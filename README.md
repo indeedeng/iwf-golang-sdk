@@ -1,2 +1,3 @@
 # iwf-golang-sdk
-Golang SDK for iWF engine
+WIP Golang SDK for iWF engine
+Contribution is welcome! 
