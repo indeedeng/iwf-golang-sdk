@@ -1,3 +1,5 @@
 # iwf-golang-sdk
-WIP Golang SDK for iWF engine
-Contribution is welcome! 
+WIP Golang SDK for [iWF workflow engine](https://github.com/indeedeng/iwf)
+
+Contribution is welcome!
+

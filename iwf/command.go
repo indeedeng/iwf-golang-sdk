@@ -1,55 +1,45 @@
 package iwf
 
-type CommandRequest interface {
-	GetCommands() []BaseCommand
-	GetDeciderTriggerType() DeciderTriggerType
+import "time"
+
+type Command struct {
+	commandId   string
+	commandType CommandType
+	// for CommandTypeSignalChannel and CommandTypeInterStateChannel
+	channelName string
+	// for CommandTypeTimer
+	firingUnixTimestampSeconds int64
 }
 
-func RequestAllCommandsCompleted(command ...BaseCommand)CommandRequest{
-	return nil
-}
-
-func RequestAnyCommandsCompleted(command ...BaseCommand)CommandRequest{
-	return nil
-}
-
-func RequestAnyCommandsClosed(command ...BaseCommand)CommandRequest{
-	return nil
-}
-
-type CommandResults interface {
-	GetAllActivityCommandResults() []ActivityCommandResult
-	GetAllSignalCommandResults() []SignalCommandResult
-	GetAllTimerCommandResults() []TimerCommandResult
-	GetActivityOutputByIndex(idx int) interface{}
-	GetSignalValueByIndex(idx int) interface{}
-	GetActivityOutputById(id string) interface{}
-	GetSignalValueById(id string) interface{}
-	GetActivityCommandResultByIndex(idx int) ActivityCommandResult
-	GetActivityCommandResultById(id string) ActivityCommandResult
-	GetSignalCommandResultByIndex(idx int) SignalCommandResult
-	GetSignalCommandResultById(id string) SignalCommandResult
-}
-
-type BaseCommand interface {
-	GetCommandId() string
-}
-
-type DeciderTriggerType string
+type CommandType string
 
 const (
-	ALL_COMMAND_COMPLETED DeciderTriggerType = "ALL_COMMAND_COMPLETED" // this will wait for all commands are completed. It will fail the workflow if any command fails(e.g. activity failure)
-	ANY_COMMAND_COMPLETED DeciderTriggerType = "ANY_COMMAND_COMPLETED" // this will wait for any command to be completed. It will fail the workflow if any command fails(e.g. activity failure)
-	ANY_COMMAND_CLOSED    DeciderTriggerType = "ANY_COMMAND_CLOSED"    // this will wait for any command to be closed. It won't fail the workflow if any command fails(e.g. activity failure)
+	CommandTypeSignalChannel     CommandType = "SignalChannel"
+	CommandTypeTimer             CommandType = "Timer"
+	CommandTypeInterStateChannel CommandType = "InterStateChannel"
 )
 
-type CommandCarryOverType string
-
-const (
-	NONE CommandCarryOverType = "NONE" // this will NOT carry over any unfinished command to next states
-	ALL_UNFINISHED CommandCarryOverType = "ALL_UNFINISHED" // this will carry over all unfinished commands to next states
-)
-
-type CommandCarryOverPolicy interface {
-	GetCommandCarryOverType() CommandCarryOverType
+func NewSignalCommand(commandId, channelName string) Command {
+	return Command{
+		commandId:   commandId,
+		commandType: CommandTypeSignalChannel,
+		channelName: channelName,
+	}
 }
+
+func NewInterStateChannelCommand(commandId, channelName string) Command {
+	return Command{
+		commandId:   commandId,
+		commandType: CommandTypeInterStateChannel,
+		channelName: channelName,
+	}
+}
+
+func NewTimerCommand(commandId string, firingTime time.Time) Command {
+	return Command{
+		commandId:                  commandId,
+		commandType:                CommandTypeTimer,
+		firingUnixTimestampSeconds: firingTime.Unix(),
+	}
+}
+
