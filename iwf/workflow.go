@@ -35,9 +35,11 @@ type Workflow interface {
 	///
 	GetCommunicationSchema() []CommunicationMethodDef
 
-	// GetWorkflowType Define the workflowType of this workflow definition. By default,(when return empty string), it's the simple Name of the workflow instance,
-	// which should be the case for most scenarios.
+	// GetWorkflowType Define the workflowType of this workflow definition. By default,(when return empty string), it's the package + struct name of the workflow instance.
+	// It ignores the import paths and aliases.
+	// e.g. if the workflow is from &myStruct{} under mywf package, the simple name is just "*mywf.myStruct". Underneath, it's from reflect.TypeOf(wf).String().
+	// the "*" is from pointer. If the instance is initiated as myStruct{}, then it is "mywf.myStruct" without the "*"
 	//
-	// In case of dynamic workflow implementation, return customized values based on constructor input.
+	// To avoid type name conflicts, or in case of dynamic workflow implementation, return customized values instead of using the default Workflow Type.
 	GetWorkflowType() string
 }
