@@ -20,16 +20,16 @@ func NewRegistry() iwf.Registry {
 }
 
 func (r *registry) AddWorkflow(wf iwf.Workflow) error {
-	if err := r.registryWorkflow(wf); err != nil {
+	if err := r.registerWorkflow(wf); err != nil {
 		return err
 	}
-	if err := r.registryWorkflowState(wf); err != nil {
+	if err := r.registerWorkflowState(wf); err != nil {
 		return err
 	}
-	if err := r.registryWorkflowCommunicationSchema(wf); err != nil {
+	if err := r.registerWorkflowCommunicationSchema(wf); err != nil {
 		return err
 	}
-	return r.registryWorkflowPersistenceSchema(wf)
+	return r.registerWorkflowPersistenceSchema(wf)
 }
 
 // GetWorkflowType returns the workflow type that will be registered and used as IwfWorkflowType
@@ -52,7 +52,7 @@ func (r *registry) GetAllWorkflowTypes() []string {
 	return res
 }
 
-func (r *registry) registryWorkflow(wf iwf.Workflow) error {
+func (r *registry) registerWorkflow(wf iwf.Workflow) error {
 	wfType := r.GetWorkflowType(wf)
 	_, ok := r.workflowStore[wfType]
 	if ok {
@@ -62,7 +62,7 @@ func (r *registry) registryWorkflow(wf iwf.Workflow) error {
 	return nil
 }
 
-func (r *registry) registryWorkflowState(wf iwf.Workflow) error {
+func (r *registry) registerWorkflowState(wf iwf.Workflow) error {
 	wfType := r.GetWorkflowType(wf)
 	if len(wf.GetStates()) == 0 {
 		return iwf.NewWorkflowDefinitionFmtError("Workflow type %s must contain at least one workflow state", wfType)
@@ -75,7 +75,7 @@ func (r *registry) registryWorkflowState(wf iwf.Workflow) error {
 	return nil
 }
 
-func (r *registry) registryWorkflowCommunicationSchema(wf iwf.Workflow) error {
+func (r *registry) registerWorkflowCommunicationSchema(wf iwf.Workflow) error {
 	wfType := r.GetWorkflowType(wf)
 	var signalMap map[string]bool
 	var interStateChannel map[string]bool
@@ -93,7 +93,7 @@ func (r *registry) registryWorkflowCommunicationSchema(wf iwf.Workflow) error {
 	return nil
 }
 
-func (r *registry) registryWorkflowPersistenceSchema(wf iwf.Workflow) error {
+func (r *registry) registerWorkflowPersistenceSchema(wf iwf.Workflow) error {
 	wfType := r.GetWorkflowType(wf)
 	var dataObjectKeys map[string]bool
 	var searchAttributes map[string]iwfidl.SearchAttributeValueType

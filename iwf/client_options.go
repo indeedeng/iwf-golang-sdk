@@ -17,6 +17,6 @@ var localDefaultClientOptions = ClientOptions{
 	ObjectEncoder: GetDefaultObjectEncoder(),
 }
 
-func GetLocalDefault() ClientOptions {
-	return localDefaultClientOptions
+func GetLocalDefaultClientOptions() *ClientOptions {
+	return &localDefaultClientOptions
 }
