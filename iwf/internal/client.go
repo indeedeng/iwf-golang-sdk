@@ -98,7 +98,7 @@ func (c *client) GetComplexWorkflowResults(ctx context.Context, workflowId, work
 	panic("implement me")
 }
 
-func (c *client) SignalWorkflow(ctx context.Context, workflowId, workflowRunId, signalChannelName string, signalValue interface{}) error {
+func (c *client) SignalWorkflow(ctx context.Context, workflow interface{}, workflowId, workflowRunId, signalChannelName string, signalValue interface{}) error {
 	//TODO implement me
 	panic("implement me")
 }
@@ -113,22 +113,22 @@ func (c *client) DescribeWorkflow(ctx context.Context, workflowId, workflowRunId
 	panic("implement me")
 }
 
-func (c *client) GetWorkflowDataObjects(ctx context.Context, workflowId, workflowRunId string, keys []string) (map[string]iwfidl.EncodedObject, error) {
+func (c *client) GetWorkflowDataObjects(ctx context.Context, workflow interface{}, workflowId, workflowRunId string, keys []string) (map[string]iwfidl.EncodedObject, error) {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (c *client) GetAllWorkflowDataObjects(ctx context.Context, workflowId, workflowRunId string) (map[string]iwfidl.EncodedObject, error) {
+func (c *client) GetAllWorkflowDataObjects(ctx context.Context, workflow interface{}, workflowId, workflowRunId string) (map[string]iwfidl.EncodedObject, error) {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (c *client) GetWorkflowSearchAttributes(ctx context.Context, workflowId, workflowRunId string) (map[string]interface{}, error) {
+func (c *client) GetWorkflowSearchAttributes(ctx context.Context, workflow interface{}, workflowId, workflowRunId string) (map[string]interface{}, error) {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (c *client) GetAllWorkflowSearchAttributes(ctx context.Context, workflowId, workflowRunId string) (map[string]interface{}, error) {
+func (c *client) GetAllWorkflowSearchAttributes(ctx context.Context, workflow interface{}, workflowId, workflowRunId string) (map[string]interface{}, error) {
 	//TODO implement me
 	panic("implement me")
 }
