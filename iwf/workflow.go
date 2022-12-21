@@ -35,7 +35,7 @@ type Workflow interface {
 	///
 	GetCommunicationSchema() []CommunicationMethodDef
 
-	// GetWorkflowType Define the workflowType of this workflow definition. By default,(when return empty string), it's the simple name of the workflow instance,
+	// GetWorkflowType Define the workflowType of this workflow definition. By default,(when return empty string), it's the simple Name of the workflow instance,
 	// which should be the case for most scenarios.
 	//
 	// In case of dynamic workflow implementation, return customized values based on constructor input.

@@ -19,7 +19,7 @@ type Persistence interface {
 	SetStateLocal(key string, value interface{}) error
 
 	// RecordEvent records an arbitrary event in State Start/Decide API for debugging/tracking purpose
-	// @param name       the name of the event. Within a Start/Decide API, the same name cannot be used for more than once.
+	// @param Name       the Name of the event. Within a Start/Decide API, the same Name cannot be used for more than once.
 	// @param eventData the data of the event.
 	RecordEvent(key string, value interface{}) error
 }

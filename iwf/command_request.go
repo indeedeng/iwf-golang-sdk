@@ -1,15 +1,8 @@
 package iwf
 
+import "github.com/iworkflowio/iwf-golang-sdk/gen/iwfidl"
+
 type CommandRequest struct {
 	Commands           []Command
-	DeciderTriggerType DeciderTriggerType
+	DeciderTriggerType iwfidl.DeciderTriggerType
 }
-
-type DeciderTriggerType string
-
-const (
-	// AllCommandCompleted will wait for all commands are completed.
-	AllCommandCompleted DeciderTriggerType = "AllCommandCompleted"
-	// AnyCommandCompleted will wait for any command to be completed
-	AnyCommandCompleted DeciderTriggerType = "AnyCommandCompleted"
-)
