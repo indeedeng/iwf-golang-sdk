@@ -1,35 +1,33 @@
 package iwf
 
+import "github.com/iworkflowio/iwf-golang-sdk/gen/iwfidl"
+
 type PersistenceFieldDef struct {
-	key                 string
-	fieldType           PersistenceFieldType
-	searchAttributeType SearchAttributeType
+	Key       string
+	FieldType PersistenceFieldType
+	// SearchAttributeType is optional and only required for PersistenceFieldTypeSearchAttribute
+	SearchAttributeType *iwfidl.SearchAttributeValueType
 }
 
 type PersistenceFieldType string
-type SearchAttributeType string
 
 const (
 	PersistenceFieldTypeDataObject      PersistenceFieldType = "DataObject"
 	PersistenceFieldTypeSearchAttribute PersistenceFieldType = "SearchAttribute"
 )
 
-const (
-	SearchAttributeTypeKeyword SearchAttributeType = "keyword"
-	SearchAttributeTypeInt64   SearchAttributeType = "int64"
-)
 
 func NewDataObjectDef(key string) PersistenceFieldDef {
 	return PersistenceFieldDef{
-		key:       key,
-		fieldType: PersistenceFieldTypeDataObject,
+		Key:       key,
+		FieldType: PersistenceFieldTypeDataObject,
 	}
 }
 
-func NewSearchAttributeDef(key string, saType SearchAttributeType) PersistenceFieldDef {
+func NewSearchAttributeDef(key string, saType iwfidl.SearchAttributeValueType) PersistenceFieldDef {
 	return PersistenceFieldDef{
-		key:                 key,
-		fieldType:           PersistenceFieldTypeSearchAttribute,
-		searchAttributeType: saType,
+		Key:                 key,
+		FieldType:           PersistenceFieldTypeSearchAttribute,
+		SearchAttributeType: &saType,
 	}
 }

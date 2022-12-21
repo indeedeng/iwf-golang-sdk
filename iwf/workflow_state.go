@@ -1,6 +1,6 @@
 package iwf
 
-import "github.com/cadence-oss/iwf-golang-sdk/iwf/command"
+import "github.com/iworkflowio/iwf-golang-sdk/gen/iwfidl"
 
 type StateDef struct {
 	State WorkflowState
@@ -43,14 +43,5 @@ type WorkflowState interface {
 
 	// GetStateOptions can just return nil to use the default Options
 	// StateOptions is optional configuration to adjust the state behaviors
-	GetStateOptions() *StateOptions
-}
-
-type StateOptions struct {
-	// SearchAttributesLoadingPolicy decides what and how search attributes will be loaded into this start execution
-	SearchAttributesLoadingPolicy PersistenceLoadingPolicy
-	// DataObjectsLoadingPolicy decides what and how data object will be loaded into this start execution
-	DataObjectsLoadingPolicy PersistenceLoadingPolicy
-	// CommandCarryOverPolicy decides how to carry over remaining commands into next states
-	CommandCarryOverPolicy command.CarryOverPolicy
+	GetStateOptions() *iwfidl.WorkflowStateOptions
 }

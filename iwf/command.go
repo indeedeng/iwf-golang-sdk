@@ -2,16 +2,29 @@ package iwf
 
 import "time"
 
-type Command struct {
-	commandId   string
-	commandType CommandType
-	// for CommandTypeSignalChannel and CommandTypeInterStateChannel
-	channelName string
-	// for CommandTypeTimer
-	firingUnixTimestampSeconds int64
-}
+type (
+	CommandType string
 
-type CommandType string
+	Command struct {
+		CommandId                string
+		CommandType              CommandType
+		TimerCommand             *TimerCommand
+		SignalCommand            *SignalCommand
+		InterStateChannelCommand *InterStateChannelCommand
+	}
+
+	TimerCommand struct {
+		FiringUnixTimestampSeconds int64
+	}
+
+	SignalCommand struct {
+		ChannelName string
+	}
+
+	InterStateChannelCommand struct {
+		ChannelName string
+	}
+)
 
 const (
 	CommandTypeSignalChannel     CommandType = "SignalChannel"
@@ -21,25 +34,31 @@ const (
 
 func NewSignalCommand(commandId, channelName string) Command {
 	return Command{
-		commandId:   commandId,
-		commandType: CommandTypeSignalChannel,
-		channelName: channelName,
+		CommandId:   commandId,
+		CommandType: CommandTypeSignalChannel,
+		SignalCommand: &SignalCommand{
+			ChannelName: channelName,
+		},
 	}
 }
 
 func NewInterStateChannelCommand(commandId, channelName string) Command {
 	return Command{
-		commandId:   commandId,
-		commandType: CommandTypeInterStateChannel,
-		channelName: channelName,
+		CommandId:   commandId,
+		CommandType: CommandTypeInterStateChannel,
+		InterStateChannelCommand: &InterStateChannelCommand{
+			ChannelName: channelName,
+		},
 	}
 }
 
 func NewTimerCommand(commandId string, firingTime time.Time) Command {
 	return Command{
-		commandId:                  commandId,
-		commandType:                CommandTypeTimer,
-		firingUnixTimestampSeconds: firingTime.Unix(),
+		CommandId:   commandId,
+		CommandType: CommandTypeTimer,
+		TimerCommand: &TimerCommand{
+			FiringUnixTimestampSeconds: firingTime.Unix(),
+		},
 	}
 }
 

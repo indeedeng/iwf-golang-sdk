@@ -1,8 +1,8 @@
 package iwf
 
 type CommunicationMethodDef struct {
-	name                string
-	communicationMethod CommunicationMethod
+	Name                string
+	CommunicationMethod CommunicationMethod
 }
 
 type CommunicationMethod string
@@ -14,14 +14,14 @@ const (
 
 func NewSignalChannelDef(channelName string) *CommunicationMethodDef {
 	return &CommunicationMethodDef{
-		name:                channelName,
-		communicationMethod: CommunicationMethodSignalChannel,
+		Name:                channelName,
+		CommunicationMethod: CommunicationMethodSignalChannel,
 	}
 }
 
 func NewInterstateChannelDef(channelName string) *CommunicationMethodDef {
 	return &CommunicationMethodDef{
-		name:                channelName,
-		communicationMethod: CommunicationMethodInterstateChannel,
+		Name:                channelName,
+		CommunicationMethod: CommunicationMethodInterstateChannel,
 	}
 }
