@@ -3,6 +3,7 @@ package iwf
 import (
 	"context"
 	"github.com/iworkflowio/iwf-golang-sdk/gen/iwfidl"
+	"github.com/iworkflowio/iwf-golang-sdk/iwf/ptr"
 	"net/http"
 )
 
@@ -65,13 +66,33 @@ func (c *client) StopWorkflow(ctx context.Context, workflowId, workflowRunId str
 }
 
 func (c *client) GetSimpleWorkflowResult(ctx context.Context, workflowId, workflowRunId string, resultPtr interface{}) error {
-	//TODO implement me
-	panic("implement me")
+	req := c.apiClient.DefaultApi.ApiV1WorkflowGetWithWaitPost(ctx)
+	resp, httpResp, err := req.WorkflowGetRequest(iwfidl.WorkflowGetRequest{
+		WorkflowId:    workflowId,
+		WorkflowRunId: &workflowRunId,
+		NeedsResults:  ptr.Any(true),
+	}).Execute()
+	if err := processError(err, httpResp); err != nil {
+		return err
+	}
+	if len(resp.Results) != 1 {
+		return NewWorkflowDefinitionError("this workflow should have one or zero state output for using this API")
+	}
+	output := resp.Results[0].CompletedStateOutput
+	return c.options.ObjectEncoder.Decode(output, resultPtr)
 }
 
 func (c *client) GetComplexWorkflowResults(ctx context.Context, workflowId, workflowRunId string) ([]iwfidl.StateCompletionOutput, error) {
-	//TODO implement me
-	panic("implement me")
+	req := c.apiClient.DefaultApi.ApiV1WorkflowGetWithWaitPost(ctx)
+	resp, httpResp, err := req.WorkflowGetRequest(iwfidl.WorkflowGetRequest{
+		WorkflowId:    workflowId,
+		WorkflowRunId: &workflowRunId,
+		NeedsResults:  ptr.Any(true),
+	}).Execute()
+	if err := processError(err, httpResp); err != nil {
+		return nil, err
+	}
+	return resp.Results, nil
 }
 
 func (c *client) SignalWorkflow(ctx context.Context, workflow interface{}, workflowId, workflowRunId, signalChannelName string, signalValue interface{}) error {
