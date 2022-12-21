@@ -3,7 +3,6 @@ package iwf
 import (
 	"context"
 	"github.com/iworkflowio/iwf-golang-sdk/gen/iwfidl"
-	"github.com/iworkflowio/iwf-golang-sdk/iwf/internal"
 )
 
 type Client interface {
@@ -67,5 +66,24 @@ type Client interface {
 }
 
 func NewClient(registry Registry, options *ClientOptions) Client {
-	return internal.NewClient(registry, options)
+	if options == nil {
+		options = GetLocalDefaultClientOptions()
+	}
+	if registry == nil {
+		panic("cannot have nil registry")
+	}
+
+	apiClient := iwfidl.NewAPIClient(&iwfidl.Configuration{
+		Servers: []iwfidl.ServerConfiguration{
+			{
+				URL: options.ServerUrl,
+			},
+		},
+	})
+
+	return &client{
+		registry:  registry,
+		options:   options,
+		apiClient: apiClient,
+	}
 }

@@ -1,48 +1,24 @@
-package internal
+package iwf
 
 import (
 	"context"
 	"github.com/iworkflowio/iwf-golang-sdk/gen/iwfidl"
-	"github.com/iworkflowio/iwf-golang-sdk/iwf"
 	"net/http"
 )
 
 type client struct {
-	registry  iwf.Registry
-	options   *iwf.ClientOptions
+	registry  Registry
+	options   *ClientOptions
 	apiClient *iwfidl.APIClient
 }
 
-func NewClient(registry iwf.Registry, options *iwf.ClientOptions) iwf.Client {
-	if options == nil {
-		options = iwf.GetLocalDefaultClientOptions()
-	}
-	if registry == nil {
-		panic("cannot have nil registry")
-	}
-
-	apiClient := iwfidl.NewAPIClient(&iwfidl.Configuration{
-		Servers: []iwfidl.ServerConfiguration{
-			{
-				URL: options.ServerUrl,
-			},
-		},
-	})
-
-	return &client{
-		registry:  registry,
-		options:   options,
-		apiClient: apiClient,
-	}
-}
-
-func (c *client) StartWorkflow(ctx context.Context, workflow interface{}, startStateId, workflowId string, timeoutSecs int32, input interface{}, options *iwf.WorkflowOptions) (string, error) {
+func (c *client) StartWorkflow(ctx context.Context, workflow interface{}, startStateId, workflowId string, timeoutSecs int32, input interface{}, options *WorkflowOptions) (string, error) {
 	var wfType string
 	wfType, ok := workflow.(string)
 	if !ok {
-		wf, ok := workflow.(iwf.Workflow)
+		wf, ok := workflow.(Workflow)
 		if !ok {
-			return "", iwf.NewWorkflowDefinitionError("workflow parameter must be either iwf.Workflow instance, or a string format of workflow type")
+			return "", NewWorkflowDefinitionError("workflow parameter must be either iwf.Workflow instance, or a string format of workflow type")
 		}
 		wfType = c.registry.GetWorkflowType(wf)
 	}
@@ -83,7 +59,7 @@ func (c *client) StartWorkflow(ctx context.Context, workflow interface{}, startS
 	return resp.GetWorkflowRunId(), nil
 }
 
-func (c *client) StopWorkflow(ctx context.Context, workflowId, workflowRunId string, options *iwf.WorkflowStopOptions) error {
+func (c *client) StopWorkflow(ctx context.Context, workflowId, workflowRunId string, options *WorkflowStopOptions) error {
 	//TODO implement me
 	panic("implement me")
 }
@@ -103,12 +79,12 @@ func (c *client) SignalWorkflow(ctx context.Context, workflow interface{}, workf
 	panic("implement me")
 }
 
-func (c *client) ResetWorkflow(ctx context.Context, workflowId, workflowRunId string, options *iwf.ResetWorkflowTypeAndOptions) (string, error) {
+func (c *client) ResetWorkflow(ctx context.Context, workflowId, workflowRunId string, options *ResetWorkflowTypeAndOptions) (string, error) {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (c *client) DescribeWorkflow(ctx context.Context, workflowId, workflowRunId string) (*iwf.WorkflowInfo, error) {
+func (c *client) DescribeWorkflow(ctx context.Context, workflowId, workflowRunId string) (*WorkflowInfo, error) {
 	//TODO implement me
 	panic("implement me")
 }
@@ -143,7 +119,7 @@ func processError(err error, httpResp *http.Response) error {
 		return err
 	}
 	if httpResp.StatusCode != http.StatusOK {
-		return iwf.NewInternalServiceError("HTTP request failed", *httpResp)
+		return NewInternalServiceError("HTTP request failed", *httpResp)
 	}
 	return nil
 }

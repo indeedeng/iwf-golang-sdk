@@ -1,6 +1,6 @@
 package iwf
 
-import "github.com/iworkflowio/iwf-golang-sdk/iwf/internal"
+import "github.com/iworkflowio/iwf-golang-sdk/gen/iwfidl"
 
 type Registry interface {
 	// AddWorkflow registers a workflow
@@ -12,5 +12,12 @@ type Registry interface {
 }
 
 func NewRegistry() Registry {
-	return internal.NewRegistry()
+	return &registry{
+		workflowStore:              map[string]Workflow{},
+		workflowStateStore:         map[string]map[string]StateDef{},
+		signalNameStore:            map[string]map[string]bool{},
+		interStateChannelNameStore: map[string]map[string]bool{},
+		dataObjectKeyStore:         map[string]map[string]bool{},
+		searchAttributeTypeStore:   map[string]map[string]iwfidl.SearchAttributeValueType{},
+	}
 }
