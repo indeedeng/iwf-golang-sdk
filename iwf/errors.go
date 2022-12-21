@@ -15,3 +15,9 @@ func NewWorkflowDefinitionError(msg string) error {
 		msg: msg,
 	}
 }
+
+func NewWorkflowDefinitionFmtError(tpl string, arg ...interface{}) error {
+	return &WorkflowDefinitionError{
+		msg: fmt.Sprintf(tpl, arg...),
+	}
+}
