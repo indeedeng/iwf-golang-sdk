@@ -12,7 +12,7 @@ type (
 	SignalCommandResult struct {
 		CommandId   string
 		ChannelName string
-		SignalValue interface{}
+		SignalValue Object
 		Status      iwfidl.ChannelRequestStatus
 	}
 
@@ -24,7 +24,7 @@ type (
 	InterStateChannelCommandResult struct {
 		CommandId   string
 		ChannelName string
-		Value       interface{}
+		Value       Object
 		Status      iwfidl.ChannelRequestStatus
 	}
 )

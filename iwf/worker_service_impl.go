@@ -24,11 +24,12 @@ func (w *workerServiceImpl) HandleWorkflowStateStart(ctx context.Context, reques
 		return nil, err
 	}
 
-	// TODO timer,signal, interstateChannel commands
+	idlCommandRequest, err := toIdlCommandRequest(commandRequest)
+	if err != nil {
+		return nil, err
+	}
 	return &iwfidl.WorkflowStateStartResponse{
-		CommandRequest: &iwfidl.CommandRequest{
-			DeciderTriggerType: commandRequest.DeciderTriggerType,
-		},
+		CommandRequest: idlCommandRequest,
 	}, nil
 }
 
@@ -40,8 +41,11 @@ func (w *workerServiceImpl) HandleWorkflowStateDecide(ctx context.Context, reque
 	reqContext := request.GetContext()
 	wfCtx := newWorkflowContext(ctx, reqContext.GetWorkflowId(), reqContext.GetWorkflowRunId(), reqContext.GetStateExecutionId(), reqContext.GetWorkflowStartedTimestamp())
 
-	// TODO commandResults persistence, communication
-	commandResults := CommandResults{}
+	commandResults, err := fromIdlCommandResults(request.CommandResults, w.options.ObjectEncoder)
+	if err != nil {
+		return nil, err
+	}
+	// TODO persistence, communication
 	decision, err := stateDef.State.Decide(wfCtx, input, commandResults, nil, nil)
 	if err != nil {
 		return nil, err

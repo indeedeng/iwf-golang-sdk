@@ -16,8 +16,9 @@ Here is the repository layout if you are interested to learn about it:
 * `iwf-idl/` the idl submodule
 * `iwf` the main directory
   * `*_impl.go` these are implementation for SDK. Ideally we should put them in separate folder, but Golang doesn't allow circular dependency, and we hate to use alias across packages
+  * `internal_*.go` these are implementation for SDK
   * `_test.go` the unit test
-  * other `.go` the interfaces defined for user to use
+  * other `.go` the interfaces defined in this SDK for user to use
 
 ## How to update IDL and the generated code
 1. Install openapi-generator using Homebrew if you haven't. See more [documentation](https://openapi-generator.tech/docs/installation)
