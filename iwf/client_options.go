@@ -6,9 +6,11 @@ type ClientOptions struct {
 	ObjectEncoder ObjectEncoder
 }
 
+const DefaultWorkerPort = "8803"
+const DefaultServerPort = "8801"
 const (
-	defaultWorkerUrl = "http://localhost:8803"
-	defaultServerUrl = "http://localhost:8801"
+	defaultWorkerUrl = "http://localhost:" + DefaultWorkerPort
+	defaultServerUrl = "http://localhost:" + DefaultServerPort
 )
 
 var localDefaultClientOptions = ClientOptions{

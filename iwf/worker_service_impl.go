@@ -14,11 +14,7 @@ func (w *workerServiceImpl) HandleWorkflowStateStart(ctx context.Context, reques
 	defer func() { captureStateExecutionError(recover(), &retErr) }()
 
 	stateDef := w.registry.getWorkflowStateDef(request.GetWorkflowType(), request.GetWorkflowStateId())
-	var input *interface{} // TODO need to test & verify
-	err := w.options.ObjectEncoder.Decode(request.StateInput, input)
-	if err != nil {
-		return nil, err
-	}
+	input := NewObject(request.StateInput, w.options.ObjectEncoder)
 	reqContext := request.GetContext()
 	wfCtx := newWorkflowContext(ctx, reqContext.GetWorkflowId(), reqContext.GetWorkflowRunId(), reqContext.GetStateExecutionId(), reqContext.GetWorkflowStartedTimestamp())
 
@@ -28,7 +24,6 @@ func (w *workerServiceImpl) HandleWorkflowStateStart(ctx context.Context, reques
 		return nil, err
 	}
 
-	commandRequest.DeciderTriggerType = ""
 	// TODO timer,signal, interstateChannel commands
 	return &iwfidl.WorkflowStateStartResponse{
 		CommandRequest: &iwfidl.CommandRequest{
@@ -41,11 +36,7 @@ func (w *workerServiceImpl) HandleWorkflowStateDecide(ctx context.Context, reque
 	defer func() { captureStateExecutionError(recover(), &retErr) }()
 
 	stateDef := w.registry.getWorkflowStateDef(request.GetWorkflowType(), request.GetWorkflowStateId())
-	var input *interface{} // TODO need to test & verify
-	err := w.options.ObjectEncoder.Decode(request.StateInput, input)
-	if err != nil {
-		return nil, err
-	}
+	input := NewObject(request.StateInput, w.options.ObjectEncoder)
 	reqContext := request.GetContext()
 	wfCtx := newWorkflowContext(ctx, reqContext.GetWorkflowId(), reqContext.GetWorkflowRunId(), reqContext.GetStateExecutionId(), reqContext.GetWorkflowStartedTimestamp())
 
@@ -55,7 +46,7 @@ func (w *workerServiceImpl) HandleWorkflowStateDecide(ctx context.Context, reque
 	if err != nil {
 		return nil, err
 	}
-	idlDecision, err := toIdlDecision(&decision, request.GetWorkflowType(), w.registry, w.options.ObjectEncoder)
+	idlDecision, err := toIdlDecision(decision, request.GetWorkflowType(), w.registry, w.options.ObjectEncoder)
 	return &iwfidl.WorkflowStateDecideResponse{
 		StateDecision: idlDecision,
 	}, nil
