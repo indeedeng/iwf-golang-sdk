@@ -1,6 +1,7 @@
 package iwf
 
 import (
+	"context"
 	"github.com/iworkflowio/iwf-golang-sdk/gen/iwfidl"
 	"github.com/iworkflowio/iwf-golang-sdk/iwf/ptr"
 )
@@ -11,8 +12,8 @@ const (
 )
 
 type WorkerService interface {
-	HandleWorkflowStateStart(request iwfidl.WorkflowStateStartRequest) (iwfidl.WorkflowStateStartResponse, error)
-	HandleWorkflowStateDecide(request iwfidl.WorkflowStateDecideRequest) (iwfidl.WorkflowStateDecideResponse, error)
+	HandleWorkflowStateStart(ctx context.Context, request iwfidl.WorkflowStateStartRequest) (*iwfidl.WorkflowStateStartResponse, error)
+	HandleWorkflowStateDecide(ctx context.Context, request iwfidl.WorkflowStateDecideRequest) (*iwfidl.WorkflowStateDecideResponse, error)
 }
 
 func NewWorkerService(registry Registry, options *WorkerOptions) WorkerService {
@@ -20,7 +21,7 @@ func NewWorkerService(registry Registry, options *WorkerOptions) WorkerService {
 		options = ptr.Any(GetDefaultWorkerOptions())
 	}
 	return &workerServiceImpl{
-		registry: registry,
+		registry: registry.(*registryImpl),
 		options:  *options,
 	}
 }

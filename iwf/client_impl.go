@@ -7,13 +7,13 @@ import (
 	"net/http"
 )
 
-type client struct {
-	registry  Registry
+type clientImpl struct {
+	registry  *registryImpl
 	options   *ClientOptions
 	apiClient *iwfidl.APIClient
 }
 
-func (c *client) StartWorkflow(ctx context.Context, workflow interface{}, startStateId, workflowId string, timeoutSecs int32, input interface{}, options *WorkflowOptions) (string, error) {
+func (c *clientImpl) StartWorkflow(ctx context.Context, workflow interface{}, startStateId, workflowId string, timeoutSecs int32, input interface{}, options *WorkflowOptions) (string, error) {
 	var wfType string
 	wfType, ok := workflow.(string)
 	if !ok {
@@ -23,6 +23,13 @@ func (c *client) StartWorkflow(ctx context.Context, workflow interface{}, startS
 		}
 		wfType = c.registry.GetWorkflowType(wf)
 	}
+	if c.registry != nil {
+		stateDef := c.registry.GetWorkflowStateDef(wfType, startStateId)
+		if !stateDef.CanStartWorkflow {
+			return "", NewWorkflowDefinitionFmtError("cannot start workflow %v with start state %v", wfType, startStateId)
+		}
+	}
+
 	var encodedInput *iwfidl.EncodedObject
 	var err error
 	if input != nil {
@@ -60,12 +67,12 @@ func (c *client) StartWorkflow(ctx context.Context, workflow interface{}, startS
 	return resp.GetWorkflowRunId(), nil
 }
 
-func (c *client) StopWorkflow(ctx context.Context, workflowId, workflowRunId string, options *WorkflowStopOptions) error {
+func (c *clientImpl) StopWorkflow(ctx context.Context, workflowId, workflowRunId string, options *WorkflowStopOptions) error {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (c *client) GetSimpleWorkflowResult(ctx context.Context, workflowId, workflowRunId string, resultPtr interface{}) error {
+func (c *clientImpl) GetSimpleWorkflowResult(ctx context.Context, workflowId, workflowRunId string, resultPtr interface{}) error {
 	req := c.apiClient.DefaultApi.ApiV1WorkflowGetWithWaitPost(ctx)
 	resp, httpResp, err := req.WorkflowGetRequest(iwfidl.WorkflowGetRequest{
 		WorkflowId:    workflowId,
@@ -82,7 +89,7 @@ func (c *client) GetSimpleWorkflowResult(ctx context.Context, workflowId, workfl
 	return c.options.ObjectEncoder.Decode(output, resultPtr)
 }
 
-func (c *client) GetComplexWorkflowResults(ctx context.Context, workflowId, workflowRunId string) ([]iwfidl.StateCompletionOutput, error) {
+func (c *clientImpl) GetComplexWorkflowResults(ctx context.Context, workflowId, workflowRunId string) ([]iwfidl.StateCompletionOutput, error) {
 	req := c.apiClient.DefaultApi.ApiV1WorkflowGetWithWaitPost(ctx)
 	resp, httpResp, err := req.WorkflowGetRequest(iwfidl.WorkflowGetRequest{
 		WorkflowId:    workflowId,
@@ -95,42 +102,42 @@ func (c *client) GetComplexWorkflowResults(ctx context.Context, workflowId, work
 	return resp.Results, nil
 }
 
-func (c *client) SignalWorkflow(ctx context.Context, workflow interface{}, workflowId, workflowRunId, signalChannelName string, signalValue interface{}) error {
+func (c *clientImpl) SignalWorkflow(ctx context.Context, workflow interface{}, workflowId, workflowRunId, signalChannelName string, signalValue interface{}) error {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (c *client) ResetWorkflow(ctx context.Context, workflowId, workflowRunId string, options *ResetWorkflowTypeAndOptions) (string, error) {
+func (c *clientImpl) ResetWorkflow(ctx context.Context, workflowId, workflowRunId string, options *ResetWorkflowTypeAndOptions) (string, error) {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (c *client) DescribeWorkflow(ctx context.Context, workflowId, workflowRunId string) (*WorkflowInfo, error) {
+func (c *clientImpl) DescribeWorkflow(ctx context.Context, workflowId, workflowRunId string) (*WorkflowInfo, error) {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (c *client) GetWorkflowDataObjects(ctx context.Context, workflow interface{}, workflowId, workflowRunId string, keys []string) (map[string]iwfidl.EncodedObject, error) {
+func (c *clientImpl) GetWorkflowDataObjects(ctx context.Context, workflow interface{}, workflowId, workflowRunId string, keys []string) (map[string]iwfidl.EncodedObject, error) {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (c *client) GetAllWorkflowDataObjects(ctx context.Context, workflow interface{}, workflowId, workflowRunId string) (map[string]iwfidl.EncodedObject, error) {
+func (c *clientImpl) GetAllWorkflowDataObjects(ctx context.Context, workflow interface{}, workflowId, workflowRunId string) (map[string]iwfidl.EncodedObject, error) {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (c *client) GetWorkflowSearchAttributes(ctx context.Context, workflow interface{}, workflowId, workflowRunId string) (map[string]interface{}, error) {
+func (c *clientImpl) GetWorkflowSearchAttributes(ctx context.Context, workflow interface{}, workflowId, workflowRunId string) (map[string]interface{}, error) {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (c *client) GetAllWorkflowSearchAttributes(ctx context.Context, workflow interface{}, workflowId, workflowRunId string) (map[string]interface{}, error) {
+func (c *clientImpl) GetAllWorkflowSearchAttributes(ctx context.Context, workflow interface{}, workflowId, workflowRunId string) (map[string]interface{}, error) {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (c *client) SearchWorkflow(ctx context.Context, query string, pageSize int) (*iwfidl.WorkflowSearchResponse, error) {
+func (c *clientImpl) SearchWorkflow(ctx context.Context, query string, pageSize int) (*iwfidl.WorkflowSearchResponse, error) {
 	//TODO implement me
 	panic("implement me")
 }

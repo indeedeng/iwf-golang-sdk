@@ -2,7 +2,9 @@ package iwf
 
 import (
 	"fmt"
+	"log"
 	"net/http"
+	"runtime/debug"
 )
 
 type WorkflowDefinitionError struct {
@@ -43,3 +45,43 @@ func (i InternalServiceError) Error() string {
 	return fmt.Sprintf("error message:%v, statusCode: %v", i.Message, i.Status)
 }
 
+type StateExecutionError struct {
+	OriginalError error
+	StackTrace    string
+}
+
+func newStateExecutionError(err error, stackTrace string) error {
+	return &StateExecutionError{
+		OriginalError: err,
+		StackTrace:    stackTrace,
+	}
+}
+
+func (i StateExecutionError) Error() string {
+	return fmt.Sprintf("error message:%v, stacktrace: %v", i.OriginalError, i.StackTrace)
+}
+
+// for skipping the logging in testing code
+var skipCaptureErrorLogging = false
+
+// MUST be the result from calling recover, which MUST be done in a single level deep
+// deferred function. The usual way of calling this is:
+// - defer func() { captureStateExecutionError(recover(), logger, &err) }()
+func captureStateExecutionError(errPanic interface{}, retError *error) {
+	if errPanic != nil || *retError != nil {
+		st := string(debug.Stack())
+
+		var err error
+		panicError, ok := errPanic.(error)
+		if ok && panicError != nil {
+			err = newStateExecutionError(panicError, st)
+		} else {
+			err = newStateExecutionError(*retError, st)
+		}
+
+		if !skipCaptureErrorLogging {
+			log.Printf("error is captured: %v", err)
+		}
+		*retError = err
+	}
+}

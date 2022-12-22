@@ -65,12 +65,26 @@ type Client interface {
 	SearchWorkflow(ctx context.Context, query string, pageSize int) (*iwfidl.WorkflowSearchResponse, error)
 }
 
+// NewUntypedClient returns a UntypedClient
+// It will let you invoke the APIs to iWF server without much type validation checks(workflow type, signalChannelName, etc).
+// It's useful for :
+// 1) calling Client APIs without workflow registry(which may require to have all the workflow dependencies)
+// 2) some use cases like dynamic workflow instance that workflowType is not from class simple name.
+func NewUntypedClient(options *ClientOptions) Client {
+	return doNewClient(nil, options)
+}
+
+// NewClient returns a Client
 func NewClient(registry Registry, options *ClientOptions) Client {
-	if options == nil {
-		options = GetLocalDefaultClientOptions()
-	}
 	if registry == nil {
 		panic("cannot have nil registry")
+	}
+	return doNewClient(registry, options)
+}
+
+func doNewClient(registry Registry, options *ClientOptions) Client {
+	if options == nil {
+		options = GetLocalDefaultClientOptions()
 	}
 
 	apiClient := iwfidl.NewAPIClient(&iwfidl.Configuration{
@@ -81,8 +95,8 @@ func NewClient(registry Registry, options *ClientOptions) Client {
 		},
 	})
 
-	return &client{
-		registry:  registry,
+	return &clientImpl{
+		registry:  registry.(*registryImpl),
 		options:   options,
 		apiClient: apiClient,
 	}
