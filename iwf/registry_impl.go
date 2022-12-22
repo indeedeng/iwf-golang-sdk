@@ -5,7 +5,7 @@ import (
 	"reflect"
 )
 
-type registry struct {
+type registryImpl struct {
 	workflowStore              map[string]Workflow
 	workflowStateStore         map[string]map[string]StateDef
 	signalNameStore            map[string]map[string]bool
@@ -14,7 +14,7 @@ type registry struct {
 	searchAttributeTypeStore   map[string]map[string]iwfidl.SearchAttributeValueType
 }
 
-func (r *registry) AddWorkflow(wf Workflow) error {
+func (r *registryImpl) AddWorkflow(wf Workflow) error {
 	if err := r.registerWorkflow(wf); err != nil {
 		return err
 	}
@@ -30,7 +30,7 @@ func (r *registry) AddWorkflow(wf Workflow) error {
 // GetWorkflowType returns the workflow type that will be registered and used as IwfWorkflowType
 // if the workflow is from &myStruct{} under mywf package, the method returns "*mywf.myStruct"
 // the "*" is from pointer. If the instance is initiated as myStruct{}, then it returns "mywf.myStruct" without the "*"
-func (r *registry) GetWorkflowType(wf Workflow) string {
+func (r *registryImpl) GetWorkflowType(wf Workflow) string {
 	wfType := wf.GetWorkflowType()
 	if wfType == "" {
 		rt := reflect.TypeOf(wf)
@@ -39,7 +39,7 @@ func (r *registry) GetWorkflowType(wf Workflow) string {
 	return wfType
 }
 
-func (r *registry) GetAllWorkflowTypes() []string {
+func (r *registryImpl) GetAllWorkflowTypes() []string {
 	var res []string
 	for wfType := range r.workflowStore {
 		res = append(res, wfType)
@@ -47,7 +47,11 @@ func (r *registry) GetAllWorkflowTypes() []string {
 	return res
 }
 
-func (r *registry) registerWorkflow(wf Workflow) error {
+func (r *registryImpl) getWorkflowStateDef(wfType string, id string) StateDef {
+	return r.workflowStateStore[wfType][id]
+}
+
+func (r *registryImpl) registerWorkflow(wf Workflow) error {
 	wfType := r.GetWorkflowType(wf)
 	_, ok := r.workflowStore[wfType]
 	if ok {
@@ -57,7 +61,7 @@ func (r *registry) registerWorkflow(wf Workflow) error {
 	return nil
 }
 
-func (r *registry) registerWorkflowState(wf Workflow) error {
+func (r *registryImpl) registerWorkflowState(wf Workflow) error {
 	wfType := r.GetWorkflowType(wf)
 	if len(wf.GetStates()) == 0 {
 		return NewWorkflowDefinitionFmtError("Workflow type %s must contain at least one workflow state", wfType)
@@ -70,7 +74,7 @@ func (r *registry) registerWorkflowState(wf Workflow) error {
 	return nil
 }
 
-func (r *registry) registerWorkflowCommunicationSchema(wf Workflow) error {
+func (r *registryImpl) registerWorkflowCommunicationSchema(wf Workflow) error {
 	wfType := r.GetWorkflowType(wf)
 	signalMap := map[string]bool{}
 	interStateChannel := map[string]bool{}
@@ -88,7 +92,7 @@ func (r *registry) registerWorkflowCommunicationSchema(wf Workflow) error {
 	return nil
 }
 
-func (r *registry) registerWorkflowPersistenceSchema(wf Workflow) error {
+func (r *registryImpl) registerWorkflowPersistenceSchema(wf Workflow) error {
 	wfType := r.GetWorkflowType(wf)
 	dataObjectKeys := map[string]bool{}
 	searchAttributes := map[string]iwfidl.SearchAttributeValueType{}

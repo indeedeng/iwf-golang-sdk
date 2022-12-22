@@ -6,12 +6,12 @@ type StateDecision struct {
 	NextStates []StateMovement
 }
 
-func SingleNextState(stateId string, input interface{}) StateDecision {
+func SingleNextState(stateId string, input interface{}) *StateDecision {
 	return SingleNextStateWithOptions(stateId, input, nil)
 }
 
-func SingleNextStateWithOptions(stateId string, input interface{}, options *iwfidl.WorkflowStateOptions) StateDecision {
-	return StateDecision{
+func SingleNextStateWithOptions(stateId string, input interface{}, options *iwfidl.WorkflowStateOptions) *StateDecision {
+	return &StateDecision{
 		NextStates: []StateMovement{
 			{
 				NextStateId:      stateId,
@@ -35,8 +35,8 @@ var ForceFailingWorkflow = StateDecision{
 
 var GracefulCompletingWorkflow = GracefulCompleteWorkflow(nil)
 
-func GracefulCompleteWorkflow(output interface{}) StateDecision {
-	return StateDecision{
+func GracefulCompleteWorkflow(output interface{}) *StateDecision {
+	return &StateDecision{
 		NextStates: []StateMovement{
 			{
 				NextStateId:    GracefulCompletingWorkflowStateId,
@@ -48,8 +48,8 @@ func GracefulCompleteWorkflow(output interface{}) StateDecision {
 
 var ForceCompletingWorkflow = ForceCompleteWorkflow(nil)
 
-func ForceCompleteWorkflow(output interface{}) StateDecision {
-	return StateDecision{
+func ForceCompleteWorkflow(output interface{}) *StateDecision {
+	return &StateDecision{
 		NextStates: []StateMovement{
 			{
 				NextStateId:    ForceCompletingWorkflowStateId,
