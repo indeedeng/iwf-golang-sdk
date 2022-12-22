@@ -13,4 +13,8 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
+	err = registry.AddWorkflow(&timerWorkflow{})
+	if err != nil {
+		panic(err)
+	}
 }
