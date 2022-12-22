@@ -1,12 +1,11 @@
-package mapper
+package iwf
 
 import (
 	"github.com/iworkflowio/iwf-golang-sdk/gen/iwfidl"
-	"github.com/iworkflowio/iwf-golang-sdk/iwf"
 	"strings"
 )
 
-func ToIdlDecision(from *iwf.StateDecision, wfType string, registry iwf.Registry, encoder iwf.ObjectEncoder) (*iwfidl.StateDecision, error) {
+func toIdlDecision(from *StateDecision, wfType string, registry Registry, encoder ObjectEncoder) (*iwfidl.StateDecision, error) {
 	var mvs []iwfidl.StateMovement
 	for _, fromMv := range from.NextStates {
 		input, err := encoder.Encode(fromMv.NextStateInput)
@@ -14,8 +13,8 @@ func ToIdlDecision(from *iwf.StateDecision, wfType string, registry iwf.Registry
 			return nil, err
 		}
 		var options *iwfidl.WorkflowStateOptions
-		if !strings.HasPrefix(fromMv.NextStateId, iwf.ReservedStateIdPrefix) {
-			stateDef := registry.GetWorkflowStateDef(wfType, fromMv.NextStateId)
+		if !strings.HasPrefix(fromMv.NextStateId, ReservedStateIdPrefix) {
+			stateDef := registry.getWorkflowStateDef(wfType, fromMv.NextStateId)
 			options = stateDef.State.GetStateOptions()
 		}
 		mv := iwfidl.StateMovement{

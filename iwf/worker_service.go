@@ -21,7 +21,7 @@ func NewWorkerService(registry Registry, options *WorkerOptions) WorkerService {
 		options = ptr.Any(GetDefaultWorkerOptions())
 	}
 	return &workerServiceImpl{
-		registry: registry.(*registryImpl),
+		registry: registry,
 		options:  *options,
 	}
 }

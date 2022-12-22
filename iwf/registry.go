@@ -9,8 +9,10 @@ type Registry interface {
 	GetWorkflowType(workflow Workflow) string
 	// GetAllWorkflowTypes returns all the workflow types that have been registered
 	GetAllWorkflowTypes() []string
-	// GetWorkflowStateDef returns stateDef
-	GetWorkflowStateDef(wfType string, id string) StateDef
+
+	// below are all for internal implementation
+	// getWorkflowStateDef returns stateDef
+	getWorkflowStateDef(wfType string, id string) StateDef
 }
 
 func NewRegistry() Registry {

@@ -3,18 +3,17 @@ package iwf
 import (
 	"context"
 	"github.com/iworkflowio/iwf-golang-sdk/gen/iwfidl"
-	"github.com/iworkflowio/iwf-golang-sdk/iwf/internal/mapper"
 )
 
 type workerServiceImpl struct {
-	registry *registryImpl
+	registry Registry
 	options  WorkerOptions
 }
 
 func (w *workerServiceImpl) HandleWorkflowStateStart(ctx context.Context, request iwfidl.WorkflowStateStartRequest) (resp *iwfidl.WorkflowStateStartResponse, retErr error) {
 	defer func() { captureStateExecutionError(recover(), &retErr) }()
 
-	stateDef := w.registry.GetWorkflowStateDef(request.GetWorkflowType(), request.GetWorkflowStateId())
+	stateDef := w.registry.getWorkflowStateDef(request.GetWorkflowType(), request.GetWorkflowStateId())
 	var input *interface{} // TODO need to test & verify
 	err := w.options.ObjectEncoder.Decode(request.StateInput, input)
 	if err != nil {
@@ -41,7 +40,7 @@ func (w *workerServiceImpl) HandleWorkflowStateStart(ctx context.Context, reques
 func (w *workerServiceImpl) HandleWorkflowStateDecide(ctx context.Context, request iwfidl.WorkflowStateDecideRequest) (resp *iwfidl.WorkflowStateDecideResponse, retErr error) {
 	defer func() { captureStateExecutionError(recover(), &retErr) }()
 
-	stateDef := w.registry.GetWorkflowStateDef(request.GetWorkflowType(), request.GetWorkflowStateId())
+	stateDef := w.registry.getWorkflowStateDef(request.GetWorkflowType(), request.GetWorkflowStateId())
 	var input *interface{} // TODO need to test & verify
 	err := w.options.ObjectEncoder.Decode(request.StateInput, input)
 	if err != nil {
@@ -56,7 +55,7 @@ func (w *workerServiceImpl) HandleWorkflowStateDecide(ctx context.Context, reque
 	if err != nil {
 		return nil, err
 	}
-	idlDecision, err := mapper.ToIdlDecision(&decision, request.GetWorkflowType(), w.registry, w.options.ObjectEncoder)
+	idlDecision, err := toIdlDecision(&decision, request.GetWorkflowType(), w.registry, w.options.ObjectEncoder)
 	return &iwfidl.WorkflowStateDecideResponse{
 		StateDecision: idlDecision,
 	}, nil

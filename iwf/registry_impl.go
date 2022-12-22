@@ -47,7 +47,7 @@ func (r *registryImpl) GetAllWorkflowTypes() []string {
 	return res
 }
 
-func (r *registryImpl) GetWorkflowStateDef(wfType string, id string) StateDef {
+func (r *registryImpl) getWorkflowStateDef(wfType string, id string) StateDef {
 	return r.workflowStateStore[wfType][id]
 }
 

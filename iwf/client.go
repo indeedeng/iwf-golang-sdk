@@ -96,7 +96,7 @@ func doNewClient(registry Registry, options *ClientOptions) Client {
 	})
 
 	return &clientImpl{
-		registry:  registry.(*registryImpl),
+		registry:  registry,
 		options:   options,
 		apiClient: apiClient,
 	}

@@ -8,7 +8,7 @@ import (
 )
 
 type clientImpl struct {
-	registry  *registryImpl
+	registry  Registry
 	options   *ClientOptions
 	apiClient *iwfidl.APIClient
 }
@@ -24,7 +24,7 @@ func (c *clientImpl) StartWorkflow(ctx context.Context, workflow interface{}, st
 		wfType = c.registry.GetWorkflowType(wf)
 	}
 	if c.registry != nil {
-		stateDef := c.registry.GetWorkflowStateDef(wfType, startStateId)
+		stateDef := c.registry.getWorkflowStateDef(wfType, startStateId)
 		if !stateDef.CanStartWorkflow {
 			return "", NewWorkflowDefinitionFmtError("cannot start workflow %v with start state %v", wfType, startStateId)
 		}
