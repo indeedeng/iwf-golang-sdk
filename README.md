@@ -30,9 +30,9 @@ Contribution is welcome!
 - [ ] Cancel workflow API
 - [ ] Reset workflow API
 - [ ] Command type(s) for inter-state communications (e.g. internal channel)
-- [ ] AnyCommandCompleted Decider trigger type
+- [X] AnyCommandCompleted Decider trigger type
 - [ ] More workflow start options: IdReusePolicy, cron schedule, retry
-- [ ] StateOption: Start/Decide API timeout and retry policy
+- [x] StateOption: Start/Decide API timeout and retry policy
 - [ ] Reset workflow by stateId/StateExecutionId
 
 ## 1.1
