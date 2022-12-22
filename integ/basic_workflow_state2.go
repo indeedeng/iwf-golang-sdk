@@ -14,7 +14,7 @@ func (b basicWorkflowState2) GetStateId() string {
 }
 
 func (b basicWorkflowState2) Start(ctx iwf.WorkflowContext, input iwf.Object, persistence iwf.Persistence, communication iwf.Communication) (*iwf.CommandRequest, error) {
-	return iwf.AllCommandsCompletedRequest(), nil
+	return iwf.EmptyCommandRequest(), nil
 }
 
 func (b basicWorkflowState2) Decide(ctx iwf.WorkflowContext, input iwf.Object, commandResults iwf.CommandResults, persistence iwf.Persistence, communication iwf.Communication) (*iwf.StateDecision, error) {

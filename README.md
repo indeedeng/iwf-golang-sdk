@@ -1,8 +1,5 @@
-# iwf-golang-sdk
-WIP Golang SDK for [iWF workflow engine](https://github.com/indeedeng/iwf)
-
-Contribution is welcome!
-
+# iWF Golang SDK
+Golang SDK for [iWF workflow engine](https://github.com/indeedeng/iwf)
 
 # Contribution
 See [contribution guide](CONTRIBUTION.md)
@@ -14,7 +11,7 @@ See [contribution guide](CONTRIBUTION.md)
 - [x] Start workflow API
 - [x] Executing `start`/`decide` APIs and completing workflow
 - [x] Parallel execution of multiple states
-- [ ] Timer command
+- [x] Timer command
 - [ ] Signal command
 - [ ] SearchAttributeRW
 - [ ] DataObjectRW
