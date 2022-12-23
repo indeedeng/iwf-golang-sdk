@@ -7,6 +7,13 @@ type CommandRequest struct {
 	DeciderTriggerType iwfidl.DeciderTriggerType
 }
 
+func EmptyCommandRequest() *CommandRequest {
+	return &CommandRequest{
+		// this field is required to be not empty, but it doesn't matter what type is for empty commands
+		DeciderTriggerType: iwfidl.ALL_COMMAND_COMPLETED,
+	}
+}
+
 func AnyCommandCompletedRequest(commands ...Command) *CommandRequest {
 	return &CommandRequest{
 		Commands:           commands,
