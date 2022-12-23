@@ -13,6 +13,16 @@ type registryImpl struct {
 	searchAttributeTypeStore   map[string]map[string]iwfidl.SearchAttributeValueType
 }
 
+func (r *registryImpl) AddWorkflows(workflows ...Workflow) error {
+	for _, wf := range workflows {
+		err := r.AddWorkflow(wf)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 func (r *registryImpl) AddWorkflow(wf Workflow) error {
 	if err := r.registerWorkflow(wf); err != nil {
 		return err

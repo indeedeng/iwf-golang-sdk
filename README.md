@@ -20,11 +20,11 @@ See [contribution guide](CONTRIBUTION.md)
 - [ ] Get workflow DataObjects/SearchAttributes API
 - [x] Get workflow result API
 - [ ] Search workflow API
-- [ ] Cancel workflow API
+- [x] Stop workflow API
 - [ ] Reset workflow API
 - [ ] Command type(s) for inter-state communications (e.g. internal channel)
 - [X] AnyCommandCompleted Decider trigger type
-- [ ] More workflow start options: IdReusePolicy, cron schedule, retry
+- [x] More workflow start options: IdReusePolicy, cron schedule, retry
 - [x] StateOption: Start/Decide API timeout and retry policy
 - [ ] Reset workflow by stateId/StateExecutionId
 

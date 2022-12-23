@@ -5,6 +5,8 @@ import "github.com/iworkflowio/iwf-golang-sdk/gen/iwfidl"
 type Registry interface {
 	// AddWorkflow registers a workflow
 	AddWorkflow(workflow Workflow) error
+	// AddWorkflows registers multiple workflows
+	AddWorkflows(workflows ...Workflow) error
 	// GetAllRegisteredWorkflowTypes returns all the workflow types that have been registered
 	GetAllRegisteredWorkflowTypes() []string
 

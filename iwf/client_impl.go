@@ -120,11 +120,11 @@ func (c *clientImpl) GetComplexWorkflowResults(ctx context.Context, workflowId, 
 }
 
 func (c *clientImpl) SignalWorkflow(ctx context.Context, workflow interface{}, workflowId, workflowRunId, signalChannelName string, signalValue interface{}) error {
-	wfType, err := getWorkflowType(workflow)
-	if err != nil {
-		return err
-	}
 	if c.registry != nil {
+		wfType, err := getWorkflowType(workflow)
+		if err != nil {
+			return err
+		}
 		signalNameStore := c.registry.getWorkflowSignalNameStore(wfType)
 		if !signalNameStore[signalChannelName] {
 			return NewWorkflowDefinitionFmtError("signal channel %v is not defined in workflow type %v", signalChannelName, wfType)
