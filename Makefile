@@ -151,6 +151,7 @@ integTests:
 unitTests:
 	$Q go test -v ./iwf
 
+tests: integTests unitTests
 
 help:
 	@# print help first, so it's visible
