@@ -15,12 +15,12 @@ func (m myState) GetStateId() string {
 	return "stateId"
 }
 
-func (m myState) Start(ctx WorkflowContext, input interface{}, persistence Persistence, communication Communication) (CommandRequest, error) {
+func (m myState) Start(ctx WorkflowContext, input Object, persistence Persistence, communication Communication) (*CommandRequest, error) {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (m myState) Decide(ctx WorkflowContext, input interface{}, commandResults CommandResults, persistence Persistence, communication Communication) (StateDecision, error) {
+func (m myState) Decide(ctx WorkflowContext, input Object, commandResults CommandResults, persistence Persistence, communication Communication) (*StateDecision, error) {
 	//TODO implement me
 	panic("implement me")
 }
