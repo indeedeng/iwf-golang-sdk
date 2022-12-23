@@ -12,11 +12,11 @@ See [contribution guide](CONTRIBUTION.md)
 - [x] Executing `start`/`decide` APIs and completing workflow
 - [x] Parallel execution of multiple states
 - [x] Timer command
-- [ ] Signal command
+- [x] Signal command
 - [ ] SearchAttributeRW
 - [ ] DataObjectRW
 - [ ] StateLocal
-- [ ] Signal workflow API
+- [x] Signal workflow API
 - [ ] Get workflow DataObjects/SearchAttributes API
 - [x] Get workflow result API
 - [ ] Search workflow API

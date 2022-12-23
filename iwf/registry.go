@@ -5,14 +5,15 @@ import "github.com/iworkflowio/iwf-golang-sdk/gen/iwfidl"
 type Registry interface {
 	// AddWorkflow registers a workflow
 	AddWorkflow(workflow Workflow) error
-	// GetWorkflowType returns the workflow type that will be registered
-	GetWorkflowType(workflow Workflow) string
-	// GetAllWorkflowTypes returns all the workflow types that have been registered
-	GetAllWorkflowTypes() []string
+	// GetAllRegisteredWorkflowTypes returns all the workflow types that have been registered
+	GetAllRegisteredWorkflowTypes() []string
 
 	// below are all for internal implementation
-	// getWorkflowStateDef returns stateDef
 	getWorkflowStateDef(wfType string, id string) StateDef
+	getWorkflowSignalNameStore(wfType string) map[string]bool
+	getWorkflowInterStateChannelNameStore(wfType string) map[string]bool
+	getWorkflowDataObjectKeyStore(wfType string) map[string]bool
+	getSearchAttributeTypeStore(wfType string) map[string]iwfidl.SearchAttributeValueType
 }
 
 func NewRegistry() Registry {

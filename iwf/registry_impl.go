@@ -2,7 +2,6 @@ package iwf
 
 import (
 	"github.com/iworkflowio/iwf-golang-sdk/gen/iwfidl"
-	"reflect"
 )
 
 type registryImpl struct {
@@ -27,19 +26,7 @@ func (r *registryImpl) AddWorkflow(wf Workflow) error {
 	return r.registerWorkflowPersistenceSchema(wf)
 }
 
-// GetWorkflowType returns the workflow type that will be registered and used as IwfWorkflowType
-// if the workflow is from &myStruct{} under mywf package, the method returns "*mywf.myStruct"
-// the "*" is from pointer. If the instance is initiated as myStruct{}, then it returns "mywf.myStruct" without the "*"
-func (r *registryImpl) GetWorkflowType(wf Workflow) string {
-	wfType := wf.GetWorkflowType()
-	if wfType == "" {
-		rt := reflect.TypeOf(wf)
-		return rt.String()
-	}
-	return wfType
-}
-
-func (r *registryImpl) GetAllWorkflowTypes() []string {
+func (r *registryImpl) GetAllRegisteredWorkflowTypes() []string {
 	var res []string
 	for wfType := range r.workflowStore {
 		res = append(res, wfType)
@@ -51,8 +38,24 @@ func (r *registryImpl) getWorkflowStateDef(wfType string, id string) StateDef {
 	return r.workflowStateStore[wfType][id]
 }
 
+func (r *registryImpl) getWorkflowSignalNameStore(wfType string) map[string]bool {
+	return r.signalNameStore[wfType]
+}
+
+func (r *registryImpl) getWorkflowInterStateChannelNameStore(wfType string) map[string]bool {
+	return r.interStateChannelNameStore[wfType]
+}
+
+func (r *registryImpl) getWorkflowDataObjectKeyStore(wfType string) map[string]bool {
+	return r.dataObjectKeyStore[wfType]
+}
+
+func (r *registryImpl) getSearchAttributeTypeStore(wfType string) map[string]iwfidl.SearchAttributeValueType {
+	return r.searchAttributeTypeStore[wfType]
+}
+
 func (r *registryImpl) registerWorkflow(wf Workflow) error {
-	wfType := r.GetWorkflowType(wf)
+	wfType := GetDefaultWorkflowType(wf)
 	_, ok := r.workflowStore[wfType]
 	if ok {
 		return NewWorkflowDefinitionError("workflow type conflict: " + wfType)
@@ -62,7 +65,7 @@ func (r *registryImpl) registerWorkflow(wf Workflow) error {
 }
 
 func (r *registryImpl) registerWorkflowState(wf Workflow) error {
-	wfType := r.GetWorkflowType(wf)
+	wfType := GetDefaultWorkflowType(wf)
 	if len(wf.GetStates()) == 0 {
 		return NewWorkflowDefinitionFmtError("Workflow type %s must contain at least one workflow state", wfType)
 	}
@@ -75,7 +78,7 @@ func (r *registryImpl) registerWorkflowState(wf Workflow) error {
 }
 
 func (r *registryImpl) registerWorkflowCommunicationSchema(wf Workflow) error {
-	wfType := r.GetWorkflowType(wf)
+	wfType := GetDefaultWorkflowType(wf)
 	signalMap := map[string]bool{}
 	interStateChannel := map[string]bool{}
 	for _, methodDef := range wf.GetCommunicationSchema() {
@@ -93,7 +96,7 @@ func (r *registryImpl) registerWorkflowCommunicationSchema(wf Workflow) error {
 }
 
 func (r *registryImpl) registerWorkflowPersistenceSchema(wf Workflow) error {
-	wfType := r.GetWorkflowType(wf)
+	wfType := GetDefaultWorkflowType(wf)
 	dataObjectKeys := map[string]bool{}
 	searchAttributes := map[string]iwfidl.SearchAttributeValueType{}
 	for _, pers := range wf.GetPersistenceSchema() {
