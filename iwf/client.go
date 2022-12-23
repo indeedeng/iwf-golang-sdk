@@ -29,7 +29,7 @@ type Client interface {
 	// workflowId is required, workflowRunId is optional and default to current runId of the workflowId
 	GetComplexWorkflowResults(ctx context.Context, workflowId, workflowRunId string) ([]iwfidl.StateCompletionOutput, error)
 	// SignalWorkflow signals a workflow execution
-	// workflow must be either an instance of Workflow interface or the workflowType in string format
+	// workflow can be an instance of Workflow interface or the workflowType in string format, or just nil if used as UntypedClient(without registry)
 	// workflowId is required, workflowRunId is optional and default to current runId of the workflowId
 	// signalChannelName is required, signalValue is optional(for case of empty value)
 	SignalWorkflow(ctx context.Context, workflow interface{}, workflowId, workflowRunId, signalChannelName string, signalValue interface{}) error

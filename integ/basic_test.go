@@ -2,6 +2,9 @@ package integ
 
 import (
 	"context"
+	"github.com/iworkflowio/iwf-golang-sdk/gen/iwfidl"
+	"github.com/iworkflowio/iwf-golang-sdk/iwf"
+	"github.com/iworkflowio/iwf-golang-sdk/iwf/ptr"
 	"github.com/stretchr/testify/assert"
 	"strconv"
 	"testing"
@@ -9,8 +12,16 @@ import (
 )
 
 func TestBasicWorkflow(t *testing.T) {
-	wfId := "basic" + strconv.Itoa(int(time.Now().Unix()))
-	runId, err := client.StartWorkflow(context.Background(), &basicWorkflow{}, basicWorkflowState1Id, wfId, 10, 1, nil)
+	wfId := "TestBasicWorkflow" + strconv.Itoa(int(time.Now().Unix()))
+	runId, err := client.StartWorkflow(context.Background(), &basicWorkflow{}, basicWorkflowState1Id, wfId, 10, 1, &iwf.WorkflowOptions{
+		WorkflowIdReusePolicy: ptr.Any(iwfidl.REJECT_DUPLICATE),
+		WorkflowRetryPolicy: &iwfidl.RetryPolicy{
+			InitialIntervalSeconds: iwfidl.PtrInt32(10),
+			MaximumAttempts:        iwfidl.PtrInt32(3),
+			MaximumIntervalSeconds: iwfidl.PtrInt32(100),
+			BackoffCoefficient:     iwfidl.PtrFloat32(3),
+		},
+	})
 	assert.Nil(t, err)
 	assert.NotEmpty(t, runId)
 	var output int

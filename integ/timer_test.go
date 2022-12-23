@@ -9,7 +9,7 @@ import (
 )
 
 func TestTimerWorkflow(t *testing.T) {
-	wfId := "timer" + strconv.Itoa(int(time.Now().Unix()))
+	wfId := "TestTimerWorkflow" + strconv.Itoa(int(time.Now().Unix()))
 	runId, err := client.StartWorkflow(context.Background(), &timerWorkflow{}, timerWorkflowState1Id, wfId, 10, 5, nil)
 	assert.Nil(t, err)
 	assert.NotEmpty(t, runId)

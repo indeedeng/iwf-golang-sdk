@@ -10,6 +10,7 @@ func fromIdlCommandResults(results *iwfidl.CommandResults, encoder ObjectEncoder
 		return CommandResults{}, nil
 	}
 	var timerResults []TimerCommandResult
+	var signalResults []SignalCommandResult
 	for _, t := range results.TimerResults {
 		timerResult := TimerCommandResult{
 			CommandId: t.CommandId,
@@ -17,15 +18,26 @@ func fromIdlCommandResults(results *iwfidl.CommandResults, encoder ObjectEncoder
 		}
 		timerResults = append(timerResults, timerResult)
 	}
-	// TODO signal, interstatechannel
+	for _, t := range results.SignalResults {
+		signalResult := SignalCommandResult{
+			CommandId:   t.CommandId,
+			ChannelName: t.SignalChannelName,
+			Status:      t.SignalRequestStatus,
+			SignalValue: NewObject(t.SignalValue, encoder),
+		}
+		signalResults = append(signalResults, signalResult)
+	}
+	// TODO interstatechannel
 	return CommandResults{
-		Timers: timerResults,
+		Timers:  timerResults,
+		Signals: signalResults,
 	}, nil
 }
 
 func toIdlCommandRequest(commandRequest *CommandRequest) (*iwfidl.CommandRequest, error) {
-	// TODO signal, interstateChannel commands
+	// TODO interstateChannel commands
 	var timerCmds []iwfidl.TimerCommand
+	var signalCmds []iwfidl.SignalCommand
 	for _, t := range commandRequest.Commands {
 		if t.CommandType == CommandTypeTimer {
 			timerCmd := iwfidl.TimerCommand{
@@ -34,6 +46,13 @@ func toIdlCommandRequest(commandRequest *CommandRequest) (*iwfidl.CommandRequest
 			}
 			timerCmds = append(timerCmds, timerCmd)
 		}
+		if t.CommandType == CommandTypeSignalChannel {
+			signalCmd := iwfidl.SignalCommand{
+				CommandId:         t.CommandId,
+				SignalChannelName: t.SignalCommand.ChannelName,
+			}
+			signalCmds = append(signalCmds, signalCmd)
+		}
 	}
 
 	idlCmdReq := &iwfidl.CommandRequest{
@@ -41,6 +60,9 @@ func toIdlCommandRequest(commandRequest *CommandRequest) (*iwfidl.CommandRequest
 	}
 	if len(timerCmds) > 0 {
 		idlCmdReq.TimerCommands = timerCmds
+	}
+	if len(signalCmds) > 0 {
+		idlCmdReq.SignalCommands = signalCmds
 	}
 	return idlCmdReq, nil
 }

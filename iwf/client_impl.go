@@ -14,14 +14,9 @@ type clientImpl struct {
 }
 
 func (c *clientImpl) StartWorkflow(ctx context.Context, workflow interface{}, startStateId, workflowId string, timeoutSecs int32, input interface{}, options *WorkflowOptions) (string, error) {
-	var wfType string
-	wfType, ok := workflow.(string)
-	if !ok {
-		wf, ok := workflow.(Workflow)
-		if !ok {
-			return "", NewWorkflowDefinitionError("workflow parameter must be either iwf.Workflow instance, or a string format of workflow type")
-		}
-		wfType = c.registry.GetWorkflowType(wf)
+	wfType, err := getWorkflowType(workflow)
+	if err != nil {
+		return "", err
 	}
 	if c.registry != nil {
 		stateDef := c.registry.getWorkflowStateDef(wfType, startStateId)
@@ -31,7 +26,6 @@ func (c *clientImpl) StartWorkflow(ctx context.Context, workflow interface{}, st
 	}
 
 	var encodedInput *iwfidl.EncodedObject
-	var err error
 	if input != nil {
 		encodedInput, err = c.options.ObjectEncoder.Encode(input)
 		if err != nil {
@@ -67,9 +61,32 @@ func (c *clientImpl) StartWorkflow(ctx context.Context, workflow interface{}, st
 	return resp.GetWorkflowRunId(), nil
 }
 
+func getWorkflowType(workflow interface{}) (string, error) {
+	var wfType string
+	wfType, ok := workflow.(string)
+	if ok {
+		return wfType, nil
+	}
+
+	wf, ok := workflow.(Workflow)
+	if !ok {
+		return "", NewWorkflowDefinitionError("workflow parameter must be either iwf.Workflow instance, or a string format of workflow type")
+	}
+	return GetDefaultWorkflowType(wf), nil
+
+}
+
 func (c *clientImpl) StopWorkflow(ctx context.Context, workflowId, workflowRunId string, options *WorkflowStopOptions) error {
-	//TODO implement me
-	panic("implement me")
+	reqPost := c.apiClient.DefaultApi.ApiV1WorkflowStopPost(ctx)
+	req := &iwfidl.WorkflowStopRequest{
+		WorkflowId:    workflowId,
+		WorkflowRunId: &workflowRunId,
+	}
+	if options != nil {
+		req.StopType = &options.StopType
+	}
+	httpResp, err := reqPost.WorkflowStopRequest(*req).Execute()
+	return processError(err, httpResp)
 }
 
 func (c *clientImpl) GetSimpleWorkflowResult(ctx context.Context, workflowId, workflowRunId string, resultPtr interface{}) error {
@@ -103,8 +120,28 @@ func (c *clientImpl) GetComplexWorkflowResults(ctx context.Context, workflowId, 
 }
 
 func (c *clientImpl) SignalWorkflow(ctx context.Context, workflow interface{}, workflowId, workflowRunId, signalChannelName string, signalValue interface{}) error {
-	//TODO implement me
-	panic("implement me")
+	if c.registry != nil {
+		wfType, err := getWorkflowType(workflow)
+		if err != nil {
+			return err
+		}
+		signalNameStore := c.registry.getWorkflowSignalNameStore(wfType)
+		if !signalNameStore[signalChannelName] {
+			return NewWorkflowDefinitionFmtError("signal channel %v is not defined in workflow type %v", signalChannelName, wfType)
+		}
+	}
+	value, err := c.options.ObjectEncoder.Encode(signalValue)
+	if err != nil {
+		return err
+	}
+	req := c.apiClient.DefaultApi.ApiV1WorkflowSignalPost(ctx)
+	httpResp, err := req.WorkflowSignalRequest(iwfidl.WorkflowSignalRequest{
+		WorkflowId:        workflowId,
+		WorkflowRunId:     &workflowRunId,
+		SignalChannelName: signalChannelName,
+		SignalValue:       value,
+	}).Execute()
+	return processError(err, httpResp)
 }
 
 func (c *clientImpl) ResetWorkflow(ctx context.Context, workflowId, workflowRunId string, options *ResetWorkflowTypeAndOptions) (string, error) {
