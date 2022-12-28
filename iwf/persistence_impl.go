@@ -65,6 +65,8 @@ func newPersistence(
 			saCurrentDoubleValue[sa.GetKey()] = sa.GetDoubleValue()
 		case iwfidl.KEYWORD_ARRAY:
 			saCurrentStrArrValue[sa.GetKey()] = sa.GetStringArrayValue()
+		case iwfidl.INT:
+			saCurrentIntValue[sa.GetKey()] = sa.GetIntegerValue()
 		default:
 			return nil, newInternalError("invalid search attribute type %v for key %v ", sa.GetValueType(), sa.GetKey())
 		}

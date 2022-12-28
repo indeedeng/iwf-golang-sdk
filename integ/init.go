@@ -14,6 +14,7 @@ func init() {
 		&timerWorkflow{},
 		&signalWorkflow{},
 		&interStateWorkflow{},
+		&persistenceWorkflow{},
 	)
 	if err != nil {
 		panic(err)
