@@ -2,6 +2,7 @@ package iwf
 
 import (
 	"context"
+	"fmt"
 	"github.com/iworkflowio/iwf-golang-sdk/gen/iwfidl"
 )
 
@@ -16,6 +17,19 @@ func (c *clientImpl) StartWorkflow(ctx context.Context, workflow Workflow, start
 	stateDef := c.registry.getWorkflowStateDef(wfType, startStateId)
 	if !stateDef.CanStartWorkflow {
 		return "", NewWorkflowDefinitionFmtError("cannot start workflow %v with start state %v", wfType, startStateId)
+	}
+	if options != nil {
+		for _, sa := range options.InitialSearchAttributes {
+			typeMap := c.registry.getSearchAttributeTypeStore(wfType)
+			registeredType, ok := typeMap[sa.GetKey()]
+			if !ok || registeredType != sa.GetValueType() {
+				return "", fmt.Errorf("key %s is not defined as search attribute value type %s", sa.GetKey(), registeredType)
+			}
+			v, _ := getSearchAttributeValue(sa)
+			if v == nil {
+				return "", fmt.Errorf("search attribute value is not set correctly for key %s with value type %s", sa.GetKey(), sa.GetValueType())
+			}
+		}
 	}
 	return c.UnregisteredClient.StartWorkflow(ctx, wfType, startStateId, workflowId, timeoutSecs, input, options)
 }
