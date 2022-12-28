@@ -17,7 +17,7 @@ See [contribution guide](CONTRIBUTION.md)
 - [x] DataObjectRW
 - [x] StateLocal
 - [x] Signal workflow API
-- [ ] Get workflow DataObjects/SearchAttributes API
+- [x] Get workflow DataObjects/SearchAttributes API
 - [x] Get workflow result API
 - [x] Search workflow API
 - [x] Describe workflow API
