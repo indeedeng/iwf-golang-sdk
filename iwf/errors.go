@@ -41,6 +41,12 @@ func NewInternalServiceError(message string, httpResponse http.Response) error {
 	}
 }
 
+func newInternalError(format string, args ...interface{}) error {
+	return &InternalServiceError{
+		Message: fmt.Sprintf(format, args...),
+	}
+}
+
 func (i InternalServiceError) Error() string {
 	return fmt.Sprintf("error message:%v, statusCode: %v", i.Message, i.Status)
 }
