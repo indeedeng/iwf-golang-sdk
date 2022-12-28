@@ -11,7 +11,7 @@ type ResetWorkflowTypeAndOptions struct {
 	// Reason is required
 	Reason string
 	// HistoryEventId is required for iwfidl.HISTORY_EVENT_ID resetType
-	HistoryEventId *int
+	HistoryEventId *int32
 	// HistoryEventTime is required for iwfidl.HISTORY_EVENT_TIME resetType
 	HistoryEventTime *time.Time
 	//  StateId is required for iwfidl.STATE_ID resetType
@@ -29,7 +29,7 @@ func ResetToBeginning(reason string) ResetWorkflowTypeAndOptions {
 	}
 }
 
-func ResetToHistoryEventId(historyEventId int, reason string) ResetWorkflowTypeAndOptions {
+func ResetToHistoryEventId(historyEventId int32, reason string) ResetWorkflowTypeAndOptions {
 	return ResetWorkflowTypeAndOptions{
 		ResetType:      iwfidl.HISTORY_EVENT_ID,
 		Reason:         reason,

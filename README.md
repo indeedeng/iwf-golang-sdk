@@ -21,12 +21,12 @@ See [contribution guide](CONTRIBUTION.md)
 - [x] Get workflow result API
 - [ ] Search workflow API
 - [x] Stop workflow API
-- [ ] Reset workflow API
+- [x] Reset workflow API
 - [x] Command type(s) for inter-state communications (e.g. internal channel)
 - [X] AnyCommandCompleted Decider trigger type
 - [x] More workflow start options: IdReusePolicy, cron schedule, retry
 - [x] StateOption: Start/Decide API timeout and retry policy
-- [ ] Reset workflow by stateId/StateExecutionId
+- [x] Reset workflow by stateId/StateExecutionId
 - [ ] More workflow start options: initial search attributes
 
 ## Future
