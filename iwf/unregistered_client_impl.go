@@ -73,24 +73,56 @@ func (u *unregisteredClientImpl) SignalWorkflow(ctx context.Context, workflowId,
 	return u.processError(err, httpResp)
 }
 
-func (u *unregisteredClientImpl) GetWorkflowDataObjects(ctx context.Context, workflowId, workflowRunId string, keys []string) (map[string]iwfidl.EncodedObject, error) {
-	//TODO implement me
-	panic("implement me")
+func (u *unregisteredClientImpl) GetWorkflowDataObjects(ctx context.Context, workflowId, workflowRunId string, keys []string) (map[string]Object, error) {
+	if len(keys) == 0 {
+		return nil, fmt.Errorf("must specify keys to return, use GetAllWorkflowDataObjects if intended to get all keys")
+	}
+	return u.doGetWorkflowDataObjects(ctx, workflowId, workflowRunId, keys)
 }
 
-func (u *unregisteredClientImpl) GetAllWorkflowDataObjects(ctx context.Context, workflowId, workflowRunId string) (map[string]iwfidl.EncodedObject, error) {
-	//TODO implement me
-	panic("implement me")
+func (u *unregisteredClientImpl) GetAllWorkflowDataObjects(ctx context.Context, workflowId, workflowRunId string) (map[string]Object, error) {
+	return u.doGetWorkflowDataObjects(ctx, workflowId, workflowRunId, nil)
 }
 
-func (u *unregisteredClientImpl) GetWorkflowSearchAttributes(ctx context.Context, workflowId, workflowRunId string) (map[string]iwfidl.SearchAttribute, error) {
-	//TODO implement me
-	panic("implement me")
+func (u *unregisteredClientImpl) doGetWorkflowDataObjects(ctx context.Context, workflowId, workflowRunId string, keys []string) (map[string]Object, error) {
+	reqPost := u.apiClient.DefaultApi.ApiV1WorkflowDataobjectsGetPost(ctx)
+	resp, httpResp, err := reqPost.WorkflowGetDataObjectsRequest(iwfidl.WorkflowGetDataObjectsRequest{
+		WorkflowId:    workflowId,
+		WorkflowRunId: iwfidl.PtrString(workflowRunId),
+		Keys:          keys,
+	}).Execute()
+	if err := u.processError(err, httpResp); err != nil {
+		return nil, err
+	}
+	out := make(map[string]Object, len(resp.Objects))
+	for _, kv := range resp.Objects {
+		out[kv.GetKey()] = NewObject(ptr.Any(kv.GetValue()), u.options.ObjectEncoder)
+	}
+	return out, nil
 }
 
-func (u *unregisteredClientImpl) GetAllWorkflowSearchAttributes(ctx context.Context, workflowId, workflowRunId string) (map[string]iwfidl.SearchAttribute, error) {
-	//TODO implement me
-	panic("implement me")
+func (u *unregisteredClientImpl) GetWorkflowSearchAttributes(ctx context.Context, workflowId, workflowRunId string, keys []iwfidl.SearchAttributeKeyAndType) (map[string]iwfidl.SearchAttribute, error) {
+	if len(keys) == 0 {
+		return nil, fmt.Errorf("must specify keys to return, use GetAllWorkflowSearchAttributes if intended to get all keys")
+	}
+	return u.doGetWorkflowSearchAttributes(ctx, workflowId, workflowRunId, keys)
+}
+
+func (u *unregisteredClientImpl) doGetWorkflowSearchAttributes(ctx context.Context, workflowId, workflowRunId string, keys []iwfidl.SearchAttributeKeyAndType) (map[string]iwfidl.SearchAttribute, error) {
+	reqPost := u.apiClient.DefaultApi.ApiV1WorkflowSearchattributesGetPost(ctx)
+	resp, httpResp, err := reqPost.WorkflowGetSearchAttributesRequest(iwfidl.WorkflowGetSearchAttributesRequest{
+		WorkflowId:    workflowId,
+		WorkflowRunId: iwfidl.PtrString(workflowRunId),
+		Keys:          keys,
+	}).Execute()
+	if err := u.processError(err, httpResp); err != nil {
+		return nil, err
+	}
+	out := make(map[string]iwfidl.SearchAttribute, len(resp.SearchAttributes))
+	for _, kv := range resp.SearchAttributes {
+		out[kv.GetKey()] = kv
+	}
+	return out, nil
 }
 
 func (u *unregisteredClientImpl) StopWorkflow(ctx context.Context, workflowId, workflowRunId string, options *WorkflowStopOptions) error {

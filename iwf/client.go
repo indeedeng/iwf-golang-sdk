@@ -23,16 +23,11 @@ type Client interface {
 	// GetWorkflowDataObjects returns the data objects of a workflow execution
 	// workflowId is required, workflowRunId is optional and default to current runId of the workflowId
 	// keys is required to be non-empty. If you intend to return all data objects, use GetAllWorkflowDataObjects API instead
-	// It returns data objects in format of iwfidl.EncodedObject and user code have to use ObjectEncoder to deserialize
-	GetWorkflowDataObjects(ctx context.Context, workflow Workflow, workflowId, workflowRunId string, keys []string) (map[string]iwfidl.EncodedObject, error)
-	// GetAllWorkflowDataObjects returns all the data objects of a workflow execution
-	// workflowId is required, workflowRunId is optional and default to current runId of the workflowId
-	// It returns data objects in format of iwfidl.EncodedObject and user code have to use ObjectEncoder to deserialize
-	GetAllWorkflowDataObjects(ctx context.Context, workflow Workflow, workflowId, workflowRunId string) (map[string]iwfidl.EncodedObject, error)
+	GetWorkflowDataObjects(ctx context.Context, workflow Workflow, workflowId, workflowRunId string, keys []string) (map[string]Object, error)
 	// GetWorkflowSearchAttributes returns search attributes of a workflow execution
 	// workflowId is required, workflowRunId is optional and default to current runId of the workflowId
-	// keys is required to be non-empty. If you intend to return all data objects, use GetAllWorkflowDataObjects API instead
-	GetWorkflowSearchAttributes(ctx context.Context, workflow Workflow, workflowId, workflowRunId string) (map[string]interface{}, error)
+	// keys is required to be non-empty. If you intend to return all data objects, use GetAllWorkflowSearchAttributes API instead
+	GetWorkflowSearchAttributes(ctx context.Context, workflow Workflow, workflowId, workflowRunId string, keys []string) (map[string]interface{}, error)
 	// GetAllWorkflowSearchAttributes returns all search attributes of a workflow execution
 	// workflowId is required, workflowRunId is optional and default to current runId of the workflowId
 	GetAllWorkflowSearchAttributes(ctx context.Context, workflow Workflow, workflowId, workflowRunId string) (map[string]interface{}, error)
@@ -66,6 +61,9 @@ type clientCommon interface {
 	//  https://cadenceworkflow.io/docs/concepts/search-workflows/
 	//  https://docs.temporal.io/concepts/what-is-a-search-attribute/
 	SearchWorkflow(ctx context.Context, request iwfidl.WorkflowSearchRequest) (*iwfidl.WorkflowSearchResponse, error)
+	// GetAllWorkflowDataObjects returns all the data objects of a workflow execution
+	// workflowId is required, workflowRunId is optional and default to current runId of the workflowId
+	GetAllWorkflowDataObjects(ctx context.Context, workflowId, workflowRunId string) (map[string]Object, error)
 }
 
 // UnregisteredClient is a client without workflow registry
@@ -86,19 +84,11 @@ type UnregisteredClient interface {
 	// GetWorkflowDataObjects returns the data objects of a workflow execution
 	// workflowId is required, workflowRunId is optional and default to current runId of the workflowId
 	// keys is required to be non-empty. If you intend to return all data objects, use GetAllWorkflowDataObjects API instead
-	// It returns data objects in format of iwfidl.EncodedObject and user code have to use ObjectEncoder to deserialize
-	GetWorkflowDataObjects(ctx context.Context, workflowId, workflowRunId string, keys []string) (map[string]iwfidl.EncodedObject, error)
-	// GetAllWorkflowDataObjects returns all the data objects of a workflow execution
-	// workflowId is required, workflowRunId is optional and default to current runId of the workflowId
-	// It returns data objects in format of iwfidl.EncodedObject and user code have to use ObjectEncoder to deserialize
-	GetAllWorkflowDataObjects(ctx context.Context, workflowId, workflowRunId string) (map[string]iwfidl.EncodedObject, error)
+	GetWorkflowDataObjects(ctx context.Context, workflowId, workflowRunId string, keys []string) (map[string]Object, error)
 	// GetWorkflowSearchAttributes returns search attributes of a workflow execution
 	// workflowId is required, workflowRunId is optional and default to current runId of the workflowId
-	// keys is required to be non-empty. If you intend to return all data objects, use GetAllWorkflowDataObjects API instead
-	GetWorkflowSearchAttributes(ctx context.Context, workflowId, workflowRunId string) (map[string]iwfidl.SearchAttribute, error)
-	// GetAllWorkflowSearchAttributes returns all search attributes of a workflow execution
-	// workflowId is required, workflowRunId is optional and default to current runId of the workflowId
-	GetAllWorkflowSearchAttributes(ctx context.Context, workflowId, workflowRunId string) (map[string]iwfidl.SearchAttribute, error)
+	// keys is required to be non-empty. If you intend to return all data objects, use GetAllWorkflowSearchAttributes API instead
+	GetWorkflowSearchAttributes(ctx context.Context, workflowId, workflowRunId string, keys []iwfidl.SearchAttributeKeyAndType) (map[string]iwfidl.SearchAttribute, error)
 }
 
 // NewUnregisteredClient returns a UnregisteredClient

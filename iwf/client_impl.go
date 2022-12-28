@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/iworkflowio/iwf-golang-sdk/gen/iwfidl"
+	"github.com/iworkflowio/iwf-golang-sdk/iwf/ptr"
 )
 
 type clientImpl struct {
@@ -43,23 +44,50 @@ func (c *clientImpl) SignalWorkflow(ctx context.Context, workflow Workflow, work
 	return c.UnregisteredClient.SignalWorkflow(ctx, workflowId, workflowRunId, signalChannelName, signalValue)
 }
 
-func (c *clientImpl) GetWorkflowDataObjects(ctx context.Context, workflow Workflow, workflowId, workflowRunId string, keys []string) (map[string]iwfidl.EncodedObject, error) {
-	//TODO implement me
-	panic("implement me")
+func (c *clientImpl) GetWorkflowDataObjects(ctx context.Context, workflow Workflow, workflowId, workflowRunId string, keys []string) (map[string]Object, error) {
+	wfType := GetDefaultWorkflowType(workflow)
+	doTypeMap := c.registry.getWorkflowDataObjectKeyStore(wfType)
+	for _, k := range keys {
+		_, ok := doTypeMap[k]
+		if !ok {
+			return nil, fmt.Errorf("data object type %v is not registered", k)
+		}
+	}
+	return c.UnregisteredClient.GetWorkflowDataObjects(ctx, workflowId, workflowRunId, keys)
 }
 
-func (c *clientImpl) GetAllWorkflowDataObjects(ctx context.Context, workflow Workflow, workflowId, workflowRunId string) (map[string]iwfidl.EncodedObject, error) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (c *clientImpl) GetWorkflowSearchAttributes(ctx context.Context, workflow Workflow, workflowId, workflowRunId string) (map[string]interface{}, error) {
-	//TODO implement me
-	panic("implement me")
+func (c *clientImpl) GetWorkflowSearchAttributes(ctx context.Context, workflow Workflow, workflowId, workflowRunId string, keys []string) (map[string]interface{}, error) {
+	wfType := GetDefaultWorkflowType(workflow)
+	allTypes := c.registry.getSearchAttributeTypeStore(wfType)
+	var keyAndTypes []iwfidl.SearchAttributeKeyAndType
+	for _, k := range keys {
+		keyAndTypes = append(keyAndTypes, iwfidl.SearchAttributeKeyAndType{
+			Key:       &k,
+			ValueType: ptr.Any(allTypes[k]),
+		})
+	}
+	vals, err := c.UnregisteredClient.GetWorkflowSearchAttributes(ctx, workflowId, workflowRunId, keyAndTypes)
+	if err != nil {
+		return nil, err
+	}
+	out := make(map[string]interface{}, len(vals))
+	for _, val := range vals {
+		v, err := getSearchAttributeValue(val)
+		if err != nil {
+			return nil, err
+		}
+		out[val.GetKey()] = v
+	}
+	return out, nil
 }
 
 func (c *clientImpl) GetAllWorkflowSearchAttributes(ctx context.Context, workflow Workflow, workflowId, workflowRunId string) (map[string]interface{}, error) {
-	//TODO implement me
-	panic("implement me")
+	wfType := GetDefaultWorkflowType(workflow)
+	allTypes := c.registry.getSearchAttributeTypeStore(wfType)
+	var keys []string
+	for k := range allTypes {
+		keys = append(keys, k)
+	}
+	return c.GetWorkflowSearchAttributes(ctx, workflow, workflowId, workflowRunId, keys)
 }
 
