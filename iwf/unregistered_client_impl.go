@@ -166,13 +166,28 @@ func (u *unregisteredClientImpl) ResetWorkflow(ctx context.Context, workflowId, 
 }
 
 func (u *unregisteredClientImpl) DescribeWorkflow(ctx context.Context, workflowId, workflowRunId string) (*WorkflowInfo, error) {
-	//TODO implement me
-	panic("implement me")
+	reqPost := u.apiClient.DefaultApi.ApiV1WorkflowGetPost(ctx)
+	resp, httpResp, err := reqPost.WorkflowGetRequest(iwfidl.WorkflowGetRequest{
+		WorkflowId:    workflowId,
+		WorkflowRunId: iwfidl.PtrString(workflowRunId),
+		NeedsResults:  ptr.Any(false),
+	}).Execute()
+	if err := u.processError(err, httpResp); err != nil {
+		return nil, err
+	}
+	return &WorkflowInfo{
+		Status:       resp.WorkflowStatus,
+		CurrentRunId: resp.WorkflowRunId,
+	}, nil
 }
 
 func (u *unregisteredClientImpl) SearchWorkflow(ctx context.Context, request iwfidl.WorkflowSearchRequest) (*iwfidl.WorkflowSearchResponse, error) {
-	//TODO implement me
-	panic("implement me")
+	reqPost := u.apiClient.DefaultApi.ApiV1WorkflowSearchPost(ctx)
+	resp, httpResp, err := reqPost.WorkflowSearchRequest(request).Execute()
+	if err := u.processError(err, httpResp); err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 func (u *unregisteredClientImpl) processError(err error, httpResp *http.Response) error {

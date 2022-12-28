@@ -19,7 +19,8 @@ See [contribution guide](CONTRIBUTION.md)
 - [x] Signal workflow API
 - [ ] Get workflow DataObjects/SearchAttributes API
 - [x] Get workflow result API
-- [ ] Search workflow API
+- [x] Search workflow API
+- [x] Describe workflow API
 - [x] Stop workflow API
 - [x] Reset workflow API
 - [x] Command type(s) for inter-state communications (e.g. internal channel)
