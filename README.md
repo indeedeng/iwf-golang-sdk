@@ -13,9 +13,9 @@ See [contribution guide](CONTRIBUTION.md)
 - [x] Parallel execution of multiple states
 - [x] Timer command
 - [x] Signal command
-- [ ] SearchAttributeRW
-- [ ] DataObjectRW
-- [ ] StateLocal
+- [x] SearchAttributeRW
+- [x] DataObjectRW
+- [x] StateLocal
 - [x] Signal workflow API
 - [ ] Get workflow DataObjects/SearchAttributes API
 - [x] Get workflow result API

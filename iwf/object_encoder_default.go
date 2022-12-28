@@ -31,7 +31,7 @@ func (b *builtinJsonEncoder) Encode(obj interface{}) (*iwfidl.EncodedObject, err
 }
 
 func (b *builtinJsonEncoder) Decode(encodedObj *iwfidl.EncodedObject, resultPtr interface{}) error {
-	if encodedObj == nil || resultPtr == nil {
+	if encodedObj == nil || resultPtr == nil || encodedObj.GetData() == "" {
 		return nil
 	}
 	return json.Unmarshal([]byte(encodedObj.GetData()), resultPtr)
