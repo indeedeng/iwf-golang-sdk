@@ -2,6 +2,7 @@ package iwf
 
 import (
 	"context"
+	"fmt"
 	"github.com/iworkflowio/iwf-golang-sdk/gen/iwfidl"
 	"github.com/iworkflowio/iwf-golang-sdk/iwf/ptr"
 	"net/http"
@@ -25,11 +26,18 @@ func (u *unregisteredClientImpl) StartWorkflow(ctx context.Context, workflowType
 	var stateOptions *iwfidl.WorkflowStateOptions
 	var startOptions *iwfidl.WorkflowStartOptions
 	if options != nil {
+		for _, sa := range options.InitialSearchAttributes {
+			val, _ := getSearchAttributeValue(sa)
+			if val == nil {
+				return "", fmt.Errorf("search attribute value is not set correctly for key %s with value type %s", sa.GetKey(), sa.GetValueType())
+			}
+		}
 		stateOptions = options.StartStateOptions
 		startOptions = &iwfidl.WorkflowStartOptions{
 			WorkflowIDReusePolicy: options.WorkflowIdReusePolicy,
 			CronSchedule:          options.WorkflowCronSchedule,
 			RetryPolicy:           options.WorkflowRetryPolicy,
+			SearchAttributes:      options.InitialSearchAttributes,
 		}
 	}
 

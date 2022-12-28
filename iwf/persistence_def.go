@@ -1,6 +1,10 @@
 package iwf
 
-import "github.com/iworkflowio/iwf-golang-sdk/gen/iwfidl"
+import (
+	"fmt"
+	"github.com/iworkflowio/iwf-golang-sdk/gen/iwfidl"
+	"time"
+)
 
 const DateTimeFormat = "2006-01-02T15:04:05-07:00"
 
@@ -31,5 +35,26 @@ func NewSearchAttributeDef(key string, saType iwfidl.SearchAttributeValueType) P
 		Key:                 key,
 		FieldType:           PersistenceFieldTypeSearchAttribute,
 		SearchAttributeType: &saType,
+	}
+}
+
+func getSearchAttributeValue(sa iwfidl.SearchAttribute) (interface{}, error) {
+	switch *sa.ValueType {
+	case iwfidl.TEXT, iwfidl.KEYWORD:
+		return *sa.StringValue, nil
+	case iwfidl.KEYWORD_ARRAY:
+		return sa.StringArrayValue, nil
+	case iwfidl.DOUBLE:
+		return *sa.DoubleValue, nil
+	case iwfidl.BOOL:
+		return *sa.BoolValue, nil
+	case iwfidl.DATETIME:
+		t, err := time.Parse(DateTimeFormat, *sa.StringValue)
+		if err != nil {
+			return nil, err
+		}
+		return t, nil
+	default:
+		return nil, fmt.Errorf("unsupported search attribute type %v", sa.GetValueType())
 	}
 }

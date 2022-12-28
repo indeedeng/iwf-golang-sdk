@@ -27,7 +27,7 @@ See [contribution guide](CONTRIBUTION.md)
 - [x] More workflow start options: IdReusePolicy, cron schedule, retry
 - [x] StateOption: Start/Decide API timeout and retry policy
 - [x] Reset workflow by stateId/StateExecutionId
-- [ ] More workflow start options: initial search attributes
+- [x] More workflow start options: initial search attributes
 
 ## Future
 - [ ] Decider trigger type: AnyCommandClosed
