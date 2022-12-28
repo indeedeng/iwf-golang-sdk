@@ -250,18 +250,64 @@ func (p *persistenceImpl) RecordEvent(key string, value interface{}) error {
 }
 
 func (p *persistenceImpl) getToReturn() (
-	map[string]iwfidl.EncodedObject,
-	map[string]iwfidl.EncodedObject,
-	map[string]int64,
-	map[string]string,
-	map[string]float64,
-	map[string]bool,
-	map[string][]string) {
-	return p.dataObjectsToReturn,
-		p.stateLocalToReturn,
-		p.saIntToReturn,
-		p.saStringToReturn,
-		p.saDoubleToReturn,
-		p.saBoolToReturn,
-		p.saStrArrToReturn
+	dataObjectsToReturn []iwfidl.KeyValue,
+	stateLocalToReturn []iwfidl.KeyValue,
+	recordEvents []iwfidl.KeyValue,
+	searchAttributes []iwfidl.SearchAttribute) {
+	for k, v := range p.dataObjectsToReturn {
+		dataObjectsToReturn = append(dataObjectsToReturn, iwfidl.KeyValue{
+			Key:   &k,
+			Value: &v,
+		})
+	}
+
+	for k, v := range p.stateLocalToReturn {
+		stateLocalToReturn = append(stateLocalToReturn, iwfidl.KeyValue{
+			Key:   &k,
+			Value: &v,
+		})
+	}
+
+	for k, v := range p.recordedEvents {
+		recordEvents = append(recordEvents, iwfidl.KeyValue{
+			Key:   &k,
+			Value: &v,
+		})
+	}
+	for k, sa := range p.saIntToReturn {
+		searchAttributes = append(searchAttributes, iwfidl.SearchAttribute{
+			Key:          &k,
+			ValueType:    ptr.Any(p.saKeyToType[k]),
+			IntegerValue: &sa,
+		})
+	}
+	for k, sa := range p.saStringToReturn {
+		searchAttributes = append(searchAttributes, iwfidl.SearchAttribute{
+			Key:         &k,
+			ValueType:   ptr.Any(p.saKeyToType[k]),
+			StringValue: &sa,
+		})
+	}
+	for k, sa := range p.saDoubleToReturn {
+		searchAttributes = append(searchAttributes, iwfidl.SearchAttribute{
+			Key:         &k,
+			ValueType:   ptr.Any(p.saKeyToType[k]),
+			DoubleValue: &sa,
+		})
+	}
+	for k, sa := range p.saBoolToReturn {
+		searchAttributes = append(searchAttributes, iwfidl.SearchAttribute{
+			Key:       &k,
+			ValueType: ptr.Any(p.saKeyToType[k]),
+			BoolValue: &sa,
+		})
+	}
+	for k, sa := range p.saStrArrToReturn {
+		searchAttributes = append(searchAttributes, iwfidl.SearchAttribute{
+			Key:              &k,
+			ValueType:        ptr.Any(p.saKeyToType[k]),
+			StringArrayValue: sa,
+		})
+	}
+	return
 }

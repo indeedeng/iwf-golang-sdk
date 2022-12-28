@@ -13,14 +13,18 @@ type workerServiceImpl struct {
 func (w *workerServiceImpl) HandleWorkflowStateStart(ctx context.Context, request iwfidl.WorkflowStateStartRequest) (resp *iwfidl.WorkflowStateStartResponse, retErr error) {
 	defer func() { captureStateExecutionError(recover(), &retErr) }()
 
-	stateDef := w.registry.getWorkflowStateDef(request.GetWorkflowType(), request.GetWorkflowStateId())
+	wfType := request.GetWorkflowType()
+	stateDef := w.registry.getWorkflowStateDef(wfType, request.GetWorkflowStateId())
 	input := NewObject(request.StateInput, w.options.ObjectEncoder)
 	reqContext := request.GetContext()
 	wfCtx := newWorkflowContext(ctx, reqContext.GetWorkflowId(), reqContext.GetWorkflowRunId(), reqContext.GetStateExecutionId(), reqContext.GetWorkflowStartedTimestamp())
 
-	// TODO persistence
-	comm := newCommunication(w.options.ObjectEncoder, w.registry.getWorkflowInterStateChannelNameStore(request.GetWorkflowType()))
-	commandRequest, err := stateDef.State.Start(wfCtx, input, nil, comm)
+	pers, err := newPersistence(w.options.ObjectEncoder, w.registry.getWorkflowDataObjectKeyStore(wfType), w.registry.getSearchAttributeTypeStore(wfType), request.DataObjects, request.SearchAttributes, nil)
+	if err != nil {
+		return nil, err
+	}
+	comm := newCommunication(w.options.ObjectEncoder, w.registry.getWorkflowInterStateChannelNameStore(wfType))
+	commandRequest, err := stateDef.State.Start(wfCtx, input, pers, comm)
 	if err != nil {
 		return nil, err
 	}
@@ -40,6 +44,19 @@ func (w *workerServiceImpl) HandleWorkflowStateStart(ctx context.Context, reques
 	}
 	if len(publishings) > 0 {
 		resp.PublishToInterStateChannel = publishings
+	}
+	dataObjectsToReturn, stateLocalToReturn, recordedEvents, upsertSearchAttributes := pers.getToReturn()
+	if len(dataObjectsToReturn) > 0 {
+		resp.UpsertDataObjects = dataObjectsToReturn
+	}
+	if len(stateLocalToReturn) > 0 {
+		resp.UpsertStateLocals = stateLocalToReturn
+	}
+	if len(recordedEvents) > 0 {
+		resp.RecordEvents = recordedEvents
+	}
+	if len(upsertSearchAttributes) > 0 {
+		resp.UpsertSearchAttributes = upsertSearchAttributes
 	}
 	return resp, nil
 }
@@ -75,7 +92,8 @@ func canNotRequestAndPublishTheSameInterStateChannel(channelToPublish map[string
 func (w *workerServiceImpl) HandleWorkflowStateDecide(ctx context.Context, request iwfidl.WorkflowStateDecideRequest) (resp *iwfidl.WorkflowStateDecideResponse, retErr error) {
 	defer func() { captureStateExecutionError(recover(), &retErr) }()
 
-	stateDef := w.registry.getWorkflowStateDef(request.GetWorkflowType(), request.GetWorkflowStateId())
+	wfType := request.GetWorkflowType()
+	stateDef := w.registry.getWorkflowStateDef(wfType, request.GetWorkflowStateId())
 	input := NewObject(request.StateInput, w.options.ObjectEncoder)
 	reqContext := request.GetContext()
 	wfCtx := newWorkflowContext(ctx, reqContext.GetWorkflowId(), reqContext.GetWorkflowRunId(), reqContext.GetStateExecutionId(), reqContext.GetWorkflowStartedTimestamp())
@@ -84,19 +102,35 @@ func (w *workerServiceImpl) HandleWorkflowStateDecide(ctx context.Context, reque
 	if err != nil {
 		return nil, err
 	}
-	// TODO persistence
-	comm := newCommunication(w.options.ObjectEncoder, w.registry.getWorkflowInterStateChannelNameStore(request.GetWorkflowType()))
-	decision, err := stateDef.State.Decide(wfCtx, input, commandResults, nil, comm)
+	pers, err := newPersistence(w.options.ObjectEncoder, w.registry.getWorkflowDataObjectKeyStore(wfType), w.registry.getSearchAttributeTypeStore(wfType), request.DataObjects, request.SearchAttributes, request.GetStateLocals())
 	if err != nil {
 		return nil, err
 	}
-	idlDecision, err := toIdlDecision(decision, request.GetWorkflowType(), w.registry, w.options.ObjectEncoder)
+	comm := newCommunication(w.options.ObjectEncoder, w.registry.getWorkflowInterStateChannelNameStore(wfType))
+	decision, err := stateDef.State.Decide(wfCtx, input, commandResults, pers, comm)
+	if err != nil {
+		return nil, err
+	}
+	idlDecision, err := toIdlDecision(decision, wfType, w.registry, w.options.ObjectEncoder)
 	resp = &iwfidl.WorkflowStateDecideResponse{
 		StateDecision: idlDecision,
 	}
 	publishings := toPublishing(comm.getToPublishInterStateChannel())
 	if len(publishings) > 0 {
 		resp.PublishToInterStateChannel = publishings
+	}
+	dataObjectsToReturn, stateLocalToReturn, recordedEvents, upsertSearchAttributes := pers.getToReturn()
+	if len(dataObjectsToReturn) > 0 {
+		resp.UpsertDataObjects = dataObjectsToReturn
+	}
+	if len(stateLocalToReturn) > 0 {
+		resp.UpsertStateLocals = stateLocalToReturn
+	}
+	if len(recordedEvents) > 0 {
+		resp.RecordEvents = recordedEvents
+	}
+	if len(upsertSearchAttributes) > 0 {
+		resp.UpsertSearchAttributes = upsertSearchAttributes
 	}
 	return resp, nil
 }

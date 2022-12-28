@@ -45,12 +45,9 @@ type Persistence interface {
 
 	// below is for internal implementation
 	getToReturn() (
-		dataObjectsToReturn map[string]iwfidl.EncodedObject,
-		stateLocalToReturn map[string]iwfidl.EncodedObject,
-		saIntToReturn map[string]int64,
-		saStringToReturn map[string]string,
-		saDoubleToReturn map[string]float64,
-		saBoolToReturn map[string]bool,
-		saStrArrToReturn map[string][]string,
+		dataObjectsToReturn []iwfidl.KeyValue,
+		stateLocalToReturn []iwfidl.KeyValue,
+		recordEvents []iwfidl.KeyValue,
+		searchAttributes []iwfidl.SearchAttribute,
 	)
 }
