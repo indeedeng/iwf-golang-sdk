@@ -129,8 +129,32 @@ func (u *unregisteredClientImpl) GetComplexWorkflowResults(ctx context.Context, 
 }
 
 func (u *unregisteredClientImpl) ResetWorkflow(ctx context.Context, workflowId, workflowRunId string, options *ResetWorkflowTypeAndOptions) (string, error) {
-	//TODO implement me
-	panic("implement me")
+	resetType := iwfidl.BEGINNING
+	reason := ptr.Any("")
+	if options != nil {
+		resetType = options.ResetType
+		reason = &options.Reason
+	}
+
+	req := iwfidl.WorkflowResetRequest{
+		WorkflowId:    workflowId,
+		WorkflowRunId: iwfidl.PtrString(workflowRunId),
+		ResetType:     resetType,
+		Reason:        reason,
+	}
+	if options != nil {
+		req.HistoryEventId = options.HistoryEventId
+		req.HistoryEventTime = ptr.Any(options.HistoryEventTime.Format(DateTimeFormat))
+		req.SkipSignalReapply = options.SkipSignalReapply
+		req.StateId = options.StateId
+		req.StateExecutionId = options.StateExecutionId
+	}
+	reqPost := u.apiClient.DefaultApi.ApiV1WorkflowResetPost(ctx)
+	resp, httpResp, err := reqPost.WorkflowResetRequest(req).Execute()
+	if err := u.processError(err, httpResp); err != nil {
+		return "", err
+	}
+	return resp.WorkflowRunId, nil
 }
 
 func (u *unregisteredClientImpl) DescribeWorkflow(ctx context.Context, workflowId, workflowRunId string) (*WorkflowInfo, error) {
