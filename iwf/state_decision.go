@@ -1,31 +1,42 @@
 package iwf
 
-import "github.com/iworkflowio/iwf-golang-sdk/gen/iwfidl"
-
 type StateDecision struct {
 	NextStates []StateMovement
 }
 
 func SingleNextState(stateId string, input interface{}) *StateDecision {
-	return SingleNextStateWithOptions(stateId, input, nil)
-}
-
-func SingleNextStateWithOptions(stateId string, input interface{}, options *iwfidl.WorkflowStateOptions) *StateDecision {
 	return &StateDecision{
 		NextStates: []StateMovement{
 			{
-				NextStateId:      stateId,
-				NextStateInput:   input,
-				NextStateOptions: options,
+				NextStateId:    stateId,
+				NextStateInput: input,
 			},
 		},
 	}
 }
 
-// DeadEnd means no next step for this thread. It is essentially graceful completion without a workflow result
-var DeadEnd = StateDecision{}
+func MultiNextStates(movements ...StateMovement) *StateDecision {
+	return &StateDecision{
+		NextStates: movements,
+	}
+}
 
-var ForceFailingWorkflow = StateDecision{
+func MultiNextStatesByStateIds(nextStateIds ...string) *StateDecision {
+	var movements []StateMovement
+	for _, id := range nextStateIds {
+		movements = append(movements, StateMovement{
+			NextStateId: id,
+		})
+	}
+	return &StateDecision{
+		NextStates: movements,
+	}
+}
+
+// DeadEnd means no next step for this thread. It is essentially graceful completion without a workflow result
+var DeadEnd = &StateDecision{}
+
+var ForceFailingWorkflow = &StateDecision{
 	NextStates: []StateMovement{
 		{
 			NextStateId: ForceFailingWorkflowStateId,
