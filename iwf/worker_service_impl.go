@@ -18,8 +18,14 @@ func (w *workerServiceImpl) HandleWorkflowStateStart(ctx context.Context, reques
 	reqContext := request.GetContext()
 	wfCtx := newWorkflowContext(ctx, reqContext.GetWorkflowId(), reqContext.GetWorkflowRunId(), reqContext.GetStateExecutionId(), reqContext.GetWorkflowStartedTimestamp())
 
-	// TODO persistence, communication
-	commandRequest, err := stateDef.State.Start(wfCtx, input, nil, nil)
+	// TODO persistence
+	comm := newCommunication(w.options.ObjectEncoder, w.registry.getWorkflowInterStateChannelNameStore(request.GetWorkflowType()))
+	commandRequest, err := stateDef.State.Start(wfCtx, input, nil, comm)
+	if err != nil {
+		return nil, err
+	}
+
+	err = canNotRequestAndPublishTheSameInterStateChannel(comm.getToPublishInterStateChannel(), commandRequest)
 	if err != nil {
 		return nil, err
 	}
@@ -28,9 +34,42 @@ func (w *workerServiceImpl) HandleWorkflowStateStart(ctx context.Context, reques
 	if err != nil {
 		return nil, err
 	}
-	return &iwfidl.WorkflowStateStartResponse{
+	publishings := toPublishing(comm.getToPublishInterStateChannel())
+	resp = &iwfidl.WorkflowStateStartResponse{
 		CommandRequest: idlCommandRequest,
-	}, nil
+	}
+	if len(publishings) > 0 {
+		resp.PublishToInterStateChannel = publishings
+	}
+	return resp, nil
+}
+
+func toPublishing(channels map[string][]iwfidl.EncodedObject) []iwfidl.InterStateChannelPublishing {
+	var res []iwfidl.InterStateChannelPublishing
+	for name, l := range channels {
+		for _, v := range l {
+			res = append(res, iwfidl.InterStateChannelPublishing{
+				ChannelName: name,
+				Value:       &v,
+			})
+		}
+	}
+	return res
+}
+
+func canNotRequestAndPublishTheSameInterStateChannel(channelToPublish map[string][]iwfidl.EncodedObject, commandRequest *CommandRequest) error {
+	if len(channelToPublish) > 0 && commandRequest != nil {
+		for _, cr := range commandRequest.Commands {
+			if cr.CommandType == CommandTypeInterStateChannel {
+				chName := cr.InterStateChannelCommand.ChannelName
+				_, ok := channelToPublish[chName]
+				if ok {
+					return NewWorkflowDefinitionFmtError("Cannot publish and request for the same interStateChannel: %v", chName)
+				}
+			}
+		}
+	}
+	return nil
 }
 
 func (w *workerServiceImpl) HandleWorkflowStateDecide(ctx context.Context, request iwfidl.WorkflowStateDecideRequest) (resp *iwfidl.WorkflowStateDecideResponse, retErr error) {
@@ -45,13 +84,19 @@ func (w *workerServiceImpl) HandleWorkflowStateDecide(ctx context.Context, reque
 	if err != nil {
 		return nil, err
 	}
-	// TODO persistence, communication
-	decision, err := stateDef.State.Decide(wfCtx, input, commandResults, nil, nil)
+	// TODO persistence
+	comm := newCommunication(w.options.ObjectEncoder, w.registry.getWorkflowInterStateChannelNameStore(request.GetWorkflowType()))
+	decision, err := stateDef.State.Decide(wfCtx, input, commandResults, nil, comm)
 	if err != nil {
 		return nil, err
 	}
 	idlDecision, err := toIdlDecision(decision, request.GetWorkflowType(), w.registry, w.options.ObjectEncoder)
-	return &iwfidl.WorkflowStateDecideResponse{
+	resp = &iwfidl.WorkflowStateDecideResponse{
 		StateDecision: idlDecision,
-	}, nil
+	}
+	publishings := toPublishing(comm.getToPublishInterStateChannel())
+	if len(publishings) > 0 {
+		resp.PublishToInterStateChannel = publishings
+	}
+	return resp, nil
 }

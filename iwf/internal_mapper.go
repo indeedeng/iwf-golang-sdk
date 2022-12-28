@@ -11,6 +11,7 @@ func fromIdlCommandResults(results *iwfidl.CommandResults, encoder ObjectEncoder
 	}
 	var timerResults []TimerCommandResult
 	var signalResults []SignalCommandResult
+	var interStateChannelResults []InterStateChannelCommandResult
 	for _, t := range results.TimerResults {
 		timerResult := TimerCommandResult{
 			CommandId: t.CommandId,
@@ -27,17 +28,26 @@ func fromIdlCommandResults(results *iwfidl.CommandResults, encoder ObjectEncoder
 		}
 		signalResults = append(signalResults, signalResult)
 	}
-	// TODO interstatechannel
+	for _, t := range results.InterStateChannelResults {
+		interStateChannelResult := InterStateChannelCommandResult{
+			CommandId:   t.CommandId,
+			ChannelName: t.ChannelName,
+			Status:      t.RequestStatus,
+			Value:       NewObject(t.Value, encoder),
+		}
+		interStateChannelResults = append(interStateChannelResults, interStateChannelResult)
+	}
 	return CommandResults{
-		Timers:  timerResults,
-		Signals: signalResults,
+		Timers:                    timerResults,
+		Signals:                   signalResults,
+		InterStateChannelCommands: interStateChannelResults,
 	}, nil
 }
 
 func toIdlCommandRequest(commandRequest *CommandRequest) (*iwfidl.CommandRequest, error) {
-	// TODO interstateChannel commands
 	var timerCmds []iwfidl.TimerCommand
 	var signalCmds []iwfidl.SignalCommand
+	var interStateCmds []iwfidl.InterStateChannelCommand
 	for _, t := range commandRequest.Commands {
 		if t.CommandType == CommandTypeTimer {
 			timerCmd := iwfidl.TimerCommand{
@@ -53,6 +63,13 @@ func toIdlCommandRequest(commandRequest *CommandRequest) (*iwfidl.CommandRequest
 			}
 			signalCmds = append(signalCmds, signalCmd)
 		}
+		if t.CommandType == CommandTypeInterStateChannel {
+			interstateChannelCmd := iwfidl.InterStateChannelCommand{
+				CommandId:   t.CommandId,
+				ChannelName: t.InterStateChannelCommand.ChannelName,
+			}
+			interStateCmds = append(interStateCmds, interstateChannelCmd)
+		}
 	}
 
 	idlCmdReq := &iwfidl.CommandRequest{
@@ -63,6 +80,9 @@ func toIdlCommandRequest(commandRequest *CommandRequest) (*iwfidl.CommandRequest
 	}
 	if len(signalCmds) > 0 {
 		idlCmdReq.SignalCommands = signalCmds
+	}
+	if len(interStateCmds) > 0 {
+		idlCmdReq.InterStateChannelCommands = interStateCmds
 	}
 	return idlCmdReq, nil
 }
