@@ -2,7 +2,9 @@ package integ
 
 import (
 	"context"
+	"fmt"
 	"github.com/iworkflowio/iwf-golang-sdk/gen/iwfidl"
+	"github.com/iworkflowio/iwf-golang-sdk/iwf"
 	"github.com/stretchr/testify/assert"
 	"strconv"
 	"testing"
@@ -51,4 +53,12 @@ func TestPersistenceWorkflow(t *testing.T) {
 		testSearchAttributeDouble:   1.0,
 	}
 	assert.Equal(t, expectedSas, sas)
+
+	resp, err := client.SearchWorkflow(context.Background(), iwfidl.WorkflowSearchRequest{
+		Query:         fmt.Sprintf("IwfWorkflowType='%v'", iwf.GetDefaultWorkflowType(&persistenceWorkflow{})),
+		PageSize:      iwfidl.PtrInt32(1),
+		NextPageToken: nil,
+	})
+	assert.Nil(t, err)
+	assert.True(t, len(resp.WorkflowExecutions) > 0)
 }
