@@ -37,6 +37,10 @@ func (b persistenceWorkflowState2) Start(ctx iwf.WorkflowContext, input iwf.Obje
 	if err != nil {
 		return nil, err
 	}
+	err = persistence.SetSearchAttributeDouble(testSearchAttributeDouble, 1.0)
+	if err != nil {
+		return nil, err
+	}
 	if dv.Unix() == do.Datetime.Unix() && bv == true {
 		err := persistence.SetSearchAttributeText(testSearchAttributeText, testText)
 		if err != nil {
@@ -45,6 +49,7 @@ func (b persistenceWorkflowState2) Start(ctx iwf.WorkflowContext, input iwf.Obje
 		return iwf.EmptyCommandRequest(), nil
 	}
 	panic("the value of datatime or bool search attribute is incorrect")
+
 }
 
 func (b persistenceWorkflowState2) Decide(ctx iwf.WorkflowContext, input iwf.Object, commandResults iwf.CommandResults, persistence iwf.Persistence, communication iwf.Communication) (*iwf.StateDecision, error) {

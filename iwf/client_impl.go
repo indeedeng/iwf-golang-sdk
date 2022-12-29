@@ -62,7 +62,7 @@ func (c *clientImpl) GetWorkflowSearchAttributes(ctx context.Context, workflow W
 	var keyAndTypes []iwfidl.SearchAttributeKeyAndType
 	for _, k := range keys {
 		keyAndTypes = append(keyAndTypes, iwfidl.SearchAttributeKeyAndType{
-			Key:       &k,
+			Key:       ptr.Any(k),
 			ValueType: ptr.Any(allTypes[k]),
 		})
 	}

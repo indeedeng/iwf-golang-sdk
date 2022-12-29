@@ -54,6 +54,8 @@ func getSearchAttributeValue(sa iwfidl.SearchAttribute) (interface{}, error) {
 			return nil, err
 		}
 		return t, nil
+	case iwfidl.INT:
+		return *sa.IntegerValue, nil
 	default:
 		return nil, fmt.Errorf("unsupported search attribute type %v", sa.GetValueType())
 	}
