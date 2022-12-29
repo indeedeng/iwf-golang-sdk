@@ -2,6 +2,7 @@ package iwf
 
 import (
 	"fmt"
+	"github.com/iworkflowio/iwf-golang-sdk/gen/iwfidl"
 	"log"
 	"net/http"
 	"runtime/debug"
@@ -90,4 +91,13 @@ func captureStateExecutionError(errPanic interface{}, retError *error) {
 		}
 		*retError = err
 	}
+}
+
+// GetOpenApiErrorDetailedMessage retrieve the API error body into a string to be human-readable
+func GetOpenApiErrorDetailedMessage(err error) string {
+	oerr, ok := err.(*iwfidl.GenericOpenAPIError)
+	if !ok {
+		return "not an OpenAPI Generic Error type"
+	}
+	return string(oerr.Body())
 }
