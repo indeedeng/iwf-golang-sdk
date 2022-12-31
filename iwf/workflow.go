@@ -5,7 +5,6 @@ import "reflect"
 // Workflow is the interface to define a workflow definition.
 // Most of the time, the implementation only needs to return static value for each method.
 // For a dynamic workflow definition, the implementation can return different values based on different constructor inputs.
-// To invokes/interact with a dynamic workflows, applications may need to use {@link UntypedClient} instead of {@link Client}
 type Workflow interface {
 	// GetStates defines the states of the workflow. A state represents a step of the workflow state machine.
 	// A state can execute some commands (signal/timer) and wait for result
