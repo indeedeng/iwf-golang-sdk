@@ -3,8 +3,8 @@ package integ
 import (
 	"context"
 	"fmt"
-	"github.com/iworkflowio/iwf-golang-sdk/gen/iwfidl"
-	"github.com/iworkflowio/iwf-golang-sdk/iwf"
+	"github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
+	"github.com/indeedeng/iwf-golang-sdk/iwf"
 	"github.com/stretchr/testify/assert"
 	"strconv"
 	"testing"
@@ -54,6 +54,7 @@ func TestPersistenceWorkflow(t *testing.T) {
 	}
 	assert.Equal(t, expectedSas, sas)
 
+	time.Sleep(time.Second * 2) // wait for 2 seconds so that the index is updated
 	resp, err := client.SearchWorkflow(context.Background(), iwfidl.WorkflowSearchRequest{
 		Query:         fmt.Sprintf("IwfWorkflowType='%v'", iwf.GetDefaultWorkflowType(&persistenceWorkflow{})),
 		PageSize:      iwfidl.PtrInt32(1),

@@ -1,6 +1,6 @@
 package iwf
 
-import "github.com/iworkflowio/iwf-golang-sdk/gen/iwfidl"
+import "github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
 
 type WorkflowOptions struct {
 	WorkflowIdReusePolicy   *iwfidl.WorkflowIDReusePolicy

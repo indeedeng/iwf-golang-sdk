@@ -2,7 +2,7 @@ package integ
 
 import (
 	"context"
-	"github.com/iworkflowio/iwf-golang-sdk/iwf"
+	"github.com/indeedeng/iwf-golang-sdk/iwf"
 	"github.com/stretchr/testify/assert"
 	"strconv"
 	"testing"

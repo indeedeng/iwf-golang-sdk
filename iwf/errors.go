@@ -2,7 +2,7 @@ package iwf
 
 import (
 	"fmt"
-	"github.com/iworkflowio/iwf-golang-sdk/gen/iwfidl"
+	"github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
 	"log"
 	"net/http"
 	"runtime/debug"

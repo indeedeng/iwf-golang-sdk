@@ -1,7 +1,7 @@
 # iWF Golang SDK
 Golang SDK for [iWF workflow engine](https://github.com/indeedeng/iwf)
 
-See [samples](https://github.com/iworkflowio/iwf-golang-samples) for how to use this SDK.
+See [samples](https://github.com/indeedeng/iwf-golang-samples) for how to use this SDK.
 # Contribution
 See [contribution guide](CONTRIBUTION.md)
 

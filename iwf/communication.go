@@ -1,6 +1,6 @@
 package iwf
 
-import "github.com/iworkflowio/iwf-golang-sdk/gen/iwfidl"
+import "github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
 
 type Communication interface {
 	// PublishInterstateChannel publishes a value to an interstate Channel

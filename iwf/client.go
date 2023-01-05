@@ -2,7 +2,7 @@ package iwf
 
 import (
 	"context"
-	"github.com/iworkflowio/iwf-golang-sdk/gen/iwfidl"
+	"github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
 )
 
 // Client is a full-featured client
