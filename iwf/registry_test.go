@@ -1,7 +1,7 @@
 package iwf
 
 import (
-	"github.com/iworkflowio/iwf-golang-sdk/gen/iwfidl"
+	"github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
 	"testing"
 )
 

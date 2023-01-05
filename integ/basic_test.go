@@ -2,9 +2,9 @@ package integ
 
 import (
 	"context"
-	"github.com/iworkflowio/iwf-golang-sdk/gen/iwfidl"
-	"github.com/iworkflowio/iwf-golang-sdk/iwf"
-	"github.com/iworkflowio/iwf-golang-sdk/iwf/ptr"
+	"github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
+	"github.com/indeedeng/iwf-golang-sdk/iwf"
+	"github.com/indeedeng/iwf-golang-sdk/iwf/ptr"
 	"github.com/stretchr/testify/assert"
 	"strconv"
 	"testing"

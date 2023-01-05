@@ -2,8 +2,8 @@ package integ
 
 import (
 	"fmt"
-	"github.com/iworkflowio/iwf-golang-sdk/gen/iwfidl"
-	"github.com/iworkflowio/iwf-golang-sdk/iwf"
+	"github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
+	"github.com/indeedeng/iwf-golang-sdk/iwf"
 )
 
 type signalWorkflowState1 struct{}

@@ -3,8 +3,8 @@ package integ
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/iworkflowio/iwf-golang-sdk/gen/iwfidl"
-	"github.com/iworkflowio/iwf-golang-sdk/iwf"
+	"github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
+	"github.com/indeedeng/iwf-golang-sdk/iwf"
 	"log"
 	"net/http"
 	"os"

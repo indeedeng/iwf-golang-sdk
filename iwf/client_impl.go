@@ -3,8 +3,8 @@ package iwf
 import (
 	"context"
 	"fmt"
-	"github.com/iworkflowio/iwf-golang-sdk/gen/iwfidl"
-	"github.com/iworkflowio/iwf-golang-sdk/iwf/ptr"
+	"github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
+	"github.com/indeedeng/iwf-golang-sdk/iwf/ptr"
 )
 
 type clientImpl struct {

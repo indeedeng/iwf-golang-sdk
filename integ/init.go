@@ -1,7 +1,7 @@
 package integ
 
 import (
-	"github.com/iworkflowio/iwf-golang-sdk/iwf"
+	"github.com/indeedeng/iwf-golang-sdk/iwf"
 )
 
 var registry = iwf.NewRegistry()
