@@ -11,6 +11,7 @@ type Registry interface {
 	GetAllRegisteredWorkflowTypes() []string
 
 	// below are all for internal implementation
+	getWorkflowStartingState(wfType string) WorkflowState
 	getWorkflowStateDef(wfType string, id string) StateDef
 	getWorkflowSignalNameStore(wfType string) map[string]bool
 	getWorkflowInterStateChannelNameStore(wfType string) map[string]bool
@@ -21,6 +22,7 @@ type Registry interface {
 func NewRegistry() Registry {
 	return &registryImpl{
 		workflowStore:              map[string]Workflow{},
+		workflowStartingState:      map[string]WorkflowState{},
 		workflowStateStore:         map[string]map[string]StateDef{},
 		signalNameStore:            map[string]map[string]bool{},
 		interStateChannelNameStore: map[string]map[string]bool{},

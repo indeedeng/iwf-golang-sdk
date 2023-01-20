@@ -18,7 +18,7 @@ func TestPersistenceWorkflow(t *testing.T) {
 		StrValue: wfId,
 		Datetime: time.Now(),
 	}
-	runId, err := client.StartWorkflow(context.Background(), &persistenceWorkflow{}, persistenceWorkflowState1Id, wfId, 10, input, nil)
+	runId, err := client.StartWorkflow(context.Background(), &persistenceWorkflow{}, wfId, 10, input, nil)
 	assert.Nil(t, err)
 	assert.NotEmpty(t, runId)
 	err = client.GetSimpleWorkflowResult(context.Background(), wfId, "", nil)

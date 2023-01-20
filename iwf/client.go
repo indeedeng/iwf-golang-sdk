@@ -9,13 +9,12 @@ import (
 type Client interface {
 	clientCommon
 	// StartWorkflow starts a workflow execution
-	// startStateId is the first stateId to start
 	// workflowId is the required identifier for the workflow execution(see Cadence/Temporal for more details about WorkflowId uniqueness)
 	// timeoutSecs is required as the workflow execution timeout in seconds
 	// input can be optional, it's the input for the startState
 	// options is optional includes like IdReusePolicy, RetryPolicy, CronSchedule and also WorkflowStateOptions for the startState. Empty by default(when nil).
 	// return the workflowRunId
-	StartWorkflow(ctx context.Context, workflow Workflow, startStateId, workflowId string, timeoutSecs int32, input interface{}, options *WorkflowOptions) (string, error)
+	StartWorkflow(ctx context.Context, workflow Workflow, workflowId string, timeoutSecs int32, input interface{}, options *WorkflowOptions) (string, error)
 	// SignalWorkflow signals a workflow execution
 	// workflowId is required, workflowRunId is optional and default to current runId of the workflowId
 	// signalChannelName is required, signalValue is optional(for case of empty value)
