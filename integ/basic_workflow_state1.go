@@ -14,10 +14,22 @@ func (b basicWorkflowState1) GetStateId() string {
 }
 
 func (b basicWorkflowState1) Start(ctx iwf.WorkflowContext, input iwf.Object, persistence iwf.Persistence, communication iwf.Communication) (*iwf.CommandRequest, error) {
+	if ctx.GetAttempt() <= 0 {
+		panic("attempt should be greater than zero")
+	}
+	if ctx.GetFirstAttemptTimestampSeconds() <= 0 {
+		panic("GetFirstAttemptTimestampSeconds should be greater than zero")
+	}
 	return iwf.EmptyCommandRequest(), nil
 }
 
 func (b basicWorkflowState1) Decide(ctx iwf.WorkflowContext, input iwf.Object, commandResults iwf.CommandResults, persistence iwf.Persistence, communication iwf.Communication) (*iwf.StateDecision, error) {
+	if ctx.GetAttempt() <= 0 {
+		panic("attempt should be greater than zero")
+	}
+	if ctx.GetFirstAttemptTimestampSeconds() <= 0 {
+		panic("GetFirstAttemptTimestampSeconds should be greater than zero")
+	}
 	var i int
 	err := input.Get(&i)
 	if err != nil {
