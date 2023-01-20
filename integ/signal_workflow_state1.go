@@ -33,7 +33,7 @@ func (b signalWorkflowState1) Decide(ctx iwf.WorkflowContext, input iwf.Object, 
 		if err != nil {
 			return nil, err
 		}
-		return iwf.GracefulCompleteWorkflow(value), nil
+		return iwf.SingleNextState(signalWorkflowState2Id, value), nil
 	}
 	return nil, fmt.Errorf(testChannelName2 + " doesn't receive correct value")
 }

@@ -10,6 +10,7 @@ const testChannelName2 = "test-channel-name-2"
 func (b signalWorkflow) GetStates() []iwf.StateDef {
 	return []iwf.StateDef{
 		iwf.NewStartingState(&signalWorkflowState1{}),
+		iwf.NewNonStartingState(&signalWorkflowState2{}),
 	}
 }
 
