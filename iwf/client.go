@@ -63,6 +63,10 @@ type clientCommon interface {
 	// GetAllWorkflowDataObjects returns all the data objects of a workflow execution
 	// workflowId is required, workflowRunId is optional and default to current runId of the workflowId
 	GetAllWorkflowDataObjects(ctx context.Context, workflowId, workflowRunId string) (map[string]Object, error)
+	// SkipTimerByCommandId skips a timer for the state execution based on the timerCommandId
+	SkipTimerByCommandId(ctx context.Context, workflowId, workflowRunId, workflowStateId string, stateExecutionNumber int, timerCommandId string) error
+	// SkipTimerByCommandIndex skips a timer for the state execution based on the timerCommandId
+	SkipTimerByCommandIndex(ctx context.Context, workflowId, workflowRunId, workflowStateId string, stateExecutionNumber, timerCommandIndex int) error
 }
 
 // UnregisteredClient is a client without workflow registry

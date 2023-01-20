@@ -222,6 +222,34 @@ func (u *unregisteredClientImpl) SearchWorkflow(ctx context.Context, request iwf
 	return resp, nil
 }
 
+func (u *unregisteredClientImpl) SkipTimerByCommandId(ctx context.Context, workflowId, workflowRunId, workflowStateId string, stateExecutionNumber int, timerCommandId string) error {
+	if timerCommandId == "" {
+		return NewInvalidArgumentErrorFmt("cannot use empty timerCommandId")
+	}
+	return u.doSkipTimer(ctx, workflowId, workflowRunId, workflowStateId, stateExecutionNumber, timerCommandId, 0)
+}
+
+func (u *unregisteredClientImpl) SkipTimerByCommandIndex(ctx context.Context, workflowId, workflowRunId, workflowStateId string, stateExecutionNumber int, timerCommandIndex int) error {
+	return u.doSkipTimer(ctx, workflowId, workflowRunId, workflowStateId, stateExecutionNumber, "", timerCommandIndex)
+}
+
+func (u *unregisteredClientImpl) doSkipTimer(ctx context.Context, workflowId, workflowRunId, workflowStateId string, stateExecutionNumber int, timerCommandId string, timerCommandIndex int) error {
+	workflowStateExecutionId := fmt.Sprintf("%v-%v", workflowStateId, stateExecutionNumber)
+	reqPost := u.apiClient.DefaultApi.ApiV1WorkflowTimerSkipPost(ctx)
+	req := iwfidl.WorkflowSkipTimerRequest{
+		WorkflowId:               workflowId,
+		WorkflowRunId:            iwfidl.PtrString(workflowRunId),
+		WorkflowStateExecutionId: workflowStateExecutionId,
+	}
+	if timerCommandId != "" {
+		req.TimerCommandId = &timerCommandId
+	} else {
+		req.TimerCommandIndex = ptr.Any(int32(timerCommandIndex))
+	}
+	httpResp, err := reqPost.WorkflowSkipTimerRequest(req).Execute()
+	return u.processError(err, httpResp)
+}
+
 func (u *unregisteredClientImpl) processError(err error, httpResp *http.Response) error {
 	if err != nil {
 		return err
