@@ -17,7 +17,7 @@ import (
 // ErrorResponse struct for ErrorResponse
 type ErrorResponse struct {
 	Detail *string `json:"detail,omitempty"`
-	SubStatus *string `json:"subStatus,omitempty"`
+	SubStatus *ErrorSubStatus `json:"subStatus,omitempty"`
 }
 
 // NewErrorResponse instantiates a new ErrorResponse object
@@ -39,7 +39,7 @@ func NewErrorResponseWithDefaults() *ErrorResponse {
 
 // GetDetail returns the Detail field value if set, zero value otherwise.
 func (o *ErrorResponse) GetDetail() string {
-	if o == nil || o.Detail == nil {
+	if o == nil || isNil(o.Detail) {
 		var ret string
 		return ret
 	}
@@ -49,15 +49,15 @@ func (o *ErrorResponse) GetDetail() string {
 // GetDetailOk returns a tuple with the Detail field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ErrorResponse) GetDetailOk() (*string, bool) {
-	if o == nil || o.Detail == nil {
-		return nil, false
+	if o == nil || isNil(o.Detail) {
+    return nil, false
 	}
 	return o.Detail, true
 }
 
 // HasDetail returns a boolean if a field has been set.
 func (o *ErrorResponse) HasDetail() bool {
-	if o != nil && o.Detail != nil {
+	if o != nil && !isNil(o.Detail) {
 		return true
 	}
 
@@ -70,9 +70,9 @@ func (o *ErrorResponse) SetDetail(v string) {
 }
 
 // GetSubStatus returns the SubStatus field value if set, zero value otherwise.
-func (o *ErrorResponse) GetSubStatus() string {
-	if o == nil || o.SubStatus == nil {
-		var ret string
+func (o *ErrorResponse) GetSubStatus() ErrorSubStatus {
+	if o == nil || isNil(o.SubStatus) {
+		var ret ErrorSubStatus
 		return ret
 	}
 	return *o.SubStatus
@@ -80,33 +80,33 @@ func (o *ErrorResponse) GetSubStatus() string {
 
 // GetSubStatusOk returns a tuple with the SubStatus field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ErrorResponse) GetSubStatusOk() (*string, bool) {
-	if o == nil || o.SubStatus == nil {
-		return nil, false
+func (o *ErrorResponse) GetSubStatusOk() (*ErrorSubStatus, bool) {
+	if o == nil || isNil(o.SubStatus) {
+    return nil, false
 	}
 	return o.SubStatus, true
 }
 
 // HasSubStatus returns a boolean if a field has been set.
 func (o *ErrorResponse) HasSubStatus() bool {
-	if o != nil && o.SubStatus != nil {
+	if o != nil && !isNil(o.SubStatus) {
 		return true
 	}
 
 	return false
 }
 
-// SetSubStatus gets a reference to the given string and assigns it to the SubStatus field.
-func (o *ErrorResponse) SetSubStatus(v string) {
+// SetSubStatus gets a reference to the given ErrorSubStatus and assigns it to the SubStatus field.
+func (o *ErrorResponse) SetSubStatus(v ErrorSubStatus) {
 	o.SubStatus = &v
 }
 
 func (o ErrorResponse) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Detail != nil {
+	if !isNil(o.Detail) {
 		toSerialize["detail"] = o.Detail
 	}
-	if o.SubStatus != nil {
+	if !isNil(o.SubStatus) {
 		toSerialize["subStatus"] = o.SubStatus
 	}
 	return json.Marshal(toSerialize)
