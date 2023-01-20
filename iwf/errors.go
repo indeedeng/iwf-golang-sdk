@@ -100,14 +100,18 @@ func captureStateExecutionError(errPanic interface{}, retError *error) {
 
 		var err error
 		panicError, ok := errPanic.(error)
-		if ok && panicError != nil {
-			err = newStateExecutionError(panicError, st)
+		if errPanic != nil {
+			if ok && panicError != nil {
+				err = newStateExecutionError(panicError, st)
+			} else {
+				err = newStateExecutionError(fmt.Errorf("errPanic is not an error %v", errPanic), st)
+			}
 		} else {
 			err = newStateExecutionError(*retError, st)
 		}
 
-		if !skipCaptureErrorLogging {
-			log.Printf("error is captured: %v", err)
+		if !skipCaptureErrorLogging && errPanic != nil {
+			log.Printf("panic is captured: %v", errPanic)
 		}
 		*retError = err
 	}
