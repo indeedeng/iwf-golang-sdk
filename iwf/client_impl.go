@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
 	"github.com/indeedeng/iwf-golang-sdk/iwf/ptr"
+	"strconv"
+	"time"
 )
 
 type clientImpl struct {
@@ -16,27 +18,86 @@ type clientImpl struct {
 func (c *clientImpl) StartWorkflow(ctx context.Context, workflow Workflow, workflowId string, timeoutSecs int32, input interface{}, options *WorkflowOptions) (string, error) {
 	wfType := GetDefaultWorkflowType(workflow)
 	state := c.registry.getWorkflowStartingState(wfType)
-	if options != nil {
-		for _, sa := range options.InitialSearchAttributes {
-			typeMap := c.registry.getSearchAttributeTypeStore(wfType)
-			registeredType, ok := typeMap[sa.GetKey()]
-			if !ok || registeredType != sa.GetValueType() {
-				return "", fmt.Errorf("key %s is not defined as search attribute value type %s", sa.GetKey(), registeredType)
-			}
-			v, _ := getSearchAttributeValue(sa)
-			if v == nil {
-				return "", fmt.Errorf("search attribute value is not set correctly for key %s with value type %s", sa.GetKey(), sa.GetValueType())
-			}
-		}
+
+	unregOpt := &UnregisteredWorkflowOptions{
+		StartStateOptions: state.GetStateOptions(),
 	}
-	return c.UnregisteredClient.StartWorkflow(ctx, wfType, state.GetStateId(), workflowId, timeoutSecs, input, options)
+
+	if options != nil {
+		unregOpt.WorkflowIdReusePolicy = options.WorkflowIdReusePolicy
+		unregOpt.WorkflowRetryPolicy = options.WorkflowRetryPolicy
+		unregOpt.WorkflowCronSchedule = options.WorkflowCronSchedule
+
+		saTypes := c.registry.getSearchAttributeTypeStore(wfType)
+
+		convertedSAs, err := convertToSearchAttributeList(saTypes, options.InitialSearchAttributes)
+		if err != nil {
+			return "", err
+		}
+		unregOpt.InitialSearchAttributes = convertedSAs
+	}
+	return c.UnregisteredClient.StartWorkflow(ctx, wfType, state.GetStateId(), workflowId, timeoutSecs, input, unregOpt)
+}
+
+func convertToSearchAttributeList(types map[string]iwfidl.SearchAttributeValueType, attributes map[string]interface{}) ([]iwfidl.SearchAttribute, error) {
+	var converted []iwfidl.SearchAttribute
+	for key, rawAtt := range attributes {
+		saType, ok := types[key]
+		if !ok {
+			return nil, NewWorkflowDefinitionErrorFmt("key %v is not defined as search attribute, all keys are: %v ", key, types)
+		}
+		att := iwfidl.SearchAttribute{
+			Key:       ptr.Any(key),
+			ValueType: ptr.Any(saType),
+		}
+
+		sv := fmt.Sprintf("%v", rawAtt)
+		var err error
+		var intV int64
+		var douV float64
+		var bV bool
+		var arr []string
+		switch saType {
+		case iwfidl.INT:
+			intV, err = strconv.ParseInt(sv, 10, 64)
+			att.IntegerValue = &intV
+		case iwfidl.DOUBLE:
+			douV, err = strconv.ParseFloat(sv, 64)
+			att.DoubleValue = &douV
+		case iwfidl.BOOL:
+			bV, err = strconv.ParseBool(sv)
+			att.BoolValue = ptr.Any(bV)
+		case iwfidl.KEYWORD, iwfidl.TEXT:
+			att.StringValue = &sv
+		case iwfidl.DATETIME:
+			dtV, ok := rawAtt.(time.Time)
+			if ok {
+				att.StringValue = ptr.Any(dtV.Format(DateTimeFormat))
+			} else {
+				att.StringValue = &sv
+			}
+		case iwfidl.KEYWORD_ARRAY:
+			arr, ok = rawAtt.([]string)
+			if !ok {
+				err = fmt.Errorf("not a string array")
+			}
+			att.StringArrayValue = arr
+		default:
+			return nil, NewInvalidArgumentErrorFmt("unsupported search attribute type %v", saType)
+		}
+		if err != nil {
+			return nil, NewInvalidArgumentErrorFmt("unable to convert the value %v to registered type %v", rawAtt, saType)
+		}
+		converted = append(converted, att)
+	}
+	return converted, nil
 }
 
 func (c *clientImpl) SignalWorkflow(ctx context.Context, workflow Workflow, workflowId, workflowRunId, signalChannelName string, signalValue interface{}) error {
 	wfType := GetDefaultWorkflowType(workflow)
 	signalNameStore := c.registry.getWorkflowSignalNameStore(wfType)
 	if !signalNameStore[signalChannelName] {
-		return NewWorkflowDefinitionFmtError("signal channel %v is not defined in workflow type %v", signalChannelName, wfType)
+		return NewWorkflowDefinitionErrorFmt("signal channel %v is not defined in workflow type %v", signalChannelName, wfType)
 	}
 	return c.UnregisteredClient.SignalWorkflow(ctx, workflowId, workflowRunId, signalChannelName, signalValue)
 }

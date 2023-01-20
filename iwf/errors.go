@@ -8,6 +8,26 @@ import (
 	"runtime/debug"
 )
 
+type InvalidArgumentError struct {
+	msg string
+}
+
+func (w InvalidArgumentError) Error() string {
+	return fmt.Sprintf("WorkflowDefinitionError: %s", w.msg)
+}
+
+func NewInvalidArgumentError(msg string) error {
+	return &InvalidArgumentError{
+		msg: msg,
+	}
+}
+
+func NewInvalidArgumentErrorFmt(tpl string, arg ...interface{}) error {
+	return &WorkflowDefinitionError{
+		msg: fmt.Sprintf(tpl, arg...),
+	}
+}
+
 type WorkflowDefinitionError struct {
 	msg string
 }
@@ -22,7 +42,7 @@ func NewWorkflowDefinitionError(msg string) error {
 	}
 }
 
-func NewWorkflowDefinitionFmtError(tpl string, arg ...interface{}) error {
+func NewWorkflowDefinitionErrorFmt(tpl string, arg ...interface{}) error {
 	return &WorkflowDefinitionError{
 		msg: fmt.Sprintf(tpl, arg...),
 	}

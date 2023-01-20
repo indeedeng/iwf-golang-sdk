@@ -14,7 +14,7 @@ func (c *communicationImpl) getToPublishInterStateChannel() map[string][]iwfidl.
 
 func (c *communicationImpl) PublishInterstateChannel(channelName string, value interface{}) error {
 	if !c.interStateChannelNames[channelName] {
-		return NewWorkflowDefinitionFmtError("channelName %v is not registered", channelName)
+		return NewWorkflowDefinitionErrorFmt("channelName %v is not registered", channelName)
 	}
 	l := c.toPublishInterStateChannel[channelName]
 	obj, err := c.encoder.Encode(value)

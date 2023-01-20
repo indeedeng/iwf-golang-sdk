@@ -81,7 +81,7 @@ func canNotRequestAndPublishTheSameInterStateChannel(channelToPublish map[string
 				chName := cr.InterStateChannelCommand.ChannelName
 				_, ok := channelToPublish[chName]
 				if ok {
-					return NewWorkflowDefinitionFmtError("Cannot publish and request for the same interStateChannel: %v", chName)
+					return NewWorkflowDefinitionErrorFmt("Cannot publish and request for the same interStateChannel: %v", chName)
 				}
 			}
 		}

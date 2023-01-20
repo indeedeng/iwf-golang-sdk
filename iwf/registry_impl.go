@@ -82,7 +82,7 @@ func (r *registryImpl) registerWorkflow(wf Workflow) error {
 func (r *registryImpl) registerWorkflowState(wf Workflow) error {
 	wfType := GetDefaultWorkflowType(wf)
 	if len(wf.GetStates()) == 0 {
-		return NewWorkflowDefinitionFmtError("Workflow type %s must contain at least one workflow state", wfType)
+		return NewWorkflowDefinitionErrorFmt("Workflow type %s must contain at least one workflow state", wfType)
 	}
 	stateMap := map[string]StateDef{}
 	var startingState WorkflowState
@@ -129,7 +129,7 @@ func (r *registryImpl) registerWorkflowPersistenceSchema(wf Workflow) error {
 		} else if pers.FieldType == PersistenceFieldTypeSearchAttribute && pers.SearchAttributeType != nil {
 			searchAttributes[pers.Key] = *pers.SearchAttributeType
 		} else {
-			return NewWorkflowDefinitionFmtError("invalid PersistenceField definition %s for key %s ", string(pers.FieldType), pers.Key)
+			return NewWorkflowDefinitionErrorFmt("invalid PersistenceField definition %s for key %s ", string(pers.FieldType), pers.Key)
 		}
 	}
 	r.dataObjectKeyStore[wfType] = dataObjectKeys
