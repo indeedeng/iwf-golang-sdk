@@ -94,14 +94,14 @@ func newPersistence(
 
 func (p *persistenceImpl) GetDataObject(key string, valuePtr interface{}) error {
 	if !p.dataObjectKeyMap[key] {
-		return NewWorkflowDefinitionFmtError("key %v is not registered as a data object", key)
+		return NewWorkflowDefinitionErrorFmt("key %v is not registered as a data object", key)
 	}
 	return p.encoder.Decode(ptr.Any(p.currentDataObjects[key]), valuePtr)
 }
 
 func (p *persistenceImpl) SetDataObject(key string, value interface{}) error {
 	if !p.dataObjectKeyMap[key] {
-		return NewWorkflowDefinitionFmtError("key %v is not registered as a data object", key)
+		return NewWorkflowDefinitionErrorFmt("key %v is not registered as a data object", key)
 	}
 	v, err := p.encoder.Encode(value)
 	if err != nil {
@@ -114,14 +114,14 @@ func (p *persistenceImpl) SetDataObject(key string, value interface{}) error {
 
 func (p *persistenceImpl) GetSearchAttributeInt(key string) (int64, error) {
 	if p.saKeyToType[key] != iwfidl.INT {
-		return 0, NewWorkflowDefinitionFmtError("key %v is not registered as a INT search attribute", key)
+		return 0, NewWorkflowDefinitionErrorFmt("key %v is not registered as a INT search attribute", key)
 	}
 	return p.saCurrentIntValue[key], nil
 }
 
 func (p *persistenceImpl) SetSearchAttributeInt(key string, value int64) error {
 	if p.saKeyToType[key] != iwfidl.INT {
-		return NewWorkflowDefinitionFmtError("key %v is not registered as a INT search attribute", key)
+		return NewWorkflowDefinitionErrorFmt("key %v is not registered as a INT search attribute", key)
 	}
 	p.saCurrentIntValue[key] = value
 	p.saIntToReturn[key] = value
@@ -130,14 +130,14 @@ func (p *persistenceImpl) SetSearchAttributeInt(key string, value int64) error {
 
 func (p *persistenceImpl) GetSearchAttributeKeyword(key string) (string, error) {
 	if p.saKeyToType[key] != iwfidl.KEYWORD {
-		return "", NewWorkflowDefinitionFmtError("key %v is not registered as a INT search attribute", key)
+		return "", NewWorkflowDefinitionErrorFmt("key %v is not registered as a INT search attribute", key)
 	}
 	return p.saCurrentStringValue[key], nil
 }
 
 func (p *persistenceImpl) SetSearchAttributeKeyword(key string, value string) error {
 	if p.saKeyToType[key] != iwfidl.KEYWORD {
-		return NewWorkflowDefinitionFmtError("key %v is not registered as a INT search attribute", key)
+		return NewWorkflowDefinitionErrorFmt("key %v is not registered as a INT search attribute", key)
 	}
 	p.saCurrentStringValue[key] = value
 	p.saStringToReturn[key] = value
@@ -146,14 +146,14 @@ func (p *persistenceImpl) SetSearchAttributeKeyword(key string, value string) er
 
 func (p *persistenceImpl) GetSearchAttributeBool(key string) (bool, error) {
 	if p.saKeyToType[key] != iwfidl.BOOL {
-		return false, NewWorkflowDefinitionFmtError("key %v is not registered as a INT search attribute", key)
+		return false, NewWorkflowDefinitionErrorFmt("key %v is not registered as a INT search attribute", key)
 	}
 	return p.saCurrentBoolValue[key], nil
 }
 
 func (p *persistenceImpl) SetSearchAttributeBool(key string, value bool) error {
 	if p.saKeyToType[key] != iwfidl.BOOL {
-		return NewWorkflowDefinitionFmtError("key %v is not registered as a INT search attribute", key)
+		return NewWorkflowDefinitionErrorFmt("key %v is not registered as a INT search attribute", key)
 	}
 	p.saBoolToReturn[key] = value
 	p.saCurrentBoolValue[key] = value
@@ -162,14 +162,14 @@ func (p *persistenceImpl) SetSearchAttributeBool(key string, value bool) error {
 
 func (p *persistenceImpl) GetSearchAttributeDouble(key string) (float64, error) {
 	if p.saKeyToType[key] != iwfidl.DOUBLE {
-		return 0, NewWorkflowDefinitionFmtError("key %v is not registered as a INT search attribute", key)
+		return 0, NewWorkflowDefinitionErrorFmt("key %v is not registered as a INT search attribute", key)
 	}
 	return p.saCurrentDoubleValue[key], nil
 }
 
 func (p *persistenceImpl) SetSearchAttributeDouble(key string, value float64) error {
 	if p.saKeyToType[key] != iwfidl.DOUBLE {
-		return NewWorkflowDefinitionFmtError("key %v is not registered as a INT search attribute", key)
+		return NewWorkflowDefinitionErrorFmt("key %v is not registered as a INT search attribute", key)
 	}
 	p.saCurrentDoubleValue[key] = value
 	p.saDoubleToReturn[key] = value
@@ -178,14 +178,14 @@ func (p *persistenceImpl) SetSearchAttributeDouble(key string, value float64) er
 
 func (p *persistenceImpl) GetSearchAttributeText(key string) (string, error) {
 	if p.saKeyToType[key] != iwfidl.TEXT {
-		return "", NewWorkflowDefinitionFmtError("key %v is not registered as a INT search attribute", key)
+		return "", NewWorkflowDefinitionErrorFmt("key %v is not registered as a INT search attribute", key)
 	}
 	return p.saCurrentStringValue[key], nil
 }
 
 func (p *persistenceImpl) SetSearchAttributeText(key string, value string) error {
 	if p.saKeyToType[key] != iwfidl.TEXT {
-		return NewWorkflowDefinitionFmtError("key %v is not registered as a INT search attribute", key)
+		return NewWorkflowDefinitionErrorFmt("key %v is not registered as a INT search attribute", key)
 	}
 	p.saStringToReturn[key] = value
 	p.saCurrentStringValue[key] = value
@@ -194,14 +194,14 @@ func (p *persistenceImpl) SetSearchAttributeText(key string, value string) error
 
 func (p *persistenceImpl) GetSearchAttributeDatetime(key string) (time.Time, error) {
 	if p.saKeyToType[key] != iwfidl.DATETIME {
-		return time.Time{}, NewWorkflowDefinitionFmtError("key %v is not registered as a INT search attribute", key)
+		return time.Time{}, NewWorkflowDefinitionErrorFmt("key %v is not registered as a INT search attribute", key)
 	}
 	return time.Parse(DateTimeFormat, p.saCurrentStringValue[key])
 }
 
 func (p *persistenceImpl) SetSearchAttributeDatetime(key string, value time.Time) error {
 	if p.saKeyToType[key] != iwfidl.DATETIME {
-		return NewWorkflowDefinitionFmtError("key %v is not registered as a INT search attribute", key)
+		return NewWorkflowDefinitionErrorFmt("key %v is not registered as a INT search attribute", key)
 	}
 
 	v := value.Format(DateTimeFormat)
@@ -212,14 +212,14 @@ func (p *persistenceImpl) SetSearchAttributeDatetime(key string, value time.Time
 
 func (p *persistenceImpl) GetSearchAttributeKeywordArray(key string) ([]string, error) {
 	if p.saKeyToType[key] != iwfidl.KEYWORD_ARRAY {
-		return nil, NewWorkflowDefinitionFmtError("key %v is not registered as a INT search attribute", key)
+		return nil, NewWorkflowDefinitionErrorFmt("key %v is not registered as a INT search attribute", key)
 	}
 	return p.saCurrentStrArrValue[key], nil
 }
 
 func (p *persistenceImpl) SetSearchAttributeKeywordArray(key string, value []string) error {
 	if p.saKeyToType[key] != iwfidl.KEYWORD_ARRAY {
-		return NewWorkflowDefinitionFmtError("key %v is not registered as a INT search attribute", key)
+		return NewWorkflowDefinitionErrorFmt("key %v is not registered as a INT search attribute", key)
 	}
 	p.saCurrentStrArrValue[key] = value
 	p.saStrArrToReturn[key] = value

@@ -75,7 +75,7 @@ type UnregisteredClient interface {
 	// input can be optional, it's the input for the startState
 	// options is optional includes like IdReusePolicy, RetryPolicy, CronSchedule and also WorkflowStateOptions for the startState. Empty by default(when nil).
 	// return the workflowRunId
-	StartWorkflow(ctx context.Context, workflowType string, startStateId, workflowId string, timeoutSecs int32, input interface{}, options *WorkflowOptions) (string, error)
+	StartWorkflow(ctx context.Context, workflowType string, startStateId, workflowId string, timeoutSecs int32, input interface{}, options *UnregisteredWorkflowOptions) (string, error)
 	// SignalWorkflow signals a workflow execution
 	// workflowId is required, workflowRunId is optional and default to current runId of the workflowId
 	// signalChannelName is required, signalValue is optional(for case of empty value)

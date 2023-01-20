@@ -8,6 +8,26 @@ import (
 	"runtime/debug"
 )
 
+type InvalidArgumentError struct {
+	msg string
+}
+
+func (w InvalidArgumentError) Error() string {
+	return fmt.Sprintf("WorkflowDefinitionError: %s", w.msg)
+}
+
+func NewInvalidArgumentError(msg string) error {
+	return &InvalidArgumentError{
+		msg: msg,
+	}
+}
+
+func NewInvalidArgumentErrorFmt(tpl string, arg ...interface{}) error {
+	return &WorkflowDefinitionError{
+		msg: fmt.Sprintf(tpl, arg...),
+	}
+}
+
 type WorkflowDefinitionError struct {
 	msg string
 }
@@ -22,7 +42,7 @@ func NewWorkflowDefinitionError(msg string) error {
 	}
 }
 
-func NewWorkflowDefinitionFmtError(tpl string, arg ...interface{}) error {
+func NewWorkflowDefinitionErrorFmt(tpl string, arg ...interface{}) error {
 	return &WorkflowDefinitionError{
 		msg: fmt.Sprintf(tpl, arg...),
 	}
@@ -80,14 +100,18 @@ func captureStateExecutionError(errPanic interface{}, retError *error) {
 
 		var err error
 		panicError, ok := errPanic.(error)
-		if ok && panicError != nil {
-			err = newStateExecutionError(panicError, st)
+		if errPanic != nil {
+			if ok && panicError != nil {
+				err = newStateExecutionError(panicError, st)
+			} else {
+				err = newStateExecutionError(fmt.Errorf("errPanic is not an error %v", errPanic), st)
+			}
 		} else {
 			err = newStateExecutionError(*retError, st)
 		}
 
-		if !skipCaptureErrorLogging {
-			log.Printf("error is captured: %v", err)
+		if !skipCaptureErrorLogging && errPanic != nil {
+			log.Printf("panic is captured: %v", errPanic)
 		}
 		*retError = err
 	}

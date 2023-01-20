@@ -18,7 +18,17 @@ func TestPersistenceWorkflow(t *testing.T) {
 		StrValue: wfId,
 		Datetime: time.Now(),
 	}
-	runId, err := client.StartWorkflow(context.Background(), &persistenceWorkflow{}, wfId, 10, input, nil)
+	opt := iwf.WorkflowOptions{
+		InitialSearchAttributes: map[string]interface{}{
+			testSearchAttributeKeyword:  "init-1",
+			testSearchAttributeText:     "init-2",
+			testSearchAttributeBool:     false,
+			testSearchAttributeDatetime: time.Now(),
+			testSearchAttributeInt:      1,
+			testSearchAttributeDouble:   2.1,
+		},
+	}
+	runId, err := client.StartWorkflow(context.Background(), &persistenceWorkflow{}, wfId, 10, input, &opt)
 	assert.Nil(t, err)
 	assert.NotEmpty(t, runId)
 	err = client.GetSimpleWorkflowResult(context.Background(), wfId, "", nil)

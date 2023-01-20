@@ -13,7 +13,7 @@ type unregisteredClientImpl struct {
 	apiClient *iwfidl.APIClient
 }
 
-func (u *unregisteredClientImpl) StartWorkflow(ctx context.Context, workflowType string, startStateId, workflowId string, timeoutSecs int32, input interface{}, options *WorkflowOptions) (string, error) {
+func (u *unregisteredClientImpl) StartWorkflow(ctx context.Context, workflowType string, startStateId, workflowId string, timeoutSecs int32, input interface{}, options *UnregisteredWorkflowOptions) (string, error) {
 	var encodedInput *iwfidl.EncodedObject
 	var err error
 	if input != nil {
