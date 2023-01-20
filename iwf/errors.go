@@ -48,28 +48,18 @@ func NewWorkflowDefinitionErrorFmt(tpl string, arg ...interface{}) error {
 	}
 }
 
-type InternalServiceError struct {
-	Message      string
-	Status       int
-	HttpResponse http.Response
-}
-
-func NewInternalServiceError(message string, httpResponse http.Response) error {
-	return &InternalServiceError{
-		Message:      message,
-		Status:       httpResponse.StatusCode,
-		HttpResponse: httpResponse,
-	}
+type InternalError struct {
+	Message string
 }
 
 func newInternalError(format string, args ...interface{}) error {
-	return &InternalServiceError{
+	return &InternalError{
 		Message: fmt.Sprintf(format, args...),
 	}
 }
 
-func (i InternalServiceError) Error() string {
-	return fmt.Sprintf("error message:%v, statusCode: %v", i.Message, i.Status)
+func (i InternalError) Error() string {
+	return fmt.Sprintf("error in SDK or service: message:%v", i.Message)
 }
 
 type StateExecutionError struct {
@@ -117,11 +107,61 @@ func captureStateExecutionError(errPanic interface{}, retError *error) {
 	}
 }
 
-// GetOpenApiErrorDetailedMessage retrieve the API error body into a string to be human-readable
-func GetOpenApiErrorDetailedMessage(err error) string {
-	oerr, ok := err.(*iwfidl.GenericOpenAPIError)
-	if !ok {
-		return "not an OpenAPI Generic Error type"
+type ApiError struct {
+	StatusCode    int
+	OriginalError error
+	OpenApiError  *iwfidl.GenericOpenAPIError
+	HttpResponse  *http.Response
+	Response      *iwfidl.ErrorResponse
+}
+
+func (i *ApiError) Error() string {
+	return i.OriginalError.Error()
+}
+
+func NewApiError(originalError error, openApiError *iwfidl.GenericOpenAPIError, httpResponse *http.Response, response *iwfidl.ErrorResponse) error {
+	statusCode := 0
+	if httpResponse != nil {
+		statusCode = httpResponse.StatusCode
 	}
-	return string(oerr.Body())
+	return &ApiError{
+		StatusCode:    statusCode,
+		OriginalError: originalError,
+		OpenApiError:  openApiError,
+		HttpResponse:  httpResponse,
+		Response:      response,
+	}
+}
+
+// GetOpenApiErrorBody retrieve the API error body into a string to be human-readable
+func GetOpenApiErrorBody(err error) string {
+	apiError, ok := err.(*ApiError)
+	if !ok {
+		return "not an ApiError"
+	}
+	return string(apiError.OpenApiError.Body())
+}
+
+func IsClientError(err error) bool {
+	apiError, ok := err.(*ApiError)
+	if !ok {
+		return false
+	}
+	return apiError.StatusCode >= 400 && apiError.StatusCode < 500
+}
+
+func IsWorkflowAlreadyStartedError(err error) bool {
+	apiError, ok := err.(*ApiError)
+	if !ok || apiError.Response == nil {
+		return false
+	}
+	return apiError.Response.GetSubStatus() == iwfidl.WORKFLOW_ALREADY_STARTED_SUB_STATUS
+}
+
+func IsWorkflowNotExistsError(err error) bool {
+	apiError, ok := err.(*ApiError)
+	if !ok || apiError.Response == nil {
+		return false
+	}
+	return apiError.Response.GetSubStatus() == iwfidl.WORKFLOW_NOT_EXISTS_SUB_STATUS
 }

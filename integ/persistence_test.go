@@ -70,6 +70,6 @@ func TestPersistenceWorkflow(t *testing.T) {
 		PageSize:      iwfidl.PtrInt32(1),
 		NextPageToken: nil,
 	})
-	assert.Nil(t, err, iwf.GetOpenApiErrorDetailedMessage(err))
+	assert.Nil(t, err, iwf.GetOpenApiErrorBody(err))
 	assert.True(t, len(resp.WorkflowExecutions) > 0)
 }
