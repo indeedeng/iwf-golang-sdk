@@ -17,7 +17,9 @@ func (w *workerServiceImpl) HandleWorkflowStateStart(ctx context.Context, reques
 	stateDef := w.registry.getWorkflowStateDef(wfType, request.GetWorkflowStateId())
 	input := NewObject(request.StateInput, w.options.ObjectEncoder)
 	reqContext := request.GetContext()
-	wfCtx := newWorkflowContext(ctx, reqContext.GetWorkflowId(), reqContext.GetWorkflowRunId(), reqContext.GetStateExecutionId(), reqContext.GetWorkflowStartedTimestamp())
+	wfCtx := newWorkflowContext(
+		ctx, reqContext.GetWorkflowId(), reqContext.GetWorkflowRunId(), reqContext.GetStateExecutionId(), reqContext.GetWorkflowStartedTimestamp(),
+		int(reqContext.GetAttempt()), reqContext.GetFirstAttemptTimestamp())
 
 	pers, err := newPersistence(w.options.ObjectEncoder, w.registry.getWorkflowDataObjectKeyStore(wfType), w.registry.getSearchAttributeTypeStore(wfType), request.DataObjects, request.SearchAttributes, nil)
 	if err != nil {
@@ -96,7 +98,9 @@ func (w *workerServiceImpl) HandleWorkflowStateDecide(ctx context.Context, reque
 	stateDef := w.registry.getWorkflowStateDef(wfType, request.GetWorkflowStateId())
 	input := NewObject(request.StateInput, w.options.ObjectEncoder)
 	reqContext := request.GetContext()
-	wfCtx := newWorkflowContext(ctx, reqContext.GetWorkflowId(), reqContext.GetWorkflowRunId(), reqContext.GetStateExecutionId(), reqContext.GetWorkflowStartedTimestamp())
+	wfCtx := newWorkflowContext(
+		ctx, reqContext.GetWorkflowId(), reqContext.GetWorkflowRunId(), reqContext.GetStateExecutionId(), reqContext.GetWorkflowStartedTimestamp(),
+		int(reqContext.GetAttempt()), reqContext.GetFirstAttemptTimestamp())
 
 	commandResults, err := fromIdlCommandResults(request.CommandResults, w.options.ObjectEncoder)
 	if err != nil {
