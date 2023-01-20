@@ -11,7 +11,7 @@ import (
 
 func TestSignalWorkflow(t *testing.T) {
 	wfId := "TestSignalWorkflow" + strconv.Itoa(int(time.Now().Unix()))
-	runId, err := client.StartWorkflow(context.Background(), &signalWorkflow{}, signalWorkflowState1Id, wfId, 10, nil, nil)
+	runId, err := client.StartWorkflow(context.Background(), &signalWorkflow{}, wfId, 10, nil, nil)
 	assert.Nil(t, err)
 	assert.NotEmpty(t, runId)
 	err = client.SignalWorkflow(context.Background(), &signalWorkflow{}, wfId, "", testChannelName2, 10)

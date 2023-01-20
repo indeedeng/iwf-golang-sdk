@@ -6,6 +6,7 @@ import (
 
 type registryImpl struct {
 	workflowStore              map[string]Workflow
+	workflowStartingState      map[string]WorkflowState
 	workflowStateStore         map[string]map[string]StateDef
 	signalNameStore            map[string]map[string]bool
 	interStateChannelNameStore map[string]map[string]bool
@@ -44,6 +45,10 @@ func (r *registryImpl) GetAllRegisteredWorkflowTypes() []string {
 	return res
 }
 
+func (r *registryImpl) getWorkflowStartingState(wfType string) WorkflowState {
+	return r.workflowStartingState[wfType]
+}
+
 func (r *registryImpl) getWorkflowStateDef(wfType string, id string) StateDef {
 	return r.workflowStateStore[wfType][id]
 }
@@ -80,9 +85,18 @@ func (r *registryImpl) registerWorkflowState(wf Workflow) error {
 		return NewWorkflowDefinitionFmtError("Workflow type %s must contain at least one workflow state", wfType)
 	}
 	stateMap := map[string]StateDef{}
+	var startingState WorkflowState
 	for _, state := range wf.GetStates() {
 		stateMap[state.State.GetStateId()] = state
+		if state.CanStartWorkflow {
+			if startingState == nil {
+				startingState = state.State
+			} else {
+				return NewWorkflowDefinitionError("Workflow must contain exactly one starting states: " + wfType)
+			}
+		}
 	}
+	r.workflowStartingState[wfType] = startingState
 	r.workflowStateStore[wfType] = stateMap
 	return nil
 }

@@ -13,12 +13,9 @@ type clientImpl struct {
 	options  *ClientOptions
 }
 
-func (c *clientImpl) StartWorkflow(ctx context.Context, workflow Workflow, startStateId, workflowId string, timeoutSecs int32, input interface{}, options *WorkflowOptions) (string, error) {
+func (c *clientImpl) StartWorkflow(ctx context.Context, workflow Workflow, workflowId string, timeoutSecs int32, input interface{}, options *WorkflowOptions) (string, error) {
 	wfType := GetDefaultWorkflowType(workflow)
-	stateDef := c.registry.getWorkflowStateDef(wfType, startStateId)
-	if !stateDef.CanStartWorkflow {
-		return "", NewWorkflowDefinitionFmtError("cannot start workflow %v with start state %v", wfType, startStateId)
-	}
+	state := c.registry.getWorkflowStartingState(wfType)
 	if options != nil {
 		for _, sa := range options.InitialSearchAttributes {
 			typeMap := c.registry.getSearchAttributeTypeStore(wfType)
@@ -32,7 +29,7 @@ func (c *clientImpl) StartWorkflow(ctx context.Context, workflow Workflow, start
 			}
 		}
 	}
-	return c.UnregisteredClient.StartWorkflow(ctx, wfType, startStateId, workflowId, timeoutSecs, input, options)
+	return c.UnregisteredClient.StartWorkflow(ctx, wfType, state.GetStateId(), workflowId, timeoutSecs, input, options)
 }
 
 func (c *clientImpl) SignalWorkflow(ctx context.Context, workflow Workflow, workflowId, workflowRunId, signalChannelName string, signalValue interface{}) error {
