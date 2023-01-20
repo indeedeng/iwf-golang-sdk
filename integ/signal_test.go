@@ -25,6 +25,9 @@ func TestSignalWorkflow(t *testing.T) {
 	err = client.GetSimpleWorkflowResult(context.Background(), wfId, "", &output)
 	assert.Nil(t, err)
 	assert.Equal(t, 100, output)
+
+	err = client.SignalWorkflow(context.Background(), &signalWorkflow{}, "a wrong workflowId", "", testChannelName1, 100)
+	assert.True(t, iwf.IsWorkflowNotExistsError(err))
 }
 
 func TestSignalWorkflowWithUntypedClient(t *testing.T) {

@@ -24,8 +24,16 @@ func TestBasicWorkflow(t *testing.T) {
 	})
 	assert.Nil(t, err)
 	assert.NotEmpty(t, runId)
+
+	// start the same workflowId again will fail
+	_, err = client.StartWorkflow(context.Background(), &basicWorkflow{}, wfId, 10, nil, nil)
+	assert.True(t, iwf.IsWorkflowAlreadyStartedError(err))
+
 	var output int
 	err = client.GetSimpleWorkflowResult(context.Background(), wfId, "", &output)
 	assert.Nil(t, err)
 	assert.Equal(t, 3, output)
+
+	err = client.GetSimpleWorkflowResult(context.Background(), "a wrong workflowId", "", &output)
+	assert.True(t, iwf.IsWorkflowNotExistsError(err))
 }

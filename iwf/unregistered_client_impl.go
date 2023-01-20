@@ -251,11 +251,16 @@ func (u *unregisteredClientImpl) doSkipTimer(ctx context.Context, workflowId, wo
 }
 
 func (u *unregisteredClientImpl) processError(err error, httpResp *http.Response) error {
-	if err != nil {
-		return err
+	if err == nil && httpResp != nil && httpResp.StatusCode == http.StatusOK {
+		return nil
 	}
-	if httpResp.StatusCode != http.StatusOK {
-		return NewInternalServiceError("HTTP request failed", *httpResp)
+	var resp *iwfidl.ErrorResponse
+	oerr, ok := err.(*iwfidl.GenericOpenAPIError)
+	if ok {
+		rsp, ok := oerr.Model().(iwfidl.ErrorResponse)
+		if ok {
+			resp = &rsp
+		}
 	}
-	return nil
+	return NewApiError(err, oerr, httpResp, resp)
 }
