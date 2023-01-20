@@ -55,7 +55,7 @@ func ResetToStateId(stateId, reason string) ResetWorkflowTypeAndOptions {
 
 func ResetToStateExecutionId(stateExecutionId, reason string) ResetWorkflowTypeAndOptions {
 	return ResetWorkflowTypeAndOptions{
-		ResetType:        iwfidl.STATE_ID,
+		ResetType:        iwfidl.STATE_EXECUTION_ID,
 		Reason:           reason,
 		StateExecutionId: &stateExecutionId,
 	}
