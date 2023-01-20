@@ -84,6 +84,9 @@ func toIdlCommandRequest(commandRequest *CommandRequest) (*iwfidl.CommandRequest
 	if len(interStateCmds) > 0 {
 		idlCmdReq.InterStateChannelCommands = interStateCmds
 	}
+	if len(commandRequest.CommandCombinations) > 0 {
+		idlCmdReq.CommandCombinations = commandRequest.CommandCombinations
+	}
 	return idlCmdReq, nil
 }
 
