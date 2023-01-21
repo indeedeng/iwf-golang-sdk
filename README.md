@@ -31,10 +31,14 @@ See [contribution guide](CONTRIBUTION.md)
 - [x] Reset workflow by stateId/StateExecutionId
 - [x] More workflow start options: initial search attributes
 
+## 1.1
+
+- [x] Skip timer API for testing/operation
+- [x] Decider trigger type: any command combination
+
 ## Future
 - [ ] Decider trigger type: AnyCommandClosed
 - [ ] WaitForMoreResults in StateDecision
-- [ ] Skip timer API for testing/operation
 - [ ] LongRunningActivityCommand
 - [ ] Failing workflow details
 - [ ] Auto ContinueAsNew
