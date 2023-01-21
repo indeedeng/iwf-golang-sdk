@@ -20,8 +20,8 @@ func TestPersistenceWorkflow(t *testing.T) {
 	}
 	opt := iwf.WorkflowOptions{
 		InitialSearchAttributes: map[string]interface{}{
-			testSearchAttributeKeyword:  "init-1",
-			testSearchAttributeText:     "init-2",
+			testSearchAttributeKeyword:  "init-keyword",
+			testSearchAttributeText:     "init-text",
 			testSearchAttributeBool:     false,
 			testSearchAttributeDatetime: time.Now(),
 			testSearchAttributeInt:      1,

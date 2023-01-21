@@ -14,18 +14,23 @@ func (b persistenceWorkflowState1) GetStateId() string {
 }
 
 func (b persistenceWorkflowState1) Start(ctx iwf.WorkflowContext, input iwf.Object, persistence iwf.Persistence, communication iwf.Communication) (*iwf.CommandRequest, error) {
-	// TODO https://github.com/indeedeng/iwf/issues/146
-	//kw, err := persistence.GetSearchAttributeKeyword(testSearchAttributeKeyword)
-	//if kw != "init-1" {
-	//	panic("must have a init value")
-	//}
-	//txt, err := persistence.GetSearchAttributeKeyword(testSearchAttributeText)
-	//if txt != "init-2" {
-	//	panic("must have a init value")
-	//}
+	kw, err := persistence.GetSearchAttributeKeyword(testSearchAttributeKeyword)
+	if err != nil {
+		return nil, err
+	}
+	if kw != "init-keyword" {
+		panic("incorrect init value: " + kw)
+	}
+	txt, err := persistence.GetSearchAttributeText(testSearchAttributeText)
+	if err != nil {
+		return nil, err
+	}
+	if txt != "init-text" {
+		panic("incorrect init value: " + txt)
+	}
 
 	var do ExampleDataObjectModel
-	err := persistence.GetDataObject(testDataObjectKey, &do)
+	err = persistence.GetDataObject(testDataObjectKey, &do)
 	if err != nil {
 		return nil, err
 	}
