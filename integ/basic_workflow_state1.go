@@ -31,10 +31,7 @@ func (b basicWorkflowState1) Decide(ctx iwf.WorkflowContext, input iwf.Object, c
 		panic("GetFirstAttemptTimestampSeconds should be greater than zero")
 	}
 	var i int
-	err := input.Get(&i)
-	if err != nil {
-		return nil, err
-	}
+	input.Get(&i)
 	return iwf.SingleNextState(basicWorkflowState2Id, i+1), nil
 }
 

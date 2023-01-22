@@ -35,10 +35,7 @@ func (b persistenceWorkflowState1) Start(ctx iwf.WorkflowContext, input iwf.Obje
 		return nil, err
 	}
 	if do.StrValue == "" && do.IntValue == 0 {
-		err := input.Get(&do)
-		if err != nil {
-			return nil, err
-		}
+		input.Get(&do)
 		if do.StrValue == "" || do.IntValue == 0 {
 			panic("this value shouldn't be empty as we got it from start request")
 		}

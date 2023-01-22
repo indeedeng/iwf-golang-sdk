@@ -25,10 +25,7 @@ func (b interStateWorkflowState1) Decide(ctx iwf.WorkflowContext, input iwf.Obje
 	var i int
 	cmd1 := commandResults.GetInterStateChannelCommandResultById("id1")
 	cmd2 := commandResults.GetInterStateChannelCommandResultById("id2")
-	err := cmd2.Value.Get(&i)
-	if err != nil {
-		return nil, err
-	}
+	cmd2.Value.Get(&i)
 	if cmd1.Status == iwfidl.WAITING && i == 2 {
 		return iwf.GracefulCompletingWorkflow, nil
 	}

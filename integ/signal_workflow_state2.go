@@ -20,10 +20,7 @@ func (b signalWorkflowState2) GetStateId() string {
 
 func (b signalWorkflowState2) Start(ctx iwf.WorkflowContext, input iwf.Object, persistence iwf.Persistence, communication iwf.Communication) (*iwf.CommandRequest, error) {
 	var val int
-	err := input.Get(&val)
-	if err != nil {
-		panic(err)
-	}
+	input.Get(&val)
 	if val != 10 {
 		panic(fmt.Sprintf("input value should be 10 but is %v", val))
 	}
@@ -56,10 +53,7 @@ func (b signalWorkflowState2) Decide(ctx iwf.WorkflowContext, input iwf.Object, 
 	}
 
 	var val int
-	err := signal0.SignalValue.Get(&val)
-	if err != nil {
-		panic(err)
-	}
+	signal0.SignalValue.Get(&val)
 	if val != 100 {
 		panic("signal value should be 100")
 	}

@@ -29,10 +29,7 @@ func (b signalWorkflowState1) Decide(ctx iwf.WorkflowContext, input iwf.Object, 
 	}
 	if signal1.CommandId == "" && signal1.ChannelName == testChannelName2 && signal1.Status == iwfidl.RECEIVED {
 		var value int
-		err := signal1.SignalValue.Get(&value)
-		if err != nil {
-			return nil, err
-		}
+		signal1.SignalValue.Get(&value)
 		return iwf.SingleNextState(signalWorkflowState2Id, value), nil
 	}
 	return nil, fmt.Errorf(testChannelName2 + " doesn't receive correct value")
