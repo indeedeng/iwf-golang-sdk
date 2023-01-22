@@ -14,10 +14,7 @@ func (b interStateWorkflowState2) GetStateId() string {
 }
 
 func (b interStateWorkflowState2) Start(ctx iwf.WorkflowContext, input iwf.Object, persistence iwf.Persistence, communication iwf.Communication) (*iwf.CommandRequest, error) {
-	err := communication.PublishInterstateChannel(interStateChannel2, 2)
-	if err != nil {
-		return nil, err
-	}
+	communication.PublishInterstateChannel(interStateChannel2, 2)
 	return iwf.EmptyCommandRequest(), nil
 }
 

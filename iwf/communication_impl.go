@@ -12,18 +12,17 @@ func (c *communicationImpl) getToPublishInterStateChannel() map[string][]iwfidl.
 	return c.toPublishInterStateChannel
 }
 
-func (c *communicationImpl) PublishInterstateChannel(channelName string, value interface{}) error {
+func (c *communicationImpl) PublishInterstateChannel(channelName string, value interface{}) {
 	if !c.interStateChannelNames[channelName] {
-		return NewWorkflowDefinitionErrorFmt("channelName %v is not registered", channelName)
+		panic(NewWorkflowDefinitionErrorFmt("channelName %v is not registered", channelName))
 	}
 	l := c.toPublishInterStateChannel[channelName]
 	obj, err := c.encoder.Encode(value)
 	if err != nil {
-		return err
+		panic(err)
 	}
 	l = append(l, *obj)
 	c.toPublishInterStateChannel[channelName] = l
-	return nil
 }
 
 func newCommunication(encoder ObjectEncoder, interStateChannelNames map[string]bool) Communication {
