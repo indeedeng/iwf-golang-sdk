@@ -92,161 +92,161 @@ func newPersistence(
 	}, nil
 }
 
-func (p *persistenceImpl) GetDataObject(key string, valuePtr interface{}) error {
+func (p *persistenceImpl) GetDataObject(key string, valuePtr interface{}) {
 	if !p.dataObjectKeyMap[key] {
-		return NewWorkflowDefinitionErrorFmt("key %v is not registered as a data object", key)
+		panic(NewWorkflowDefinitionErrorFmt("key %v is not registered as a data object", key))
 	}
-	return p.encoder.Decode(ptr.Any(p.currentDataObjects[key]), valuePtr)
+	err := p.encoder.Decode(ptr.Any(p.currentDataObjects[key]), valuePtr)
+	if err != nil {
+		panic(err)
+	}
 }
 
-func (p *persistenceImpl) SetDataObject(key string, value interface{}) error {
+func (p *persistenceImpl) SetDataObject(key string, value interface{}) {
 	if !p.dataObjectKeyMap[key] {
-		return NewWorkflowDefinitionErrorFmt("key %v is not registered as a data object", key)
+		panic(NewWorkflowDefinitionErrorFmt("key %v is not registered as a data object", key))
 	}
 	v, err := p.encoder.Encode(value)
 	if err != nil {
-		return err
+		panic(err)
 	}
 	p.dataObjectsToReturn[key] = *v
 	p.currentDataObjects[key] = *v
-	return nil
 }
 
-func (p *persistenceImpl) GetSearchAttributeInt(key string) (int64, error) {
+func (p *persistenceImpl) GetSearchAttributeInt(key string) int64 {
 	if p.saKeyToType[key] != iwfidl.INT {
-		return 0, NewWorkflowDefinitionErrorFmt("key %v is not registered as a INT search attribute", key)
+		panic(NewWorkflowDefinitionErrorFmt("key %v is not registered as a INT search attribute", key))
 	}
-	return p.saCurrentIntValue[key], nil
+	return p.saCurrentIntValue[key]
 }
 
-func (p *persistenceImpl) SetSearchAttributeInt(key string, value int64) error {
+func (p *persistenceImpl) SetSearchAttributeInt(key string, value int64) {
 	if p.saKeyToType[key] != iwfidl.INT {
-		return NewWorkflowDefinitionErrorFmt("key %v is not registered as a INT search attribute", key)
+		panic(NewWorkflowDefinitionErrorFmt("key %v is not registered as a INT search attribute", key))
 	}
 	p.saCurrentIntValue[key] = value
 	p.saIntToReturn[key] = value
-	return nil
 }
 
-func (p *persistenceImpl) GetSearchAttributeKeyword(key string) (string, error) {
+func (p *persistenceImpl) GetSearchAttributeKeyword(key string) string {
 	if p.saKeyToType[key] != iwfidl.KEYWORD {
-		return "", NewWorkflowDefinitionErrorFmt("key %v is not registered as a KEYWORD search attribute", key)
+		panic(NewWorkflowDefinitionErrorFmt("key %v is not registered as a KEYWORD search attribute", key))
 	}
-	return p.saCurrentStringValue[key], nil
+	return p.saCurrentStringValue[key]
 }
 
-func (p *persistenceImpl) SetSearchAttributeKeyword(key string, value string) error {
+func (p *persistenceImpl) SetSearchAttributeKeyword(key string, value string) {
 	if p.saKeyToType[key] != iwfidl.KEYWORD {
-		return NewWorkflowDefinitionErrorFmt("key %v is not registered as a KEYWORD search attribute", key)
+		panic(NewWorkflowDefinitionErrorFmt("key %v is not registered as a KEYWORD search attribute", key))
 	}
 	p.saCurrentStringValue[key] = value
 	p.saStringToReturn[key] = value
-	return nil
 }
 
-func (p *persistenceImpl) GetSearchAttributeBool(key string) (bool, error) {
+func (p *persistenceImpl) GetSearchAttributeBool(key string) bool {
 	if p.saKeyToType[key] != iwfidl.BOOL {
-		return false, NewWorkflowDefinitionErrorFmt("key %v is not registered as a BOOL search attribute", key)
+		panic(NewWorkflowDefinitionErrorFmt("key %v is not registered as a BOOL search attribute", key))
 	}
-	return p.saCurrentBoolValue[key], nil
+	return p.saCurrentBoolValue[key]
 }
 
-func (p *persistenceImpl) SetSearchAttributeBool(key string, value bool) error {
+func (p *persistenceImpl) SetSearchAttributeBool(key string, value bool) {
 	if p.saKeyToType[key] != iwfidl.BOOL {
-		return NewWorkflowDefinitionErrorFmt("key %v is not registered as a BOOL search attribute", key)
+		panic(NewWorkflowDefinitionErrorFmt("key %v is not registered as a BOOL search attribute", key))
 	}
 	p.saBoolToReturn[key] = value
 	p.saCurrentBoolValue[key] = value
-	return nil
 }
 
-func (p *persistenceImpl) GetSearchAttributeDouble(key string) (float64, error) {
+func (p *persistenceImpl) GetSearchAttributeDouble(key string) float64 {
 	if p.saKeyToType[key] != iwfidl.DOUBLE {
-		return 0, NewWorkflowDefinitionErrorFmt("key %v is not registered as a DOUBLE search attribute", key)
+		panic(NewWorkflowDefinitionErrorFmt("key %v is not registered as a DOUBLE search attribute", key))
 	}
-	return p.saCurrentDoubleValue[key], nil
+	return p.saCurrentDoubleValue[key]
 }
 
-func (p *persistenceImpl) SetSearchAttributeDouble(key string, value float64) error {
+func (p *persistenceImpl) SetSearchAttributeDouble(key string, value float64) {
 	if p.saKeyToType[key] != iwfidl.DOUBLE {
-		return NewWorkflowDefinitionErrorFmt("key %v is not registered as a DOUBLE search attribute", key)
+		panic(NewWorkflowDefinitionErrorFmt("key %v is not registered as a DOUBLE search attribute", key))
 	}
 	p.saCurrentDoubleValue[key] = value
 	p.saDoubleToReturn[key] = value
-	return nil
 }
 
-func (p *persistenceImpl) GetSearchAttributeText(key string) (string, error) {
+func (p *persistenceImpl) GetSearchAttributeText(key string) string {
 	if p.saKeyToType[key] != iwfidl.TEXT {
-		return "", NewWorkflowDefinitionErrorFmt("key %v is not registered as a TEXT search attribute", key)
+		panic(NewWorkflowDefinitionErrorFmt("key %v is not registered as a TEXT search attribute", key))
 	}
-	return p.saCurrentStringValue[key], nil
+	return p.saCurrentStringValue[key]
 }
 
-func (p *persistenceImpl) SetSearchAttributeText(key string, value string) error {
+func (p *persistenceImpl) SetSearchAttributeText(key string, value string) {
 	if p.saKeyToType[key] != iwfidl.TEXT {
-		return NewWorkflowDefinitionErrorFmt("key %v is not registered as a TEXT search attribute", key)
+		panic(NewWorkflowDefinitionErrorFmt("key %v is not registered as a TEXT search attribute", key))
 	}
 	p.saStringToReturn[key] = value
 	p.saCurrentStringValue[key] = value
-	return nil
 }
 
-func (p *persistenceImpl) GetSearchAttributeDatetime(key string) (time.Time, error) {
+func (p *persistenceImpl) GetSearchAttributeDatetime(key string) time.Time {
 	if p.saKeyToType[key] != iwfidl.DATETIME {
-		return time.Time{}, NewWorkflowDefinitionErrorFmt("key %v is not registered as a DATETIME search attribute", key)
+		panic(NewWorkflowDefinitionErrorFmt("key %v is not registered as a DATETIME search attribute", key))
 	}
-	return time.Parse(DateTimeFormat, p.saCurrentStringValue[key])
+	d, err := time.Parse(DateTimeFormat, p.saCurrentStringValue[key])
+	if err != nil {
+		panic(err)
+	}
+	return d
 }
 
-func (p *persistenceImpl) SetSearchAttributeDatetime(key string, value time.Time) error {
+func (p *persistenceImpl) SetSearchAttributeDatetime(key string, value time.Time) {
 	if p.saKeyToType[key] != iwfidl.DATETIME {
-		return NewWorkflowDefinitionErrorFmt("key %v is not registered as a DATETIME search attribute", key)
+		panic(NewWorkflowDefinitionErrorFmt("key %v is not registered as a DATETIME search attribute", key))
 	}
 
 	v := value.Format(DateTimeFormat)
 	p.saCurrentStringValue[key] = v
 	p.saStringToReturn[key] = v
-	return nil
 }
 
-func (p *persistenceImpl) GetSearchAttributeKeywordArray(key string) ([]string, error) {
+func (p *persistenceImpl) GetSearchAttributeKeywordArray(key string) []string {
 	if p.saKeyToType[key] != iwfidl.KEYWORD_ARRAY {
-		return nil, NewWorkflowDefinitionErrorFmt("key %v is not registered as a KEYWORD_ARRAY search attribute", key)
+		panic(NewWorkflowDefinitionErrorFmt("key %v is not registered as a KEYWORD_ARRAY search attribute", key))
 	}
-	return p.saCurrentStrArrValue[key], nil
+	return p.saCurrentStrArrValue[key]
 }
 
-func (p *persistenceImpl) SetSearchAttributeKeywordArray(key string, value []string) error {
+func (p *persistenceImpl) SetSearchAttributeKeywordArray(key string, value []string) {
 	if p.saKeyToType[key] != iwfidl.KEYWORD_ARRAY {
-		return NewWorkflowDefinitionErrorFmt("key %v is not registered as a KEYWORD_ARRAY search attribute", key)
+		panic(NewWorkflowDefinitionErrorFmt("key %v is not registered as a KEYWORD_ARRAY search attribute", key))
 	}
 	p.saCurrentStrArrValue[key] = value
 	p.saStrArrToReturn[key] = value
-	return nil
 }
 
-func (p *persistenceImpl) GetStateLocal(key string, valuePtr interface{}) error {
-	return p.encoder.Decode(ptr.Any(p.currentStateLocal[key]), valuePtr)
+func (p *persistenceImpl) GetStateLocal(key string, valuePtr interface{}) {
+	err := p.encoder.Decode(ptr.Any(p.currentStateLocal[key]), valuePtr)
+	if err != nil {
+		panic(err)
+	}
 }
 
-func (p *persistenceImpl) SetStateLocal(key string, value interface{}) error {
+func (p *persistenceImpl) SetStateLocal(key string, value interface{}) {
 	v, err := p.encoder.Encode(value)
 	if err != nil {
-		return err
+		panic(err)
 	}
 	p.currentStateLocal[key] = *v
 	p.stateLocalToReturn[key] = *v
-	return nil
 }
 
-func (p *persistenceImpl) RecordEvent(key string, value interface{}) error {
+func (p *persistenceImpl) RecordEvent(key string, value interface{}) {
 	v, err := p.encoder.Encode(value)
 	if err != nil {
-		return err
+		panic(err)
 	}
 	p.recordedEvents[key] = *v
-	return nil
 }
 
 func (p *persistenceImpl) getToReturn() (
