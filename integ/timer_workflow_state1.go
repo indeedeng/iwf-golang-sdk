@@ -1,17 +1,12 @@
 package integ
 
 import (
-	"github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
 	"github.com/indeedeng/iwf-golang-sdk/iwf"
 	"time"
 )
 
-type timerWorkflowState1 struct{}
-
-const timerWorkflowState1Id = "timerWorkflowState1"
-
-func (b timerWorkflowState1) GetStateId() string {
-	return timerWorkflowState1Id
+type timerWorkflowState1 struct {
+	iwf.DefaultStateIdAndOptions
 }
 
 func (b timerWorkflowState1) Start(ctx iwf.WorkflowContext, input iwf.Object, persistence iwf.Persistence, communication iwf.Communication) (*iwf.CommandRequest, error) {
@@ -26,8 +21,4 @@ func (b timerWorkflowState1) Decide(ctx iwf.WorkflowContext, input iwf.Object, c
 	var i int
 	input.Get(&i)
 	return iwf.GracefulCompleteWorkflow(i + 1), nil
-}
-
-func (b timerWorkflowState1) GetStateOptions() *iwfidl.WorkflowStateOptions {
-	return nil
 }

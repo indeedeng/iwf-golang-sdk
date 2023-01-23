@@ -87,11 +87,12 @@ func (r *registryImpl) registerWorkflowState(wf Workflow) error {
 	stateMap := map[string]StateDef{}
 	var startingState WorkflowState
 	for _, state := range wf.GetStates() {
-		_, ok := stateMap[state.State.GetStateId()]
+		stateId := GetFinalWorkflowStateId(state.State)
+		_, ok := stateMap[stateId]
 		if ok {
-			return NewWorkflowDefinitionErrorFmt("Workflow %v cannot have duplicate stateId %v ", wfType, state.State.GetStateId())
+			return NewWorkflowDefinitionErrorFmt("Workflow %v cannot have duplicate stateId %v ", wfType, stateId)
 		}
-		stateMap[state.State.GetStateId()] = state
+		stateMap[stateId] = state
 		if state.CanStartWorkflow {
 			if startingState == nil {
 				startingState = state.State

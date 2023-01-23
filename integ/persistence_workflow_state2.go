@@ -1,19 +1,14 @@
 package integ
 
 import (
-	"github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
 	"github.com/indeedeng/iwf-golang-sdk/iwf"
 )
 
-type persistenceWorkflowState2 struct{}
-
-const persistenceWorkflowState2Id = "persistenceWorkflowState2"
+type persistenceWorkflowState2 struct {
+	iwf.DefaultStateIdAndOptions
+}
 
 const testText = "Hail iWF!"
-
-func (b persistenceWorkflowState2) GetStateId() string {
-	return persistenceWorkflowState2Id
-}
 
 func (b persistenceWorkflowState2) Start(ctx iwf.WorkflowContext, input iwf.Object, persistence iwf.Persistence, communication iwf.Communication) (*iwf.CommandRequest, error) {
 	iv := persistence.GetSearchAttributeInt(testSearchAttributeInt)
@@ -41,8 +36,4 @@ func (b persistenceWorkflowState2) Decide(ctx iwf.WorkflowContext, input iwf.Obj
 		return iwf.GracefulCompletingWorkflow, nil
 	}
 	panic("the value of text search attribute is incorrect")
-}
-
-func (b persistenceWorkflowState2) GetStateOptions() *iwfidl.WorkflowStateOptions {
-	return nil
 }

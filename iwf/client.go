@@ -30,6 +30,10 @@ type Client interface {
 	// GetAllWorkflowSearchAttributes returns all search attributes of a workflow execution
 	// workflowId is required, workflowRunId is optional and default to current runId of the workflowId
 	GetAllWorkflowSearchAttributes(ctx context.Context, workflow Workflow, workflowId, workflowRunId string) (map[string]interface{}, error)
+	// SkipTimerByCommandId skips a timer for the state execution based on the timerCommandId
+	SkipTimerByCommandId(ctx context.Context, workflowId, workflowRunId string, workflowState WorkflowState, stateExecutionNumber int, timerCommandId string) error
+	// SkipTimerByCommandIndex skips a timer for the state execution based on the timerCommandId
+	SkipTimerByCommandIndex(ctx context.Context, workflowId, workflowRunId string, workflowState WorkflowState, stateExecutionNumber, timerCommandIndex int) error
 }
 
 // clientCommon is the common APIs between Client and UnregisteredClient
@@ -63,10 +67,6 @@ type clientCommon interface {
 	// GetAllWorkflowDataObjects returns all the data objects of a workflow execution
 	// workflowId is required, workflowRunId is optional and default to current runId of the workflowId
 	GetAllWorkflowDataObjects(ctx context.Context, workflowId, workflowRunId string) (map[string]Object, error)
-	// SkipTimerByCommandId skips a timer for the state execution based on the timerCommandId
-	SkipTimerByCommandId(ctx context.Context, workflowId, workflowRunId, workflowStateId string, stateExecutionNumber int, timerCommandId string) error
-	// SkipTimerByCommandIndex skips a timer for the state execution based on the timerCommandId
-	SkipTimerByCommandIndex(ctx context.Context, workflowId, workflowRunId, workflowStateId string, stateExecutionNumber, timerCommandIndex int) error
 }
 
 // UnregisteredClient is a client without workflow registry
@@ -92,6 +92,10 @@ type UnregisteredClient interface {
 	// workflowId is required, workflowRunId is optional and default to current runId of the workflowId
 	// keys is required to be non-empty. If you intend to return all data objects, use GetAllWorkflowSearchAttributes API instead
 	GetWorkflowSearchAttributes(ctx context.Context, workflowId, workflowRunId string, keys []iwfidl.SearchAttributeKeyAndType) (map[string]iwfidl.SearchAttribute, error)
+	// SkipTimerByCommandIndex skips a timer for the state execution based on the timerCommandId
+	SkipTimerByCommandIndex(ctx context.Context, workflowId, workflowRunId, workflowStateId string, stateExecutionNumber, timerCommandIndex int) error
+	// SkipTimerByCommandId skips a timer for the state execution based on the timerCommandId
+	SkipTimerByCommandId(ctx context.Context, workflowId, workflowRunId, workflowStateId string, stateExecutionNumber int, timerCommandId string) error
 }
 
 // NewUnregisteredClient returns a UnregisteredClient

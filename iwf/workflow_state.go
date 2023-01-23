@@ -54,10 +54,10 @@ type WorkflowState interface {
 	GetStateOptions() *iwfidl.WorkflowStateOptions
 }
 
-// GetDefaultWorkflowStateId returns the stateId that will be registered
+// GetFinalWorkflowStateId returns the stateId that will be registered and used
 // if the workflowState is from &myStruct{} under mywf package, the method returns "*mywf.myStruct"
 // the "*" is from pointer. If the instance is initiated as myStruct{}, then it returns "mywf.myStruct" without the "*"
-func GetDefaultWorkflowStateId(workflowState WorkflowState) string {
+func GetFinalWorkflowStateId(workflowState WorkflowState) string {
 	sid := workflowState.GetStateId()
 	if sid == "" {
 		rt := reflect.TypeOf(workflowState)

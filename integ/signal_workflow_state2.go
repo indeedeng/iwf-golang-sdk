@@ -7,16 +7,12 @@ import (
 	"time"
 )
 
-type signalWorkflowState2 struct{}
-
-const signalWorkflowState2Id = "signalWorkflowState2"
+type signalWorkflowState2 struct {
+	iwf.DefaultStateIdAndOptions
+}
 
 const timerCommandId = "timerId"
 const signalCommandId = "s1"
-
-func (b signalWorkflowState2) GetStateId() string {
-	return signalWorkflowState2Id
-}
 
 func (b signalWorkflowState2) Start(ctx iwf.WorkflowContext, input iwf.Object, persistence iwf.Persistence, communication iwf.Communication) (*iwf.CommandRequest, error) {
 	var val int
@@ -59,8 +55,4 @@ func (b signalWorkflowState2) Decide(ctx iwf.WorkflowContext, input iwf.Object, 
 	}
 
 	return iwf.GracefulCompleteWorkflow(val), nil
-}
-
-func (b signalWorkflowState2) GetStateOptions() *iwfidl.WorkflowStateOptions {
-	return nil
 }

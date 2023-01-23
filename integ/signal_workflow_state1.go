@@ -6,12 +6,8 @@ import (
 	"github.com/indeedeng/iwf-golang-sdk/iwf"
 )
 
-type signalWorkflowState1 struct{}
-
-const signalWorkflowState1Id = "signalWorkflowState1"
-
-func (b signalWorkflowState1) GetStateId() string {
-	return signalWorkflowState1Id
+type signalWorkflowState1 struct {
+	iwf.DefaultStateIdAndOptions
 }
 
 func (b signalWorkflowState1) Start(ctx iwf.WorkflowContext, input iwf.Object, persistence iwf.Persistence, communication iwf.Communication) (*iwf.CommandRequest, error) {
@@ -30,11 +26,7 @@ func (b signalWorkflowState1) Decide(ctx iwf.WorkflowContext, input iwf.Object, 
 	if signal1.CommandId == "" && signal1.ChannelName == testChannelName2 && signal1.Status == iwfidl.RECEIVED {
 		var value int
 		signal1.SignalValue.Get(&value)
-		return iwf.SingleNextState(signalWorkflowState2Id, value), nil
+		return iwf.SingleNextState(signalWorkflowState2{}, value), nil
 	}
 	return nil, fmt.Errorf(testChannelName2 + " doesn't receive correct value")
-}
-
-func (b signalWorkflowState1) GetStateOptions() *iwfidl.WorkflowStateOptions {
-	return nil
 }

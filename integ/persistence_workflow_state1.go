@@ -1,16 +1,11 @@
 package integ
 
 import (
-	"github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
 	"github.com/indeedeng/iwf-golang-sdk/iwf"
 )
 
-type persistenceWorkflowState1 struct{}
-
-const persistenceWorkflowState1Id = "persistenceWorkflowState1"
-
-func (b persistenceWorkflowState1) GetStateId() string {
-	return persistenceWorkflowState1Id
+type persistenceWorkflowState1 struct {
+	iwf.DefaultStateIdAndOptions
 }
 
 func (b persistenceWorkflowState1) Start(ctx iwf.WorkflowContext, input iwf.Object, persistence iwf.Persistence, communication iwf.Communication) (*iwf.CommandRequest, error) {
@@ -50,9 +45,5 @@ func (b persistenceWorkflowState1) Decide(ctx iwf.WorkflowContext, input iwf.Obj
 	persistence.GetDataObject(testDataObjectKey, &do)
 	persistence.SetSearchAttributeDatetime(testSearchAttributeDatetime, do.Datetime)
 	persistence.SetSearchAttributeBool(testSearchAttributeBool, true)
-	return iwf.SingleNextState(persistenceWorkflowState2Id, nil), nil
-}
-
-func (b persistenceWorkflowState1) GetStateOptions() *iwfidl.WorkflowStateOptions {
-	return nil
+	return iwf.SingleNextState(persistenceWorkflowState2{}, nil), nil
 }

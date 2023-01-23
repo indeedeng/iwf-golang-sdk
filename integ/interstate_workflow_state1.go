@@ -6,12 +6,8 @@ import (
 	"github.com/indeedeng/iwf-golang-sdk/iwf"
 )
 
-type interStateWorkflowState1 struct{}
-
-const interStateWorkflowState1Id = "interStateWorkflowState1"
-
-func (b interStateWorkflowState1) GetStateId() string {
-	return interStateWorkflowState1Id
+type interStateWorkflowState1 struct {
+	iwf.DefaultStateIdAndOptions
 }
 
 func (b interStateWorkflowState1) Start(ctx iwf.WorkflowContext, input iwf.Object, persistence iwf.Persistence, communication iwf.Communication) (*iwf.CommandRequest, error) {
@@ -29,9 +25,5 @@ func (b interStateWorkflowState1) Decide(ctx iwf.WorkflowContext, input iwf.Obje
 	if cmd1.Status == iwfidl.WAITING && i == 2 {
 		return iwf.GracefulCompletingWorkflow, nil
 	}
-	return nil, fmt.Errorf("error in executing " + interStateWorkflowState1Id)
-}
-
-func (b interStateWorkflowState1) GetStateOptions() *iwfidl.WorkflowStateOptions {
-	return nil
+	return nil, fmt.Errorf("error in executing " + ctx.GetStateExecutionId())
 }
