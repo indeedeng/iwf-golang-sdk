@@ -22,7 +22,11 @@ const (
 	PersistenceFieldTypeSearchAttribute PersistenceFieldType = "SearchAttribute"
 )
 
+func DataObjectDef(key string) PersistenceFieldDef {
+	return NewDataObjectDef(key)
+}
 
+// Deprecated: use DataObjectDef instead to be more concise and readable
 func NewDataObjectDef(key string) PersistenceFieldDef {
 	return PersistenceFieldDef{
 		Key:       key,
@@ -30,6 +34,11 @@ func NewDataObjectDef(key string) PersistenceFieldDef {
 	}
 }
 
+func SearchAttributeDef(key string, saType iwfidl.SearchAttributeValueType) PersistenceFieldDef {
+	return NewSearchAttributeDef(key, saType)
+}
+
+// Deprecated: use SearchAttributeDef instead to be more concise and readable
 func NewSearchAttributeDef(key string, saType iwfidl.SearchAttributeValueType) PersistenceFieldDef {
 	return PersistenceFieldDef{
 		Key:                 key,

@@ -9,9 +9,9 @@ const interStateChannel2 = "test-inter-state-channel-2"
 
 func (b interStateWorkflow) GetStates() []iwf.StateDef {
 	return []iwf.StateDef{
-		iwf.NewStartingState(&interStateWorkflowState0{}),
-		iwf.NewNonStartingState(&interStateWorkflowState1{}),
-		iwf.NewNonStartingState(&interStateWorkflowState2{}),
+		iwf.StartingStateDef(&interStateWorkflowState0{}),
+		iwf.NonStartingStateDef(&interStateWorkflowState1{}),
+		iwf.NonStartingStateDef(&interStateWorkflowState2{}),
 	}
 }
 
@@ -21,8 +21,8 @@ func (b interStateWorkflow) GetPersistenceSchema() []iwf.PersistenceFieldDef {
 
 func (b interStateWorkflow) GetCommunicationSchema() []iwf.CommunicationMethodDef {
 	return []iwf.CommunicationMethodDef{
-		iwf.NewInterstateChannelDef(interStateChannel1),
-		iwf.NewInterstateChannelDef(interStateChannel2),
+		iwf.InterstateChannelDef(interStateChannel1),
+		iwf.InterstateChannelDef(interStateChannel2),
 	}
 }
 

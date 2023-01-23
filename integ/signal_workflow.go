@@ -9,8 +9,8 @@ const testChannelName2 = "test-channel-name-2"
 
 func (b signalWorkflow) GetStates() []iwf.StateDef {
 	return []iwf.StateDef{
-		iwf.NewStartingState(&signalWorkflowState1{}),
-		iwf.NewNonStartingState(&signalWorkflowState2{}),
+		iwf.StartingStateDef(&signalWorkflowState1{}),
+		iwf.NonStartingStateDef(&signalWorkflowState2{}),
 	}
 }
 
@@ -20,8 +20,8 @@ func (b signalWorkflow) GetPersistenceSchema() []iwf.PersistenceFieldDef {
 
 func (b signalWorkflow) GetCommunicationSchema() []iwf.CommunicationMethodDef {
 	return []iwf.CommunicationMethodDef{
-		iwf.NewSignalChannelDef(testChannelName1),
-		iwf.NewSignalChannelDef(testChannelName2),
+		iwf.SignalChannelDef(testChannelName1),
+		iwf.SignalChannelDef(testChannelName2),
 	}
 }
 
