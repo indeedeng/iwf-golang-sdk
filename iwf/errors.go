@@ -101,7 +101,7 @@ func captureStateExecutionError(errPanic interface{}, retError *error) {
 		}
 
 		if !skipCaptureErrorLogging && errPanic != nil {
-			log.Printf("panic is captured: %v", errPanic)
+			log.Printf("panic is captured: %v , stacktrace: %v", errPanic, st)
 		}
 		*retError = err
 	}

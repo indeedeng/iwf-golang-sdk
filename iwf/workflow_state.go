@@ -3,6 +3,7 @@ package iwf
 import (
 	"github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
 	"reflect"
+	"strings"
 )
 
 type WorkflowState interface {
@@ -55,13 +56,13 @@ type WorkflowState interface {
 }
 
 // GetFinalWorkflowStateId returns the stateId that will be registered and used
-// if the workflowState is from &myStruct{} under mywf package, the method returns "*mywf.myStruct"
-// the "*" is from pointer. If the instance is initiated as myStruct{}, then it returns "mywf.myStruct" without the "*"
+// if the workflowState is from myStruct{} under mywf package, the method returns "mywf.myStruct"
 func GetFinalWorkflowStateId(workflowState WorkflowState) string {
 	sid := workflowState.GetStateId()
 	if sid == "" {
 		rt := reflect.TypeOf(workflowState)
-		return rt.String()
+		rtStr := strings.TrimLeft(rt.String(), "*")
+		return rtStr
 	}
 	return sid
 }

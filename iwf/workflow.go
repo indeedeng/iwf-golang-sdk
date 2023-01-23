@@ -1,6 +1,9 @@
 package iwf
 
-import "reflect"
+import (
+	"reflect"
+	"strings"
+)
 
 // Workflow is the interface to define a workflow definition.
 // Most of the time, the implementation only needs to return static value for each method.
@@ -49,13 +52,13 @@ type Workflow interface {
 }
 
 // GetFinalWorkflowType returns the workflow type that will be registered and used as IwfWorkflowType
-// if the workflow is from &myStruct{} under mywf package, the method returns "*mywf.myStruct"
-// the "*" is from pointer. If the instance is initiated as myStruct{}, then it returns "mywf.myStruct" without the "*"
+// if the workflow is from &myStruct{} under mywf package, the method returns "mywf.myStruct"
 func GetFinalWorkflowType(wf Workflow) string {
 	wfType := wf.GetWorkflowType()
 	if wfType == "" {
 		rt := reflect.TypeOf(wf)
-		return rt.String()
+		rtStr := strings.TrimLeft(rt.String(), "*")
+		return rtStr
 	}
 	return wfType
 }
