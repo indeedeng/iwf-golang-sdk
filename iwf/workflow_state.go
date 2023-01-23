@@ -11,8 +11,7 @@ type WorkflowState interface {
 	// the StateId is being used for WorkerService to choose the right WorkflowState to execute Start/Decide APIs
 	// See GetDefaultWorkflowStateId for default value when return empty string.
 	// It's the package + struct name of the workflow instance and ignores the import paths and aliases.
-	// e.g. if the workflow is from &myStruct{} under mywf package, the simple name is just "*mywf.myStruct". Underneath, it's from reflect.TypeOf(wf).String().
-	// the "*" is from pointer. If the instance is initiated as myStruct{}, then it is "mywf.myStruct" without the "*"
+	// e.g. if the workflow is from myStruct{} under mywf package, the simple name is just "mywf.myStruct". Underneath, it's from reflect.TypeOf(wf).String().
 	//
 	// Usually using default value is enough. Unless cases like:
 	// 1. You rename the workflowState struct but there is some in-flight state execution still using the old StateId
