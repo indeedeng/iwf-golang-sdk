@@ -33,7 +33,7 @@ func TestSignalWorkflow(t *testing.T) {
 func TestSignalWorkflowWithUntypedClient(t *testing.T) {
 	unregisteredClient := iwf.NewUnregisteredClient(nil)
 
-	wfType := iwf.GetDefaultWorkflowType(&signalWorkflow{})
+	wfType := iwf.GetFinalWorkflowType(&signalWorkflow{})
 	wfId := "TestSignalWorkflowWithUntypedClient" + strconv.Itoa(int(time.Now().Unix()))
 	runId, err := unregisteredClient.StartWorkflow(context.Background(), wfType, signalWorkflowState1Id, wfId, 10, nil, nil)
 	assert.Nil(t, err)
