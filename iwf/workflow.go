@@ -42,7 +42,9 @@ type Workflow interface {
 	// e.g. if the workflow is from &myStruct{} under mywf package, the simple name is just "*mywf.myStruct". Underneath, it's from reflect.TypeOf(wf).String().
 	// the "*" is from pointer. If the instance is initiated as myStruct{}, then it is "mywf.myStruct" without the "*"
 	//
-	// To avoid type name conflicts, or in case of dynamic workflow implementation, return customized values instead of using the default Workflow Type.
+	// Usually using default value is enough. Unless cases like:
+	// 1. To avoid type name conflicts because the GetDefaultWorkflowType is not long enough
+	// 2. In case of dynamic workflow implementation, return customized values instead of using empty string
 	GetWorkflowType() string
 }
 

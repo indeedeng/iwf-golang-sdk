@@ -1,8 +1,22 @@
 package iwf
 
-import "github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
+import (
+	"github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
+	"reflect"
+)
 
 type WorkflowState interface {
+	// GetStateId defines the StateId of this workflow state definition.
+	// the StateId is being used for WorkerService to choose the right WorkflowState to execute Start/Decide APIs
+	// See GetDefaultWorkflowStateId for default value when return empty string.
+	// It's the package + struct name of the workflow instance and ignores the import paths and aliases.
+	// e.g. if the workflow is from &myStruct{} under mywf package, the simple name is just "*mywf.myStruct". Underneath, it's from reflect.TypeOf(wf).String().
+	// the "*" is from pointer. If the instance is initiated as myStruct{}, then it is "mywf.myStruct" without the "*"
+	//
+	// Usually using default value is enough. Unless cases like:
+	// 1. You rename the workflowState struct but there is some in-flight state execution still using the old StateId
+	// 2. To avoid type name conflicts because the GetDefaultWorkflowStateId is not long enough
+	// 3. In case of dynamic workflow state implementation, return customized values instead of using empty string
 	GetStateId() string
 
 	// Start is the method to execute the commands set up for this state.
@@ -38,4 +52,30 @@ type WorkflowState interface {
 	// GetStateOptions can just return nil to use the default Options
 	// StateOptions is optional configuration to adjust the state behaviors
 	GetStateOptions() *iwfidl.WorkflowStateOptions
+}
+
+// GetDefaultWorkflowStateId returns the stateId that will be registered
+// if the workflowState is from &myStruct{} under mywf package, the method returns "*mywf.myStruct"
+// the "*" is from pointer. If the instance is initiated as myStruct{}, then it returns "mywf.myStruct" without the "*"
+func GetDefaultWorkflowStateId(workflowState WorkflowState) string {
+	sid := workflowState.GetStateId()
+	if sid == "" {
+		rt := reflect.TypeOf(workflowState)
+		return rt.String()
+	}
+	return sid
+}
+
+// DefaultStateIdAndOptions is a convenient struct to put into your state implementation to save the boilerplate code. Eg:
+// type myStateImpl struct{
+//     DefaultStateIdAndOptions
+// }
+type DefaultStateIdAndOptions struct{}
+
+func (d DefaultStateIdAndOptions) GetStateId() string {
+	return ""
+}
+
+func (d DefaultStateIdAndOptions) GetStateOptions() *iwfidl.WorkflowStateOptions {
+	return nil
 }
