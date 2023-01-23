@@ -70,12 +70,19 @@ func GetDefaultWorkflowStateId(workflowState WorkflowState) string {
 // type myStateImpl struct{
 //     DefaultStateIdAndOptions
 // }
-type DefaultStateIdAndOptions struct{}
+type DefaultStateIdAndOptions struct {
+	DefaultStateId
+	DefaultStateOptions
+}
 
-func (d DefaultStateIdAndOptions) GetStateId() string {
+type DefaultStateId struct{}
+
+func (d DefaultStateId) GetStateId() string {
 	return ""
 }
 
-func (d DefaultStateIdAndOptions) GetStateOptions() *iwfidl.WorkflowStateOptions {
+type DefaultStateOptions struct{}
+
+func (d DefaultStateOptions) GetStateOptions() *iwfidl.WorkflowStateOptions {
 	return nil
 }

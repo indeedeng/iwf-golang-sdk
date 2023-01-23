@@ -59,3 +59,33 @@ func GetDefaultWorkflowType(wf Workflow) string {
 	}
 	return wfType
 }
+
+// DefaultWorkflowType is a convenient struct to put into your workflow implementation to save the boilerplate code. Eg:
+// type myStateImpl struct{
+//     DefaultWorkflowType
+// }
+type DefaultWorkflowType struct{}
+
+func (d DefaultWorkflowType) GetWorkflowType() string {
+	return ""
+}
+
+// EmptyPersistenceSchema is a convenient struct to put into your workflow implementation to save the boilerplate code. Eg:
+// type myStateImpl struct{
+//     EmptyPersistenceSchema
+// }
+type EmptyPersistenceSchema struct{}
+
+func (d DefaultWorkflowType) GetPersistenceSchema() []PersistenceFieldDef {
+	return nil
+}
+
+// EmptyCommunicationSchema is a convenient struct to put into your workflow implementation to save the boilerplate code. Eg:
+// type myStateImpl struct{
+//     EmptyCommunicationSchema
+// }
+type EmptyCommunicationSchema struct{}
+
+func (d EmptyPersistenceSchema) GetCommunicationSchema() []CommunicationMethodDef {
+	return nil
+}
