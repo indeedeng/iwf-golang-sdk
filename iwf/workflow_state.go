@@ -2,8 +2,6 @@ package iwf
 
 import (
 	"github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
-	"reflect"
-	"strings"
 )
 
 type WorkflowState interface {
@@ -59,9 +57,7 @@ type WorkflowState interface {
 func GetFinalWorkflowStateId(workflowState WorkflowState) string {
 	sid := workflowState.GetStateId()
 	if sid == "" {
-		rt := reflect.TypeOf(workflowState)
-		rtStr := strings.TrimLeft(rt.String(), "*")
-		return rtStr
+		return getSimpleTypeNameFromReflect(workflowState)
 	}
 	return sid
 }

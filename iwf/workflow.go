@@ -50,13 +50,17 @@ type Workflow interface {
 	GetWorkflowType() string
 }
 
-// SetLegacyUseStarPrefixForPointerStruct will GetFinalWorkflowType to use "*" as prefix in the workflow type, if the struct is a pointer
+// SetLegacyUseStarPrefixInWorkflowTypeForPointerStruct will GetFinalWorkflowType to use "*" as prefix in the workflow type, if the struct is a pointer
 // e.g. &myStruct{} will return "*mywf.myStruct"
-func SetLegacyUseStarPrefixForPointerStruct() {
-	legacyUseStarPrefixForPointerStruct = true
+// this is only for being compatible for workflows running on old SDK versions
+func SetLegacyUseStarPrefixInWorkflowTypeForPointerStruct(legacyWorkflows ...Workflow) {
+	for _, wf := range legacyWorkflows {
+		simpleType := getSimpleTypeNameFromReflect(wf)
+		legacyUseStarPrefixInWorkflowTypeForPointerStruct[simpleType] = true
+	}
 }
 
-var legacyUseStarPrefixForPointerStruct = false
+var legacyUseStarPrefixInWorkflowTypeForPointerStruct map[string]bool
 
 // GetFinalWorkflowType returns the workflow type that will be registered and used as IwfWorkflowType
 // if the workflow is from &myStruct{} or myStruct{} under mywf package, the method returns "mywf.myStruct"
@@ -64,14 +68,25 @@ var legacyUseStarPrefixForPointerStruct = false
 func GetFinalWorkflowType(wf Workflow) string {
 	wfType := wf.GetWorkflowType()
 	if wfType == "" {
-		rt := reflect.TypeOf(wf)
-		if legacyUseStarPrefixForPointerStruct {
-			return rt.String()
+		legacyType := getLegacyTypeNameFromReflect(wf)
+		simpleType := getSimpleTypeNameFromReflect(wf)
+		if legacyUseStarPrefixInWorkflowTypeForPointerStruct[simpleType] {
+			return legacyType
 		}
-		rtStr := strings.TrimLeft(rt.String(), "*")
-		return rtStr
+		return simpleType
 	}
 	return wfType
+}
+
+func getSimpleTypeNameFromReflect(obj interface{}) string {
+	rt := reflect.TypeOf(obj)
+	rtStr := strings.TrimLeft(rt.String(), "*")
+	return rtStr
+}
+
+func getLegacyTypeNameFromReflect(obj interface{}) string {
+	rt := reflect.TypeOf(obj)
+	return rt.String()
 }
 
 // DefaultWorkflowType is a convenient struct to put into your workflow implementation to save the boilerplate code. Eg:
