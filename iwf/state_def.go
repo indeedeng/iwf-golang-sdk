@@ -6,6 +6,11 @@ type StateDef struct {
 	CanStartWorkflow bool
 }
 
+func StartingStateDef(state WorkflowState) StateDef {
+	return NewStartingState(state)
+}
+
+// Deprecated: use StartingStateDef instead to be more concise and readable
 func NewStartingState(state WorkflowState) StateDef {
 	return StateDef{
 		State:            state,
@@ -13,6 +18,11 @@ func NewStartingState(state WorkflowState) StateDef {
 	}
 }
 
+func NonStartingStateDef(state WorkflowState) StateDef {
+	return NewNonStartingState(state)
+}
+
+// Deprecated: use NonStartingStateDef instead to be more concise and readable
 func NewNonStartingState(state WorkflowState) StateDef {
 	return StateDef{
 		State:            state,

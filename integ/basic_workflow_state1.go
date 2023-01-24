@@ -1,16 +1,11 @@
 package integ
 
 import (
-	"github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
 	"github.com/indeedeng/iwf-golang-sdk/iwf"
 )
 
-type basicWorkflowState1 struct{}
-
-const basicWorkflowState1Id = "basicWorkflowState1"
-
-func (b basicWorkflowState1) GetStateId() string {
-	return basicWorkflowState1Id
+type basicWorkflowState1 struct {
+	iwf.DefaultStateIdAndOptions
 }
 
 func (b basicWorkflowState1) Start(ctx iwf.WorkflowContext, input iwf.Object, persistence iwf.Persistence, communication iwf.Communication) (*iwf.CommandRequest, error) {
@@ -31,13 +26,6 @@ func (b basicWorkflowState1) Decide(ctx iwf.WorkflowContext, input iwf.Object, c
 		panic("GetFirstAttemptTimestampSeconds should be greater than zero")
 	}
 	var i int
-	err := input.Get(&i)
-	if err != nil {
-		return nil, err
-	}
-	return iwf.SingleNextState(basicWorkflowState2Id, i+1), nil
-}
-
-func (b basicWorkflowState1) GetStateOptions() *iwfidl.WorkflowStateOptions {
-	return nil
+	input.Get(&i)
+	return iwf.SingleNextState(basicWorkflowState2{}, i+1), nil
 }

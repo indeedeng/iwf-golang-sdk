@@ -66,7 +66,7 @@ func TestPersistenceWorkflow(t *testing.T) {
 
 	time.Sleep(time.Second * 2) // wait for 2 seconds so that the index is updated
 	resp, err := client.SearchWorkflow(context.Background(), iwfidl.WorkflowSearchRequest{
-		Query:         fmt.Sprintf("IwfWorkflowType='%v'", iwf.GetDefaultWorkflowType(&persistenceWorkflow{})),
+		Query:         fmt.Sprintf("IwfWorkflowType='%v'", iwf.GetFinalWorkflowType(&persistenceWorkflow{})),
 		PageSize:      iwfidl.PtrInt32(1),
 		NextPageToken: nil,
 	})

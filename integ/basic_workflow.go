@@ -6,8 +6,8 @@ type basicWorkflow struct{}
 
 func (b basicWorkflow) GetStates() []iwf.StateDef {
 	return []iwf.StateDef{
-		iwf.NewStartingState(&basicWorkflowState1{}),
-		iwf.NewNonStartingState(&basicWorkflowState2{}),
+		iwf.StartingStateDef(&basicWorkflowState1{}),
+		iwf.NonStartingStateDef(&basicWorkflowState2{}),
 	}
 }
 

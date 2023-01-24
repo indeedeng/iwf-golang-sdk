@@ -6,7 +6,7 @@ type timerWorkflow struct{}
 
 func (b timerWorkflow) GetStates() []iwf.StateDef {
 	return []iwf.StateDef{
-		iwf.NewStartingState(&timerWorkflowState1{}),
+		iwf.StartingStateDef(&timerWorkflowState1{}),
 	}
 }
 

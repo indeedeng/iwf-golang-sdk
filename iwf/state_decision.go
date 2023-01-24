@@ -4,18 +4,30 @@ type StateDecision struct {
 	NextStates []StateMovement
 }
 
-func SingleNextState(stateId string, input interface{}) *StateDecision {
+func SingleNextState(state WorkflowState, input interface{}) *StateDecision {
 	return &StateDecision{
 		NextStates: []StateMovement{
 			{
-				NextStateId:    stateId,
+				NextStateId:    GetFinalWorkflowStateId(state),
 				NextStateInput: input,
 			},
 		},
 	}
 }
 
-func MultiNextStates(movements ...StateMovement) *StateDecision {
+func MultiNextStates(states ...WorkflowState) *StateDecision {
+	var movements []StateMovement
+	for _, st := range states {
+		movements = append(movements, StateMovement{
+			NextStateId: GetFinalWorkflowStateId(st),
+		})
+	}
+	return &StateDecision{
+		NextStates: movements,
+	}
+}
+
+func MultiNextStatesWithInput(movements ...StateMovement) *StateDecision {
 	return &StateDecision{
 		NextStates: movements,
 	}

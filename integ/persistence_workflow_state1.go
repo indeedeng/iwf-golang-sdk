@@ -1,87 +1,49 @@
 package integ
 
 import (
-	"github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
 	"github.com/indeedeng/iwf-golang-sdk/iwf"
 )
 
-type persistenceWorkflowState1 struct{}
-
-const persistenceWorkflowState1Id = "persistenceWorkflowState1"
-
-func (b persistenceWorkflowState1) GetStateId() string {
-	return persistenceWorkflowState1Id
+type persistenceWorkflowState1 struct {
+	iwf.DefaultStateIdAndOptions
 }
 
 func (b persistenceWorkflowState1) Start(ctx iwf.WorkflowContext, input iwf.Object, persistence iwf.Persistence, communication iwf.Communication) (*iwf.CommandRequest, error) {
-	kw, err := persistence.GetSearchAttributeKeyword(testSearchAttributeKeyword)
-	if err != nil {
-		return nil, err
-	}
+	kw := persistence.GetSearchAttributeKeyword(testSearchAttributeKeyword)
+
 	if kw != "init-keyword" {
 		panic("incorrect init value: " + kw)
 	}
-	txt, err := persistence.GetSearchAttributeText(testSearchAttributeText)
-	if err != nil {
-		return nil, err
-	}
+	txt := persistence.GetSearchAttributeText(testSearchAttributeText)
 	if txt != "init-text" {
 		panic("incorrect init value: " + txt)
 	}
 
 	var do ExampleDataObjectModel
-	err = persistence.GetDataObject(testDataObjectKey, &do)
-	if err != nil {
-		return nil, err
-	}
+	persistence.GetDataObject(testDataObjectKey, &do)
 	if do.StrValue == "" && do.IntValue == 0 {
-		err := input.Get(&do)
-		if err != nil {
-			return nil, err
-		}
+		input.Get(&do)
 		if do.StrValue == "" || do.IntValue == 0 {
 			panic("this value shouldn't be empty as we got it from start request")
 		}
 	} else {
 		panic("this value should be empty because we haven't set it before")
 	}
-	err = persistence.SetDataObject(testDataObjectKey, do)
-	if err != nil {
-		return nil, err
-	}
-	err = persistence.SetSearchAttributeInt(testSearchAttributeInt, 1)
-	if err != nil {
-		return nil, err
-	}
+	persistence.SetDataObject(testDataObjectKey, do)
+	persistence.SetSearchAttributeInt(testSearchAttributeInt, 1)
 
 	return iwf.EmptyCommandRequest(), nil
 }
 
 func (b persistenceWorkflowState1) Decide(ctx iwf.WorkflowContext, input iwf.Object, commandResults iwf.CommandResults, persistence iwf.Persistence, communication iwf.Communication) (*iwf.StateDecision, error) {
-	iv, err := persistence.GetSearchAttributeInt(testSearchAttributeInt)
-	if err != nil {
-		return nil, err
-	}
+	iv := persistence.GetSearchAttributeInt(testSearchAttributeInt)
 	if iv != 1 {
 		panic("this value must be 1 because it got set by Start API")
 	}
 
 	var do ExampleDataObjectModel
-	err = persistence.GetDataObject(testDataObjectKey, &do)
-	if err != nil {
-		return nil, err
-	}
-	err = persistence.SetSearchAttributeDatetime(testSearchAttributeDatetime, do.Datetime)
-	if err != nil {
-		return nil, err
-	}
-	err = persistence.SetSearchAttributeBool(testSearchAttributeBool, true)
-	if err != nil {
-		return nil, err
-	}
-	return iwf.SingleNextState(persistenceWorkflowState2Id, nil), nil
-}
-
-func (b persistenceWorkflowState1) GetStateOptions() *iwfidl.WorkflowStateOptions {
-	return nil
+	persistence.GetDataObject(testDataObjectKey, &do)
+	persistence.SetSearchAttributeDatetime(testSearchAttributeDatetime, do.Datetime)
+	persistence.SetSearchAttributeBool(testSearchAttributeBool, true)
+	return iwf.SingleNextState(persistenceWorkflowState2{}, nil), nil
 }

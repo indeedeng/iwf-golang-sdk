@@ -16,7 +16,7 @@ type clientImpl struct {
 }
 
 func (c *clientImpl) StartWorkflow(ctx context.Context, workflow Workflow, workflowId string, timeoutSecs int32, input interface{}, options *WorkflowOptions) (string, error) {
-	wfType := GetDefaultWorkflowType(workflow)
+	wfType := GetFinalWorkflowType(workflow)
 	state := c.registry.getWorkflowStartingState(wfType)
 
 	unregOpt := &UnregisteredWorkflowOptions{
@@ -36,7 +36,7 @@ func (c *clientImpl) StartWorkflow(ctx context.Context, workflow Workflow, workf
 		}
 		unregOpt.InitialSearchAttributes = convertedSAs
 	}
-	return c.UnregisteredClient.StartWorkflow(ctx, wfType, state.GetStateId(), workflowId, timeoutSecs, input, unregOpt)
+	return c.UnregisteredClient.StartWorkflow(ctx, wfType, GetFinalWorkflowStateId(state), workflowId, timeoutSecs, input, unregOpt)
 }
 
 func convertToSearchAttributeList(types map[string]iwfidl.SearchAttributeValueType, attributes map[string]interface{}) ([]iwfidl.SearchAttribute, error) {
@@ -94,7 +94,7 @@ func convertToSearchAttributeList(types map[string]iwfidl.SearchAttributeValueTy
 }
 
 func (c *clientImpl) SignalWorkflow(ctx context.Context, workflow Workflow, workflowId, workflowRunId, signalChannelName string, signalValue interface{}) error {
-	wfType := GetDefaultWorkflowType(workflow)
+	wfType := GetFinalWorkflowType(workflow)
 	signalNameStore := c.registry.getWorkflowSignalNameStore(wfType)
 	if !signalNameStore[signalChannelName] {
 		return NewWorkflowDefinitionErrorFmt("signal channel %v is not defined in workflow type %v", signalChannelName, wfType)
@@ -103,7 +103,7 @@ func (c *clientImpl) SignalWorkflow(ctx context.Context, workflow Workflow, work
 }
 
 func (c *clientImpl) GetWorkflowDataObjects(ctx context.Context, workflow Workflow, workflowId, workflowRunId string, keys []string) (map[string]Object, error) {
-	wfType := GetDefaultWorkflowType(workflow)
+	wfType := GetFinalWorkflowType(workflow)
 	doTypeMap := c.registry.getWorkflowDataObjectKeyStore(wfType)
 	for _, k := range keys {
 		_, ok := doTypeMap[k]
@@ -115,7 +115,7 @@ func (c *clientImpl) GetWorkflowDataObjects(ctx context.Context, workflow Workfl
 }
 
 func (c *clientImpl) GetWorkflowSearchAttributes(ctx context.Context, workflow Workflow, workflowId, workflowRunId string, keys []string) (map[string]interface{}, error) {
-	wfType := GetDefaultWorkflowType(workflow)
+	wfType := GetFinalWorkflowType(workflow)
 	allTypes := c.registry.getSearchAttributeTypeStore(wfType)
 	var keyAndTypes []iwfidl.SearchAttributeKeyAndType
 	for _, k := range keys {
@@ -140,7 +140,7 @@ func (c *clientImpl) GetWorkflowSearchAttributes(ctx context.Context, workflow W
 }
 
 func (c *clientImpl) GetAllWorkflowSearchAttributes(ctx context.Context, workflow Workflow, workflowId, workflowRunId string) (map[string]interface{}, error) {
-	wfType := GetDefaultWorkflowType(workflow)
+	wfType := GetFinalWorkflowType(workflow)
 	allTypes := c.registry.getSearchAttributeTypeStore(wfType)
 	var keys []string
 	for k := range allTypes {
@@ -149,3 +149,12 @@ func (c *clientImpl) GetAllWorkflowSearchAttributes(ctx context.Context, workflo
 	return c.GetWorkflowSearchAttributes(ctx, workflow, workflowId, workflowRunId, keys)
 }
 
+func (c *clientImpl) SkipTimerByCommandId(ctx context.Context, workflowId, workflowRunId string, workflowState WorkflowState, stateExecutionNumber int, timerCommandId string) error {
+	stateId := GetFinalWorkflowStateId(workflowState)
+	return c.UnregisteredClient.SkipTimerByCommandId(ctx, workflowId, workflowRunId, stateId, stateExecutionNumber, timerCommandId)
+}
+
+func (c *clientImpl) SkipTimerByCommandIndex(ctx context.Context, workflowId, workflowRunId string, workflowState WorkflowState, stateExecutionNumber, timerCommandIndex int) error {
+	stateId := GetFinalWorkflowStateId(workflowState)
+	return c.UnregisteredClient.SkipTimerByCommandIndex(ctx, workflowId, workflowRunId, stateId, stateExecutionNumber, timerCommandIndex)
+}

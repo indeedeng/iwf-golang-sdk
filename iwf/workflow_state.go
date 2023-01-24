@@ -1,8 +1,20 @@
 package iwf
 
-import "github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
+import (
+	"github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
+)
 
 type WorkflowState interface {
+	// GetStateId defines the StateId of this workflow state definition.
+	// the StateId is being used for WorkerService to choose the right WorkflowState to execute Start/Decide APIs
+	// See GetDefaultWorkflowStateId for default value when return empty string.
+	// It's the package + struct name of the workflow instance and ignores the import paths and aliases.
+	// e.g. if the workflow is from myStruct{} under mywf package, the simple name is just "mywf.myStruct". Underneath, it's from reflect.TypeOf(wf).String().
+	//
+	// Usually using default value is enough. Unless cases like:
+	// 1. You rename the workflowState struct but there is some in-flight state execution still using the old StateId
+	// 2. To avoid type name conflicts because the GetDefaultWorkflowStateId is not long enough
+	// 3. In case of dynamic workflow state implementation, return customized values instead of using empty string
 	GetStateId() string
 
 	// Start is the method to execute the commands set up for this state.
@@ -38,4 +50,35 @@ type WorkflowState interface {
 	// GetStateOptions can just return nil to use the default Options
 	// StateOptions is optional configuration to adjust the state behaviors
 	GetStateOptions() *iwfidl.WorkflowStateOptions
+}
+
+// GetFinalWorkflowStateId returns the stateId that will be registered and used
+// if the workflowState is from myStruct{} under mywf package, the method returns "mywf.myStruct"
+func GetFinalWorkflowStateId(workflowState WorkflowState) string {
+	sid := workflowState.GetStateId()
+	if sid == "" {
+		return getSimpleTypeNameFromReflect(workflowState)
+	}
+	return sid
+}
+
+// DefaultStateIdAndOptions is a convenient struct to put into your state implementation to save the boilerplate code. Eg:
+// type myStateImpl struct{
+//     DefaultStateIdAndOptions
+// }
+type DefaultStateIdAndOptions struct {
+	DefaultStateId
+	DefaultStateOptions
+}
+
+type DefaultStateId struct{}
+
+func (d DefaultStateId) GetStateId() string {
+	return ""
+}
+
+type DefaultStateOptions struct{}
+
+func (d DefaultStateOptions) GetStateOptions() *iwfidl.WorkflowStateOptions {
+	return nil
 }

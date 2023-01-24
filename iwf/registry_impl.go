@@ -70,7 +70,7 @@ func (r *registryImpl) getSearchAttributeTypeStore(wfType string) map[string]iwf
 }
 
 func (r *registryImpl) registerWorkflow(wf Workflow) error {
-	wfType := GetDefaultWorkflowType(wf)
+	wfType := GetFinalWorkflowType(wf)
 	_, ok := r.workflowStore[wfType]
 	if ok {
 		return NewWorkflowDefinitionError("workflow type conflict: " + wfType)
@@ -80,18 +80,19 @@ func (r *registryImpl) registerWorkflow(wf Workflow) error {
 }
 
 func (r *registryImpl) registerWorkflowState(wf Workflow) error {
-	wfType := GetDefaultWorkflowType(wf)
+	wfType := GetFinalWorkflowType(wf)
 	if len(wf.GetStates()) == 0 {
 		return NewWorkflowDefinitionErrorFmt("Workflow type %s must contain at least one workflow state", wfType)
 	}
 	stateMap := map[string]StateDef{}
 	var startingState WorkflowState
 	for _, state := range wf.GetStates() {
-		_, ok := stateMap[state.State.GetStateId()]
+		stateId := GetFinalWorkflowStateId(state.State)
+		_, ok := stateMap[stateId]
 		if ok {
-			return NewWorkflowDefinitionErrorFmt("Workflow %v cannot have duplicate stateId %v ", wfType, state.State.GetStateId())
+			return NewWorkflowDefinitionErrorFmt("Workflow %v cannot have duplicate stateId %v ", wfType, stateId)
 		}
-		stateMap[state.State.GetStateId()] = state
+		stateMap[stateId] = state
 		if state.CanStartWorkflow {
 			if startingState == nil {
 				startingState = state.State
@@ -106,7 +107,7 @@ func (r *registryImpl) registerWorkflowState(wf Workflow) error {
 }
 
 func (r *registryImpl) registerWorkflowCommunicationSchema(wf Workflow) error {
-	wfType := GetDefaultWorkflowType(wf)
+	wfType := GetFinalWorkflowType(wf)
 	signalMap := map[string]bool{}
 	interStateChannel := map[string]bool{}
 	for _, methodDef := range wf.GetCommunicationSchema() {
@@ -124,7 +125,7 @@ func (r *registryImpl) registerWorkflowCommunicationSchema(wf Workflow) error {
 }
 
 func (r *registryImpl) registerWorkflowPersistenceSchema(wf Workflow) error {
-	wfType := GetDefaultWorkflowType(wf)
+	wfType := GetFinalWorkflowType(wf)
 	dataObjectKeys := map[string]bool{}
 	searchAttributes := map[string]iwfidl.SearchAttributeValueType{}
 	for _, pers := range wf.GetPersistenceSchema() {
