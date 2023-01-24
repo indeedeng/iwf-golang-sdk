@@ -105,7 +105,7 @@ func (d DefaultWorkflowType) GetWorkflowType() string {
 // }
 type EmptyPersistenceSchema struct{}
 
-func (d DefaultWorkflowType) GetPersistenceSchema() []PersistenceFieldDef {
+func (d EmptyPersistenceSchema) GetPersistenceSchema() []PersistenceFieldDef {
 	return nil
 }
 
@@ -115,6 +115,6 @@ func (d DefaultWorkflowType) GetPersistenceSchema() []PersistenceFieldDef {
 // }
 type EmptyCommunicationSchema struct{}
 
-func (d EmptyPersistenceSchema) GetCommunicationSchema() []CommunicationMethodDef {
+func (d EmptyCommunicationSchema) GetCommunicationSchema() []CommunicationMethodDef {
 	return nil
 }

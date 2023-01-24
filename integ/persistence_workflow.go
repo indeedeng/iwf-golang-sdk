@@ -5,7 +5,10 @@ import (
 	"github.com/indeedeng/iwf-golang-sdk/iwf"
 )
 
-type persistenceWorkflow struct{}
+type persistenceWorkflow struct {
+	iwf.DefaultWorkflowType
+	iwf.EmptyCommunicationSchema
+}
 
 const (
 	testDataObjectKey = "test-data-object"
@@ -35,12 +38,4 @@ func (b persistenceWorkflow) GetPersistenceSchema() []iwf.PersistenceFieldDef {
 		iwf.SearchAttributeDef(testSearchAttributeText, iwfidl.TEXT),
 		iwf.SearchAttributeDef(testSearchAttributeKeyword, iwfidl.KEYWORD),
 	}
-}
-
-func (b persistenceWorkflow) GetCommunicationSchema() []iwf.CommunicationMethodDef {
-	return nil
-}
-
-func (b persistenceWorkflow) GetWorkflowType() string {
-	return ""
 }

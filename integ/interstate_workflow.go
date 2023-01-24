@@ -2,7 +2,10 @@ package integ
 
 import "github.com/indeedeng/iwf-golang-sdk/iwf"
 
-type interStateWorkflow struct{}
+type interStateWorkflow struct {
+	iwf.DefaultWorkflowType
+	iwf.EmptyPersistenceSchema
+}
 
 const interStateChannel1 = "test-inter-state-channel-1"
 const interStateChannel2 = "test-inter-state-channel-2"
@@ -15,10 +18,6 @@ func (b interStateWorkflow) GetStates() []iwf.StateDef {
 	}
 }
 
-func (b interStateWorkflow) GetPersistenceSchema() []iwf.PersistenceFieldDef {
-	return nil
-}
-
 func (b interStateWorkflow) GetCommunicationSchema() []iwf.CommunicationMethodDef {
 	return []iwf.CommunicationMethodDef{
 		iwf.InterstateChannelDef(interStateChannel1),
@@ -26,6 +25,3 @@ func (b interStateWorkflow) GetCommunicationSchema() []iwf.CommunicationMethodDe
 	}
 }
 
-func (b interStateWorkflow) GetWorkflowType() string {
-	return ""
-}

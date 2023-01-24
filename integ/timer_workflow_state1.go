@@ -6,7 +6,8 @@ import (
 )
 
 type timerWorkflowState1 struct {
-	iwf.DefaultStateIdAndOptions
+	iwf.DefaultStateId
+	iwf.DefaultStateOptions
 }
 
 func (b timerWorkflowState1) Start(ctx iwf.WorkflowContext, input iwf.Object, persistence iwf.Persistence, communication iwf.Communication) (*iwf.CommandRequest, error) {
