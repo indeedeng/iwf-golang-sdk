@@ -8,7 +8,7 @@ type communicationImpl struct {
 	encoder                    ObjectEncoder
 }
 
-func (c *communicationImpl) getToPublishInterStateChannel() map[string][]iwfidl.EncodedObject {
+func (c *communicationImpl) GetToPublishInterStateChannel() map[string][]iwfidl.EncodedObject {
 	return c.toPublishInterStateChannel
 }
 

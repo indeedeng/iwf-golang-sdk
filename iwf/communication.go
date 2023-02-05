@@ -11,5 +11,5 @@ type Communication interface {
 }
 
 type communicationInternal interface {
-	getToPublishInterStateChannel() map[string][]iwfidl.EncodedObject
+	GetToPublishInterStateChannel() map[string][]iwfidl.EncodedObject
 }
