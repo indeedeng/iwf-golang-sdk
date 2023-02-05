@@ -31,7 +31,7 @@ func (w *workerServiceImpl) HandleWorkflowStateStart(ctx context.Context, reques
 		return nil, err
 	}
 
-	err = canNotRequestAndPublishTheSameInterStateChannel(comm.getToPublishInterStateChannel(), commandRequest)
+	err = canNotRequestAndPublishTheSameInterStateChannel(comm.GetToPublishInterStateChannel(), commandRequest)
 	if err != nil {
 		return nil, err
 	}
@@ -40,14 +40,14 @@ func (w *workerServiceImpl) HandleWorkflowStateStart(ctx context.Context, reques
 	if err != nil {
 		return nil, err
 	}
-	publishings := toPublishing(comm.getToPublishInterStateChannel())
+	publishings := toPublishing(comm.GetToPublishInterStateChannel())
 	resp = &iwfidl.WorkflowStateStartResponse{
 		CommandRequest: idlCommandRequest,
 	}
 	if len(publishings) > 0 {
 		resp.PublishToInterStateChannel = publishings
 	}
-	dataObjectsToReturn, stateLocalToReturn, recordedEvents, upsertSearchAttributes := pers.getToReturn()
+	dataObjectsToReturn, stateLocalToReturn, recordedEvents, upsertSearchAttributes := pers.GetToReturn()
 	if len(dataObjectsToReturn) > 0 {
 		resp.UpsertDataObjects = dataObjectsToReturn
 	}
@@ -119,11 +119,11 @@ func (w *workerServiceImpl) HandleWorkflowStateDecide(ctx context.Context, reque
 	resp = &iwfidl.WorkflowStateDecideResponse{
 		StateDecision: idlDecision,
 	}
-	publishings := toPublishing(comm.getToPublishInterStateChannel())
+	publishings := toPublishing(comm.GetToPublishInterStateChannel())
 	if len(publishings) > 0 {
 		resp.PublishToInterStateChannel = publishings
 	}
-	dataObjectsToReturn, stateLocalToReturn, recordedEvents, upsertSearchAttributes := pers.getToReturn()
+	dataObjectsToReturn, stateLocalToReturn, recordedEvents, upsertSearchAttributes := pers.GetToReturn()
 	if len(dataObjectsToReturn) > 0 {
 		resp.UpsertDataObjects = dataObjectsToReturn
 	}

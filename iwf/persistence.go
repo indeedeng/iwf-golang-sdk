@@ -48,11 +48,14 @@ type Persistence interface {
 	RecordEvent(key string, value interface{})
 
 	// below is for internal implementation
-	getToReturn() (
+	persistenceInternal
+}
+
+type persistenceInternal interface {
+	GetToReturn() (
 		dataObjectsToReturn []iwfidl.KeyValue,
 		stateLocalToReturn []iwfidl.KeyValue,
 		recordEvents []iwfidl.KeyValue,
 		searchAttributes []iwfidl.SearchAttribute,
 	)
 }
-

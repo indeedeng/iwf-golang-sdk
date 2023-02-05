@@ -249,7 +249,7 @@ func (p *persistenceImpl) RecordEvent(key string, value interface{}) {
 	p.recordedEvents[key] = *v
 }
 
-func (p *persistenceImpl) getToReturn() (
+func (p *persistenceImpl) GetToReturn() (
 	dataObjectsToReturn []iwfidl.KeyValue,
 	stateLocalToReturn []iwfidl.KeyValue,
 	recordEvents []iwfidl.KeyValue,
