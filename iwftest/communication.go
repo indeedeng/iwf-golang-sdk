@@ -59,3 +59,40 @@ func (mr *MockCommunicationMockRecorder) getToPublishInterStateChannel() *gomock
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "getToPublishInterStateChannel", reflect.TypeOf((*MockCommunication)(nil).getToPublishInterStateChannel))
 }
+
+// MockcommunicationInternal is a mock of communicationInternal interface.
+type MockcommunicationInternal struct {
+	ctrl     *gomock.Controller
+	recorder *MockcommunicationInternalMockRecorder
+}
+
+// MockcommunicationInternalMockRecorder is the mock recorder for MockcommunicationInternal.
+type MockcommunicationInternalMockRecorder struct {
+	mock *MockcommunicationInternal
+}
+
+// NewMockcommunicationInternal creates a new mock instance.
+func NewMockcommunicationInternal(ctrl *gomock.Controller) *MockcommunicationInternal {
+	mock := &MockcommunicationInternal{ctrl: ctrl}
+	mock.recorder = &MockcommunicationInternalMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockcommunicationInternal) EXPECT() *MockcommunicationInternalMockRecorder {
+	return m.recorder
+}
+
+// getToPublishInterStateChannel mocks base method.
+func (m *MockcommunicationInternal) getToPublishInterStateChannel() map[string][]iwfidl.EncodedObject {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "getToPublishInterStateChannel")
+	ret0, _ := ret[0].(map[string][]iwfidl.EncodedObject)
+	return ret0
+}
+
+// getToPublishInterStateChannel indicates an expected call of getToPublishInterStateChannel.
+func (mr *MockcommunicationInternalMockRecorder) getToPublishInterStateChannel() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "getToPublishInterStateChannel", reflect.TypeOf((*MockcommunicationInternal)(nil).getToPublishInterStateChannel))
+}

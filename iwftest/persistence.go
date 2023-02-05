@@ -157,6 +157,23 @@ func (mr *MockPersistenceMockRecorder) GetStateLocal(key, valuePtr interface{}) 
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetStateLocal", reflect.TypeOf((*MockPersistence)(nil).GetStateLocal), key, valuePtr)
 }
 
+// GetToReturn mocks base method.
+func (m *MockPersistence) GetToReturn() ([]iwfidl.KeyValue, []iwfidl.KeyValue, []iwfidl.KeyValue, []iwfidl.SearchAttribute) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetToReturn")
+	ret0, _ := ret[0].([]iwfidl.KeyValue)
+	ret1, _ := ret[1].([]iwfidl.KeyValue)
+	ret2, _ := ret[2].([]iwfidl.KeyValue)
+	ret3, _ := ret[3].([]iwfidl.SearchAttribute)
+	return ret0, ret1, ret2, ret3
+}
+
+// GetToReturn indicates an expected call of GetToReturn.
+func (mr *MockPersistenceMockRecorder) GetToReturn() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetToReturn", reflect.TypeOf((*MockPersistence)(nil).GetToReturn))
+}
+
 // RecordEvent mocks base method.
 func (m *MockPersistence) RecordEvent(key string, value interface{}) {
 	m.ctrl.T.Helper()
@@ -277,10 +294,33 @@ func (mr *MockPersistenceMockRecorder) SetStateLocal(key, value interface{}) *go
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetStateLocal", reflect.TypeOf((*MockPersistence)(nil).SetStateLocal), key, value)
 }
 
-// getToReturn mocks base method.
-func (m *MockPersistence) getToReturn() ([]iwfidl.KeyValue, []iwfidl.KeyValue, []iwfidl.KeyValue, []iwfidl.SearchAttribute) {
+// MockpersistenceInternal is a mock of persistenceInternal interface.
+type MockpersistenceInternal struct {
+	ctrl     *gomock.Controller
+	recorder *MockpersistenceInternalMockRecorder
+}
+
+// MockpersistenceInternalMockRecorder is the mock recorder for MockpersistenceInternal.
+type MockpersistenceInternalMockRecorder struct {
+	mock *MockpersistenceInternal
+}
+
+// NewMockpersistenceInternal creates a new mock instance.
+func NewMockpersistenceInternal(ctrl *gomock.Controller) *MockpersistenceInternal {
+	mock := &MockpersistenceInternal{ctrl: ctrl}
+	mock.recorder = &MockpersistenceInternalMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockpersistenceInternal) EXPECT() *MockpersistenceInternalMockRecorder {
+	return m.recorder
+}
+
+// GetToReturn mocks base method.
+func (m *MockpersistenceInternal) GetToReturn() ([]iwfidl.KeyValue, []iwfidl.KeyValue, []iwfidl.KeyValue, []iwfidl.SearchAttribute) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "getToReturn")
+	ret := m.ctrl.Call(m, "GetToReturn")
 	ret0, _ := ret[0].([]iwfidl.KeyValue)
 	ret1, _ := ret[1].([]iwfidl.KeyValue)
 	ret2, _ := ret[2].([]iwfidl.KeyValue)
@@ -288,8 +328,8 @@ func (m *MockPersistence) getToReturn() ([]iwfidl.KeyValue, []iwfidl.KeyValue, [
 	return ret0, ret1, ret2, ret3
 }
 
-// getToReturn indicates an expected call of getToReturn.
-func (mr *MockPersistenceMockRecorder) getToReturn() *gomock.Call {
+// GetToReturn indicates an expected call of GetToReturn.
+func (mr *MockpersistenceInternalMockRecorder) GetToReturn() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "getToReturn", reflect.TypeOf((*MockPersistence)(nil).getToReturn))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetToReturn", reflect.TypeOf((*MockpersistenceInternal)(nil).GetToReturn))
 }

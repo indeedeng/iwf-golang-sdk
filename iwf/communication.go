@@ -7,5 +7,9 @@ type Communication interface {
 	PublishInterstateChannel(channelName string, value interface{})
 
 	// below is for internal implementation
+	communicationInternal
+}
+
+type communicationInternal interface {
 	getToPublishInterStateChannel() map[string][]iwfidl.EncodedObject
 }

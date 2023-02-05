@@ -47,7 +47,7 @@ func (w *workerServiceImpl) HandleWorkflowStateStart(ctx context.Context, reques
 	if len(publishings) > 0 {
 		resp.PublishToInterStateChannel = publishings
 	}
-	dataObjectsToReturn, stateLocalToReturn, recordedEvents, upsertSearchAttributes := pers.getToReturn()
+	dataObjectsToReturn, stateLocalToReturn, recordedEvents, upsertSearchAttributes := pers.GetToReturn()
 	if len(dataObjectsToReturn) > 0 {
 		resp.UpsertDataObjects = dataObjectsToReturn
 	}
@@ -123,7 +123,7 @@ func (w *workerServiceImpl) HandleWorkflowStateDecide(ctx context.Context, reque
 	if len(publishings) > 0 {
 		resp.PublishToInterStateChannel = publishings
 	}
-	dataObjectsToReturn, stateLocalToReturn, recordedEvents, upsertSearchAttributes := pers.getToReturn()
+	dataObjectsToReturn, stateLocalToReturn, recordedEvents, upsertSearchAttributes := pers.GetToReturn()
 	if len(dataObjectsToReturn) > 0 {
 		resp.UpsertDataObjects = dataObjectsToReturn
 	}
