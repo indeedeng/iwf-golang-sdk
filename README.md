@@ -36,6 +36,13 @@ See [contribution guide](CONTRIBUTION.md)
 - [x] Skip timer API for testing/operation
 - [x] Decider trigger type: any command combination
 
+## 1.2
+- [x] API improvements to reduce boilerplate code
+
+## 1.3
+- [x] Support failing workflow with results
+- [x] Improve workflow uncompleted error return(canceled, failed, timeout, terminated)
+
 ## Future
 - [ ] Decider trigger type: AnyCommandClosed
 - [ ] WaitForMoreResults in StateDecision
