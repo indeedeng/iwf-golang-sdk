@@ -165,3 +165,27 @@ func IsWorkflowNotExistsError(err error) bool {
 	}
 	return apiError.Response.GetSubStatus() == iwfidl.WORKFLOW_NOT_EXISTS_SUB_STATUS
 }
+
+type WorkflowUncompletedError struct {
+	ClosedStatus iwfidl.WorkflowStatus
+	ErrorType    iwfidl.WorkflowErrorType
+	ErrorMessage string
+	StateResults []iwfidl.StateCompletionOutput
+	Encoder      ObjectEncoder
+}
+
+func (w *WorkflowUncompletedError) Error() string {
+	return fmt.Sprintf("workflow is not completed succesfully, closedStatus: %v, failedErrorType(applies if failed as closedStatus):%v, error message:%v",
+		w.ClosedStatus, w.ErrorType, w.ErrorMessage)
+}
+
+// AsWorkflowUncompletedError will check if it's a WorkflowUncompletedError and convert it if so
+func AsWorkflowUncompletedError(err error) (*WorkflowUncompletedError, bool) {
+	wErr, ok := err.(*WorkflowUncompletedError)
+	return wErr, ok
+}
+
+func (w *WorkflowUncompletedError) GetStateResult(index int, resultPtr interface{}) error {
+	output := w.StateResults[index]
+	return w.Encoder.Decode(output.CompletedStateOutput, resultPtr)
+}
