@@ -56,6 +56,17 @@ var ForceFailingWorkflow = &StateDecision{
 	},
 }
 
+func ForceFailWorkflow(output interface{}) *StateDecision {
+	return &StateDecision{
+		NextStates: []StateMovement{
+			{
+				NextStateId:    ForceFailingWorkflowStateId,
+				NextStateInput: output,
+			},
+		},
+	}
+}
+
 var GracefulCompletingWorkflow = GracefulCompleteWorkflow(nil)
 
 func GracefulCompleteWorkflow(output interface{}) *StateDecision {
