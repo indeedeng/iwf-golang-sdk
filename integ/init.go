@@ -16,6 +16,8 @@ func init() {
 		&interStateWorkflow{},
 		&persistenceWorkflow{},
 		&forceFailWorkflow{},
+		&stateApiFailWorkflow{},
+		&stateApiTimeoutWorkflow{},
 	)
 	if err != nil {
 		panic(err)
