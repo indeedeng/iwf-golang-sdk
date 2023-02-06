@@ -148,6 +148,9 @@ func (u *unregisteredClientImpl) GetSimpleWorkflowResult(ctx context.Context, wo
 	if err := u.processError(err, httpResp); err != nil {
 		return err
 	}
+	if resp.WorkflowStatus != iwfidl.COMPLETED {
+		return u.processUncompletedError(resp)
+	}
 	if len(resp.Results) != 1 {
 		return NewWorkflowDefinitionError("this workflow should have one or zero state output for using this API")
 	}
@@ -164,6 +167,9 @@ func (u *unregisteredClientImpl) GetComplexWorkflowResults(ctx context.Context, 
 	}).Execute()
 	if err := u.processError(err, httpResp); err != nil {
 		return nil, err
+	}
+	if resp.WorkflowStatus != iwfidl.COMPLETED {
+		return nil, u.processUncompletedError(resp)
 	}
 	return resp.Results, nil
 }
@@ -263,4 +269,8 @@ func (u *unregisteredClientImpl) processError(err error, httpResp *http.Response
 		}
 	}
 	return NewApiError(err, oerr, httpResp, resp)
+}
+
+func (u *unregisteredClientImpl) processUncompletedError(resp *iwfidl.WorkflowGetResponse) error {
+	return NewWorkflowUncompletedError(resp.WorkflowRunId, resp.WorkflowStatus, resp.ErrorType, resp.ErrorMessage, resp.Results, u.options.ObjectEncoder)
 }

@@ -167,16 +167,37 @@ func IsWorkflowNotExistsError(err error) bool {
 }
 
 type WorkflowUncompletedError struct {
+	RunId        string
 	ClosedStatus iwfidl.WorkflowStatus
-	ErrorType    iwfidl.WorkflowErrorType
-	ErrorMessage string
+	ErrorType    *iwfidl.WorkflowErrorType
+	ErrorMessage *string
 	StateResults []iwfidl.StateCompletionOutput
 	Encoder      ObjectEncoder
 }
 
+func NewWorkflowUncompletedError(
+	runId string, closedStatus iwfidl.WorkflowStatus, errorType *iwfidl.WorkflowErrorType,
+	errorMessage *string, stateResults []iwfidl.StateCompletionOutput, encoder ObjectEncoder) error {
+	return &WorkflowUncompletedError{
+		RunId:        runId,
+		ClosedStatus: closedStatus,
+		ErrorType:    errorType,
+		ErrorMessage: errorMessage,
+		StateResults: stateResults,
+		Encoder:      encoder,
+	}
+}
 func (w *WorkflowUncompletedError) Error() string {
+	errTypeMsg := "<nil>"
+	message := "<nil>"
+	if w.ErrorType != nil {
+		errTypeMsg = fmt.Sprintf("%v", *w.ErrorType)
+	}
+	if w.ErrorMessage != nil {
+		message = fmt.Sprintf("%v", *w.ErrorMessage)
+	}
 	return fmt.Sprintf("workflow is not completed succesfully, closedStatus: %v, failedErrorType(applies if failed as closedStatus):%v, error message:%v",
-		w.ClosedStatus, w.ErrorType, w.ErrorMessage)
+		w.ClosedStatus, errTypeMsg, message)
 }
 
 // AsWorkflowUncompletedError will check if it's a WorkflowUncompletedError and convert it if so
