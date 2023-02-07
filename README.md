@@ -1,4 +1,6 @@
 # iWF Golang SDK
+[![Build status](https://github.com/indeedeng/iwf-golang-sdk/actions/workflows/ci-integ-test.yml/badge.svg?branch=main)](https://github.com/indeedeng/iwf-golang-sdk/actions/workflows/ci-integ-test.yml)
+
 Golang SDK for [iWF workflow engine](https://github.com/indeedeng/iwf)
 
 See [samples](https://github.com/indeedeng/iwf-golang-samples) for how to use this SDK.
