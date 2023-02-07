@@ -1,0 +1,20 @@
+name: Integration Test
+on:
+  pull_request:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  tests:
+    name: "Integration testing"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: "Set up iWF environment"
+        run: docker compose -f integ/docker-compose.yml up -d
+      - name: "Unit test and Integration test"
+        run: make tests
+      - name: Dump docker logs
+        if: always()
+        uses: jwalton/gh-docker-logs@v2
