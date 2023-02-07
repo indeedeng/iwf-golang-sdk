@@ -11,7 +11,8 @@ type persistenceWorkflow struct {
 }
 
 const (
-	testDataObjectKey = "test-data-object"
+	testDataObjectKey  = "test-data-object"
+	testDataObjectKey2 = "test-data-object-2"
 
 	testSearchAttributeInt      = "CustomIntField"
 	testSearchAttributeDatetime = "CustomDatetimeField"
@@ -31,6 +32,7 @@ func (b persistenceWorkflow) GetStates() []iwf.StateDef {
 func (b persistenceWorkflow) GetPersistenceSchema() []iwf.PersistenceFieldDef {
 	return []iwf.PersistenceFieldDef{
 		iwf.DataObjectDef(testDataObjectKey),
+		iwf.DataObjectDef(testDataObjectKey2),
 		iwf.SearchAttributeDef(testSearchAttributeInt, iwfidl.INT),
 		iwf.SearchAttributeDef(testSearchAttributeDatetime, iwfidl.DATETIME),
 		iwf.SearchAttributeDef(testSearchAttributeBool, iwfidl.BOOL),
