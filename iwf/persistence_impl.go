@@ -256,55 +256,55 @@ func (p *persistenceImpl) GetToReturn() (
 	searchAttributes []iwfidl.SearchAttribute) {
 	for k, v := range p.dataObjectsToReturn {
 		dataObjectsToReturn = append(dataObjectsToReturn, iwfidl.KeyValue{
-			Key:   &k,
-			Value: &v,
+			Key:   ptr.Any(k),
+			Value: ptr.Any(v),
 		})
 	}
 
 	for k, v := range p.stateLocalToReturn {
 		stateLocalToReturn = append(stateLocalToReturn, iwfidl.KeyValue{
-			Key:   &k,
-			Value: &v,
+			Key:   ptr.Any(k),
+			Value: ptr.Any(v),
 		})
 	}
 
 	for k, v := range p.recordedEvents {
 		recordEvents = append(recordEvents, iwfidl.KeyValue{
-			Key:   &k,
-			Value: &v,
+			Key:   ptr.Any(k),
+			Value: ptr.Any(v),
 		})
 	}
 	for k, sa := range p.saIntToReturn {
 		searchAttributes = append(searchAttributes, iwfidl.SearchAttribute{
-			Key:          &k,
+			Key:          ptr.Any(k),
 			ValueType:    ptr.Any(p.saKeyToType[k]),
-			IntegerValue: &sa,
+			IntegerValue: ptr.Any(sa),
 		})
 	}
 	for k, sa := range p.saStringToReturn {
 		searchAttributes = append(searchAttributes, iwfidl.SearchAttribute{
-			Key:         &k,
+			Key:         ptr.Any(k),
 			ValueType:   ptr.Any(p.saKeyToType[k]),
-			StringValue: &sa,
+			StringValue: ptr.Any(sa),
 		})
 	}
 	for k, sa := range p.saDoubleToReturn {
 		searchAttributes = append(searchAttributes, iwfidl.SearchAttribute{
-			Key:         &k,
+			Key:         ptr.Any(k),
 			ValueType:   ptr.Any(p.saKeyToType[k]),
-			DoubleValue: &sa,
+			DoubleValue: ptr.Any(sa),
 		})
 	}
 	for k, sa := range p.saBoolToReturn {
 		searchAttributes = append(searchAttributes, iwfidl.SearchAttribute{
-			Key:       &k,
+			Key:       ptr.Any(k),
 			ValueType: ptr.Any(p.saKeyToType[k]),
-			BoolValue: &sa,
+			BoolValue: ptr.Any(sa),
 		})
 	}
 	for k, sa := range p.saStrArrToReturn {
 		searchAttributes = append(searchAttributes, iwfidl.SearchAttribute{
-			Key:              &k,
+			Key:              ptr.Any(k),
 			ValueType:        ptr.Any(p.saKeyToType[k]),
 			StringArrayValue: sa,
 		})

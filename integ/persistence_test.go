@@ -45,6 +45,13 @@ func TestPersistenceWorkflow(t *testing.T) {
 	dos[testDataObjectKey].Get(&do)
 	assert.Equal(t, wfId, do.StrValue)
 
+	dos, err = client.GetAllWorkflowDataObjects(context.Background(), wfId, "")
+	assert.Nil(t, err)
+	assert.Equal(t, 2, len(dos))
+	var str string
+	dos[testDataObjectKey2].Get(&str)
+	assert.Equal(t, "a string", str)
+
 	sas, err := client.GetWorkflowSearchAttributes(context.Background(), &persistenceWorkflow{}, wfId, "", []string{
 		testSearchAttributeKeyword,
 		testSearchAttributeText,
