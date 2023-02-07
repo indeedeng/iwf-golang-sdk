@@ -63,7 +63,7 @@ services:
     stdin_open: true
     tty: true
     volumes:
-     - ./init-docker-compose.sh:/etc/temporal/init.sh
+     - ./docker-compose-init.sh:/etc/temporal/init.sh
     entrypoint: sh -c "/etc/temporal/init.sh"
   temporal-ui:
     container_name: temporal-ui-iwf
