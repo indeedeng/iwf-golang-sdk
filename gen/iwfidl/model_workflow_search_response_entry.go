@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the WorkflowSearchResponseEntry type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &WorkflowSearchResponseEntry{}
+
 // WorkflowSearchResponseEntry struct for WorkflowSearchResponseEntry
 type WorkflowSearchResponseEntry struct {
 	WorkflowId string `json:"workflowId"`
@@ -53,7 +56,7 @@ func (o *WorkflowSearchResponseEntry) GetWorkflowId() string {
 // and a boolean to check if the value has been set.
 func (o *WorkflowSearchResponseEntry) GetWorkflowIdOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.WorkflowId, true
 }
@@ -77,7 +80,7 @@ func (o *WorkflowSearchResponseEntry) GetWorkflowRunId() string {
 // and a boolean to check if the value has been set.
 func (o *WorkflowSearchResponseEntry) GetWorkflowRunIdOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.WorkflowRunId, true
 }
@@ -88,14 +91,18 @@ func (o *WorkflowSearchResponseEntry) SetWorkflowRunId(v string) {
 }
 
 func (o WorkflowSearchResponseEntry) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["workflowId"] = o.WorkflowId
-	}
-	if true {
-		toSerialize["workflowRunId"] = o.WorkflowRunId
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o WorkflowSearchResponseEntry) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["workflowId"] = o.WorkflowId
+	toSerialize["workflowRunId"] = o.WorkflowRunId
+	return toSerialize, nil
 }
 
 type NullableWorkflowSearchResponseEntry struct {

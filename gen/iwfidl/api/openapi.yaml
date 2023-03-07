@@ -301,9 +301,9 @@ components:
       example:
         stringValue: stringValue
         valueType: null
-        integerValue: 9
+        integerValue: 1
         boolValue: true
-        doubleValue: 3.616076749251911
+        doubleValue: 1.0246457001441578
         stringArrayValue:
         - stringArrayValue
         - stringArrayValue
@@ -330,6 +330,7 @@ components:
       type: object
     RetryPolicy:
       example:
+        maximumAttemptsDurationSeconds: 9
         maximumAttempts: 7
         initialIntervalSeconds: 5
         maximumIntervalSeconds: 2
@@ -344,7 +345,31 @@ components:
           type: integer
         maximumAttempts:
           type: integer
+        maximumAttemptsDurationSeconds:
+          type: integer
       type: object
+    WorkflowRetryPolicy:
+      example:
+        maximumAttempts: 7
+        initialIntervalSeconds: 3
+        maximumIntervalSeconds: 4
+        backoffCoefficient: 2.027123
+      properties:
+        initialIntervalSeconds:
+          type: integer
+        backoffCoefficient:
+          format: float
+          type: number
+        maximumIntervalSeconds:
+          type: integer
+        maximumAttempts:
+          type: integer
+      type: object
+    StartApiFailurePolicy:
+      enum:
+      - FAIL_WORKFLOW_ON_START_API_FAILURE
+      - PROCEED_TO_DECIDE_ON_START_API_FAILURE
+      type: string
     WorkflowStateOptions:
       example:
         searchAttributesLoadingPolicy:
@@ -355,6 +380,7 @@ components:
         commandCarryOverPolicy:
           commandCarryOverType: null
         decideApiRetryPolicy:
+          maximumAttemptsDurationSeconds: 9
           maximumAttempts: 7
           initialIntervalSeconds: 5
           maximumIntervalSeconds: 2
@@ -362,6 +388,7 @@ components:
         decideApiTimeoutSeconds: 1
         startApiTimeoutSeconds: 6
         startApiRetryPolicy:
+          maximumAttemptsDurationSeconds: 9
           maximumAttempts: 7
           initialIntervalSeconds: 5
           maximumIntervalSeconds: 2
@@ -371,6 +398,7 @@ components:
           - partialLoadingKeys
           - partialLoadingKeys
           persistenceLoadingType: null
+        startApiFailurePolicy: null
       properties:
         searchAttributesLoadingPolicy:
           $ref: '#/components/schemas/PersistenceLoadingPolicy'
@@ -386,29 +414,31 @@ components:
           $ref: '#/components/schemas/RetryPolicy'
         decideApiRetryPolicy:
           $ref: '#/components/schemas/RetryPolicy'
+        startApiFailurePolicy:
+          $ref: '#/components/schemas/StartApiFailurePolicy'
       type: object
     WorkflowStartOptions:
       example:
         retryPolicy:
           maximumAttempts: 7
-          initialIntervalSeconds: 5
-          maximumIntervalSeconds: 2
-          backoffCoefficient: 5.637377
+          initialIntervalSeconds: 3
+          maximumIntervalSeconds: 4
+          backoffCoefficient: 2.027123
         searchAttributes:
         - stringValue: stringValue
           valueType: null
-          integerValue: 9
+          integerValue: 1
           boolValue: true
-          doubleValue: 3.616076749251911
+          doubleValue: 1.0246457001441578
           stringArrayValue:
           - stringArrayValue
           - stringArrayValue
           key: key
         - stringValue: stringValue
           valueType: null
-          integerValue: 9
+          integerValue: 1
           boolValue: true
-          doubleValue: 3.616076749251911
+          doubleValue: 1.0246457001441578
           stringArrayValue:
           - stringArrayValue
           - stringArrayValue
@@ -421,7 +451,7 @@ components:
         cronSchedule:
           type: string
         retryPolicy:
-          $ref: '#/components/schemas/RetryPolicy'
+          $ref: '#/components/schemas/WorkflowRetryPolicy'
         searchAttributes:
           items:
             $ref: '#/components/schemas/SearchAttribute'
@@ -490,6 +520,7 @@ components:
           commandCarryOverPolicy:
             commandCarryOverType: null
           decideApiRetryPolicy:
+            maximumAttemptsDurationSeconds: 9
             maximumAttempts: 7
             initialIntervalSeconds: 5
             maximumIntervalSeconds: 2
@@ -497,6 +528,7 @@ components:
           decideApiTimeoutSeconds: 1
           startApiTimeoutSeconds: 6
           startApiRetryPolicy:
+            maximumAttemptsDurationSeconds: 9
             maximumAttempts: 7
             initialIntervalSeconds: 5
             maximumIntervalSeconds: 2
@@ -506,28 +538,29 @@ components:
             - partialLoadingKeys
             - partialLoadingKeys
             persistenceLoadingType: null
+          startApiFailurePolicy: null
         iwfWorkflowType: iwfWorkflowType
         workflowStartOptions:
           retryPolicy:
             maximumAttempts: 7
-            initialIntervalSeconds: 5
-            maximumIntervalSeconds: 2
-            backoffCoefficient: 5.637377
+            initialIntervalSeconds: 3
+            maximumIntervalSeconds: 4
+            backoffCoefficient: 2.027123
           searchAttributes:
           - stringValue: stringValue
             valueType: null
-            integerValue: 9
+            integerValue: 1
             boolValue: true
-            doubleValue: 3.616076749251911
+            doubleValue: 1.0246457001441578
             stringArrayValue:
             - stringArrayValue
             - stringArrayValue
             key: key
           - stringValue: stringValue
             valueType: null
-            integerValue: 9
+            integerValue: 1
             boolValue: true
-            doubleValue: 3.616076749251911
+            doubleValue: 1.0246457001441578
             stringArrayValue:
             - stringArrayValue
             - stringArrayValue
@@ -675,18 +708,18 @@ components:
         searchAttributes:
         - stringValue: stringValue
           valueType: null
-          integerValue: 9
+          integerValue: 1
           boolValue: true
-          doubleValue: 3.616076749251911
+          doubleValue: 1.0246457001441578
           stringArrayValue:
           - stringArrayValue
           - stringArrayValue
           key: key
         - stringValue: stringValue
           valueType: null
-          integerValue: 9
+          integerValue: 1
           boolValue: true
-          doubleValue: 3.616076749251911
+          doubleValue: 1.0246457001441578
           stringArrayValue:
           - stringArrayValue
           - stringArrayValue
@@ -903,18 +936,18 @@ components:
         searchAttributes:
         - stringValue: stringValue
           valueType: null
-          integerValue: 9
+          integerValue: 1
           boolValue: true
-          doubleValue: 3.616076749251911
+          doubleValue: 1.0246457001441578
           stringArrayValue:
           - stringArrayValue
           - stringArrayValue
           key: key
         - stringValue: stringValue
           valueType: null
-          integerValue: 9
+          integerValue: 1
           boolValue: true
-          doubleValue: 3.616076749251911
+          doubleValue: 1.0246457001441578
           stringArrayValue:
           - stringArrayValue
           - stringArrayValue
@@ -971,18 +1004,18 @@ components:
         upsertSearchAttributes:
         - stringValue: stringValue
           valueType: null
-          integerValue: 9
+          integerValue: 1
           boolValue: true
-          doubleValue: 3.616076749251911
+          doubleValue: 1.0246457001441578
           stringArrayValue:
           - stringArrayValue
           - stringArrayValue
           key: key
         - stringValue: stringValue
           valueType: null
-          integerValue: 9
+          integerValue: 1
           boolValue: true
-          doubleValue: 3.616076749251911
+          doubleValue: 1.0246457001441578
           stringArrayValue:
           - stringArrayValue
           - stringArrayValue
@@ -1110,6 +1143,7 @@ components:
               data: data
               encoding: encoding
             requestStatus: null
+          stateStartApiSucceeded: true
           timerResults:
           - timerStatus: null
             commandId: commandId
@@ -1126,18 +1160,18 @@ components:
         searchAttributes:
         - stringValue: stringValue
           valueType: null
-          integerValue: 9
+          integerValue: 1
           boolValue: true
-          doubleValue: 3.616076749251911
+          doubleValue: 1.0246457001441578
           stringArrayValue:
           - stringArrayValue
           - stringArrayValue
           key: key
         - stringValue: stringValue
           valueType: null
-          integerValue: 9
+          integerValue: 1
           boolValue: true
-          doubleValue: 3.616076749251911
+          doubleValue: 1.0246457001441578
           stringArrayValue:
           - stringArrayValue
           - stringArrayValue
@@ -1187,18 +1221,18 @@ components:
         upsertSearchAttributes:
         - stringValue: stringValue
           valueType: null
-          integerValue: 9
+          integerValue: 1
           boolValue: true
-          doubleValue: 3.616076749251911
+          doubleValue: 1.0246457001441578
           stringArrayValue:
           - stringArrayValue
           - stringArrayValue
           key: key
         - stringValue: stringValue
           valueType: null
-          integerValue: 9
+          integerValue: 1
           boolValue: true
-          doubleValue: 3.616076749251911
+          doubleValue: 1.0246457001441578
           stringArrayValue:
           - stringArrayValue
           - stringArrayValue
@@ -1224,6 +1258,7 @@ components:
               commandCarryOverPolicy:
                 commandCarryOverType: null
               decideApiRetryPolicy:
+                maximumAttemptsDurationSeconds: 9
                 maximumAttempts: 7
                 initialIntervalSeconds: 5
                 maximumIntervalSeconds: 2
@@ -1231,6 +1266,7 @@ components:
               decideApiTimeoutSeconds: 1
               startApiTimeoutSeconds: 6
               startApiRetryPolicy:
+                maximumAttemptsDurationSeconds: 9
                 maximumAttempts: 7
                 initialIntervalSeconds: 5
                 maximumIntervalSeconds: 2
@@ -1240,6 +1276,7 @@ components:
                 - partialLoadingKeys
                 - partialLoadingKeys
                 persistenceLoadingType: null
+              startApiFailurePolicy: null
             stateInput:
               data: data
               encoding: encoding
@@ -1253,6 +1290,7 @@ components:
               commandCarryOverPolicy:
                 commandCarryOverType: null
               decideApiRetryPolicy:
+                maximumAttemptsDurationSeconds: 9
                 maximumAttempts: 7
                 initialIntervalSeconds: 5
                 maximumIntervalSeconds: 2
@@ -1260,6 +1298,7 @@ components:
               decideApiTimeoutSeconds: 1
               startApiTimeoutSeconds: 6
               startApiRetryPolicy:
+                maximumAttemptsDurationSeconds: 9
                 maximumAttempts: 7
                 initialIntervalSeconds: 5
                 maximumIntervalSeconds: 2
@@ -1269,6 +1308,7 @@ components:
                 - partialLoadingKeys
                 - partialLoadingKeys
                 persistenceLoadingType: null
+              startApiFailurePolicy: null
             stateInput:
               data: data
               encoding: encoding
@@ -1336,6 +1376,7 @@ components:
             commandCarryOverPolicy:
               commandCarryOverType: null
             decideApiRetryPolicy:
+              maximumAttemptsDurationSeconds: 9
               maximumAttempts: 7
               initialIntervalSeconds: 5
               maximumIntervalSeconds: 2
@@ -1343,6 +1384,7 @@ components:
             decideApiTimeoutSeconds: 1
             startApiTimeoutSeconds: 6
             startApiRetryPolicy:
+              maximumAttemptsDurationSeconds: 9
               maximumAttempts: 7
               initialIntervalSeconds: 5
               maximumIntervalSeconds: 2
@@ -1352,6 +1394,7 @@ components:
               - partialLoadingKeys
               - partialLoadingKeys
               persistenceLoadingType: null
+            startApiFailurePolicy: null
           stateInput:
             data: data
             encoding: encoding
@@ -1365,6 +1408,7 @@ components:
             commandCarryOverPolicy:
               commandCarryOverType: null
             decideApiRetryPolicy:
+              maximumAttemptsDurationSeconds: 9
               maximumAttempts: 7
               initialIntervalSeconds: 5
               maximumIntervalSeconds: 2
@@ -1372,6 +1416,7 @@ components:
             decideApiTimeoutSeconds: 1
             startApiTimeoutSeconds: 6
             startApiRetryPolicy:
+              maximumAttemptsDurationSeconds: 9
               maximumAttempts: 7
               initialIntervalSeconds: 5
               maximumIntervalSeconds: 2
@@ -1381,6 +1426,7 @@ components:
               - partialLoadingKeys
               - partialLoadingKeys
               persistenceLoadingType: null
+            startApiFailurePolicy: null
           stateInput:
             data: data
             encoding: encoding
@@ -1402,6 +1448,7 @@ components:
           commandCarryOverPolicy:
             commandCarryOverType: null
           decideApiRetryPolicy:
+            maximumAttemptsDurationSeconds: 9
             maximumAttempts: 7
             initialIntervalSeconds: 5
             maximumIntervalSeconds: 2
@@ -1409,6 +1456,7 @@ components:
           decideApiTimeoutSeconds: 1
           startApiTimeoutSeconds: 6
           startApiRetryPolicy:
+            maximumAttemptsDurationSeconds: 9
             maximumAttempts: 7
             initialIntervalSeconds: 5
             maximumIntervalSeconds: 2
@@ -1418,6 +1466,7 @@ components:
             - partialLoadingKeys
             - partialLoadingKeys
             persistenceLoadingType: null
+          startApiFailurePolicy: null
         stateInput:
           data: data
           encoding: encoding
@@ -1523,6 +1572,7 @@ components:
             data: data
             encoding: encoding
           requestStatus: null
+        stateStartApiSucceeded: true
         timerResults:
         - timerStatus: null
           commandId: commandId
@@ -1541,6 +1591,8 @@ components:
           items:
             $ref: '#/components/schemas/TimerResult'
           type: array
+        stateStartApiSucceeded:
+          type: boolean
       type: object
     TimerCommand:
       example:

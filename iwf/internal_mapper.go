@@ -1,8 +1,9 @@
 package iwf
 
 import (
-	"github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
 	"strings"
+
+	"github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
 )
 
 func fromIdlCommandResults(results *iwfidl.CommandResults, encoder ObjectEncoder) (CommandResults, error) {
@@ -41,6 +42,7 @@ func fromIdlCommandResults(results *iwfidl.CommandResults, encoder ObjectEncoder
 		Timers:                    timerResults,
 		Signals:                   signalResults,
 		InterStateChannelCommands: interStateChannelResults,
+		StateStartApiSucceeded:    results.StateStartApiSucceeded,
 	}, nil
 }
 

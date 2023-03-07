@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the WorkflowResetResponse type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &WorkflowResetResponse{}
+
 // WorkflowResetResponse struct for WorkflowResetResponse
 type WorkflowResetResponse struct {
 	WorkflowRunId string `json:"workflowRunId"`
@@ -51,7 +54,7 @@ func (o *WorkflowResetResponse) GetWorkflowRunId() string {
 // and a boolean to check if the value has been set.
 func (o *WorkflowResetResponse) GetWorkflowRunIdOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.WorkflowRunId, true
 }
@@ -62,11 +65,17 @@ func (o *WorkflowResetResponse) SetWorkflowRunId(v string) {
 }
 
 func (o WorkflowResetResponse) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["workflowRunId"] = o.WorkflowRunId
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o WorkflowResetResponse) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["workflowRunId"] = o.WorkflowRunId
+	return toSerialize, nil
 }
 
 type NullableWorkflowResetResponse struct {
