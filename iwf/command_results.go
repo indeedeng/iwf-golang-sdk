@@ -7,6 +7,7 @@ type (
 		Timers                    []TimerCommandResult
 		Signals                   []SignalCommandResult
 		InterStateChannelCommands []InterStateChannelCommandResult
+		StateStartApiSucceeded    *bool
 	}
 
 	SignalCommandResult struct {
@@ -72,4 +73,8 @@ func (c CommandResults) GetInterStateChannelCommandResultByChannel(channelName s
 		}
 	}
 	return nil
+}
+
+func (c CommandResults) GetStateStartApiSucceeded() *bool {
+	return c.StateStartApiSucceeded
 }
