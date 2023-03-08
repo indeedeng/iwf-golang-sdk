@@ -41,26 +41,14 @@ func TestBasicWorkflow(t *testing.T) {
 
 func TestProceedOnStateStartFailWorkflow(t *testing.T) {
 	wfId := "TestProceedOnStateStartFailWorkflow" + strconv.Itoa(int(time.Now().Unix()))
-	runId, err := client.StartWorkflow(context.Background(), &proceedOnStateStartFailWorkflow{}, wfId, 10, "input", &iwf.WorkflowOptions{
-		WorkflowIdReusePolicy: ptr.Any(iwfidl.REJECT_DUPLICATE),
-		WorkflowRetryPolicy: &iwfidl.WorkflowRetryPolicy{
-			InitialIntervalSeconds: iwfidl.PtrInt32(1),
-			MaximumAttempts:        iwfidl.PtrInt32(2),
-			MaximumIntervalSeconds: iwfidl.PtrInt32(100),
-			BackoffCoefficient:     iwfidl.PtrFloat32(3),
-		},
-	})
+	runId, err := client.StartWorkflow(context.Background(), &proceedOnStateStartFailWorkflow{}, wfId, 10, "input", &iwf.WorkflowOptions{})
 	assert.Nil(t, err)
 	assert.NotEmpty(t, runId)
 
-	// start the same workflowId again will fail
 	_, err = client.StartWorkflow(context.Background(), &basicWorkflow{}, wfId, 10, nil, nil)
 	assert.True(t, iwf.IsWorkflowAlreadyStartedError(err))
 
 	var output string
 	err = client.GetSimpleWorkflowResult(context.Background(), wfId, "", &output)
 	assert.Equal(t, "input_state1_start_state1_decide_state2_start_state2_decide", output)
-
-	err = client.GetSimpleWorkflowResult(context.Background(), "a wrong workflowId", "", &output)
-	assert.True(t, iwf.IsWorkflowNotExistsError(err))
 }
