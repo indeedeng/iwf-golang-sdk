@@ -8,7 +8,7 @@ type proceedOnStateStartFailWorkflow struct {
 	iwf.EmptyCommunicationSchema
 }
 
-func (b proceedOnStateStartFailWorkflow) GetStates() []iwf.StateDef {
+func (b proceedOnStateStartFailWorkflow) GetWorkflowStates() []iwf.StateDef {
 	return []iwf.StateDef{
 		iwf.StartingStateDef(&proceedOnStateStartFailWorkflowState1{output: ""}),
 		iwf.NonStartingStateDef(&proceedOnStateStartFailWorkflowState2{output: ""}),

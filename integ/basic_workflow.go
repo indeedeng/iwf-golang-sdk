@@ -8,7 +8,7 @@ type basicWorkflow struct {
 	iwf.EmptyCommunicationSchema
 }
 
-func (b basicWorkflow) GetStates() []iwf.StateDef {
+func (b basicWorkflow) GetWorkflowStates() []iwf.StateDef {
 	return []iwf.StateDef{
 		iwf.StartingStateDef(&basicWorkflowState1{}),
 		iwf.NonStartingStateDef(&basicWorkflowState2{}),

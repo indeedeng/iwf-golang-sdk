@@ -14,22 +14,22 @@ type Client interface {
 	// input can be optional, it's the input for the startState
 	// options is optional includes like IdReusePolicy, RetryPolicy, CronSchedule and also WorkflowStateOptions for the startState. Empty by default(when nil).
 	// return the workflowRunId
-	StartWorkflow(ctx context.Context, workflow Workflow, workflowId string, timeoutSecs int32, input interface{}, options *WorkflowOptions) (string, error)
+	StartWorkflow(ctx context.Context, workflow ObjectWorkflow, workflowId string, timeoutSecs int32, input interface{}, options *WorkflowOptions) (string, error)
 	// SignalWorkflow signals a workflow execution
 	// workflowId is required, workflowRunId is optional and default to current runId of the workflowId
 	// signalChannelName is required, signalValue is optional(for case of empty value)
-	SignalWorkflow(ctx context.Context, workflow Workflow, workflowId, workflowRunId, signalChannelName string, signalValue interface{}) error
+	SignalWorkflow(ctx context.Context, workflow ObjectWorkflow, workflowId, workflowRunId, signalChannelName string, signalValue interface{}) error
 	// GetWorkflowDataObjects returns the data objects of a workflow execution
 	// workflowId is required, workflowRunId is optional and default to current runId of the workflowId
 	// keys is required to be non-empty. If you intend to return all data objects, use GetAllWorkflowDataObjects API instead
-	GetWorkflowDataObjects(ctx context.Context, workflow Workflow, workflowId, workflowRunId string, keys []string) (map[string]Object, error)
+	GetWorkflowDataObjects(ctx context.Context, workflow ObjectWorkflow, workflowId, workflowRunId string, keys []string) (map[string]Object, error)
 	// GetWorkflowSearchAttributes returns search attributes of a workflow execution
 	// workflowId is required, workflowRunId is optional and default to current runId of the workflowId
 	// keys is required to be non-empty. If you intend to return all data objects, use GetAllWorkflowSearchAttributes API instead
-	GetWorkflowSearchAttributes(ctx context.Context, workflow Workflow, workflowId, workflowRunId string, keys []string) (map[string]interface{}, error)
+	GetWorkflowSearchAttributes(ctx context.Context, workflow ObjectWorkflow, workflowId, workflowRunId string, keys []string) (map[string]interface{}, error)
 	// GetAllWorkflowSearchAttributes returns all search attributes of a workflow execution
 	// workflowId is required, workflowRunId is optional and default to current runId of the workflowId
-	GetAllWorkflowSearchAttributes(ctx context.Context, workflow Workflow, workflowId, workflowRunId string) (map[string]interface{}, error)
+	GetAllWorkflowSearchAttributes(ctx context.Context, workflow ObjectWorkflow, workflowId, workflowRunId string) (map[string]interface{}, error)
 	// SkipTimerByCommandId skips a timer for the state execution based on the timerCommandId
 	SkipTimerByCommandId(ctx context.Context, workflowId, workflowRunId string, workflowState WorkflowState, stateExecutionNumber int, timerCommandId string) error
 	// SkipTimerByCommandIndex skips a timer for the state execution based on the timerCommandId

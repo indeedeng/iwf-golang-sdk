@@ -10,7 +10,7 @@ type interStateWorkflow struct {
 const interStateChannel1 = "test-inter-state-channel-1"
 const interStateChannel2 = "test-inter-state-channel-2"
 
-func (b interStateWorkflow) GetStates() []iwf.StateDef {
+func (b interStateWorkflow) GetWorkflowStates() []iwf.StateDef {
 	return []iwf.StateDef{
 		iwf.StartingStateDef(&interStateWorkflowState0{}),
 		iwf.NonStartingStateDef(&interStateWorkflowState1{}),

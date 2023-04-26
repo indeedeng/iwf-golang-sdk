@@ -5,7 +5,7 @@ import (
 )
 
 type registryImpl struct {
-	workflowStore              map[string]Workflow
+	workflowStore              map[string]ObjectWorkflow
 	workflowStartingState      map[string]WorkflowState
 	workflowStateStore         map[string]map[string]StateDef
 	signalNameStore            map[string]map[string]bool
@@ -14,7 +14,7 @@ type registryImpl struct {
 	searchAttributeTypeStore   map[string]map[string]iwfidl.SearchAttributeValueType
 }
 
-func (r *registryImpl) AddWorkflows(workflows ...Workflow) error {
+func (r *registryImpl) AddWorkflows(workflows ...ObjectWorkflow) error {
 	for _, wf := range workflows {
 		err := r.AddWorkflow(wf)
 		if err != nil {
@@ -24,7 +24,7 @@ func (r *registryImpl) AddWorkflows(workflows ...Workflow) error {
 	return nil
 }
 
-func (r *registryImpl) AddWorkflow(wf Workflow) error {
+func (r *registryImpl) AddWorkflow(wf ObjectWorkflow) error {
 	if err := r.registerWorkflow(wf); err != nil {
 		return err
 	}
@@ -69,7 +69,7 @@ func (r *registryImpl) getSearchAttributeTypeStore(wfType string) map[string]iwf
 	return r.searchAttributeTypeStore[wfType]
 }
 
-func (r *registryImpl) registerWorkflow(wf Workflow) error {
+func (r *registryImpl) registerWorkflow(wf ObjectWorkflow) error {
 	wfType := GetFinalWorkflowType(wf)
 	_, ok := r.workflowStore[wfType]
 	if ok {
@@ -79,14 +79,14 @@ func (r *registryImpl) registerWorkflow(wf Workflow) error {
 	return nil
 }
 
-func (r *registryImpl) registerWorkflowState(wf Workflow) error {
+func (r *registryImpl) registerWorkflowState(wf ObjectWorkflow) error {
 	wfType := GetFinalWorkflowType(wf)
-	if len(wf.GetStates()) == 0 {
+	if len(wf.GetWorkflowStates()) == 0 {
 		return NewWorkflowDefinitionErrorFmt("Workflow type %s must contain at least one workflow state", wfType)
 	}
 	stateMap := map[string]StateDef{}
 	var startingState WorkflowState
-	for _, state := range wf.GetStates() {
+	for _, state := range wf.GetWorkflowStates() {
 		stateId := GetFinalWorkflowStateId(state.State)
 		_, ok := stateMap[stateId]
 		if ok {
@@ -106,7 +106,7 @@ func (r *registryImpl) registerWorkflowState(wf Workflow) error {
 	return nil
 }
 
-func (r *registryImpl) registerWorkflowCommunicationSchema(wf Workflow) error {
+func (r *registryImpl) registerWorkflowCommunicationSchema(wf ObjectWorkflow) error {
 	wfType := GetFinalWorkflowType(wf)
 	signalMap := map[string]bool{}
 	interStateChannel := map[string]bool{}
@@ -124,7 +124,7 @@ func (r *registryImpl) registerWorkflowCommunicationSchema(wf Workflow) error {
 	return nil
 }
 
-func (r *registryImpl) registerWorkflowPersistenceSchema(wf Workflow) error {
+func (r *registryImpl) registerWorkflowPersistenceSchema(wf ObjectWorkflow) error {
 	wfType := GetFinalWorkflowType(wf)
 	dataObjectKeys := map[string]bool{}
 	searchAttributes := map[string]iwfidl.SearchAttributeValueType{}

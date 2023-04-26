@@ -22,7 +22,7 @@ const (
 	testSearchAttributeKeyword  = "CustomKeywordField"
 )
 
-func (b persistenceWorkflow) GetStates() []iwf.StateDef {
+func (b persistenceWorkflow) GetWorkflowStates() []iwf.StateDef {
 	return []iwf.StateDef{
 		iwf.StartingStateDef(&persistenceWorkflowState1{}),
 		iwf.NonStartingStateDef(&persistenceWorkflowState2{}),

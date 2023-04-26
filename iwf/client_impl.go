@@ -15,7 +15,7 @@ type clientImpl struct {
 	options  *ClientOptions
 }
 
-func (c *clientImpl) StartWorkflow(ctx context.Context, workflow Workflow, workflowId string, timeoutSecs int32, input interface{}, options *WorkflowOptions) (string, error) {
+func (c *clientImpl) StartWorkflow(ctx context.Context, workflow ObjectWorkflow, workflowId string, timeoutSecs int32, input interface{}, options *WorkflowOptions) (string, error) {
 	wfType := GetFinalWorkflowType(workflow)
 	state := c.registry.getWorkflowStartingState(wfType)
 
@@ -93,7 +93,7 @@ func convertToSearchAttributeList(types map[string]iwfidl.SearchAttributeValueTy
 	return converted, nil
 }
 
-func (c *clientImpl) SignalWorkflow(ctx context.Context, workflow Workflow, workflowId, workflowRunId, signalChannelName string, signalValue interface{}) error {
+func (c *clientImpl) SignalWorkflow(ctx context.Context, workflow ObjectWorkflow, workflowId, workflowRunId, signalChannelName string, signalValue interface{}) error {
 	wfType := GetFinalWorkflowType(workflow)
 	signalNameStore := c.registry.getWorkflowSignalNameStore(wfType)
 	if !signalNameStore[signalChannelName] {
@@ -102,7 +102,7 @@ func (c *clientImpl) SignalWorkflow(ctx context.Context, workflow Workflow, work
 	return c.UnregisteredClient.SignalWorkflow(ctx, workflowId, workflowRunId, signalChannelName, signalValue)
 }
 
-func (c *clientImpl) GetWorkflowDataObjects(ctx context.Context, workflow Workflow, workflowId, workflowRunId string, keys []string) (map[string]Object, error) {
+func (c *clientImpl) GetWorkflowDataObjects(ctx context.Context, workflow ObjectWorkflow, workflowId, workflowRunId string, keys []string) (map[string]Object, error) {
 	wfType := GetFinalWorkflowType(workflow)
 	doTypeMap := c.registry.getWorkflowDataObjectKeyStore(wfType)
 	for _, k := range keys {
@@ -114,7 +114,7 @@ func (c *clientImpl) GetWorkflowDataObjects(ctx context.Context, workflow Workfl
 	return c.UnregisteredClient.GetWorkflowDataObjects(ctx, workflowId, workflowRunId, keys)
 }
 
-func (c *clientImpl) GetWorkflowSearchAttributes(ctx context.Context, workflow Workflow, workflowId, workflowRunId string, keys []string) (map[string]interface{}, error) {
+func (c *clientImpl) GetWorkflowSearchAttributes(ctx context.Context, workflow ObjectWorkflow, workflowId, workflowRunId string, keys []string) (map[string]interface{}, error) {
 	wfType := GetFinalWorkflowType(workflow)
 	allTypes := c.registry.getSearchAttributeTypeStore(wfType)
 	var keyAndTypes []iwfidl.SearchAttributeKeyAndType
@@ -139,7 +139,7 @@ func (c *clientImpl) GetWorkflowSearchAttributes(ctx context.Context, workflow W
 	return out, nil
 }
 
-func (c *clientImpl) GetAllWorkflowSearchAttributes(ctx context.Context, workflow Workflow, workflowId, workflowRunId string) (map[string]interface{}, error) {
+func (c *clientImpl) GetAllWorkflowSearchAttributes(ctx context.Context, workflow ObjectWorkflow, workflowId, workflowRunId string) (map[string]interface{}, error) {
 	wfType := GetFinalWorkflowType(workflow)
 	allTypes := c.registry.getSearchAttributeTypeStore(wfType)
 	var keys []string

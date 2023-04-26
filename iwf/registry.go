@@ -4,9 +4,9 @@ import "github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
 
 type Registry interface {
 	// AddWorkflow registers a workflow
-	AddWorkflow(workflow Workflow) error
+	AddWorkflow(workflow ObjectWorkflow) error
 	// AddWorkflows registers multiple workflows
-	AddWorkflows(workflows ...Workflow) error
+	AddWorkflows(workflows ...ObjectWorkflow) error
 	// GetAllRegisteredWorkflowTypes returns all the workflow types that have been registered
 	GetAllRegisteredWorkflowTypes() []string
 
@@ -21,7 +21,7 @@ type Registry interface {
 
 func NewRegistry() Registry {
 	return &registryImpl{
-		workflowStore:              map[string]Workflow{},
+		workflowStore:              map[string]ObjectWorkflow{},
 		workflowStartingState:      map[string]WorkflowState{},
 		workflowStateStore:         map[string]map[string]StateDef{},
 		signalNameStore:            map[string]map[string]bool{},

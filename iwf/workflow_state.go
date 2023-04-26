@@ -22,7 +22,7 @@ type WorkflowState interface {
 	//  ctx              the context info of this API invocation, like workflow start time, workflowId, etc
 	//  input            the state input
 	//  Persistence      the API for 1) data objects, 2) search attributes and 3) stateLocals 4) recordEvent
-	//                         DataObjects and SearchAttributes are defined by Workflow interface.
+	//                         DataObjects and SearchAttributes are defined by ObjectWorkflow interface.
 	//                         StateLocals are for passing data within the state execution from this start API to {@link #decide} API
 	//                         RecordEvent is for storing some tracking info(e.g. RPC call input/output) when executing the API.
 	//                         Note that any write API will be recorded to server after the whole start API response is accepted.
@@ -38,7 +38,7 @@ type WorkflowState interface {
 	//  input            the state input
 	//  CommandResults   the results of the command that executed by Start
 	//  Persistence      the API for 1) data objects, 2) search attributes and 3) stateLocals 4) recordEvent
-	//                         DataObjects and SearchAttributes are defined by Workflow interface.
+	//                         DataObjects and SearchAttributes are defined by ObjectWorkflow interface.
 	//                         StateLocals are for passing data within the state execution from this start API to {@link #decide} API
 	//                         RecordEvent is for storing some tracking info(e.g. RPC call input/output) when executing the API.
 	//                         Note that any write API will be recorded to server after the whole start API response is accepted.

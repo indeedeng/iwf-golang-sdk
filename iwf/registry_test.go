@@ -30,7 +30,7 @@ func (m myState) GetStateOptions() *iwfidl.WorkflowStateOptions {
 	panic("implement me")
 }
 
-func (m myWf) GetStates() []StateDef {
+func (m myWf) GetWorkflowStates() []StateDef {
 	return []StateDef{
 		{
 			State:            myState{},
