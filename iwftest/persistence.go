@@ -36,15 +36,15 @@ func (m *MockPersistence) EXPECT() *MockPersistenceMockRecorder {
 }
 
 // GetDataObject mocks base method.
-func (m *MockPersistence) GetDataObject(key string, valuePtr interface{}) {
+func (m *MockPersistence) GetDataAttribute(key string, valuePtr interface{}) {
 	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "GetDataObject", key, valuePtr)
+	m.ctrl.Call(m, "GetDataAttribute", key, valuePtr)
 }
 
 // GetDataObject indicates an expected call of GetDataObject.
 func (mr *MockPersistenceMockRecorder) GetDataObject(key, valuePtr interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetDataObject", reflect.TypeOf((*MockPersistence)(nil).GetDataObject), key, valuePtr)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetDataAttribute", reflect.TypeOf((*MockPersistence)(nil).GetDataAttribute), key, valuePtr)
 }
 
 // GetSearchAttributeBool mocks base method.
@@ -146,15 +146,15 @@ func (mr *MockPersistenceMockRecorder) GetSearchAttributeText(key interface{}) *
 }
 
 // GetStateLocal mocks base method.
-func (m *MockPersistence) GetStateLocal(key string, valuePtr interface{}) {
+func (m *MockPersistence) GetStateExecutionLocal(key string, valuePtr interface{}) {
 	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "GetStateLocal", key, valuePtr)
+	m.ctrl.Call(m, "GetStateExecutionLocal", key, valuePtr)
 }
 
 // GetStateLocal indicates an expected call of GetStateLocal.
 func (mr *MockPersistenceMockRecorder) GetStateLocal(key, valuePtr interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetStateLocal", reflect.TypeOf((*MockPersistence)(nil).GetStateLocal), key, valuePtr)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetStateExecutionLocal", reflect.TypeOf((*MockPersistence)(nil).GetStateExecutionLocal), key, valuePtr)
 }
 
 // GetToReturn mocks base method.
@@ -187,15 +187,15 @@ func (mr *MockPersistenceMockRecorder) RecordEvent(key, value interface{}) *gomo
 }
 
 // SetDataObject mocks base method.
-func (m *MockPersistence) SetDataObject(key string, value interface{}) {
+func (m *MockPersistence) SetDataAttribute(key string, value interface{}) {
 	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "SetDataObject", key, value)
+	m.ctrl.Call(m, "SetDataAttribute", key, value)
 }
 
 // SetDataObject indicates an expected call of SetDataObject.
 func (mr *MockPersistenceMockRecorder) SetDataObject(key, value interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetDataObject", reflect.TypeOf((*MockPersistence)(nil).SetDataObject), key, value)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetDataAttribute", reflect.TypeOf((*MockPersistence)(nil).SetDataAttribute), key, value)
 }
 
 // SetSearchAttributeBool mocks base method.
@@ -283,15 +283,15 @@ func (mr *MockPersistenceMockRecorder) SetSearchAttributeText(key, value interfa
 }
 
 // SetStateLocal mocks base method.
-func (m *MockPersistence) SetStateLocal(key string, value interface{}) {
+func (m *MockPersistence) SetStateExecutionLocal(key string, value interface{}) {
 	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "SetStateLocal", key, value)
+	m.ctrl.Call(m, "SetStateExecutionLocal", key, value)
 }
 
 // SetStateLocal indicates an expected call of SetStateLocal.
 func (mr *MockPersistenceMockRecorder) SetStateLocal(key, value interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetStateLocal", reflect.TypeOf((*MockPersistence)(nil).SetStateLocal), key, value)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetStateExecutionLocal", reflect.TypeOf((*MockPersistence)(nil).SetStateExecutionLocal), key, value)
 }
 
 // MockpersistenceInternal is a mock of persistenceInternal interface.

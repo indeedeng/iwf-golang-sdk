@@ -6,11 +6,11 @@ type (
 	CommandType string
 
 	Command struct {
-		CommandId                string
-		CommandType              CommandType
-		TimerCommand             *TimerCommand
-		SignalCommand            *SignalCommand
-		InterStateChannelCommand *InterStateChannelCommand
+		CommandId              string
+		CommandType            CommandType
+		TimerCommand           *TimerCommand
+		SignalCommand          *SignalCommand
+		InternalChannelCommand *InternalChannelCommand
 	}
 
 	TimerCommand struct {
@@ -21,15 +21,15 @@ type (
 		ChannelName string
 	}
 
-	InterStateChannelCommand struct {
+	InternalChannelCommand struct {
 		ChannelName string
 	}
 )
 
 const (
-	CommandTypeSignalChannel     CommandType = "SignalChannel"
-	CommandTypeTimer             CommandType = "Timer"
-	CommandTypeInterStateChannel CommandType = "InterStateChannel"
+	CommandTypeSignalChannel   CommandType = "SignalChannel"
+	CommandTypeTimer           CommandType = "Timer"
+	CommandTypeInternalChannel CommandType = "InternalChannel"
 )
 
 func NewSignalCommand(commandId, channelName string) Command {
@@ -42,11 +42,11 @@ func NewSignalCommand(commandId, channelName string) Command {
 	}
 }
 
-func NewInterStateChannelCommand(commandId, channelName string) Command {
+func NewInternalChannelCommand(commandId, channelName string) Command {
 	return Command{
 		CommandId:   commandId,
-		CommandType: CommandTypeInterStateChannel,
-		InterStateChannelCommand: &InterStateChannelCommand{
+		CommandType: CommandTypeInternalChannel,
+		InternalChannelCommand: &InternalChannelCommand{
 			ChannelName: channelName,
 		},
 	}

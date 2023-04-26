@@ -20,8 +20,8 @@ func (b interStateWorkflow) GetWorkflowStates() []iwf.StateDef {
 
 func (b interStateWorkflow) GetCommunicationSchema() []iwf.CommunicationMethodDef {
 	return []iwf.CommunicationMethodDef{
-		iwf.InterstateChannelDef(interStateChannel1),
-		iwf.InterstateChannelDef(interStateChannel2),
+		iwf.InternalChannelDef(interStateChannel1),
+		iwf.InternalChannelDef(interStateChannel2),
 	}
 }
 

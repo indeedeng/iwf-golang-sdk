@@ -9,7 +9,7 @@ type interStateWorkflowState2 struct {
 }
 
 func (b interStateWorkflowState2) Start(ctx iwf.WorkflowContext, input iwf.Object, persistence iwf.Persistence, communication iwf.Communication) (*iwf.CommandRequest, error) {
-	communication.PublishInterstateChannel(interStateChannel2, 2)
+	communication.PublishInternalChannel(interStateChannel2, 2)
 	return iwf.EmptyCommandRequest(), nil
 }
 

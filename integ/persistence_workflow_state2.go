@@ -17,7 +17,7 @@ func (b persistenceWorkflowState2) Start(ctx iwf.WorkflowContext, input iwf.Obje
 	}
 
 	var do ExampleDataObjectModel
-	persistence.GetDataObject(testDataObjectKey, &do)
+	persistence.GetDataAttribute(testDataObjectKey, &do)
 	dv := persistence.GetSearchAttributeDatetime(testSearchAttributeDatetime)
 	bv := persistence.GetSearchAttributeBool(testSearchAttributeBool)
 	persistence.SetSearchAttributeDouble(testSearchAttributeDouble, 1.0)

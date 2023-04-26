@@ -61,7 +61,7 @@ func (r *registryImpl) getWorkflowInterStateChannelNameStore(wfType string) map[
 	return r.interStateChannelNameStore[wfType]
 }
 
-func (r *registryImpl) getWorkflowDataObjectKeyStore(wfType string) map[string]bool {
+func (r *registryImpl) getWorkflowDataAttributesKeyStore(wfType string) map[string]bool {
 	return r.dataObjectKeyStore[wfType]
 }
 
@@ -113,7 +113,7 @@ func (r *registryImpl) registerWorkflowCommunicationSchema(wf ObjectWorkflow) er
 	for _, methodDef := range wf.GetCommunicationSchema() {
 		if methodDef.CommunicationMethod == CommunicationMethodSignalChannel {
 			signalMap[methodDef.Name] = true
-		} else if methodDef.CommunicationMethod == CommunicationMethodInterstateChannel {
+		} else if methodDef.CommunicationMethod == CommunicationMethodInternalChannel {
 			interStateChannel[methodDef.Name] = true
 		} else {
 			return NewWorkflowDefinitionError("invalid CommunicationMethod definition " + string(methodDef.CommunicationMethod))

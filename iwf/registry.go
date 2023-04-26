@@ -15,7 +15,7 @@ type Registry interface {
 	getWorkflowStateDef(wfType string, id string) StateDef
 	getWorkflowSignalNameStore(wfType string) map[string]bool
 	getWorkflowInterStateChannelNameStore(wfType string) map[string]bool
-	getWorkflowDataObjectKeyStore(wfType string) map[string]bool
+	getWorkflowDataAttributesKeyStore(wfType string) map[string]bool
 	getSearchAttributeTypeStore(wfType string) map[string]iwfidl.SearchAttributeValueType
 }
 

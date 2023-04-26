@@ -9,7 +9,7 @@ import (
 type persistenceImpl struct {
 	encoder ObjectEncoder
 
-	// for data objects
+	// for data attributes
 	dataObjectKeyMap    map[string]bool
 	currentDataObjects  map[string]iwfidl.EncodedObject
 	dataObjectsToReturn map[string]iwfidl.EncodedObject
@@ -92,7 +92,7 @@ func newPersistence(
 	}, nil
 }
 
-func (p *persistenceImpl) GetDataObject(key string, valuePtr interface{}) {
+func (p *persistenceImpl) GetDataAttribute(key string, valuePtr interface{}) {
 	if !p.dataObjectKeyMap[key] {
 		panic(NewWorkflowDefinitionErrorFmt("key %v is not registered as a data object", key))
 	}
@@ -102,7 +102,7 @@ func (p *persistenceImpl) GetDataObject(key string, valuePtr interface{}) {
 	}
 }
 
-func (p *persistenceImpl) SetDataObject(key string, value interface{}) {
+func (p *persistenceImpl) SetDataAttribute(key string, value interface{}) {
 	if !p.dataObjectKeyMap[key] {
 		panic(NewWorkflowDefinitionErrorFmt("key %v is not registered as a data object", key))
 	}
@@ -225,14 +225,14 @@ func (p *persistenceImpl) SetSearchAttributeKeywordArray(key string, value []str
 	p.saStrArrToReturn[key] = value
 }
 
-func (p *persistenceImpl) GetStateLocal(key string, valuePtr interface{}) {
+func (p *persistenceImpl) GetStateExecutionLocal(key string, valuePtr interface{}) {
 	err := p.encoder.Decode(ptr.Any(p.currentStateLocal[key]), valuePtr)
 	if err != nil {
 		panic(err)
 	}
 }
 
-func (p *persistenceImpl) SetStateLocal(key string, value interface{}) {
+func (p *persistenceImpl) SetStateExecutionLocal(key string, value interface{}) {
 	v, err := p.encoder.Encode(value)
 	if err != nil {
 		panic(err)

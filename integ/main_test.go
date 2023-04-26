@@ -27,7 +27,7 @@ func apiV1WorkflowStateStart(c *gin.Context) {
 		return
 	}
 
-	resp, err := workerService.HandleWorkflowStateStart(c.Request.Context(), req)
+	resp, err := workerService.HandleWorkflowStateWaitUntil(c.Request.Context(), req)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -42,7 +42,7 @@ func apiV1WorkflowStateDecide(c *gin.Context) {
 		return
 	}
 
-	resp, err := workerService.HandleWorkflowStateDecide(c.Request.Context(), req)
+	resp, err := workerService.HandleWorkflowStateExecute(c.Request.Context(), req)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

@@ -19,10 +19,10 @@ type Client interface {
 	// workflowId is required, workflowRunId is optional and default to current runId of the workflowId
 	// signalChannelName is required, signalValue is optional(for case of empty value)
 	SignalWorkflow(ctx context.Context, workflow ObjectWorkflow, workflowId, workflowRunId, signalChannelName string, signalValue interface{}) error
-	// GetWorkflowDataObjects returns the data objects of a workflow execution
+	// GetWorkflowDataAttributes returns the data objects of a workflow execution
 	// workflowId is required, workflowRunId is optional and default to current runId of the workflowId
-	// keys is required to be non-empty. If you intend to return all data objects, use GetAllWorkflowDataObjects API instead
-	GetWorkflowDataObjects(ctx context.Context, workflow ObjectWorkflow, workflowId, workflowRunId string, keys []string) (map[string]Object, error)
+	// keys is required to be non-empty. If you intend to return all data objects, use GetAllWorkflowDataAttributes API instead
+	GetWorkflowDataAttributes(ctx context.Context, workflow ObjectWorkflow, workflowId, workflowRunId string, keys []string) (map[string]Object, error)
 	// GetWorkflowSearchAttributes returns search attributes of a workflow execution
 	// workflowId is required, workflowRunId is optional and default to current runId of the workflowId
 	// keys is required to be non-empty. If you intend to return all data objects, use GetAllWorkflowSearchAttributes API instead
@@ -64,9 +64,9 @@ type clientCommon interface {
 	//  https://cadenceworkflow.io/docs/concepts/search-workflows/
 	//  https://docs.temporal.io/concepts/what-is-a-search-attribute/
 	SearchWorkflow(ctx context.Context, request iwfidl.WorkflowSearchRequest) (*iwfidl.WorkflowSearchResponse, error)
-	// GetAllWorkflowDataObjects returns all the data objects of a workflow execution
+	// GetAllWorkflowDataAttributes returns all the data objects of a workflow execution
 	// workflowId is required, workflowRunId is optional and default to current runId of the workflowId
-	GetAllWorkflowDataObjects(ctx context.Context, workflowId, workflowRunId string) (map[string]Object, error)
+	GetAllWorkflowDataAttributes(ctx context.Context, workflowId, workflowRunId string) (map[string]Object, error)
 }
 
 // UnregisteredClient is a client without workflow registry
@@ -84,10 +84,10 @@ type UnregisteredClient interface {
 	// workflowId is required, workflowRunId is optional and default to current runId of the workflowId
 	// signalChannelName is required, signalValue is optional(for case of empty value)
 	SignalWorkflow(ctx context.Context, workflowId, workflowRunId, signalChannelName string, signalValue interface{}) error
-	// GetWorkflowDataObjects returns the data objects of a workflow execution
+	// GetWorkflowDataAttributes returns the data objects of a workflow execution
 	// workflowId is required, workflowRunId is optional and default to current runId of the workflowId
-	// keys is required to be non-empty. If you intend to return all data objects, use GetAllWorkflowDataObjects API instead
-	GetWorkflowDataObjects(ctx context.Context, workflowId, workflowRunId string, keys []string) (map[string]Object, error)
+	// keys is required to be non-empty. If you intend to return all data objects, use GetAllWorkflowDataAttributes API instead
+	GetWorkflowDataAttributes(ctx context.Context, workflowId, workflowRunId string, keys []string) (map[string]Object, error)
 	// GetWorkflowSearchAttributes returns search attributes of a workflow execution
 	// workflowId is required, workflowRunId is optional and default to current runId of the workflowId
 	// keys is required to be non-empty. If you intend to return all data objects, use GetAllWorkflowSearchAttributes API instead

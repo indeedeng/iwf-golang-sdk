@@ -10,7 +10,7 @@ type workerServiceImpl struct {
 	options  WorkerOptions
 }
 
-func (w *workerServiceImpl) HandleWorkflowStateStart(ctx context.Context, request iwfidl.WorkflowStateStartRequest) (resp *iwfidl.WorkflowStateStartResponse, retErr error) {
+func (w *workerServiceImpl) HandleWorkflowStateWaitUntil(ctx context.Context, request iwfidl.WorkflowStateWaitUntilRequest) (resp *iwfidl.WorkflowStateWaitUntilResponse, retErr error) {
 	defer func() { captureStateExecutionError(recover(), &retErr) }()
 
 	wfType := request.GetWorkflowType()
@@ -21,7 +21,7 @@ func (w *workerServiceImpl) HandleWorkflowStateStart(ctx context.Context, reques
 		ctx, reqContext.GetWorkflowId(), reqContext.GetWorkflowRunId(), reqContext.GetStateExecutionId(), reqContext.GetWorkflowStartedTimestamp(),
 		int(reqContext.GetAttempt()), reqContext.GetFirstAttemptTimestamp())
 
-	pers, err := newPersistence(w.options.ObjectEncoder, w.registry.getWorkflowDataObjectKeyStore(wfType), w.registry.getSearchAttributeTypeStore(wfType), request.DataObjects, request.SearchAttributes, nil)
+	pers, err := newPersistence(w.options.ObjectEncoder, w.registry.getWorkflowDataAttributesKeyStore(wfType), w.registry.getSearchAttributeTypeStore(wfType), request.DataObjects, request.SearchAttributes, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -31,7 +31,7 @@ func (w *workerServiceImpl) HandleWorkflowStateStart(ctx context.Context, reques
 		return nil, err
 	}
 
-	err = canNotRequestAndPublishTheSameInterStateChannel(comm.GetToPublishInterStateChannel(), commandRequest)
+	err = canNotRequestAndPublishTheSameInterStateChannel(comm.GetToPublishInternalChannel(), commandRequest)
 	if err != nil {
 		return nil, err
 	}
@@ -40,8 +40,8 @@ func (w *workerServiceImpl) HandleWorkflowStateStart(ctx context.Context, reques
 	if err != nil {
 		return nil, err
 	}
-	publishings := toPublishing(comm.GetToPublishInterStateChannel())
-	resp = &iwfidl.WorkflowStateStartResponse{
+	publishings := toPublishing(comm.GetToPublishInternalChannel())
+	resp = &iwfidl.WorkflowStateWaitUntilResponse{
 		CommandRequest: idlCommandRequest,
 	}
 	if len(publishings) > 0 {
@@ -79,8 +79,8 @@ func toPublishing(channels map[string][]iwfidl.EncodedObject) []iwfidl.InterStat
 func canNotRequestAndPublishTheSameInterStateChannel(channelToPublish map[string][]iwfidl.EncodedObject, commandRequest *CommandRequest) error {
 	if len(channelToPublish) > 0 && commandRequest != nil {
 		for _, cr := range commandRequest.Commands {
-			if cr.CommandType == CommandTypeInterStateChannel {
-				chName := cr.InterStateChannelCommand.ChannelName
+			if cr.CommandType == CommandTypeInternalChannel {
+				chName := cr.InternalChannelCommand.ChannelName
 				_, ok := channelToPublish[chName]
 				if ok {
 					return NewWorkflowDefinitionErrorFmt("Cannot publish and request for the same interStateChannel: %v", chName)
@@ -91,7 +91,7 @@ func canNotRequestAndPublishTheSameInterStateChannel(channelToPublish map[string
 	return nil
 }
 
-func (w *workerServiceImpl) HandleWorkflowStateDecide(ctx context.Context, request iwfidl.WorkflowStateDecideRequest) (resp *iwfidl.WorkflowStateDecideResponse, retErr error) {
+func (w *workerServiceImpl) HandleWorkflowStateExecute(ctx context.Context, request iwfidl.WorkflowStateExecuteRequest) (resp *iwfidl.WorkflowStateExecuteResponse, retErr error) {
 	defer func() { captureStateExecutionError(recover(), &retErr) }()
 
 	wfType := request.GetWorkflowType()
@@ -106,7 +106,7 @@ func (w *workerServiceImpl) HandleWorkflowStateDecide(ctx context.Context, reque
 	if err != nil {
 		return nil, err
 	}
-	pers, err := newPersistence(w.options.ObjectEncoder, w.registry.getWorkflowDataObjectKeyStore(wfType), w.registry.getSearchAttributeTypeStore(wfType), request.DataObjects, request.SearchAttributes, request.GetStateLocals())
+	pers, err := newPersistence(w.options.ObjectEncoder, w.registry.getWorkflowDataAttributesKeyStore(wfType), w.registry.getSearchAttributeTypeStore(wfType), request.DataObjects, request.SearchAttributes, request.GetStateLocals())
 	if err != nil {
 		return nil, err
 	}
@@ -116,10 +116,10 @@ func (w *workerServiceImpl) HandleWorkflowStateDecide(ctx context.Context, reque
 		return nil, err
 	}
 	idlDecision, err := toIdlDecision(decision, wfType, w.registry, w.options.ObjectEncoder)
-	resp = &iwfidl.WorkflowStateDecideResponse{
+	resp = &iwfidl.WorkflowStateExecuteResponse{
 		StateDecision: idlDecision,
 	}
-	publishings := toPublishing(comm.GetToPublishInterStateChannel())
+	publishings := toPublishing(comm.GetToPublishInternalChannel())
 	if len(publishings) > 0 {
 		resp.PublishToInterStateChannel = publishings
 	}

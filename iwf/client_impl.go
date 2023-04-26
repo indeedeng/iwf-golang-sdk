@@ -102,16 +102,16 @@ func (c *clientImpl) SignalWorkflow(ctx context.Context, workflow ObjectWorkflow
 	return c.UnregisteredClient.SignalWorkflow(ctx, workflowId, workflowRunId, signalChannelName, signalValue)
 }
 
-func (c *clientImpl) GetWorkflowDataObjects(ctx context.Context, workflow ObjectWorkflow, workflowId, workflowRunId string, keys []string) (map[string]Object, error) {
+func (c *clientImpl) GetWorkflowDataAttributes(ctx context.Context, workflow ObjectWorkflow, workflowId, workflowRunId string, keys []string) (map[string]Object, error) {
 	wfType := GetFinalWorkflowType(workflow)
-	doTypeMap := c.registry.getWorkflowDataObjectKeyStore(wfType)
+	doTypeMap := c.registry.getWorkflowDataAttributesKeyStore(wfType)
 	for _, k := range keys {
 		_, ok := doTypeMap[k]
 		if !ok {
 			return nil, fmt.Errorf("data object type %v is not registered", k)
 		}
 	}
-	return c.UnregisteredClient.GetWorkflowDataObjects(ctx, workflowId, workflowRunId, keys)
+	return c.UnregisteredClient.GetWorkflowDataAttributes(ctx, workflowId, workflowRunId, keys)
 }
 
 func (c *clientImpl) GetWorkflowSearchAttributes(ctx context.Context, workflow ObjectWorkflow, workflowId, workflowRunId string, keys []string) (map[string]interface{}, error) {

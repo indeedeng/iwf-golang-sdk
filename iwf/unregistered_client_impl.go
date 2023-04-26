@@ -73,14 +73,14 @@ func (u *unregisteredClientImpl) SignalWorkflow(ctx context.Context, workflowId,
 	return u.processError(err, httpResp)
 }
 
-func (u *unregisteredClientImpl) GetWorkflowDataObjects(ctx context.Context, workflowId, workflowRunId string, keys []string) (map[string]Object, error) {
+func (u *unregisteredClientImpl) GetWorkflowDataAttributes(ctx context.Context, workflowId, workflowRunId string, keys []string) (map[string]Object, error) {
 	if len(keys) == 0 {
-		return nil, fmt.Errorf("must specify keys to return, use GetAllWorkflowDataObjects if intended to get all keys")
+		return nil, fmt.Errorf("must specify keys to return, use GetAllWorkflowDataAttributes if intended to get all keys")
 	}
 	return u.doGetWorkflowDataObjects(ctx, workflowId, workflowRunId, keys)
 }
 
-func (u *unregisteredClientImpl) GetAllWorkflowDataObjects(ctx context.Context, workflowId, workflowRunId string) (map[string]Object, error) {
+func (u *unregisteredClientImpl) GetAllWorkflowDataAttributes(ctx context.Context, workflowId, workflowRunId string) (map[string]Object, error) {
 	return u.doGetWorkflowDataObjects(ctx, workflowId, workflowRunId, nil)
 }
 

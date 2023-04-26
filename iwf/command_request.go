@@ -5,23 +5,19 @@ import "github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
 type CommandRequest struct {
 	Commands            []Command
 	CommandCombinations []iwfidl.CommandCombination
-	DeciderTriggerType  iwfidl.DeciderTriggerType
+	CommandWaitingType  iwfidl.CommandWaitingType
 }
 
 // EmptyCommandRequest will jump to decide stage immediately.
 func EmptyCommandRequest() *CommandRequest {
-	return &CommandRequest{
-		// it doesn't matter what type is for empty commands
-		// TODO: server doesn't seem requiring it, maybe we can remove it
-		DeciderTriggerType: iwfidl.ALL_COMMAND_COMPLETED,
-	}
+	return &CommandRequest{}
 }
 
 // AnyCommandCompletedRequest will wait for all the commands to complete
 func AnyCommandCompletedRequest(commands ...Command) *CommandRequest {
 	return &CommandRequest{
 		Commands:           commands,
-		DeciderTriggerType: iwfidl.ANY_COMMAND_COMPLETED,
+		CommandWaitingType: iwfidl.ANY_COMPLETED,
 	}
 }
 
@@ -29,7 +25,7 @@ func AnyCommandCompletedRequest(commands ...Command) *CommandRequest {
 func AllCommandsCompletedRequest(commands ...Command) *CommandRequest {
 	return &CommandRequest{
 		Commands:           commands,
-		DeciderTriggerType: iwfidl.ALL_COMMAND_COMPLETED,
+		CommandWaitingType: iwfidl.ALL_COMPLETED,
 	}
 }
 
@@ -53,6 +49,6 @@ func AnyCommandCombinationsCompletedRequest(listsOfCommandIds [][]string, comman
 	return &CommandRequest{
 		Commands:            commands,
 		CommandCombinations: comList,
-		DeciderTriggerType:  iwfidl.ANY_COMMAND_COMBINATION_COMPLETED,
+		CommandWaitingType:  iwfidl.ANY_COMBINATION_COMPLETED,
 	}
 }

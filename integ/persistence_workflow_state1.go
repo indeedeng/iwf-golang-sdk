@@ -20,7 +20,7 @@ func (b persistenceWorkflowState1) Start(ctx iwf.WorkflowContext, input iwf.Obje
 	}
 
 	var do ExampleDataObjectModel
-	persistence.GetDataObject(testDataObjectKey, &do)
+	persistence.GetDataAttribute(testDataObjectKey, &do)
 	if do.StrValue == "" && do.IntValue == 0 {
 		input.Get(&do)
 		if do.StrValue == "" || do.IntValue == 0 {
@@ -29,8 +29,8 @@ func (b persistenceWorkflowState1) Start(ctx iwf.WorkflowContext, input iwf.Obje
 	} else {
 		panic("this value should be empty because we haven't set it before")
 	}
-	persistence.SetDataObject(testDataObjectKey, do)
-	persistence.SetDataObject(testDataObjectKey2, "a string")
+	persistence.SetDataAttribute(testDataObjectKey, do)
+	persistence.SetDataAttribute(testDataObjectKey2, "a string")
 	persistence.SetSearchAttributeInt(testSearchAttributeInt, 1)
 
 	return iwf.EmptyCommandRequest(), nil
@@ -43,9 +43,9 @@ func (b persistenceWorkflowState1) Decide(ctx iwf.WorkflowContext, input iwf.Obj
 	}
 
 	var do ExampleDataObjectModel
-	persistence.GetDataObject(testDataObjectKey, &do)
+	persistence.GetDataAttribute(testDataObjectKey, &do)
 	var str string
-	persistence.GetDataObject(testDataObjectKey2, &str)
+	persistence.GetDataAttribute(testDataObjectKey2, &str)
 	if str != "a string" {
 		panic("testDataObjectKey2 value is incorrect")
 	}
