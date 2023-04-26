@@ -31,8 +31,8 @@ func (b persistenceWorkflow) GetWorkflowStates() []iwf.StateDef {
 
 func (b persistenceWorkflow) GetPersistenceSchema() []iwf.PersistenceFieldDef {
 	return []iwf.PersistenceFieldDef{
-		iwf.DataObjectDef(testDataObjectKey),
-		iwf.DataObjectDef(testDataObjectKey2),
+		iwf.DataAttributeDef(testDataObjectKey),
+		iwf.DataAttributeDef(testDataObjectKey2),
 		iwf.SearchAttributeDef(testSearchAttributeInt, iwfidl.INT),
 		iwf.SearchAttributeDef(testSearchAttributeDatetime, iwfidl.DATETIME),
 		iwf.SearchAttributeDef(testSearchAttributeBool, iwfidl.BOOL),

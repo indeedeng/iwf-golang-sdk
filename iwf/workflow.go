@@ -11,6 +11,11 @@ type ObjectWorkflow interface {
 	// GetWorkflowStates defines the states of the workflow. A state represents a step of the workflow state machine.
 	// A state can execute some commands (signal/timer) and wait for result
 	// See more details in the WorkflowState interface.
+	// It can return an empty list, meaning no states.
+	// There can be at most one startingState in the list.
+	// If there is no startingState or with the default empty state list, the workflow
+	// will not start any state execution after workflow stated. Application can still
+	// use RPC to invoke new state execution in the future.
 	GetWorkflowStates() []StateDef
 
 	// GetPersistenceSchema defines all the persistence fields for this workflow, this includes:
