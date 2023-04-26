@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**DeciderTriggerType** | [**DeciderTriggerType**](DeciderTriggerType.md) |  | 
+**CommandWaitingType** | [**CommandWaitingType**](CommandWaitingType.md) |  | 
 **TimerCommands** | Pointer to [**[]TimerCommand**](TimerCommand.md) |  | [optional] 
 **SignalCommands** | Pointer to [**[]SignalCommand**](SignalCommand.md) |  | [optional] 
 **InterStateChannelCommands** | Pointer to [**[]InterStateChannelCommand**](InterStateChannelCommand.md) |  | [optional] 
@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 
 ### NewCommandRequest
 
-`func NewCommandRequest(deciderTriggerType DeciderTriggerType, ) *CommandRequest`
+`func NewCommandRequest(commandWaitingType CommandWaitingType, ) *CommandRequest`
 
 NewCommandRequest instantiates a new CommandRequest object
 This constructor will assign default values to properties that have it defined,
@@ -29,24 +29,24 @@ NewCommandRequestWithDefaults instantiates a new CommandRequest object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetDeciderTriggerType
+### GetCommandWaitingType
 
-`func (o *CommandRequest) GetDeciderTriggerType() DeciderTriggerType`
+`func (o *CommandRequest) GetCommandWaitingType() CommandWaitingType`
 
-GetDeciderTriggerType returns the DeciderTriggerType field if non-nil, zero value otherwise.
+GetCommandWaitingType returns the CommandWaitingType field if non-nil, zero value otherwise.
 
-### GetDeciderTriggerTypeOk
+### GetCommandWaitingTypeOk
 
-`func (o *CommandRequest) GetDeciderTriggerTypeOk() (*DeciderTriggerType, bool)`
+`func (o *CommandRequest) GetCommandWaitingTypeOk() (*CommandWaitingType, bool)`
 
-GetDeciderTriggerTypeOk returns a tuple with the DeciderTriggerType field if it's non-nil, zero value otherwise
+GetCommandWaitingTypeOk returns a tuple with the CommandWaitingType field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetDeciderTriggerType
+### SetCommandWaitingType
 
-`func (o *CommandRequest) SetDeciderTriggerType(v DeciderTriggerType)`
+`func (o *CommandRequest) SetCommandWaitingType(v CommandWaitingType)`
 
-SetDeciderTriggerType sets DeciderTriggerType field to given value.
+SetCommandWaitingType sets CommandWaitingType field to given value.
 
 
 ### GetTimerCommands

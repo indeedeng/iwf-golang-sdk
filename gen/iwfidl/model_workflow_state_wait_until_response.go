@@ -14,11 +14,11 @@ import (
 	"encoding/json"
 )
 
-// checks if the WorkflowStateStartResponse type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &WorkflowStateStartResponse{}
+// checks if the WorkflowStateWaitUntilResponse type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &WorkflowStateWaitUntilResponse{}
 
-// WorkflowStateStartResponse struct for WorkflowStateStartResponse
-type WorkflowStateStartResponse struct {
+// WorkflowStateWaitUntilResponse struct for WorkflowStateWaitUntilResponse
+type WorkflowStateWaitUntilResponse struct {
 	UpsertSearchAttributes []SearchAttribute `json:"upsertSearchAttributes,omitempty"`
 	UpsertDataObjects []KeyValue `json:"upsertDataObjects,omitempty"`
 	CommandRequest *CommandRequest `json:"commandRequest,omitempty"`
@@ -27,25 +27,25 @@ type WorkflowStateStartResponse struct {
 	PublishToInterStateChannel []InterStateChannelPublishing `json:"publishToInterStateChannel,omitempty"`
 }
 
-// NewWorkflowStateStartResponse instantiates a new WorkflowStateStartResponse object
+// NewWorkflowStateWaitUntilResponse instantiates a new WorkflowStateWaitUntilResponse object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewWorkflowStateStartResponse() *WorkflowStateStartResponse {
-	this := WorkflowStateStartResponse{}
+func NewWorkflowStateWaitUntilResponse() *WorkflowStateWaitUntilResponse {
+	this := WorkflowStateWaitUntilResponse{}
 	return &this
 }
 
-// NewWorkflowStateStartResponseWithDefaults instantiates a new WorkflowStateStartResponse object
+// NewWorkflowStateWaitUntilResponseWithDefaults instantiates a new WorkflowStateWaitUntilResponse object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewWorkflowStateStartResponseWithDefaults() *WorkflowStateStartResponse {
-	this := WorkflowStateStartResponse{}
+func NewWorkflowStateWaitUntilResponseWithDefaults() *WorkflowStateWaitUntilResponse {
+	this := WorkflowStateWaitUntilResponse{}
 	return &this
 }
 
 // GetUpsertSearchAttributes returns the UpsertSearchAttributes field value if set, zero value otherwise.
-func (o *WorkflowStateStartResponse) GetUpsertSearchAttributes() []SearchAttribute {
+func (o *WorkflowStateWaitUntilResponse) GetUpsertSearchAttributes() []SearchAttribute {
 	if o == nil || IsNil(o.UpsertSearchAttributes) {
 		var ret []SearchAttribute
 		return ret
@@ -55,7 +55,7 @@ func (o *WorkflowStateStartResponse) GetUpsertSearchAttributes() []SearchAttribu
 
 // GetUpsertSearchAttributesOk returns a tuple with the UpsertSearchAttributes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *WorkflowStateStartResponse) GetUpsertSearchAttributesOk() ([]SearchAttribute, bool) {
+func (o *WorkflowStateWaitUntilResponse) GetUpsertSearchAttributesOk() ([]SearchAttribute, bool) {
 	if o == nil || IsNil(o.UpsertSearchAttributes) {
 		return nil, false
 	}
@@ -63,7 +63,7 @@ func (o *WorkflowStateStartResponse) GetUpsertSearchAttributesOk() ([]SearchAttr
 }
 
 // HasUpsertSearchAttributes returns a boolean if a field has been set.
-func (o *WorkflowStateStartResponse) HasUpsertSearchAttributes() bool {
+func (o *WorkflowStateWaitUntilResponse) HasUpsertSearchAttributes() bool {
 	if o != nil && !IsNil(o.UpsertSearchAttributes) {
 		return true
 	}
@@ -72,12 +72,12 @@ func (o *WorkflowStateStartResponse) HasUpsertSearchAttributes() bool {
 }
 
 // SetUpsertSearchAttributes gets a reference to the given []SearchAttribute and assigns it to the UpsertSearchAttributes field.
-func (o *WorkflowStateStartResponse) SetUpsertSearchAttributes(v []SearchAttribute) {
+func (o *WorkflowStateWaitUntilResponse) SetUpsertSearchAttributes(v []SearchAttribute) {
 	o.UpsertSearchAttributes = v
 }
 
 // GetUpsertDataObjects returns the UpsertDataObjects field value if set, zero value otherwise.
-func (o *WorkflowStateStartResponse) GetUpsertDataObjects() []KeyValue {
+func (o *WorkflowStateWaitUntilResponse) GetUpsertDataObjects() []KeyValue {
 	if o == nil || IsNil(o.UpsertDataObjects) {
 		var ret []KeyValue
 		return ret
@@ -87,7 +87,7 @@ func (o *WorkflowStateStartResponse) GetUpsertDataObjects() []KeyValue {
 
 // GetUpsertDataObjectsOk returns a tuple with the UpsertDataObjects field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *WorkflowStateStartResponse) GetUpsertDataObjectsOk() ([]KeyValue, bool) {
+func (o *WorkflowStateWaitUntilResponse) GetUpsertDataObjectsOk() ([]KeyValue, bool) {
 	if o == nil || IsNil(o.UpsertDataObjects) {
 		return nil, false
 	}
@@ -95,7 +95,7 @@ func (o *WorkflowStateStartResponse) GetUpsertDataObjectsOk() ([]KeyValue, bool)
 }
 
 // HasUpsertDataObjects returns a boolean if a field has been set.
-func (o *WorkflowStateStartResponse) HasUpsertDataObjects() bool {
+func (o *WorkflowStateWaitUntilResponse) HasUpsertDataObjects() bool {
 	if o != nil && !IsNil(o.UpsertDataObjects) {
 		return true
 	}
@@ -104,12 +104,12 @@ func (o *WorkflowStateStartResponse) HasUpsertDataObjects() bool {
 }
 
 // SetUpsertDataObjects gets a reference to the given []KeyValue and assigns it to the UpsertDataObjects field.
-func (o *WorkflowStateStartResponse) SetUpsertDataObjects(v []KeyValue) {
+func (o *WorkflowStateWaitUntilResponse) SetUpsertDataObjects(v []KeyValue) {
 	o.UpsertDataObjects = v
 }
 
 // GetCommandRequest returns the CommandRequest field value if set, zero value otherwise.
-func (o *WorkflowStateStartResponse) GetCommandRequest() CommandRequest {
+func (o *WorkflowStateWaitUntilResponse) GetCommandRequest() CommandRequest {
 	if o == nil || IsNil(o.CommandRequest) {
 		var ret CommandRequest
 		return ret
@@ -119,7 +119,7 @@ func (o *WorkflowStateStartResponse) GetCommandRequest() CommandRequest {
 
 // GetCommandRequestOk returns a tuple with the CommandRequest field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *WorkflowStateStartResponse) GetCommandRequestOk() (*CommandRequest, bool) {
+func (o *WorkflowStateWaitUntilResponse) GetCommandRequestOk() (*CommandRequest, bool) {
 	if o == nil || IsNil(o.CommandRequest) {
 		return nil, false
 	}
@@ -127,7 +127,7 @@ func (o *WorkflowStateStartResponse) GetCommandRequestOk() (*CommandRequest, boo
 }
 
 // HasCommandRequest returns a boolean if a field has been set.
-func (o *WorkflowStateStartResponse) HasCommandRequest() bool {
+func (o *WorkflowStateWaitUntilResponse) HasCommandRequest() bool {
 	if o != nil && !IsNil(o.CommandRequest) {
 		return true
 	}
@@ -136,12 +136,12 @@ func (o *WorkflowStateStartResponse) HasCommandRequest() bool {
 }
 
 // SetCommandRequest gets a reference to the given CommandRequest and assigns it to the CommandRequest field.
-func (o *WorkflowStateStartResponse) SetCommandRequest(v CommandRequest) {
+func (o *WorkflowStateWaitUntilResponse) SetCommandRequest(v CommandRequest) {
 	o.CommandRequest = &v
 }
 
 // GetUpsertStateLocals returns the UpsertStateLocals field value if set, zero value otherwise.
-func (o *WorkflowStateStartResponse) GetUpsertStateLocals() []KeyValue {
+func (o *WorkflowStateWaitUntilResponse) GetUpsertStateLocals() []KeyValue {
 	if o == nil || IsNil(o.UpsertStateLocals) {
 		var ret []KeyValue
 		return ret
@@ -151,7 +151,7 @@ func (o *WorkflowStateStartResponse) GetUpsertStateLocals() []KeyValue {
 
 // GetUpsertStateLocalsOk returns a tuple with the UpsertStateLocals field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *WorkflowStateStartResponse) GetUpsertStateLocalsOk() ([]KeyValue, bool) {
+func (o *WorkflowStateWaitUntilResponse) GetUpsertStateLocalsOk() ([]KeyValue, bool) {
 	if o == nil || IsNil(o.UpsertStateLocals) {
 		return nil, false
 	}
@@ -159,7 +159,7 @@ func (o *WorkflowStateStartResponse) GetUpsertStateLocalsOk() ([]KeyValue, bool)
 }
 
 // HasUpsertStateLocals returns a boolean if a field has been set.
-func (o *WorkflowStateStartResponse) HasUpsertStateLocals() bool {
+func (o *WorkflowStateWaitUntilResponse) HasUpsertStateLocals() bool {
 	if o != nil && !IsNil(o.UpsertStateLocals) {
 		return true
 	}
@@ -168,12 +168,12 @@ func (o *WorkflowStateStartResponse) HasUpsertStateLocals() bool {
 }
 
 // SetUpsertStateLocals gets a reference to the given []KeyValue and assigns it to the UpsertStateLocals field.
-func (o *WorkflowStateStartResponse) SetUpsertStateLocals(v []KeyValue) {
+func (o *WorkflowStateWaitUntilResponse) SetUpsertStateLocals(v []KeyValue) {
 	o.UpsertStateLocals = v
 }
 
 // GetRecordEvents returns the RecordEvents field value if set, zero value otherwise.
-func (o *WorkflowStateStartResponse) GetRecordEvents() []KeyValue {
+func (o *WorkflowStateWaitUntilResponse) GetRecordEvents() []KeyValue {
 	if o == nil || IsNil(o.RecordEvents) {
 		var ret []KeyValue
 		return ret
@@ -183,7 +183,7 @@ func (o *WorkflowStateStartResponse) GetRecordEvents() []KeyValue {
 
 // GetRecordEventsOk returns a tuple with the RecordEvents field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *WorkflowStateStartResponse) GetRecordEventsOk() ([]KeyValue, bool) {
+func (o *WorkflowStateWaitUntilResponse) GetRecordEventsOk() ([]KeyValue, bool) {
 	if o == nil || IsNil(o.RecordEvents) {
 		return nil, false
 	}
@@ -191,7 +191,7 @@ func (o *WorkflowStateStartResponse) GetRecordEventsOk() ([]KeyValue, bool) {
 }
 
 // HasRecordEvents returns a boolean if a field has been set.
-func (o *WorkflowStateStartResponse) HasRecordEvents() bool {
+func (o *WorkflowStateWaitUntilResponse) HasRecordEvents() bool {
 	if o != nil && !IsNil(o.RecordEvents) {
 		return true
 	}
@@ -200,12 +200,12 @@ func (o *WorkflowStateStartResponse) HasRecordEvents() bool {
 }
 
 // SetRecordEvents gets a reference to the given []KeyValue and assigns it to the RecordEvents field.
-func (o *WorkflowStateStartResponse) SetRecordEvents(v []KeyValue) {
+func (o *WorkflowStateWaitUntilResponse) SetRecordEvents(v []KeyValue) {
 	o.RecordEvents = v
 }
 
 // GetPublishToInterStateChannel returns the PublishToInterStateChannel field value if set, zero value otherwise.
-func (o *WorkflowStateStartResponse) GetPublishToInterStateChannel() []InterStateChannelPublishing {
+func (o *WorkflowStateWaitUntilResponse) GetPublishToInterStateChannel() []InterStateChannelPublishing {
 	if o == nil || IsNil(o.PublishToInterStateChannel) {
 		var ret []InterStateChannelPublishing
 		return ret
@@ -215,7 +215,7 @@ func (o *WorkflowStateStartResponse) GetPublishToInterStateChannel() []InterStat
 
 // GetPublishToInterStateChannelOk returns a tuple with the PublishToInterStateChannel field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *WorkflowStateStartResponse) GetPublishToInterStateChannelOk() ([]InterStateChannelPublishing, bool) {
+func (o *WorkflowStateWaitUntilResponse) GetPublishToInterStateChannelOk() ([]InterStateChannelPublishing, bool) {
 	if o == nil || IsNil(o.PublishToInterStateChannel) {
 		return nil, false
 	}
@@ -223,7 +223,7 @@ func (o *WorkflowStateStartResponse) GetPublishToInterStateChannelOk() ([]InterS
 }
 
 // HasPublishToInterStateChannel returns a boolean if a field has been set.
-func (o *WorkflowStateStartResponse) HasPublishToInterStateChannel() bool {
+func (o *WorkflowStateWaitUntilResponse) HasPublishToInterStateChannel() bool {
 	if o != nil && !IsNil(o.PublishToInterStateChannel) {
 		return true
 	}
@@ -232,11 +232,11 @@ func (o *WorkflowStateStartResponse) HasPublishToInterStateChannel() bool {
 }
 
 // SetPublishToInterStateChannel gets a reference to the given []InterStateChannelPublishing and assigns it to the PublishToInterStateChannel field.
-func (o *WorkflowStateStartResponse) SetPublishToInterStateChannel(v []InterStateChannelPublishing) {
+func (o *WorkflowStateWaitUntilResponse) SetPublishToInterStateChannel(v []InterStateChannelPublishing) {
 	o.PublishToInterStateChannel = v
 }
 
-func (o WorkflowStateStartResponse) MarshalJSON() ([]byte, error) {
+func (o WorkflowStateWaitUntilResponse) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -244,7 +244,7 @@ func (o WorkflowStateStartResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o WorkflowStateStartResponse) ToMap() (map[string]interface{}, error) {
+func (o WorkflowStateWaitUntilResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.UpsertSearchAttributes) {
 		toSerialize["upsertSearchAttributes"] = o.UpsertSearchAttributes
@@ -267,38 +267,38 @@ func (o WorkflowStateStartResponse) ToMap() (map[string]interface{}, error) {
 	return toSerialize, nil
 }
 
-type NullableWorkflowStateStartResponse struct {
-	value *WorkflowStateStartResponse
+type NullableWorkflowStateWaitUntilResponse struct {
+	value *WorkflowStateWaitUntilResponse
 	isSet bool
 }
 
-func (v NullableWorkflowStateStartResponse) Get() *WorkflowStateStartResponse {
+func (v NullableWorkflowStateWaitUntilResponse) Get() *WorkflowStateWaitUntilResponse {
 	return v.value
 }
 
-func (v *NullableWorkflowStateStartResponse) Set(val *WorkflowStateStartResponse) {
+func (v *NullableWorkflowStateWaitUntilResponse) Set(val *WorkflowStateWaitUntilResponse) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableWorkflowStateStartResponse) IsSet() bool {
+func (v NullableWorkflowStateWaitUntilResponse) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableWorkflowStateStartResponse) Unset() {
+func (v *NullableWorkflowStateWaitUntilResponse) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableWorkflowStateStartResponse(val *WorkflowStateStartResponse) *NullableWorkflowStateStartResponse {
-	return &NullableWorkflowStateStartResponse{value: val, isSet: true}
+func NewNullableWorkflowStateWaitUntilResponse(val *WorkflowStateWaitUntilResponse) *NullableWorkflowStateWaitUntilResponse {
+	return &NullableWorkflowStateWaitUntilResponse{value: val, isSet: true}
 }
 
-func (v NullableWorkflowStateStartResponse) MarshalJSON() ([]byte, error) {
+func (v NullableWorkflowStateWaitUntilResponse) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableWorkflowStateStartResponse) UnmarshalJSON(src []byte) error {
+func (v *NullableWorkflowStateWaitUntilResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

@@ -19,10 +19,11 @@ var _ MappedNullable = &WorkflowStartOptions{}
 
 // WorkflowStartOptions struct for WorkflowStartOptions
 type WorkflowStartOptions struct {
-	WorkflowIDReusePolicy *WorkflowIDReusePolicy `json:"workflowIDReusePolicy,omitempty"`
+	IdReusePolicy *IDReusePolicy `json:"idReusePolicy,omitempty"`
 	CronSchedule *string `json:"cronSchedule,omitempty"`
 	RetryPolicy *WorkflowRetryPolicy `json:"retryPolicy,omitempty"`
 	SearchAttributes []SearchAttribute `json:"searchAttributes,omitempty"`
+	WorkflowConfigOverride *WorkflowConfig `json:"workflowConfigOverride,omitempty"`
 }
 
 // NewWorkflowStartOptions instantiates a new WorkflowStartOptions object
@@ -42,36 +43,36 @@ func NewWorkflowStartOptionsWithDefaults() *WorkflowStartOptions {
 	return &this
 }
 
-// GetWorkflowIDReusePolicy returns the WorkflowIDReusePolicy field value if set, zero value otherwise.
-func (o *WorkflowStartOptions) GetWorkflowIDReusePolicy() WorkflowIDReusePolicy {
-	if o == nil || IsNil(o.WorkflowIDReusePolicy) {
-		var ret WorkflowIDReusePolicy
+// GetIdReusePolicy returns the IdReusePolicy field value if set, zero value otherwise.
+func (o *WorkflowStartOptions) GetIdReusePolicy() IDReusePolicy {
+	if o == nil || IsNil(o.IdReusePolicy) {
+		var ret IDReusePolicy
 		return ret
 	}
-	return *o.WorkflowIDReusePolicy
+	return *o.IdReusePolicy
 }
 
-// GetWorkflowIDReusePolicyOk returns a tuple with the WorkflowIDReusePolicy field value if set, nil otherwise
+// GetIdReusePolicyOk returns a tuple with the IdReusePolicy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *WorkflowStartOptions) GetWorkflowIDReusePolicyOk() (*WorkflowIDReusePolicy, bool) {
-	if o == nil || IsNil(o.WorkflowIDReusePolicy) {
+func (o *WorkflowStartOptions) GetIdReusePolicyOk() (*IDReusePolicy, bool) {
+	if o == nil || IsNil(o.IdReusePolicy) {
 		return nil, false
 	}
-	return o.WorkflowIDReusePolicy, true
+	return o.IdReusePolicy, true
 }
 
-// HasWorkflowIDReusePolicy returns a boolean if a field has been set.
-func (o *WorkflowStartOptions) HasWorkflowIDReusePolicy() bool {
-	if o != nil && !IsNil(o.WorkflowIDReusePolicy) {
+// HasIdReusePolicy returns a boolean if a field has been set.
+func (o *WorkflowStartOptions) HasIdReusePolicy() bool {
+	if o != nil && !IsNil(o.IdReusePolicy) {
 		return true
 	}
 
 	return false
 }
 
-// SetWorkflowIDReusePolicy gets a reference to the given WorkflowIDReusePolicy and assigns it to the WorkflowIDReusePolicy field.
-func (o *WorkflowStartOptions) SetWorkflowIDReusePolicy(v WorkflowIDReusePolicy) {
-	o.WorkflowIDReusePolicy = &v
+// SetIdReusePolicy gets a reference to the given IDReusePolicy and assigns it to the IdReusePolicy field.
+func (o *WorkflowStartOptions) SetIdReusePolicy(v IDReusePolicy) {
+	o.IdReusePolicy = &v
 }
 
 // GetCronSchedule returns the CronSchedule field value if set, zero value otherwise.
@@ -170,6 +171,38 @@ func (o *WorkflowStartOptions) SetSearchAttributes(v []SearchAttribute) {
 	o.SearchAttributes = v
 }
 
+// GetWorkflowConfigOverride returns the WorkflowConfigOverride field value if set, zero value otherwise.
+func (o *WorkflowStartOptions) GetWorkflowConfigOverride() WorkflowConfig {
+	if o == nil || IsNil(o.WorkflowConfigOverride) {
+		var ret WorkflowConfig
+		return ret
+	}
+	return *o.WorkflowConfigOverride
+}
+
+// GetWorkflowConfigOverrideOk returns a tuple with the WorkflowConfigOverride field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WorkflowStartOptions) GetWorkflowConfigOverrideOk() (*WorkflowConfig, bool) {
+	if o == nil || IsNil(o.WorkflowConfigOverride) {
+		return nil, false
+	}
+	return o.WorkflowConfigOverride, true
+}
+
+// HasWorkflowConfigOverride returns a boolean if a field has been set.
+func (o *WorkflowStartOptions) HasWorkflowConfigOverride() bool {
+	if o != nil && !IsNil(o.WorkflowConfigOverride) {
+		return true
+	}
+
+	return false
+}
+
+// SetWorkflowConfigOverride gets a reference to the given WorkflowConfig and assigns it to the WorkflowConfigOverride field.
+func (o *WorkflowStartOptions) SetWorkflowConfigOverride(v WorkflowConfig) {
+	o.WorkflowConfigOverride = &v
+}
+
 func (o WorkflowStartOptions) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -180,8 +213,8 @@ func (o WorkflowStartOptions) MarshalJSON() ([]byte, error) {
 
 func (o WorkflowStartOptions) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.WorkflowIDReusePolicy) {
-		toSerialize["workflowIDReusePolicy"] = o.WorkflowIDReusePolicy
+	if !IsNil(o.IdReusePolicy) {
+		toSerialize["idReusePolicy"] = o.IdReusePolicy
 	}
 	if !IsNil(o.CronSchedule) {
 		toSerialize["cronSchedule"] = o.CronSchedule
@@ -191,6 +224,9 @@ func (o WorkflowStartOptions) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.SearchAttributes) {
 		toSerialize["searchAttributes"] = o.SearchAttributes
+	}
+	if !IsNil(o.WorkflowConfigOverride) {
+		toSerialize["workflowConfigOverride"] = o.WorkflowConfigOverride
 	}
 	return toSerialize, nil
 }

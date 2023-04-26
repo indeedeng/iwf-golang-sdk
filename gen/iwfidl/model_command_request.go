@@ -19,7 +19,7 @@ var _ MappedNullable = &CommandRequest{}
 
 // CommandRequest struct for CommandRequest
 type CommandRequest struct {
-	DeciderTriggerType DeciderTriggerType `json:"deciderTriggerType"`
+	CommandWaitingType CommandWaitingType `json:"commandWaitingType"`
 	TimerCommands []TimerCommand `json:"timerCommands,omitempty"`
 	SignalCommands []SignalCommand `json:"signalCommands,omitempty"`
 	InterStateChannelCommands []InterStateChannelCommand `json:"interStateChannelCommands,omitempty"`
@@ -30,9 +30,9 @@ type CommandRequest struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCommandRequest(deciderTriggerType DeciderTriggerType) *CommandRequest {
+func NewCommandRequest(commandWaitingType CommandWaitingType) *CommandRequest {
 	this := CommandRequest{}
-	this.DeciderTriggerType = deciderTriggerType
+	this.CommandWaitingType = commandWaitingType
 	return &this
 }
 
@@ -44,28 +44,28 @@ func NewCommandRequestWithDefaults() *CommandRequest {
 	return &this
 }
 
-// GetDeciderTriggerType returns the DeciderTriggerType field value
-func (o *CommandRequest) GetDeciderTriggerType() DeciderTriggerType {
+// GetCommandWaitingType returns the CommandWaitingType field value
+func (o *CommandRequest) GetCommandWaitingType() CommandWaitingType {
 	if o == nil {
-		var ret DeciderTriggerType
+		var ret CommandWaitingType
 		return ret
 	}
 
-	return o.DeciderTriggerType
+	return o.CommandWaitingType
 }
 
-// GetDeciderTriggerTypeOk returns a tuple with the DeciderTriggerType field value
+// GetCommandWaitingTypeOk returns a tuple with the CommandWaitingType field value
 // and a boolean to check if the value has been set.
-func (o *CommandRequest) GetDeciderTriggerTypeOk() (*DeciderTriggerType, bool) {
+func (o *CommandRequest) GetCommandWaitingTypeOk() (*CommandWaitingType, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.DeciderTriggerType, true
+	return &o.CommandWaitingType, true
 }
 
-// SetDeciderTriggerType sets field value
-func (o *CommandRequest) SetDeciderTriggerType(v DeciderTriggerType) {
-	o.DeciderTriggerType = v
+// SetCommandWaitingType sets field value
+func (o *CommandRequest) SetCommandWaitingType(v CommandWaitingType) {
+	o.CommandWaitingType = v
 }
 
 // GetTimerCommands returns the TimerCommands field value if set, zero value otherwise.
@@ -206,7 +206,7 @@ func (o CommandRequest) MarshalJSON() ([]byte, error) {
 
 func (o CommandRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["deciderTriggerType"] = o.DeciderTriggerType
+	toSerialize["commandWaitingType"] = o.CommandWaitingType
 	if !IsNil(o.TimerCommands) {
 		toSerialize["timerCommands"] = o.TimerCommands
 	}

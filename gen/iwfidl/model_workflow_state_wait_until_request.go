@@ -14,11 +14,11 @@ import (
 	"encoding/json"
 )
 
-// checks if the WorkflowStateStartRequest type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &WorkflowStateStartRequest{}
+// checks if the WorkflowStateWaitUntilRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &WorkflowStateWaitUntilRequest{}
 
-// WorkflowStateStartRequest struct for WorkflowStateStartRequest
-type WorkflowStateStartRequest struct {
+// WorkflowStateWaitUntilRequest struct for WorkflowStateWaitUntilRequest
+type WorkflowStateWaitUntilRequest struct {
 	Context Context `json:"context"`
 	WorkflowType string `json:"workflowType"`
 	WorkflowStateId string `json:"workflowStateId"`
@@ -27,28 +27,28 @@ type WorkflowStateStartRequest struct {
 	DataObjects []KeyValue `json:"dataObjects,omitempty"`
 }
 
-// NewWorkflowStateStartRequest instantiates a new WorkflowStateStartRequest object
+// NewWorkflowStateWaitUntilRequest instantiates a new WorkflowStateWaitUntilRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewWorkflowStateStartRequest(context Context, workflowType string, workflowStateId string) *WorkflowStateStartRequest {
-	this := WorkflowStateStartRequest{}
+func NewWorkflowStateWaitUntilRequest(context Context, workflowType string, workflowStateId string) *WorkflowStateWaitUntilRequest {
+	this := WorkflowStateWaitUntilRequest{}
 	this.Context = context
 	this.WorkflowType = workflowType
 	this.WorkflowStateId = workflowStateId
 	return &this
 }
 
-// NewWorkflowStateStartRequestWithDefaults instantiates a new WorkflowStateStartRequest object
+// NewWorkflowStateWaitUntilRequestWithDefaults instantiates a new WorkflowStateWaitUntilRequest object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewWorkflowStateStartRequestWithDefaults() *WorkflowStateStartRequest {
-	this := WorkflowStateStartRequest{}
+func NewWorkflowStateWaitUntilRequestWithDefaults() *WorkflowStateWaitUntilRequest {
+	this := WorkflowStateWaitUntilRequest{}
 	return &this
 }
 
 // GetContext returns the Context field value
-func (o *WorkflowStateStartRequest) GetContext() Context {
+func (o *WorkflowStateWaitUntilRequest) GetContext() Context {
 	if o == nil {
 		var ret Context
 		return ret
@@ -59,7 +59,7 @@ func (o *WorkflowStateStartRequest) GetContext() Context {
 
 // GetContextOk returns a tuple with the Context field value
 // and a boolean to check if the value has been set.
-func (o *WorkflowStateStartRequest) GetContextOk() (*Context, bool) {
+func (o *WorkflowStateWaitUntilRequest) GetContextOk() (*Context, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -67,12 +67,12 @@ func (o *WorkflowStateStartRequest) GetContextOk() (*Context, bool) {
 }
 
 // SetContext sets field value
-func (o *WorkflowStateStartRequest) SetContext(v Context) {
+func (o *WorkflowStateWaitUntilRequest) SetContext(v Context) {
 	o.Context = v
 }
 
 // GetWorkflowType returns the WorkflowType field value
-func (o *WorkflowStateStartRequest) GetWorkflowType() string {
+func (o *WorkflowStateWaitUntilRequest) GetWorkflowType() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -83,7 +83,7 @@ func (o *WorkflowStateStartRequest) GetWorkflowType() string {
 
 // GetWorkflowTypeOk returns a tuple with the WorkflowType field value
 // and a boolean to check if the value has been set.
-func (o *WorkflowStateStartRequest) GetWorkflowTypeOk() (*string, bool) {
+func (o *WorkflowStateWaitUntilRequest) GetWorkflowTypeOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -91,12 +91,12 @@ func (o *WorkflowStateStartRequest) GetWorkflowTypeOk() (*string, bool) {
 }
 
 // SetWorkflowType sets field value
-func (o *WorkflowStateStartRequest) SetWorkflowType(v string) {
+func (o *WorkflowStateWaitUntilRequest) SetWorkflowType(v string) {
 	o.WorkflowType = v
 }
 
 // GetWorkflowStateId returns the WorkflowStateId field value
-func (o *WorkflowStateStartRequest) GetWorkflowStateId() string {
+func (o *WorkflowStateWaitUntilRequest) GetWorkflowStateId() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -107,7 +107,7 @@ func (o *WorkflowStateStartRequest) GetWorkflowStateId() string {
 
 // GetWorkflowStateIdOk returns a tuple with the WorkflowStateId field value
 // and a boolean to check if the value has been set.
-func (o *WorkflowStateStartRequest) GetWorkflowStateIdOk() (*string, bool) {
+func (o *WorkflowStateWaitUntilRequest) GetWorkflowStateIdOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -115,12 +115,12 @@ func (o *WorkflowStateStartRequest) GetWorkflowStateIdOk() (*string, bool) {
 }
 
 // SetWorkflowStateId sets field value
-func (o *WorkflowStateStartRequest) SetWorkflowStateId(v string) {
+func (o *WorkflowStateWaitUntilRequest) SetWorkflowStateId(v string) {
 	o.WorkflowStateId = v
 }
 
 // GetStateInput returns the StateInput field value if set, zero value otherwise.
-func (o *WorkflowStateStartRequest) GetStateInput() EncodedObject {
+func (o *WorkflowStateWaitUntilRequest) GetStateInput() EncodedObject {
 	if o == nil || IsNil(o.StateInput) {
 		var ret EncodedObject
 		return ret
@@ -130,7 +130,7 @@ func (o *WorkflowStateStartRequest) GetStateInput() EncodedObject {
 
 // GetStateInputOk returns a tuple with the StateInput field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *WorkflowStateStartRequest) GetStateInputOk() (*EncodedObject, bool) {
+func (o *WorkflowStateWaitUntilRequest) GetStateInputOk() (*EncodedObject, bool) {
 	if o == nil || IsNil(o.StateInput) {
 		return nil, false
 	}
@@ -138,7 +138,7 @@ func (o *WorkflowStateStartRequest) GetStateInputOk() (*EncodedObject, bool) {
 }
 
 // HasStateInput returns a boolean if a field has been set.
-func (o *WorkflowStateStartRequest) HasStateInput() bool {
+func (o *WorkflowStateWaitUntilRequest) HasStateInput() bool {
 	if o != nil && !IsNil(o.StateInput) {
 		return true
 	}
@@ -147,12 +147,12 @@ func (o *WorkflowStateStartRequest) HasStateInput() bool {
 }
 
 // SetStateInput gets a reference to the given EncodedObject and assigns it to the StateInput field.
-func (o *WorkflowStateStartRequest) SetStateInput(v EncodedObject) {
+func (o *WorkflowStateWaitUntilRequest) SetStateInput(v EncodedObject) {
 	o.StateInput = &v
 }
 
 // GetSearchAttributes returns the SearchAttributes field value if set, zero value otherwise.
-func (o *WorkflowStateStartRequest) GetSearchAttributes() []SearchAttribute {
+func (o *WorkflowStateWaitUntilRequest) GetSearchAttributes() []SearchAttribute {
 	if o == nil || IsNil(o.SearchAttributes) {
 		var ret []SearchAttribute
 		return ret
@@ -162,7 +162,7 @@ func (o *WorkflowStateStartRequest) GetSearchAttributes() []SearchAttribute {
 
 // GetSearchAttributesOk returns a tuple with the SearchAttributes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *WorkflowStateStartRequest) GetSearchAttributesOk() ([]SearchAttribute, bool) {
+func (o *WorkflowStateWaitUntilRequest) GetSearchAttributesOk() ([]SearchAttribute, bool) {
 	if o == nil || IsNil(o.SearchAttributes) {
 		return nil, false
 	}
@@ -170,7 +170,7 @@ func (o *WorkflowStateStartRequest) GetSearchAttributesOk() ([]SearchAttribute, 
 }
 
 // HasSearchAttributes returns a boolean if a field has been set.
-func (o *WorkflowStateStartRequest) HasSearchAttributes() bool {
+func (o *WorkflowStateWaitUntilRequest) HasSearchAttributes() bool {
 	if o != nil && !IsNil(o.SearchAttributes) {
 		return true
 	}
@@ -179,12 +179,12 @@ func (o *WorkflowStateStartRequest) HasSearchAttributes() bool {
 }
 
 // SetSearchAttributes gets a reference to the given []SearchAttribute and assigns it to the SearchAttributes field.
-func (o *WorkflowStateStartRequest) SetSearchAttributes(v []SearchAttribute) {
+func (o *WorkflowStateWaitUntilRequest) SetSearchAttributes(v []SearchAttribute) {
 	o.SearchAttributes = v
 }
 
 // GetDataObjects returns the DataObjects field value if set, zero value otherwise.
-func (o *WorkflowStateStartRequest) GetDataObjects() []KeyValue {
+func (o *WorkflowStateWaitUntilRequest) GetDataObjects() []KeyValue {
 	if o == nil || IsNil(o.DataObjects) {
 		var ret []KeyValue
 		return ret
@@ -194,7 +194,7 @@ func (o *WorkflowStateStartRequest) GetDataObjects() []KeyValue {
 
 // GetDataObjectsOk returns a tuple with the DataObjects field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *WorkflowStateStartRequest) GetDataObjectsOk() ([]KeyValue, bool) {
+func (o *WorkflowStateWaitUntilRequest) GetDataObjectsOk() ([]KeyValue, bool) {
 	if o == nil || IsNil(o.DataObjects) {
 		return nil, false
 	}
@@ -202,7 +202,7 @@ func (o *WorkflowStateStartRequest) GetDataObjectsOk() ([]KeyValue, bool) {
 }
 
 // HasDataObjects returns a boolean if a field has been set.
-func (o *WorkflowStateStartRequest) HasDataObjects() bool {
+func (o *WorkflowStateWaitUntilRequest) HasDataObjects() bool {
 	if o != nil && !IsNil(o.DataObjects) {
 		return true
 	}
@@ -211,11 +211,11 @@ func (o *WorkflowStateStartRequest) HasDataObjects() bool {
 }
 
 // SetDataObjects gets a reference to the given []KeyValue and assigns it to the DataObjects field.
-func (o *WorkflowStateStartRequest) SetDataObjects(v []KeyValue) {
+func (o *WorkflowStateWaitUntilRequest) SetDataObjects(v []KeyValue) {
 	o.DataObjects = v
 }
 
-func (o WorkflowStateStartRequest) MarshalJSON() ([]byte, error) {
+func (o WorkflowStateWaitUntilRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -223,7 +223,7 @@ func (o WorkflowStateStartRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o WorkflowStateStartRequest) ToMap() (map[string]interface{}, error) {
+func (o WorkflowStateWaitUntilRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["context"] = o.Context
 	toSerialize["workflowType"] = o.WorkflowType
@@ -240,38 +240,38 @@ func (o WorkflowStateStartRequest) ToMap() (map[string]interface{}, error) {
 	return toSerialize, nil
 }
 
-type NullableWorkflowStateStartRequest struct {
-	value *WorkflowStateStartRequest
+type NullableWorkflowStateWaitUntilRequest struct {
+	value *WorkflowStateWaitUntilRequest
 	isSet bool
 }
 
-func (v NullableWorkflowStateStartRequest) Get() *WorkflowStateStartRequest {
+func (v NullableWorkflowStateWaitUntilRequest) Get() *WorkflowStateWaitUntilRequest {
 	return v.value
 }
 
-func (v *NullableWorkflowStateStartRequest) Set(val *WorkflowStateStartRequest) {
+func (v *NullableWorkflowStateWaitUntilRequest) Set(val *WorkflowStateWaitUntilRequest) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableWorkflowStateStartRequest) IsSet() bool {
+func (v NullableWorkflowStateWaitUntilRequest) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableWorkflowStateStartRequest) Unset() {
+func (v *NullableWorkflowStateWaitUntilRequest) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableWorkflowStateStartRequest(val *WorkflowStateStartRequest) *NullableWorkflowStateStartRequest {
-	return &NullableWorkflowStateStartRequest{value: val, isSet: true}
+func NewNullableWorkflowStateWaitUntilRequest(val *WorkflowStateWaitUntilRequest) *NullableWorkflowStateWaitUntilRequest {
+	return &NullableWorkflowStateWaitUntilRequest{value: val, isSet: true}
 }
 
-func (v NullableWorkflowStateStartRequest) MarshalJSON() ([]byte, error) {
+func (v NullableWorkflowStateWaitUntilRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableWorkflowStateStartRequest) UnmarshalJSON(src []byte) error {
+func (v *NullableWorkflowStateWaitUntilRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

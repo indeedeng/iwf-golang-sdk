@@ -1,13 +1,11 @@
-# WorkflowStopType
+# WaitUntilApiFailurePolicy
 
 ## Enum
 
 
-* `CANCEL` (value: `"CANCEL"`)
+* `FAIL_WORKFLOW_ON_FAILURE` (value: `"FAIL_WORKFLOW_ON_FAILURE"`)
 
-* `TERMINATE` (value: `"TERMINATE"`)
-
-* `FAIL` (value: `"FAIL"`)
+* `PROCEED_ON_FAILURE` (value: `"PROCEED_ON_FAILURE"`)
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

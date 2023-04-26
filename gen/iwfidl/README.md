@@ -77,18 +77,22 @@ All URIs are relative to *http://petstore.swagger.io/v2*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*DefaultApi* | [**ApiV1WorkflowConfigUpdatePost**](docs/DefaultApi.md#apiv1workflowconfigupdatepost) | **Post** /api/v1/workflow/config/update | update the config of a workflow
 *DefaultApi* | [**ApiV1WorkflowDataobjectsGetPost**](docs/DefaultApi.md#apiv1workflowdataobjectsgetpost) | **Post** /api/v1/workflow/dataobjects/get | get workflow data objects
 *DefaultApi* | [**ApiV1WorkflowGetPost**](docs/DefaultApi.md#apiv1workflowgetpost) | **Post** /api/v1/workflow/get | get a workflow&#39;s status and results(if completed &amp; requested)
 *DefaultApi* | [**ApiV1WorkflowGetWithWaitPost**](docs/DefaultApi.md#apiv1workflowgetwithwaitpost) | **Post** /api/v1/workflow/getWithWait | get a workflow&#39;s status and results(if completed &amp; requested), wait if the workflow is still running
+*DefaultApi* | [**ApiV1WorkflowInternalDumpPost**](docs/DefaultApi.md#apiv1workflowinternaldumppost) | **Post** /api/v1/workflow/internal/dump | dump internal info of a workflow
 *DefaultApi* | [**ApiV1WorkflowResetPost**](docs/DefaultApi.md#apiv1workflowresetpost) | **Post** /api/v1/workflow/reset | reset a workflow
+*DefaultApi* | [**ApiV1WorkflowRpcPost**](docs/DefaultApi.md#apiv1workflowrpcpost) | **Post** /api/v1/workflow/rpc | execute an RPC of a workflow
 *DefaultApi* | [**ApiV1WorkflowSearchPost**](docs/DefaultApi.md#apiv1workflowsearchpost) | **Post** /api/v1/workflow/search | search for workflows by a search attribute query
 *DefaultApi* | [**ApiV1WorkflowSearchattributesGetPost**](docs/DefaultApi.md#apiv1workflowsearchattributesgetpost) | **Post** /api/v1/workflow/searchattributes/get | get workflow search attributes
 *DefaultApi* | [**ApiV1WorkflowSignalPost**](docs/DefaultApi.md#apiv1workflowsignalpost) | **Post** /api/v1/workflow/signal | signal a workflow
 *DefaultApi* | [**ApiV1WorkflowStartPost**](docs/DefaultApi.md#apiv1workflowstartpost) | **Post** /api/v1/workflow/start | start a workflow
-*DefaultApi* | [**ApiV1WorkflowStateDecidePost**](docs/DefaultApi.md#apiv1workflowstatedecidepost) | **Post** /api/v1/workflowState/decide | for invoking WorkflowState.decide API
-*DefaultApi* | [**ApiV1WorkflowStateStartPost**](docs/DefaultApi.md#apiv1workflowstatestartpost) | **Post** /api/v1/workflowState/start | for invoking WorkflowState.start API
+*DefaultApi* | [**ApiV1WorkflowStateDecidePost**](docs/DefaultApi.md#apiv1workflowstatedecidepost) | **Post** /api/v1/workflowState/decide | for invoking WorkflowState.execute API
+*DefaultApi* | [**ApiV1WorkflowStateStartPost**](docs/DefaultApi.md#apiv1workflowstatestartpost) | **Post** /api/v1/workflowState/start | for invoking WorkflowState.waitUntil API
 *DefaultApi* | [**ApiV1WorkflowStopPost**](docs/DefaultApi.md#apiv1workflowstoppost) | **Post** /api/v1/workflow/stop | stop a workflow
 *DefaultApi* | [**ApiV1WorkflowTimerSkipPost**](docs/DefaultApi.md#apiv1workflowtimerskippost) | **Post** /api/v1/workflow/timer/skip | skip the timer of a workflow
+*DefaultApi* | [**ApiV1WorkflowWorkerRpcPost**](docs/DefaultApi.md#apiv1workflowworkerrpcpost) | **Post** /api/v1/workflowWorker/rpc | for invoking workflow RPC API in the worker
 
 
 ## Documentation For Models
@@ -99,11 +103,12 @@ Class | Method | HTTP request | Description
  - [CommandCombination](docs/CommandCombination.md)
  - [CommandRequest](docs/CommandRequest.md)
  - [CommandResults](docs/CommandResults.md)
+ - [CommandWaitingType](docs/CommandWaitingType.md)
  - [Context](docs/Context.md)
- - [DeciderTriggerType](docs/DeciderTriggerType.md)
  - [EncodedObject](docs/EncodedObject.md)
  - [ErrorResponse](docs/ErrorResponse.md)
  - [ErrorSubStatus](docs/ErrorSubStatus.md)
+ - [IDReusePolicy](docs/IDReusePolicy.md)
  - [InterStateChannelCommand](docs/InterStateChannelCommand.md)
  - [InterStateChannelPublishing](docs/InterStateChannelPublishing.md)
  - [InterStateChannelResult](docs/InterStateChannelResult.md)
@@ -116,13 +121,18 @@ Class | Method | HTTP request | Description
  - [SearchAttributeValueType](docs/SearchAttributeValueType.md)
  - [SignalCommand](docs/SignalCommand.md)
  - [SignalResult](docs/SignalResult.md)
- - [StartApiFailurePolicy](docs/StartApiFailurePolicy.md)
  - [StateCompletionOutput](docs/StateCompletionOutput.md)
  - [StateDecision](docs/StateDecision.md)
  - [StateMovement](docs/StateMovement.md)
  - [TimerCommand](docs/TimerCommand.md)
  - [TimerResult](docs/TimerResult.md)
  - [TimerStatus](docs/TimerStatus.md)
+ - [WaitUntilApiFailurePolicy](docs/WaitUntilApiFailurePolicy.md)
+ - [WorkerErrorResponse](docs/WorkerErrorResponse.md)
+ - [WorkflowConfig](docs/WorkflowConfig.md)
+ - [WorkflowConfigUpdateRequest](docs/WorkflowConfigUpdateRequest.md)
+ - [WorkflowDumpRequest](docs/WorkflowDumpRequest.md)
+ - [WorkflowDumpResponse](docs/WorkflowDumpResponse.md)
  - [WorkflowErrorType](docs/WorkflowErrorType.md)
  - [WorkflowGetDataObjectsRequest](docs/WorkflowGetDataObjectsRequest.md)
  - [WorkflowGetDataObjectsResponse](docs/WorkflowGetDataObjectsResponse.md)
@@ -130,11 +140,12 @@ Class | Method | HTTP request | Description
  - [WorkflowGetResponse](docs/WorkflowGetResponse.md)
  - [WorkflowGetSearchAttributesRequest](docs/WorkflowGetSearchAttributesRequest.md)
  - [WorkflowGetSearchAttributesResponse](docs/WorkflowGetSearchAttributesResponse.md)
- - [WorkflowIDReusePolicy](docs/WorkflowIDReusePolicy.md)
  - [WorkflowResetRequest](docs/WorkflowResetRequest.md)
  - [WorkflowResetResponse](docs/WorkflowResetResponse.md)
  - [WorkflowResetType](docs/WorkflowResetType.md)
  - [WorkflowRetryPolicy](docs/WorkflowRetryPolicy.md)
+ - [WorkflowRpcRequest](docs/WorkflowRpcRequest.md)
+ - [WorkflowRpcResponse](docs/WorkflowRpcResponse.md)
  - [WorkflowSearchRequest](docs/WorkflowSearchRequest.md)
  - [WorkflowSearchResponse](docs/WorkflowSearchResponse.md)
  - [WorkflowSearchResponseEntry](docs/WorkflowSearchResponseEntry.md)
@@ -143,14 +154,16 @@ Class | Method | HTTP request | Description
  - [WorkflowStartOptions](docs/WorkflowStartOptions.md)
  - [WorkflowStartRequest](docs/WorkflowStartRequest.md)
  - [WorkflowStartResponse](docs/WorkflowStartResponse.md)
- - [WorkflowStateDecideRequest](docs/WorkflowStateDecideRequest.md)
- - [WorkflowStateDecideResponse](docs/WorkflowStateDecideResponse.md)
+ - [WorkflowStateExecuteRequest](docs/WorkflowStateExecuteRequest.md)
+ - [WorkflowStateExecuteResponse](docs/WorkflowStateExecuteResponse.md)
  - [WorkflowStateOptions](docs/WorkflowStateOptions.md)
- - [WorkflowStateStartRequest](docs/WorkflowStateStartRequest.md)
- - [WorkflowStateStartResponse](docs/WorkflowStateStartResponse.md)
+ - [WorkflowStateWaitUntilRequest](docs/WorkflowStateWaitUntilRequest.md)
+ - [WorkflowStateWaitUntilResponse](docs/WorkflowStateWaitUntilResponse.md)
  - [WorkflowStatus](docs/WorkflowStatus.md)
  - [WorkflowStopRequest](docs/WorkflowStopRequest.md)
  - [WorkflowStopType](docs/WorkflowStopType.md)
+ - [WorkflowWorkerRpcRequest](docs/WorkflowWorkerRpcRequest.md)
+ - [WorkflowWorkerRpcResponse](docs/WorkflowWorkerRpcResponse.md)
 
 
 ## Documentation For Authorization

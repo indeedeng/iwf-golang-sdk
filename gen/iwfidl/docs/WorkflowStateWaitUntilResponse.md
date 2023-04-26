@@ -1,4 +1,4 @@
-# WorkflowStateStartResponse
+# WorkflowStateWaitUntilResponse
 
 ## Properties
 
@@ -13,170 +13,170 @@ Name | Type | Description | Notes
 
 ## Methods
 
-### NewWorkflowStateStartResponse
+### NewWorkflowStateWaitUntilResponse
 
-`func NewWorkflowStateStartResponse() *WorkflowStateStartResponse`
+`func NewWorkflowStateWaitUntilResponse() *WorkflowStateWaitUntilResponse`
 
-NewWorkflowStateStartResponse instantiates a new WorkflowStateStartResponse object
+NewWorkflowStateWaitUntilResponse instantiates a new WorkflowStateWaitUntilResponse object
 This constructor will assign default values to properties that have it defined,
 and makes sure properties required by API are set, but the set of arguments
 will change when the set of required properties is changed
 
-### NewWorkflowStateStartResponseWithDefaults
+### NewWorkflowStateWaitUntilResponseWithDefaults
 
-`func NewWorkflowStateStartResponseWithDefaults() *WorkflowStateStartResponse`
+`func NewWorkflowStateWaitUntilResponseWithDefaults() *WorkflowStateWaitUntilResponse`
 
-NewWorkflowStateStartResponseWithDefaults instantiates a new WorkflowStateStartResponse object
+NewWorkflowStateWaitUntilResponseWithDefaults instantiates a new WorkflowStateWaitUntilResponse object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
 ### GetUpsertSearchAttributes
 
-`func (o *WorkflowStateStartResponse) GetUpsertSearchAttributes() []SearchAttribute`
+`func (o *WorkflowStateWaitUntilResponse) GetUpsertSearchAttributes() []SearchAttribute`
 
 GetUpsertSearchAttributes returns the UpsertSearchAttributes field if non-nil, zero value otherwise.
 
 ### GetUpsertSearchAttributesOk
 
-`func (o *WorkflowStateStartResponse) GetUpsertSearchAttributesOk() (*[]SearchAttribute, bool)`
+`func (o *WorkflowStateWaitUntilResponse) GetUpsertSearchAttributesOk() (*[]SearchAttribute, bool)`
 
 GetUpsertSearchAttributesOk returns a tuple with the UpsertSearchAttributes field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetUpsertSearchAttributes
 
-`func (o *WorkflowStateStartResponse) SetUpsertSearchAttributes(v []SearchAttribute)`
+`func (o *WorkflowStateWaitUntilResponse) SetUpsertSearchAttributes(v []SearchAttribute)`
 
 SetUpsertSearchAttributes sets UpsertSearchAttributes field to given value.
 
 ### HasUpsertSearchAttributes
 
-`func (o *WorkflowStateStartResponse) HasUpsertSearchAttributes() bool`
+`func (o *WorkflowStateWaitUntilResponse) HasUpsertSearchAttributes() bool`
 
 HasUpsertSearchAttributes returns a boolean if a field has been set.
 
 ### GetUpsertDataObjects
 
-`func (o *WorkflowStateStartResponse) GetUpsertDataObjects() []KeyValue`
+`func (o *WorkflowStateWaitUntilResponse) GetUpsertDataObjects() []KeyValue`
 
 GetUpsertDataObjects returns the UpsertDataObjects field if non-nil, zero value otherwise.
 
 ### GetUpsertDataObjectsOk
 
-`func (o *WorkflowStateStartResponse) GetUpsertDataObjectsOk() (*[]KeyValue, bool)`
+`func (o *WorkflowStateWaitUntilResponse) GetUpsertDataObjectsOk() (*[]KeyValue, bool)`
 
 GetUpsertDataObjectsOk returns a tuple with the UpsertDataObjects field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetUpsertDataObjects
 
-`func (o *WorkflowStateStartResponse) SetUpsertDataObjects(v []KeyValue)`
+`func (o *WorkflowStateWaitUntilResponse) SetUpsertDataObjects(v []KeyValue)`
 
 SetUpsertDataObjects sets UpsertDataObjects field to given value.
 
 ### HasUpsertDataObjects
 
-`func (o *WorkflowStateStartResponse) HasUpsertDataObjects() bool`
+`func (o *WorkflowStateWaitUntilResponse) HasUpsertDataObjects() bool`
 
 HasUpsertDataObjects returns a boolean if a field has been set.
 
 ### GetCommandRequest
 
-`func (o *WorkflowStateStartResponse) GetCommandRequest() CommandRequest`
+`func (o *WorkflowStateWaitUntilResponse) GetCommandRequest() CommandRequest`
 
 GetCommandRequest returns the CommandRequest field if non-nil, zero value otherwise.
 
 ### GetCommandRequestOk
 
-`func (o *WorkflowStateStartResponse) GetCommandRequestOk() (*CommandRequest, bool)`
+`func (o *WorkflowStateWaitUntilResponse) GetCommandRequestOk() (*CommandRequest, bool)`
 
 GetCommandRequestOk returns a tuple with the CommandRequest field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCommandRequest
 
-`func (o *WorkflowStateStartResponse) SetCommandRequest(v CommandRequest)`
+`func (o *WorkflowStateWaitUntilResponse) SetCommandRequest(v CommandRequest)`
 
 SetCommandRequest sets CommandRequest field to given value.
 
 ### HasCommandRequest
 
-`func (o *WorkflowStateStartResponse) HasCommandRequest() bool`
+`func (o *WorkflowStateWaitUntilResponse) HasCommandRequest() bool`
 
 HasCommandRequest returns a boolean if a field has been set.
 
 ### GetUpsertStateLocals
 
-`func (o *WorkflowStateStartResponse) GetUpsertStateLocals() []KeyValue`
+`func (o *WorkflowStateWaitUntilResponse) GetUpsertStateLocals() []KeyValue`
 
 GetUpsertStateLocals returns the UpsertStateLocals field if non-nil, zero value otherwise.
 
 ### GetUpsertStateLocalsOk
 
-`func (o *WorkflowStateStartResponse) GetUpsertStateLocalsOk() (*[]KeyValue, bool)`
+`func (o *WorkflowStateWaitUntilResponse) GetUpsertStateLocalsOk() (*[]KeyValue, bool)`
 
 GetUpsertStateLocalsOk returns a tuple with the UpsertStateLocals field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetUpsertStateLocals
 
-`func (o *WorkflowStateStartResponse) SetUpsertStateLocals(v []KeyValue)`
+`func (o *WorkflowStateWaitUntilResponse) SetUpsertStateLocals(v []KeyValue)`
 
 SetUpsertStateLocals sets UpsertStateLocals field to given value.
 
 ### HasUpsertStateLocals
 
-`func (o *WorkflowStateStartResponse) HasUpsertStateLocals() bool`
+`func (o *WorkflowStateWaitUntilResponse) HasUpsertStateLocals() bool`
 
 HasUpsertStateLocals returns a boolean if a field has been set.
 
 ### GetRecordEvents
 
-`func (o *WorkflowStateStartResponse) GetRecordEvents() []KeyValue`
+`func (o *WorkflowStateWaitUntilResponse) GetRecordEvents() []KeyValue`
 
 GetRecordEvents returns the RecordEvents field if non-nil, zero value otherwise.
 
 ### GetRecordEventsOk
 
-`func (o *WorkflowStateStartResponse) GetRecordEventsOk() (*[]KeyValue, bool)`
+`func (o *WorkflowStateWaitUntilResponse) GetRecordEventsOk() (*[]KeyValue, bool)`
 
 GetRecordEventsOk returns a tuple with the RecordEvents field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetRecordEvents
 
-`func (o *WorkflowStateStartResponse) SetRecordEvents(v []KeyValue)`
+`func (o *WorkflowStateWaitUntilResponse) SetRecordEvents(v []KeyValue)`
 
 SetRecordEvents sets RecordEvents field to given value.
 
 ### HasRecordEvents
 
-`func (o *WorkflowStateStartResponse) HasRecordEvents() bool`
+`func (o *WorkflowStateWaitUntilResponse) HasRecordEvents() bool`
 
 HasRecordEvents returns a boolean if a field has been set.
 
 ### GetPublishToInterStateChannel
 
-`func (o *WorkflowStateStartResponse) GetPublishToInterStateChannel() []InterStateChannelPublishing`
+`func (o *WorkflowStateWaitUntilResponse) GetPublishToInterStateChannel() []InterStateChannelPublishing`
 
 GetPublishToInterStateChannel returns the PublishToInterStateChannel field if non-nil, zero value otherwise.
 
 ### GetPublishToInterStateChannelOk
 
-`func (o *WorkflowStateStartResponse) GetPublishToInterStateChannelOk() (*[]InterStateChannelPublishing, bool)`
+`func (o *WorkflowStateWaitUntilResponse) GetPublishToInterStateChannelOk() (*[]InterStateChannelPublishing, bool)`
 
 GetPublishToInterStateChannelOk returns a tuple with the PublishToInterStateChannel field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetPublishToInterStateChannel
 
-`func (o *WorkflowStateStartResponse) SetPublishToInterStateChannel(v []InterStateChannelPublishing)`
+`func (o *WorkflowStateWaitUntilResponse) SetPublishToInterStateChannel(v []InterStateChannelPublishing)`
 
 SetPublishToInterStateChannel sets PublishToInterStateChannel field to given value.
 
 ### HasPublishToInterStateChannel
 
-`func (o *WorkflowStateStartResponse) HasPublishToInterStateChannel() bool`
+`func (o *WorkflowStateWaitUntilResponse) HasPublishToInterStateChannel() bool`
 
 HasPublishToInterStateChannel returns a boolean if a field has been set.
 
