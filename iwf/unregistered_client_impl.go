@@ -151,10 +151,20 @@ func (u *unregisteredClientImpl) GetSimpleWorkflowResult(ctx context.Context, wo
 	if resp.WorkflowStatus != iwfidl.COMPLETED {
 		return u.processUncompletedError(resp)
 	}
-	if len(resp.Results) != 1 {
+	count := 0
+	var output *iwfidl.EncodedObject
+	for _, res := range resp.Results {
+		if res.HasCompletedStateOutput() && res.CompletedStateOutput.HasData() {
+			output = res.CompletedStateOutput
+			count++
+		}
+	}
+	if count > 1 {
 		return NewWorkflowDefinitionError("this workflow should have one or zero state output for using this API")
 	}
-	output := resp.Results[0].CompletedStateOutput
+	if count == 0 {
+		return nil
+	}
 	return u.options.ObjectEncoder.Decode(output, resultPtr)
 }
 

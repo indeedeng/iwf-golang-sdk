@@ -10,7 +10,9 @@ type CommandRequest struct {
 
 // EmptyCommandRequest will jump to decide stage immediately.
 func EmptyCommandRequest() *CommandRequest {
-	return &CommandRequest{}
+	return &CommandRequest{
+		CommandWaitingType: iwfidl.ALL_COMPLETED,
+	}
 }
 
 // AnyCommandCompletedRequest will wait for all the commands to complete
