@@ -29,10 +29,10 @@ func (b *proceedOnStateStartFailWorkflowState1) Execute(ctx iwf.WorkflowContext,
 
 func (b *proceedOnStateStartFailWorkflowState1) GetStateOptions() *iwfidl.WorkflowStateOptions {
 	return &iwfidl.WorkflowStateOptions{
-		StartApiRetryPolicy: &iwfidl.RetryPolicy{
+		WaitUntilApiRetryPolicy: &iwfidl.RetryPolicy{
 			InitialIntervalSeconds: iwfidl.PtrInt32(1),
 			MaximumAttempts:        iwfidl.PtrInt32(2),
 		},
-		StartApiFailurePolicy: iwfidl.PROCEED_TO_DECIDE_ON_START_API_FAILURE.Ptr(),
+		WaitUntilApiFailurePolicy: iwfidl.PROCEED_ON_FAILURE.Ptr(),
 	}
 }

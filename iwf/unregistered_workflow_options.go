@@ -3,7 +3,7 @@ package iwf
 import "github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
 
 type UnregisteredWorkflowOptions struct {
-	WorkflowIdReusePolicy   *iwfidl.WorkflowIDReusePolicy
+	WorkflowIdReusePolicy   *iwfidl.IDReusePolicy
 	WorkflowCronSchedule    *string
 	WorkflowRetryPolicy     *iwfidl.WorkflowRetryPolicy
 	StartStateOptions       *iwfidl.WorkflowStateOptions

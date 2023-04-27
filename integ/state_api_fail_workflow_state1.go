@@ -20,7 +20,7 @@ func (b stateApiFailWorkflowState1) Execute(ctx iwf.WorkflowContext, input iwf.O
 
 func (b stateApiFailWorkflowState1) GetStateOptions() *iwfidl.WorkflowStateOptions {
 	return &iwfidl.WorkflowStateOptions{
-		StartApiRetryPolicy: &iwfidl.RetryPolicy{
+		WaitUntilApiRetryPolicy: &iwfidl.RetryPolicy{
 			MaximumAttempts: iwfidl.PtrInt32(1),
 		},
 	}

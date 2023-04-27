@@ -14,5 +14,5 @@ func (b interStateWorkflowState2) WaitUntil(ctx iwf.WorkflowContext, input iwf.O
 }
 
 func (b interStateWorkflowState2) Execute(ctx iwf.WorkflowContext, input iwf.Object, commandResults iwf.CommandResults, persistence iwf.Persistence, communication iwf.Communication) (*iwf.StateDecision, error) {
-	return iwf.DeadEnd, nil
+	return iwf.GracefulCompletingWorkflow, nil
 }
