@@ -25,8 +25,8 @@ func (w *workerServiceImpl) HandleWorkflowStateWaitUntil(ctx context.Context, re
 	if err != nil {
 		return nil, err
 	}
-	comm := newCommunication(w.options.ObjectEncoder, w.registry.getWorkflowInterStateChannelNameStore(wfType))
-	commandRequest, err := stateDef.State.Start(wfCtx, input, pers, comm)
+	comm := newCommunication(w.options.ObjectEncoder, w.registry.getWorkflowInternalChannelNameStore(wfType))
+	commandRequest, err := stateDef.State.WaitUntil(wfCtx, input, pers, comm)
 	if err != nil {
 		return nil, err
 	}
@@ -110,8 +110,8 @@ func (w *workerServiceImpl) HandleWorkflowStateExecute(ctx context.Context, requ
 	if err != nil {
 		return nil, err
 	}
-	comm := newCommunication(w.options.ObjectEncoder, w.registry.getWorkflowInterStateChannelNameStore(wfType))
-	decision, err := stateDef.State.Decide(wfCtx, input, commandResults, pers, comm)
+	comm := newCommunication(w.options.ObjectEncoder, w.registry.getWorkflowInternalChannelNameStore(wfType))
+	decision, err := stateDef.State.Execute(wfCtx, input, commandResults, pers, comm)
 	if err != nil {
 		return nil, err
 	}

@@ -10,10 +10,10 @@ type persistenceWorkflowState2 struct {
 
 const testText = "Hail iWF!"
 
-func (b persistenceWorkflowState2) Start(ctx iwf.WorkflowContext, input iwf.Object, persistence iwf.Persistence, communication iwf.Communication) (*iwf.CommandRequest, error) {
+func (b persistenceWorkflowState2) WaitUntil(ctx iwf.WorkflowContext, input iwf.Object, persistence iwf.Persistence, communication iwf.Communication) (*iwf.CommandRequest, error) {
 	iv := persistence.GetSearchAttributeInt(testSearchAttributeInt)
 	if iv != 1 {
-		panic("this value must be 1 because it got set by Start API")
+		panic("this value must be 1 because it got set by WaitUntil API")
 	}
 
 	var do ExampleDataObjectModel
@@ -29,7 +29,7 @@ func (b persistenceWorkflowState2) Start(ctx iwf.WorkflowContext, input iwf.Obje
 
 }
 
-func (b persistenceWorkflowState2) Decide(ctx iwf.WorkflowContext, input iwf.Object, commandResults iwf.CommandResults, persistence iwf.Persistence, communication iwf.Communication) (*iwf.StateDecision, error) {
+func (b persistenceWorkflowState2) Execute(ctx iwf.WorkflowContext, input iwf.Object, commandResults iwf.CommandResults, persistence iwf.Persistence, communication iwf.Communication) (*iwf.StateDecision, error) {
 	tv := persistence.GetSearchAttributeText(testSearchAttributeText)
 	persistence.SetSearchAttributeKeyword(testSearchAttributeKeyword, "iWF")
 	if tv == testText {

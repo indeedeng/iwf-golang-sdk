@@ -6,7 +6,7 @@ import (
 
 type WorkflowState interface {
 	// GetStateId defines the StateId of this workflow state definition.
-	// the StateId is being used for WorkerService to choose the right WorkflowState to execute Start/Decide APIs
+	// the StateId is being used for WorkerService to choose the right WorkflowState to execute Start/Execute APIs
 	// See GetDefaultWorkflowStateId for default value when return empty string.
 	// It's the package + struct name of the workflow instance and ignores the import paths and aliases.
 	// e.g. if the workflow is from myStruct{} under mywf package, the simple name is just "mywf.myStruct". Underneath, it's from reflect.TypeOf(wf).String().
@@ -17,35 +17,35 @@ type WorkflowState interface {
 	// 3. In case of dynamic workflow state implementation, return customized values instead of using empty string
 	GetStateId() string
 
-	// Start is the method to execute the commands set up for this state.
+	// WaitUntil is the method to set up commands set up to wait for, before `Execute` API is invoked
 	//
 	//  ctx              the context info of this API invocation, like workflow start time, workflowId, etc
 	//  input            the state input
-	//  Persistence      the API for 1) data objects, 2) search attributes and 3) stateLocals 4) recordEvent
+	//  Persistence      the API for 1) data attributes, 2) search attributes and 3) stateExecutionLocals 4) recordEvent
 	//                         DataObjects and SearchAttributes are defined by ObjectWorkflow interface.
-	//                         StateLocals are for passing data within the state execution from this start API to {@link #decide} API
+	//                         StateExecutionLocals are for passing data within the state execution
 	//                         RecordEvent is for storing some tracking info(e.g. RPC call input/output) when executing the API.
-	//                         Note that any write API will be recorded to server after the whole start API response is accepted.
-	//  Communication    the API right now only for publishing value to interstate channel
+	//                         Note that any write API will be recorded to server after the whole WaitUntil API response is accepted
+	//  Communication    the API right now only for publishing value to internalChannel
 	//                         Note that any write API will be recorded to server after the whole start API response is accepted.
 	// @return the requested commands for this state
 	///
-	Start(ctx WorkflowContext, input Object, persistence Persistence, communication Communication) (*CommandRequest, error)
+	WaitUntil(ctx WorkflowContext, input Object, persistence Persistence, communication Communication) (*CommandRequest, error)
 
-	// Decide is the method to decide what to do next when requested commands are ready
+	// Execute is the method to execute and decide what to do next
 	//
 	//  ctx              the context info of this API invocation, like workflow start time, workflowId, etc
 	//  input            the state input
-	//  CommandResults   the results of the command that executed by Start
-	//  Persistence      the API for 1) data objects, 2) search attributes and 3) stateLocals 4) recordEvent
+	//  CommandResults   the results of the command that executed by WaitUntil
+	//  Persistence      the API for 1) data attributes, 2) search attributes and 3) stateExecutionLocals 4) recordEvent
 	//                         DataObjects and SearchAttributes are defined by ObjectWorkflow interface.
-	//                         StateLocals are for passing data within the state execution from this start API to {@link #decide} API
+	//                         StateExecutionLocals are for passing data within the state execution
 	//                         RecordEvent is for storing some tracking info(e.g. RPC call input/output) when executing the API.
+	//                         Note that any write API will be recorded to server after the whole WaitUntil API response is accepted
+	//  Communication    the API right now only for publishing value to internalChannel
 	//                         Note that any write API will be recorded to server after the whole start API response is accepted.
-	//  Communication    the API right now only for publishing value to interstate channel
-	//                         Note that any write API will be recorded to server after the whole start API response is accepted.
-	// @return the decision of what to do next(e.g. transition to next states)
-	Decide(ctx WorkflowContext, input Object, commandResults CommandResults, persistence Persistence, communication Communication) (*StateDecision, error)
+	// @return the decision of what to do next(e.g. transition to next states or closing workflow)
+	Execute(ctx WorkflowContext, input Object, commandResults CommandResults, persistence Persistence, communication Communication) (*StateDecision, error)
 
 	// GetStateOptions can just return nil to use the default Options
 	// StateOptions is optional configuration to adjust the state behaviors

@@ -14,19 +14,19 @@ type Registry interface {
 	getWorkflowStartingState(wfType string) WorkflowState
 	getWorkflowStateDef(wfType string, id string) StateDef
 	getWorkflowSignalNameStore(wfType string) map[string]bool
-	getWorkflowInterStateChannelNameStore(wfType string) map[string]bool
+	getWorkflowInternalChannelNameStore(wfType string) map[string]bool
 	getWorkflowDataAttributesKeyStore(wfType string) map[string]bool
 	getSearchAttributeTypeStore(wfType string) map[string]iwfidl.SearchAttributeValueType
 }
 
 func NewRegistry() Registry {
 	return &registryImpl{
-		workflowStore:              map[string]ObjectWorkflow{},
-		workflowStartingState:      map[string]WorkflowState{},
-		workflowStateStore:         map[string]map[string]StateDef{},
-		signalNameStore:            map[string]map[string]bool{},
-		interStateChannelNameStore: map[string]map[string]bool{},
-		dataObjectKeyStore:         map[string]map[string]bool{},
-		searchAttributeTypeStore:   map[string]map[string]iwfidl.SearchAttributeValueType{},
+		workflowStore:            map[string]ObjectWorkflow{},
+		workflowStartingState:    map[string]WorkflowState{},
+		workflowStateStore:       map[string]map[string]StateDef{},
+		signalNameStore:          map[string]map[string]bool{},
+		internalChannelNameStore: map[string]map[string]bool{},
+		dataAttrsKeyStore:        map[string]map[string]bool{},
+		searchAttributeTypeStore: map[string]map[string]iwfidl.SearchAttributeValueType{},
 	}
 }

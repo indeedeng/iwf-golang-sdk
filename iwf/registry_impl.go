@@ -5,13 +5,13 @@ import (
 )
 
 type registryImpl struct {
-	workflowStore              map[string]ObjectWorkflow
-	workflowStartingState      map[string]WorkflowState
-	workflowStateStore         map[string]map[string]StateDef
-	signalNameStore            map[string]map[string]bool
-	interStateChannelNameStore map[string]map[string]bool
-	dataObjectKeyStore         map[string]map[string]bool
-	searchAttributeTypeStore   map[string]map[string]iwfidl.SearchAttributeValueType
+	workflowStore            map[string]ObjectWorkflow
+	workflowStartingState    map[string]WorkflowState
+	workflowStateStore       map[string]map[string]StateDef
+	signalNameStore          map[string]map[string]bool
+	internalChannelNameStore map[string]map[string]bool
+	dataAttrsKeyStore        map[string]map[string]bool
+	searchAttributeTypeStore map[string]map[string]iwfidl.SearchAttributeValueType
 }
 
 func (r *registryImpl) AddWorkflows(workflows ...ObjectWorkflow) error {
@@ -57,12 +57,12 @@ func (r *registryImpl) getWorkflowSignalNameStore(wfType string) map[string]bool
 	return r.signalNameStore[wfType]
 }
 
-func (r *registryImpl) getWorkflowInterStateChannelNameStore(wfType string) map[string]bool {
-	return r.interStateChannelNameStore[wfType]
+func (r *registryImpl) getWorkflowInternalChannelNameStore(wfType string) map[string]bool {
+	return r.internalChannelNameStore[wfType]
 }
 
 func (r *registryImpl) getWorkflowDataAttributesKeyStore(wfType string) map[string]bool {
-	return r.dataObjectKeyStore[wfType]
+	return r.dataAttrsKeyStore[wfType]
 }
 
 func (r *registryImpl) getSearchAttributeTypeStore(wfType string) map[string]iwfidl.SearchAttributeValueType {
@@ -109,35 +109,35 @@ func (r *registryImpl) registerWorkflowState(wf ObjectWorkflow) error {
 func (r *registryImpl) registerWorkflowCommunicationSchema(wf ObjectWorkflow) error {
 	wfType := GetFinalWorkflowType(wf)
 	signalMap := map[string]bool{}
-	interStateChannel := map[string]bool{}
+	internalChannel := map[string]bool{}
 	for _, methodDef := range wf.GetCommunicationSchema() {
 		if methodDef.CommunicationMethod == CommunicationMethodSignalChannel {
 			signalMap[methodDef.Name] = true
 		} else if methodDef.CommunicationMethod == CommunicationMethodInternalChannel {
-			interStateChannel[methodDef.Name] = true
+			internalChannel[methodDef.Name] = true
 		} else {
 			return NewWorkflowDefinitionError("invalid CommunicationMethod definition " + string(methodDef.CommunicationMethod))
 		}
 	}
 	r.signalNameStore[wfType] = signalMap
-	r.interStateChannelNameStore[wfType] = interStateChannel
+	r.internalChannelNameStore[wfType] = internalChannel
 	return nil
 }
 
 func (r *registryImpl) registerWorkflowPersistenceSchema(wf ObjectWorkflow) error {
 	wfType := GetFinalWorkflowType(wf)
-	dataObjectKeys := map[string]bool{}
+	dataAttrsKeys := map[string]bool{}
 	searchAttributes := map[string]iwfidl.SearchAttributeValueType{}
 	for _, pers := range wf.GetPersistenceSchema() {
 		if pers.FieldType == PersistenceFieldTypeDataObject {
-			dataObjectKeys[pers.Key] = true
+			dataAttrsKeys[pers.Key] = true
 		} else if pers.FieldType == PersistenceFieldTypeSearchAttribute && pers.SearchAttributeType != nil {
 			searchAttributes[pers.Key] = *pers.SearchAttributeType
 		} else {
 			return NewWorkflowDefinitionErrorFmt("invalid PersistenceField definition %s for key %s ", string(pers.FieldType), pers.Key)
 		}
 	}
-	r.dataObjectKeyStore[wfType] = dataObjectKeys
+	r.dataAttrsKeyStore[wfType] = dataAttrsKeys
 	r.searchAttributeTypeStore[wfType] = searchAttributes
 	return nil
 }

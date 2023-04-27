@@ -10,14 +10,14 @@ type persistenceImpl struct {
 	encoder ObjectEncoder
 
 	// for data attributes
-	dataObjectKeyMap    map[string]bool
-	currentDataObjects  map[string]iwfidl.EncodedObject
-	dataObjectsToReturn map[string]iwfidl.EncodedObject
+	dataAttributesKeyMap   map[string]bool
+	currentDataAttributes  map[string]iwfidl.EncodedObject
+	dataAttributesToReturn map[string]iwfidl.EncodedObject
 
-	// for state locals
-	recordedEvents     map[string]iwfidl.EncodedObject
-	currentStateLocal  map[string]iwfidl.EncodedObject
-	stateLocalToReturn map[string]iwfidl.EncodedObject
+	// for stateExecutionLocals
+	recordedEvents        map[string]iwfidl.EncodedObject
+	currentStateExeLocal  map[string]iwfidl.EncodedObject
+	stateExeLocalToReturn map[string]iwfidl.EncodedObject
 
 	// for search attributes
 	saKeyToType          map[string]iwfidl.SearchAttributeValueType
@@ -34,7 +34,7 @@ type persistenceImpl struct {
 }
 
 func newPersistence(
-	encoder ObjectEncoder, dataObjectKeyMap map[string]bool, saKeyToType map[string]iwfidl.SearchAttributeValueType,
+	encoder ObjectEncoder, dataAttrsKeyMap map[string]bool, saKeyToType map[string]iwfidl.SearchAttributeValueType,
 	dataObjects []iwfidl.KeyValue, searchAttributes []iwfidl.SearchAttribute, stateLocals []iwfidl.KeyValue,
 ) (Persistence, error) {
 	currentDataObjects := make(map[string]iwfidl.EncodedObject)
@@ -71,47 +71,47 @@ func newPersistence(
 	}
 
 	return &persistenceImpl{
-		encoder:              encoder,
-		dataObjectKeyMap:     dataObjectKeyMap,
-		currentDataObjects:   currentDataObjects,
-		dataObjectsToReturn:  make(map[string]iwfidl.EncodedObject),
-		recordedEvents:       make(map[string]iwfidl.EncodedObject),
-		currentStateLocal:    currentStateLocal,
-		stateLocalToReturn:   make(map[string]iwfidl.EncodedObject),
-		saKeyToType:          saKeyToType,
-		saCurrentIntValue:    saCurrentIntValue,
-		saIntToReturn:        make(map[string]int64),
-		saCurrentStringValue: saCurrentStringValue,
-		saStringToReturn:     make(map[string]string),
-		saCurrentDoubleValue: saCurrentDoubleValue,
-		saDoubleToReturn:     make(map[string]float64),
-		saCurrentBoolValue:   saCurrentBoolValue,
-		saBoolToReturn:       make(map[string]bool),
-		saCurrentStrArrValue: saCurrentStrArrValue,
-		saStrArrToReturn:     make(map[string][]string),
+		encoder:                encoder,
+		dataAttributesKeyMap:   dataAttrsKeyMap,
+		currentDataAttributes:  currentDataObjects,
+		dataAttributesToReturn: make(map[string]iwfidl.EncodedObject),
+		recordedEvents:         make(map[string]iwfidl.EncodedObject),
+		currentStateExeLocal:   currentStateLocal,
+		stateExeLocalToReturn:  make(map[string]iwfidl.EncodedObject),
+		saKeyToType:            saKeyToType,
+		saCurrentIntValue:      saCurrentIntValue,
+		saIntToReturn:          make(map[string]int64),
+		saCurrentStringValue:   saCurrentStringValue,
+		saStringToReturn:       make(map[string]string),
+		saCurrentDoubleValue:   saCurrentDoubleValue,
+		saDoubleToReturn:       make(map[string]float64),
+		saCurrentBoolValue:     saCurrentBoolValue,
+		saBoolToReturn:         make(map[string]bool),
+		saCurrentStrArrValue:   saCurrentStrArrValue,
+		saStrArrToReturn:       make(map[string][]string),
 	}, nil
 }
 
 func (p *persistenceImpl) GetDataAttribute(key string, valuePtr interface{}) {
-	if !p.dataObjectKeyMap[key] {
+	if !p.dataAttributesKeyMap[key] {
 		panic(NewWorkflowDefinitionErrorFmt("key %v is not registered as a data object", key))
 	}
-	err := p.encoder.Decode(ptr.Any(p.currentDataObjects[key]), valuePtr)
+	err := p.encoder.Decode(ptr.Any(p.currentDataAttributes[key]), valuePtr)
 	if err != nil {
 		panic(err)
 	}
 }
 
 func (p *persistenceImpl) SetDataAttribute(key string, value interface{}) {
-	if !p.dataObjectKeyMap[key] {
+	if !p.dataAttributesKeyMap[key] {
 		panic(NewWorkflowDefinitionErrorFmt("key %v is not registered as a data object", key))
 	}
 	v, err := p.encoder.Encode(value)
 	if err != nil {
 		panic(err)
 	}
-	p.dataObjectsToReturn[key] = *v
-	p.currentDataObjects[key] = *v
+	p.dataAttributesToReturn[key] = *v
+	p.currentDataAttributes[key] = *v
 }
 
 func (p *persistenceImpl) GetSearchAttributeInt(key string) int64 {
@@ -226,7 +226,7 @@ func (p *persistenceImpl) SetSearchAttributeKeywordArray(key string, value []str
 }
 
 func (p *persistenceImpl) GetStateExecutionLocal(key string, valuePtr interface{}) {
-	err := p.encoder.Decode(ptr.Any(p.currentStateLocal[key]), valuePtr)
+	err := p.encoder.Decode(ptr.Any(p.currentStateExeLocal[key]), valuePtr)
 	if err != nil {
 		panic(err)
 	}
@@ -237,8 +237,8 @@ func (p *persistenceImpl) SetStateExecutionLocal(key string, value interface{}) 
 	if err != nil {
 		panic(err)
 	}
-	p.currentStateLocal[key] = *v
-	p.stateLocalToReturn[key] = *v
+	p.currentStateExeLocal[key] = *v
+	p.stateExeLocalToReturn[key] = *v
 }
 
 func (p *persistenceImpl) RecordEvent(key string, value interface{}) {
@@ -254,14 +254,14 @@ func (p *persistenceImpl) GetToReturn() (
 	stateLocalToReturn []iwfidl.KeyValue,
 	recordEvents []iwfidl.KeyValue,
 	searchAttributes []iwfidl.SearchAttribute) {
-	for k, v := range p.dataObjectsToReturn {
+	for k, v := range p.dataAttributesToReturn {
 		dataObjectsToReturn = append(dataObjectsToReturn, iwfidl.KeyValue{
 			Key:   ptr.Any(k),
 			Value: ptr.Any(v),
 		})
 	}
 
-	for k, v := range p.stateLocalToReturn {
+	for k, v := range p.stateExeLocalToReturn {
 		stateLocalToReturn = append(stateLocalToReturn, iwfidl.KeyValue{
 			Key:   ptr.Any(k),
 			Value: ptr.Any(v),

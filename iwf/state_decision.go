@@ -45,16 +45,7 @@ func MultiNextStatesByStateIds(nextStateIds ...string) *StateDecision {
 	}
 }
 
-// DeadEnd means no next step for this thread. It is essentially graceful completion without a workflow result
-var DeadEnd = &StateDecision{}
-
-var ForceFailingWorkflow = &StateDecision{
-	NextStates: []StateMovement{
-		{
-			NextStateId: ForceFailingWorkflowStateId,
-		},
-	},
-}
+var ForceFailingWorkflow = ForceFailWorkflow(nil)
 
 func ForceFailWorkflow(output interface{}) *StateDecision {
 	return &StateDecision{

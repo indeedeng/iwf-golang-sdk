@@ -22,10 +22,10 @@ type ObjectWorkflow interface {
 	//  1. Data objects
 	//  2. Search attributes
 	//
-	// Data objects can be read/upsert in WorkflowState Start/Decide API
+	// Data objects can be read/upsert in WorkflowState WaitUntil/Execute API
 	// Data objects  can also be read by getDataObjects API by external applications using {@link Client}
 	//
-	// Search attributes can be read/upsert in WorkflowState Start/Decide API
+	// Search attributes can be read/upsert in WorkflowState WaitUntil/Execute API
 	// Search attributes can also be read by GetSearchAttributes Client API by external applications.
 	// External applications can also use "SearchWorkflow" API to find workflows by SQL-like query
 	GetPersistenceSchema() []PersistenceFieldDef
@@ -35,8 +35,8 @@ type ObjectWorkflow interface {
 	// 2. Interstate channel
 	//
 	// Signal channel is for external applications to send signal to workflow execution.
-	// ObjectWorkflow execution can listen on the signal in the WorkflowState Start API and receive in
-	// the WorkflowState Decide API
+	// ObjectWorkflow execution can listen on the signal in the WorkflowState WaitUntil API and receive in
+	// the WorkflowState Execute API
 	//
 	// InterStateChannel is for synchronization communications between WorkflowStates.
 	// E.g. WorkflowStateA will continue after receiving a value from WorkflowStateB

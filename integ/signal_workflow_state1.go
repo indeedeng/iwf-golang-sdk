@@ -11,14 +11,14 @@ type signalWorkflowState1 struct {
 	iwf.DefaultStateIdAndOptions
 }
 
-func (b signalWorkflowState1) Start(ctx iwf.WorkflowContext, input iwf.Object, persistence iwf.Persistence, communication iwf.Communication) (*iwf.CommandRequest, error) {
+func (b signalWorkflowState1) WaitUntil(ctx iwf.WorkflowContext, input iwf.Object, persistence iwf.Persistence, communication iwf.Communication) (*iwf.CommandRequest, error) {
 	return iwf.AnyCommandCompletedRequest(
 		iwf.NewSignalCommand("", testChannelName1),
 		iwf.NewSignalCommand("", testChannelName2),
 	), nil
 }
 
-func (b signalWorkflowState1) Decide(ctx iwf.WorkflowContext, input iwf.Object, commandResults iwf.CommandResults, persistence iwf.Persistence, communication iwf.Communication) (*iwf.StateDecision, error) {
+func (b signalWorkflowState1) Execute(ctx iwf.WorkflowContext, input iwf.Object, commandResults iwf.CommandResults, persistence iwf.Persistence, communication iwf.Communication) (*iwf.StateDecision, error) {
 	signal0 := commandResults.Signals[0]
 	signal1 := commandResults.Signals[1]
 	if signal0.CommandId != "" || signal0.ChannelName != testChannelName1 || signal0.Status != iwfidl.WAITING {

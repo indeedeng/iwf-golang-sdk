@@ -39,12 +39,12 @@ type Persistence interface {
 	// User code must make sure using the same type for both get and set
 	GetStateExecutionLocal(key string, valuePtr interface{})
 	// SetStateExecutionLocal sets a local attribute. The scope of the attribute is only within the execution of this state.
-	// Usually it's for passing from State Start API to State Decide API
+	// Usually it's for passing from State WaitUntil API to State Execute API
 	// User code must make sure using the same type for both get and set
 	SetStateExecutionLocal(key string, value interface{})
 
-	// RecordEvent records an arbitrary event in State Start/Decide API for debugging/tracking purpose
-	//  Name is the name of the event. Within a Start/Decide API, the same Name cannot be used for more than once.
+	// RecordEvent records an arbitrary event in State WaitUntil/Execute API for debugging/tracking purpose
+	//  Name is the name of the event. Within a WaitUntil/Execute API, the same Name cannot be used for more than once.
 	//  eventData is the data of the event.
 	RecordEvent(key string, value interface{})
 

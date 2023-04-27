@@ -55,7 +55,7 @@ type clientCommon interface {
 	// workflowId is required, workflowRunId is optional and default to current runId of the workflowId
 	// resetWorkflowTypeAndOptions is optional, it provides combination parameter for reset. Default (when nil) will reset to iwfidl.BEGINNING resetType
 	// return the workflowRunId
-	ResetWorkflow(ctx context.Context, workflowId, workflowRunId string, options *ResetWorkflowTypeAndOptions) (string, error)
+	ResetWorkflow(ctx context.Context, workflowId, workflowRunId string, options *ResetWorkflowOptions) (string, error)
 	// DescribeWorkflow describes the basic info of a workflow execution
 	// workflowId is required, workflowRunId is optional and default to current runId of the workflowId
 	DescribeWorkflow(ctx context.Context, workflowId, workflowRunId string) (*WorkflowInfo, error)

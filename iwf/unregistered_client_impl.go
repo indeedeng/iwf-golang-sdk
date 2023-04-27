@@ -174,7 +174,7 @@ func (u *unregisteredClientImpl) GetComplexWorkflowResults(ctx context.Context, 
 	return resp.Results, nil
 }
 
-func (u *unregisteredClientImpl) ResetWorkflow(ctx context.Context, workflowId, workflowRunId string, options *ResetWorkflowTypeAndOptions) (string, error) {
+func (u *unregisteredClientImpl) ResetWorkflow(ctx context.Context, workflowId, workflowRunId string, options *ResetWorkflowOptions) (string, error) {
 	resetType := iwfidl.BEGINNING
 	reason := ptr.Any("")
 	if options != nil {

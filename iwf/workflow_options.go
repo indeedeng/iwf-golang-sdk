@@ -3,7 +3,7 @@ package iwf
 import "github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
 
 type WorkflowOptions struct {
-	WorkflowIdReusePolicy *iwfidl.WorkflowIDReusePolicy
+	WorkflowIdReusePolicy *iwfidl.IDReusePolicy
 	WorkflowCronSchedule  *string
 	WorkflowRetryPolicy   *iwfidl.WorkflowRetryPolicy
 	// InitialSearchAttributes set the initial search attributes to start a workflow

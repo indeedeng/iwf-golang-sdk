@@ -8,7 +8,7 @@ type persistenceWorkflowState1 struct {
 	iwf.DefaultStateIdAndOptions
 }
 
-func (b persistenceWorkflowState1) Start(ctx iwf.WorkflowContext, input iwf.Object, persistence iwf.Persistence, communication iwf.Communication) (*iwf.CommandRequest, error) {
+func (b persistenceWorkflowState1) WaitUntil(ctx iwf.WorkflowContext, input iwf.Object, persistence iwf.Persistence, communication iwf.Communication) (*iwf.CommandRequest, error) {
 	kw := persistence.GetSearchAttributeKeyword(testSearchAttributeKeyword)
 
 	if kw != "init-keyword" {
@@ -36,10 +36,10 @@ func (b persistenceWorkflowState1) Start(ctx iwf.WorkflowContext, input iwf.Obje
 	return iwf.EmptyCommandRequest(), nil
 }
 
-func (b persistenceWorkflowState1) Decide(ctx iwf.WorkflowContext, input iwf.Object, commandResults iwf.CommandResults, persistence iwf.Persistence, communication iwf.Communication) (*iwf.StateDecision, error) {
+func (b persistenceWorkflowState1) Execute(ctx iwf.WorkflowContext, input iwf.Object, commandResults iwf.CommandResults, persistence iwf.Persistence, communication iwf.Communication) (*iwf.StateDecision, error) {
 	iv := persistence.GetSearchAttributeInt(testSearchAttributeInt)
 	if iv != 1 {
-		panic("this value must be 1 because it got set by Start API")
+		panic("this value must be 1 because it got set by WaitUntil API")
 	}
 
 	var do ExampleDataObjectModel
