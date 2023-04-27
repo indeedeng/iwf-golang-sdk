@@ -4,10 +4,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**WorkflowIDReusePolicy** | Pointer to [**WorkflowIDReusePolicy**](WorkflowIDReusePolicy.md) |  | [optional] 
+**IdReusePolicy** | Pointer to [**IDReusePolicy**](IDReusePolicy.md) |  | [optional] 
 **CronSchedule** | Pointer to **string** |  | [optional] 
 **RetryPolicy** | Pointer to [**WorkflowRetryPolicy**](WorkflowRetryPolicy.md) |  | [optional] 
 **SearchAttributes** | Pointer to [**[]SearchAttribute**](SearchAttribute.md) |  | [optional] 
+**WorkflowConfigOverride** | Pointer to [**WorkflowConfig**](WorkflowConfig.md) |  | [optional] 
 
 ## Methods
 
@@ -28,30 +29,30 @@ NewWorkflowStartOptionsWithDefaults instantiates a new WorkflowStartOptions obje
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetWorkflowIDReusePolicy
+### GetIdReusePolicy
 
-`func (o *WorkflowStartOptions) GetWorkflowIDReusePolicy() WorkflowIDReusePolicy`
+`func (o *WorkflowStartOptions) GetIdReusePolicy() IDReusePolicy`
 
-GetWorkflowIDReusePolicy returns the WorkflowIDReusePolicy field if non-nil, zero value otherwise.
+GetIdReusePolicy returns the IdReusePolicy field if non-nil, zero value otherwise.
 
-### GetWorkflowIDReusePolicyOk
+### GetIdReusePolicyOk
 
-`func (o *WorkflowStartOptions) GetWorkflowIDReusePolicyOk() (*WorkflowIDReusePolicy, bool)`
+`func (o *WorkflowStartOptions) GetIdReusePolicyOk() (*IDReusePolicy, bool)`
 
-GetWorkflowIDReusePolicyOk returns a tuple with the WorkflowIDReusePolicy field if it's non-nil, zero value otherwise
+GetIdReusePolicyOk returns a tuple with the IdReusePolicy field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetWorkflowIDReusePolicy
+### SetIdReusePolicy
 
-`func (o *WorkflowStartOptions) SetWorkflowIDReusePolicy(v WorkflowIDReusePolicy)`
+`func (o *WorkflowStartOptions) SetIdReusePolicy(v IDReusePolicy)`
 
-SetWorkflowIDReusePolicy sets WorkflowIDReusePolicy field to given value.
+SetIdReusePolicy sets IdReusePolicy field to given value.
 
-### HasWorkflowIDReusePolicy
+### HasIdReusePolicy
 
-`func (o *WorkflowStartOptions) HasWorkflowIDReusePolicy() bool`
+`func (o *WorkflowStartOptions) HasIdReusePolicy() bool`
 
-HasWorkflowIDReusePolicy returns a boolean if a field has been set.
+HasIdReusePolicy returns a boolean if a field has been set.
 
 ### GetCronSchedule
 
@@ -127,6 +128,31 @@ SetSearchAttributes sets SearchAttributes field to given value.
 `func (o *WorkflowStartOptions) HasSearchAttributes() bool`
 
 HasSearchAttributes returns a boolean if a field has been set.
+
+### GetWorkflowConfigOverride
+
+`func (o *WorkflowStartOptions) GetWorkflowConfigOverride() WorkflowConfig`
+
+GetWorkflowConfigOverride returns the WorkflowConfigOverride field if non-nil, zero value otherwise.
+
+### GetWorkflowConfigOverrideOk
+
+`func (o *WorkflowStartOptions) GetWorkflowConfigOverrideOk() (*WorkflowConfig, bool)`
+
+GetWorkflowConfigOverrideOk returns a tuple with the WorkflowConfigOverride field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetWorkflowConfigOverride
+
+`func (o *WorkflowStartOptions) SetWorkflowConfigOverride(v WorkflowConfig)`
+
+SetWorkflowConfigOverride sets WorkflowConfigOverride field to given value.
+
+### HasWorkflowConfigOverride
+
+`func (o *WorkflowStartOptions) HasWorkflowConfigOverride() bool`
+
+HasWorkflowConfigOverride returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

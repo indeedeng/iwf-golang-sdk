@@ -20,6 +20,9 @@ func (b *builtinJsonEncoder) GetEncodingType() string {
 }
 
 func (b *builtinJsonEncoder) Encode(obj interface{}) (*iwfidl.EncodedObject, error) {
+	if obj == nil {
+		return &iwfidl.EncodedObject{}, nil
+	}
 	data, err := json.Marshal(obj)
 	if err != nil {
 		return nil, err

@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-type ResetWorkflowTypeAndOptions struct {
+type ResetWorkflowOptions struct {
 	// ResetType is required
 	ResetType iwfidl.WorkflowResetType
 	// Reason is required
@@ -22,39 +22,39 @@ type ResetWorkflowTypeAndOptions struct {
 	SkipSignalReapply *bool
 }
 
-func ResetToBeginning(reason string) ResetWorkflowTypeAndOptions {
-	return ResetWorkflowTypeAndOptions{
+func ResetToBeginning(reason string) ResetWorkflowOptions {
+	return ResetWorkflowOptions{
 		ResetType: iwfidl.BEGINNING,
 		Reason:    reason,
 	}
 }
 
-func ResetToHistoryEventId(historyEventId int32, reason string) ResetWorkflowTypeAndOptions {
-	return ResetWorkflowTypeAndOptions{
+func ResetToHistoryEventId(historyEventId int32, reason string) ResetWorkflowOptions {
+	return ResetWorkflowOptions{
 		ResetType:      iwfidl.HISTORY_EVENT_ID,
 		Reason:         reason,
 		HistoryEventId: &historyEventId,
 	}
 }
 
-func ResetToHistoryEventTime(historyEventTime time.Time, reason string) ResetWorkflowTypeAndOptions {
-	return ResetWorkflowTypeAndOptions{
+func ResetToHistoryEventTime(historyEventTime time.Time, reason string) ResetWorkflowOptions {
+	return ResetWorkflowOptions{
 		ResetType:        iwfidl.HISTORY_EVENT_TIME,
 		Reason:           reason,
 		HistoryEventTime: &historyEventTime,
 	}
 }
 
-func ResetToStateId(stateId, reason string) ResetWorkflowTypeAndOptions {
-	return ResetWorkflowTypeAndOptions{
+func ResetToStateId(stateId, reason string) ResetWorkflowOptions {
+	return ResetWorkflowOptions{
 		ResetType: iwfidl.STATE_ID,
 		Reason:    reason,
 		StateId:   &stateId,
 	}
 }
 
-func ResetToStateExecutionId(stateExecutionId, reason string) ResetWorkflowTypeAndOptions {
-	return ResetWorkflowTypeAndOptions{
+func ResetToStateExecutionId(stateExecutionId, reason string) ResetWorkflowOptions {
+	return ResetWorkflowOptions{
 		ResetType:        iwfidl.STATE_EXECUTION_ID,
 		Reason:           reason,
 		StateExecutionId: &stateExecutionId,

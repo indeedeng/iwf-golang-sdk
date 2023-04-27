@@ -5,13 +5,14 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **SearchAttributesLoadingPolicy** | Pointer to [**PersistenceLoadingPolicy**](PersistenceLoadingPolicy.md) |  | [optional] 
-**DataObjectsLoadingPolicy** | Pointer to [**PersistenceLoadingPolicy**](PersistenceLoadingPolicy.md) |  | [optional] 
+**DataAttributesLoadingPolicy** | Pointer to [**PersistenceLoadingPolicy**](PersistenceLoadingPolicy.md) |  | [optional] 
 **CommandCarryOverPolicy** | Pointer to [**CommandCarryOverPolicy**](CommandCarryOverPolicy.md) |  | [optional] 
-**StartApiTimeoutSeconds** | Pointer to **int32** |  | [optional] 
-**DecideApiTimeoutSeconds** | Pointer to **int32** |  | [optional] 
-**StartApiRetryPolicy** | Pointer to [**RetryPolicy**](RetryPolicy.md) |  | [optional] 
-**DecideApiRetryPolicy** | Pointer to [**RetryPolicy**](RetryPolicy.md) |  | [optional] 
-**StartApiFailurePolicy** | Pointer to [**StartApiFailurePolicy**](StartApiFailurePolicy.md) |  | [optional] 
+**WaitUntilApiTimeoutSeconds** | Pointer to **int32** |  | [optional] 
+**ExecuteApiTimeoutSeconds** | Pointer to **int32** |  | [optional] 
+**WaitUntilApiRetryPolicy** | Pointer to [**RetryPolicy**](RetryPolicy.md) |  | [optional] 
+**ExecuteApiRetryPolicy** | Pointer to [**RetryPolicy**](RetryPolicy.md) |  | [optional] 
+**WaitUntilApiFailurePolicy** | Pointer to [**WaitUntilApiFailurePolicy**](WaitUntilApiFailurePolicy.md) |  | [optional] 
+**SkipWaitUntil** | Pointer to **bool** |  | [optional] 
 
 ## Methods
 
@@ -57,30 +58,30 @@ SetSearchAttributesLoadingPolicy sets SearchAttributesLoadingPolicy field to giv
 
 HasSearchAttributesLoadingPolicy returns a boolean if a field has been set.
 
-### GetDataObjectsLoadingPolicy
+### GetDataAttributesLoadingPolicy
 
-`func (o *WorkflowStateOptions) GetDataObjectsLoadingPolicy() PersistenceLoadingPolicy`
+`func (o *WorkflowStateOptions) GetDataAttributesLoadingPolicy() PersistenceLoadingPolicy`
 
-GetDataObjectsLoadingPolicy returns the DataObjectsLoadingPolicy field if non-nil, zero value otherwise.
+GetDataAttributesLoadingPolicy returns the DataAttributesLoadingPolicy field if non-nil, zero value otherwise.
 
-### GetDataObjectsLoadingPolicyOk
+### GetDataAttributesLoadingPolicyOk
 
-`func (o *WorkflowStateOptions) GetDataObjectsLoadingPolicyOk() (*PersistenceLoadingPolicy, bool)`
+`func (o *WorkflowStateOptions) GetDataAttributesLoadingPolicyOk() (*PersistenceLoadingPolicy, bool)`
 
-GetDataObjectsLoadingPolicyOk returns a tuple with the DataObjectsLoadingPolicy field if it's non-nil, zero value otherwise
+GetDataAttributesLoadingPolicyOk returns a tuple with the DataAttributesLoadingPolicy field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetDataObjectsLoadingPolicy
+### SetDataAttributesLoadingPolicy
 
-`func (o *WorkflowStateOptions) SetDataObjectsLoadingPolicy(v PersistenceLoadingPolicy)`
+`func (o *WorkflowStateOptions) SetDataAttributesLoadingPolicy(v PersistenceLoadingPolicy)`
 
-SetDataObjectsLoadingPolicy sets DataObjectsLoadingPolicy field to given value.
+SetDataAttributesLoadingPolicy sets DataAttributesLoadingPolicy field to given value.
 
-### HasDataObjectsLoadingPolicy
+### HasDataAttributesLoadingPolicy
 
-`func (o *WorkflowStateOptions) HasDataObjectsLoadingPolicy() bool`
+`func (o *WorkflowStateOptions) HasDataAttributesLoadingPolicy() bool`
 
-HasDataObjectsLoadingPolicy returns a boolean if a field has been set.
+HasDataAttributesLoadingPolicy returns a boolean if a field has been set.
 
 ### GetCommandCarryOverPolicy
 
@@ -107,130 +108,155 @@ SetCommandCarryOverPolicy sets CommandCarryOverPolicy field to given value.
 
 HasCommandCarryOverPolicy returns a boolean if a field has been set.
 
-### GetStartApiTimeoutSeconds
+### GetWaitUntilApiTimeoutSeconds
 
-`func (o *WorkflowStateOptions) GetStartApiTimeoutSeconds() int32`
+`func (o *WorkflowStateOptions) GetWaitUntilApiTimeoutSeconds() int32`
 
-GetStartApiTimeoutSeconds returns the StartApiTimeoutSeconds field if non-nil, zero value otherwise.
+GetWaitUntilApiTimeoutSeconds returns the WaitUntilApiTimeoutSeconds field if non-nil, zero value otherwise.
 
-### GetStartApiTimeoutSecondsOk
+### GetWaitUntilApiTimeoutSecondsOk
 
-`func (o *WorkflowStateOptions) GetStartApiTimeoutSecondsOk() (*int32, bool)`
+`func (o *WorkflowStateOptions) GetWaitUntilApiTimeoutSecondsOk() (*int32, bool)`
 
-GetStartApiTimeoutSecondsOk returns a tuple with the StartApiTimeoutSeconds field if it's non-nil, zero value otherwise
+GetWaitUntilApiTimeoutSecondsOk returns a tuple with the WaitUntilApiTimeoutSeconds field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetStartApiTimeoutSeconds
+### SetWaitUntilApiTimeoutSeconds
 
-`func (o *WorkflowStateOptions) SetStartApiTimeoutSeconds(v int32)`
+`func (o *WorkflowStateOptions) SetWaitUntilApiTimeoutSeconds(v int32)`
 
-SetStartApiTimeoutSeconds sets StartApiTimeoutSeconds field to given value.
+SetWaitUntilApiTimeoutSeconds sets WaitUntilApiTimeoutSeconds field to given value.
 
-### HasStartApiTimeoutSeconds
+### HasWaitUntilApiTimeoutSeconds
 
-`func (o *WorkflowStateOptions) HasStartApiTimeoutSeconds() bool`
+`func (o *WorkflowStateOptions) HasWaitUntilApiTimeoutSeconds() bool`
 
-HasStartApiTimeoutSeconds returns a boolean if a field has been set.
+HasWaitUntilApiTimeoutSeconds returns a boolean if a field has been set.
 
-### GetDecideApiTimeoutSeconds
+### GetExecuteApiTimeoutSeconds
 
-`func (o *WorkflowStateOptions) GetDecideApiTimeoutSeconds() int32`
+`func (o *WorkflowStateOptions) GetExecuteApiTimeoutSeconds() int32`
 
-GetDecideApiTimeoutSeconds returns the DecideApiTimeoutSeconds field if non-nil, zero value otherwise.
+GetExecuteApiTimeoutSeconds returns the ExecuteApiTimeoutSeconds field if non-nil, zero value otherwise.
 
-### GetDecideApiTimeoutSecondsOk
+### GetExecuteApiTimeoutSecondsOk
 
-`func (o *WorkflowStateOptions) GetDecideApiTimeoutSecondsOk() (*int32, bool)`
+`func (o *WorkflowStateOptions) GetExecuteApiTimeoutSecondsOk() (*int32, bool)`
 
-GetDecideApiTimeoutSecondsOk returns a tuple with the DecideApiTimeoutSeconds field if it's non-nil, zero value otherwise
+GetExecuteApiTimeoutSecondsOk returns a tuple with the ExecuteApiTimeoutSeconds field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetDecideApiTimeoutSeconds
+### SetExecuteApiTimeoutSeconds
 
-`func (o *WorkflowStateOptions) SetDecideApiTimeoutSeconds(v int32)`
+`func (o *WorkflowStateOptions) SetExecuteApiTimeoutSeconds(v int32)`
 
-SetDecideApiTimeoutSeconds sets DecideApiTimeoutSeconds field to given value.
+SetExecuteApiTimeoutSeconds sets ExecuteApiTimeoutSeconds field to given value.
 
-### HasDecideApiTimeoutSeconds
+### HasExecuteApiTimeoutSeconds
 
-`func (o *WorkflowStateOptions) HasDecideApiTimeoutSeconds() bool`
+`func (o *WorkflowStateOptions) HasExecuteApiTimeoutSeconds() bool`
 
-HasDecideApiTimeoutSeconds returns a boolean if a field has been set.
+HasExecuteApiTimeoutSeconds returns a boolean if a field has been set.
 
-### GetStartApiRetryPolicy
+### GetWaitUntilApiRetryPolicy
 
-`func (o *WorkflowStateOptions) GetStartApiRetryPolicy() RetryPolicy`
+`func (o *WorkflowStateOptions) GetWaitUntilApiRetryPolicy() RetryPolicy`
 
-GetStartApiRetryPolicy returns the StartApiRetryPolicy field if non-nil, zero value otherwise.
+GetWaitUntilApiRetryPolicy returns the WaitUntilApiRetryPolicy field if non-nil, zero value otherwise.
 
-### GetStartApiRetryPolicyOk
+### GetWaitUntilApiRetryPolicyOk
 
-`func (o *WorkflowStateOptions) GetStartApiRetryPolicyOk() (*RetryPolicy, bool)`
+`func (o *WorkflowStateOptions) GetWaitUntilApiRetryPolicyOk() (*RetryPolicy, bool)`
 
-GetStartApiRetryPolicyOk returns a tuple with the StartApiRetryPolicy field if it's non-nil, zero value otherwise
+GetWaitUntilApiRetryPolicyOk returns a tuple with the WaitUntilApiRetryPolicy field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetStartApiRetryPolicy
+### SetWaitUntilApiRetryPolicy
 
-`func (o *WorkflowStateOptions) SetStartApiRetryPolicy(v RetryPolicy)`
+`func (o *WorkflowStateOptions) SetWaitUntilApiRetryPolicy(v RetryPolicy)`
 
-SetStartApiRetryPolicy sets StartApiRetryPolicy field to given value.
+SetWaitUntilApiRetryPolicy sets WaitUntilApiRetryPolicy field to given value.
 
-### HasStartApiRetryPolicy
+### HasWaitUntilApiRetryPolicy
 
-`func (o *WorkflowStateOptions) HasStartApiRetryPolicy() bool`
+`func (o *WorkflowStateOptions) HasWaitUntilApiRetryPolicy() bool`
 
-HasStartApiRetryPolicy returns a boolean if a field has been set.
+HasWaitUntilApiRetryPolicy returns a boolean if a field has been set.
 
-### GetDecideApiRetryPolicy
+### GetExecuteApiRetryPolicy
 
-`func (o *WorkflowStateOptions) GetDecideApiRetryPolicy() RetryPolicy`
+`func (o *WorkflowStateOptions) GetExecuteApiRetryPolicy() RetryPolicy`
 
-GetDecideApiRetryPolicy returns the DecideApiRetryPolicy field if non-nil, zero value otherwise.
+GetExecuteApiRetryPolicy returns the ExecuteApiRetryPolicy field if non-nil, zero value otherwise.
 
-### GetDecideApiRetryPolicyOk
+### GetExecuteApiRetryPolicyOk
 
-`func (o *WorkflowStateOptions) GetDecideApiRetryPolicyOk() (*RetryPolicy, bool)`
+`func (o *WorkflowStateOptions) GetExecuteApiRetryPolicyOk() (*RetryPolicy, bool)`
 
-GetDecideApiRetryPolicyOk returns a tuple with the DecideApiRetryPolicy field if it's non-nil, zero value otherwise
+GetExecuteApiRetryPolicyOk returns a tuple with the ExecuteApiRetryPolicy field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetDecideApiRetryPolicy
+### SetExecuteApiRetryPolicy
 
-`func (o *WorkflowStateOptions) SetDecideApiRetryPolicy(v RetryPolicy)`
+`func (o *WorkflowStateOptions) SetExecuteApiRetryPolicy(v RetryPolicy)`
 
-SetDecideApiRetryPolicy sets DecideApiRetryPolicy field to given value.
+SetExecuteApiRetryPolicy sets ExecuteApiRetryPolicy field to given value.
 
-### HasDecideApiRetryPolicy
+### HasExecuteApiRetryPolicy
 
-`func (o *WorkflowStateOptions) HasDecideApiRetryPolicy() bool`
+`func (o *WorkflowStateOptions) HasExecuteApiRetryPolicy() bool`
 
-HasDecideApiRetryPolicy returns a boolean if a field has been set.
+HasExecuteApiRetryPolicy returns a boolean if a field has been set.
 
-### GetStartApiFailurePolicy
+### GetWaitUntilApiFailurePolicy
 
-`func (o *WorkflowStateOptions) GetStartApiFailurePolicy() StartApiFailurePolicy`
+`func (o *WorkflowStateOptions) GetWaitUntilApiFailurePolicy() WaitUntilApiFailurePolicy`
 
-GetStartApiFailurePolicy returns the StartApiFailurePolicy field if non-nil, zero value otherwise.
+GetWaitUntilApiFailurePolicy returns the WaitUntilApiFailurePolicy field if non-nil, zero value otherwise.
 
-### GetStartApiFailurePolicyOk
+### GetWaitUntilApiFailurePolicyOk
 
-`func (o *WorkflowStateOptions) GetStartApiFailurePolicyOk() (*StartApiFailurePolicy, bool)`
+`func (o *WorkflowStateOptions) GetWaitUntilApiFailurePolicyOk() (*WaitUntilApiFailurePolicy, bool)`
 
-GetStartApiFailurePolicyOk returns a tuple with the StartApiFailurePolicy field if it's non-nil, zero value otherwise
+GetWaitUntilApiFailurePolicyOk returns a tuple with the WaitUntilApiFailurePolicy field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetStartApiFailurePolicy
+### SetWaitUntilApiFailurePolicy
 
-`func (o *WorkflowStateOptions) SetStartApiFailurePolicy(v StartApiFailurePolicy)`
+`func (o *WorkflowStateOptions) SetWaitUntilApiFailurePolicy(v WaitUntilApiFailurePolicy)`
 
-SetStartApiFailurePolicy sets StartApiFailurePolicy field to given value.
+SetWaitUntilApiFailurePolicy sets WaitUntilApiFailurePolicy field to given value.
 
-### HasStartApiFailurePolicy
+### HasWaitUntilApiFailurePolicy
 
-`func (o *WorkflowStateOptions) HasStartApiFailurePolicy() bool`
+`func (o *WorkflowStateOptions) HasWaitUntilApiFailurePolicy() bool`
 
-HasStartApiFailurePolicy returns a boolean if a field has been set.
+HasWaitUntilApiFailurePolicy returns a boolean if a field has been set.
+
+### GetSkipWaitUntil
+
+`func (o *WorkflowStateOptions) GetSkipWaitUntil() bool`
+
+GetSkipWaitUntil returns the SkipWaitUntil field if non-nil, zero value otherwise.
+
+### GetSkipWaitUntilOk
+
+`func (o *WorkflowStateOptions) GetSkipWaitUntilOk() (*bool, bool)`
+
+GetSkipWaitUntilOk returns a tuple with the SkipWaitUntil field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSkipWaitUntil
+
+`func (o *WorkflowStateOptions) SetSkipWaitUntil(v bool)`
+
+SetSkipWaitUntil sets SkipWaitUntil field to given value.
+
+### HasSkipWaitUntil
+
+`func (o *WorkflowStateOptions) HasSkipWaitUntil() bool`
+
+HasSkipWaitUntil returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

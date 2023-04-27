@@ -8,7 +8,7 @@ type basicWorkflowState1 struct {
 	iwf.DefaultStateIdAndOptions
 }
 
-func (b basicWorkflowState1) Start(ctx iwf.WorkflowContext, input iwf.Object, persistence iwf.Persistence, communication iwf.Communication) (*iwf.CommandRequest, error) {
+func (b basicWorkflowState1) WaitUntil(ctx iwf.WorkflowContext, input iwf.Object, persistence iwf.Persistence, communication iwf.Communication) (*iwf.CommandRequest, error) {
 	if ctx.GetAttempt() <= 0 {
 		panic("attempt should be greater than zero")
 	}
@@ -18,7 +18,7 @@ func (b basicWorkflowState1) Start(ctx iwf.WorkflowContext, input iwf.Object, pe
 	return iwf.EmptyCommandRequest(), nil
 }
 
-func (b basicWorkflowState1) Decide(ctx iwf.WorkflowContext, input iwf.Object, commandResults iwf.CommandResults, persistence iwf.Persistence, communication iwf.Communication) (*iwf.StateDecision, error) {
+func (b basicWorkflowState1) Execute(ctx iwf.WorkflowContext, input iwf.Object, commandResults iwf.CommandResults, persistence iwf.Persistence, communication iwf.Communication) (*iwf.StateDecision, error) {
 	if ctx.GetAttempt() <= 0 {
 		panic("attempt should be greater than zero")
 	}

@@ -12,8 +12,8 @@ const (
 )
 
 type WorkerService interface {
-	HandleWorkflowStateStart(ctx context.Context, request iwfidl.WorkflowStateStartRequest) (*iwfidl.WorkflowStateStartResponse, error)
-	HandleWorkflowStateDecide(ctx context.Context, request iwfidl.WorkflowStateDecideRequest) (*iwfidl.WorkflowStateDecideResponse, error)
+	HandleWorkflowStateWaitUntil(ctx context.Context, request iwfidl.WorkflowStateWaitUntilRequest) (*iwfidl.WorkflowStateWaitUntilResponse, error)
+	HandleWorkflowStateExecute(ctx context.Context, request iwfidl.WorkflowStateExecuteRequest) (*iwfidl.WorkflowStateExecuteResponse, error)
 }
 
 func NewWorkerService(registry Registry, options *WorkerOptions) WorkerService {

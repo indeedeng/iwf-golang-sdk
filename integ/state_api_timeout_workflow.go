@@ -8,7 +8,7 @@ type stateApiTimeoutWorkflow struct {
 	iwf.EmptyPersistenceSchema
 }
 
-func (b stateApiTimeoutWorkflow) GetStates() []iwf.StateDef {
+func (b stateApiTimeoutWorkflow) GetWorkflowStates() []iwf.StateDef {
 	return []iwf.StateDef{
 		iwf.StartingStateDef(&stateApiTimeoutWorkflowState1{}),
 	}

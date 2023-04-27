@@ -8,7 +8,7 @@ type forceFailWorkflow struct {
 	iwf.EmptyPersistenceSchema
 }
 
-func (b forceFailWorkflow) GetStates() []iwf.StateDef {
+func (b forceFailWorkflow) GetWorkflowStates() []iwf.StateDef {
 	return []iwf.StateDef{
 		iwf.StartingStateDef(&forceFailWorkflowState1{}),
 	}

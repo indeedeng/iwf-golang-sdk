@@ -8,7 +8,7 @@ type timerWorkflow struct {
 	iwf.EmptyPersistenceSchema
 }
 
-func (b timerWorkflow) GetStates() []iwf.StateDef {
+func (b timerWorkflow) GetWorkflowStates() []iwf.StateDef {
 	return []iwf.StateDef{
 		iwf.StartingStateDef(&timerWorkflowState1{}),
 	}

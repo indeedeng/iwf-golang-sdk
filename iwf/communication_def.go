@@ -8,31 +8,21 @@ type CommunicationMethodDef struct {
 type CommunicationMethod string
 
 const (
-	CommunicationMethodSignalChannel     CommunicationMethod = "SignalChannel"
-	CommunicationMethodInterstateChannel CommunicationMethod = "InterstateChannel"
+	CommunicationMethodSignalChannel   CommunicationMethod = "SignalChannel"
+	CommunicationMethodInternalChannel CommunicationMethod = "InternalChannel"
 )
 
 func SignalChannelDef(channelName string) CommunicationMethodDef {
-	return NewSignalChannelDef(channelName)
-}
-
-// Deprecated: use SignalChannelDef instead to be more concise and readable
-func NewSignalChannelDef(channelName string) CommunicationMethodDef {
 	return CommunicationMethodDef{
 		Name:                channelName,
 		CommunicationMethod: CommunicationMethodSignalChannel,
 	}
 }
 
-func InterstateChannelDef(channelName string) CommunicationMethodDef {
-	return NewInterstateChannelDef(channelName)
-}
-
-// Deprecated: use InterstateChannelDef instead to be more concise and readable
-func NewInterstateChannelDef(channelName string) CommunicationMethodDef {
+func InternalChannelDef(channelName string) CommunicationMethodDef {
 	return CommunicationMethodDef{
 		Name:                channelName,
-		CommunicationMethod: CommunicationMethodInterstateChannel,
+		CommunicationMethod: CommunicationMethodInternalChannel,
 	}
 }
 

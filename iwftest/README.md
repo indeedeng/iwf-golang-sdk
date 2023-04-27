@@ -40,26 +40,26 @@ func beforeEach(t *testing.T) {
 }
 
 
-func TestInitState_Start(t *testing.T) {
+func TestInitState_WaitUntil(t *testing.T) {
 	beforeEach(t)
 
 	state := NewInitState()
 
 	mockPersistence.EXPECT().SetDataObject(keyCustomer, testCustomer)
-	cmdReq, err := state.Start(mockWfCtx, testCustomerObj, mockPersistence, mockCommunication)
+	cmdReq, err := state.WaitUntil(mockWfCtx, testCustomerObj, mockPersistence, mockCommunication)
 	assert.Nil(t, err)
 	assert.Equal(t, iwf.EmptyCommandRequest(), cmdReq)
 }
 
 
-func TestTrialState_Start(t *testing.T) {
+func TestTrialState_WaitUntil(t *testing.T) {
 	beforeEach(t)
 
 	state := NewTrialState(mockSvc)
 
 	mockSvc.EXPECT().sendEmail(testCustomer.Email, gomock.Any(), gomock.Any())
 	mockPersistence.EXPECT().GetDataObject(keyCustomer, gomock.Any()).SetArg(1, testCustomer)
-	cmdReq, err := state.Start(mockWfCtx, emptyObj, mockPersistence, mockCommunication)
+	cmdReq, err := state.WaitUntil(mockWfCtx, emptyObj, mockPersistence, mockCommunication)
 	assert.Nil(t, err)
 	firingTime := cmdReq.Commands[0].TimerCommand.FiringUnixTimestampSeconds
 	assert.Equal(t, iwf.AllCommandsCompletedRequest(

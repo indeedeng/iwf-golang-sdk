@@ -18,28 +18,17 @@ type PersistenceFieldDef struct {
 type PersistenceFieldType string
 
 const (
-	PersistenceFieldTypeDataObject      PersistenceFieldType = "DataObject"
+	PersistenceFieldTypeDataObject      PersistenceFieldType = "DataAttribute"
 	PersistenceFieldTypeSearchAttribute PersistenceFieldType = "SearchAttribute"
 )
 
-func DataObjectDef(key string) PersistenceFieldDef {
-	return NewDataObjectDef(key)
-}
-
-// Deprecated: use DataObjectDef instead to be more concise and readable
-func NewDataObjectDef(key string) PersistenceFieldDef {
+func DataAttributeDef(key string) PersistenceFieldDef {
 	return PersistenceFieldDef{
 		Key:       key,
 		FieldType: PersistenceFieldTypeDataObject,
 	}
 }
-
 func SearchAttributeDef(key string, saType iwfidl.SearchAttributeValueType) PersistenceFieldDef {
-	return NewSearchAttributeDef(key, saType)
-}
-
-// Deprecated: use SearchAttributeDef instead to be more concise and readable
-func NewSearchAttributeDef(key string, saType iwfidl.SearchAttributeValueType) PersistenceFieldDef {
 	return PersistenceFieldDef{
 		Key:                 key,
 		FieldType:           PersistenceFieldTypeSearchAttribute,

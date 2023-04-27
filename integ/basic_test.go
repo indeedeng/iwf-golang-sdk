@@ -15,7 +15,7 @@ import (
 func TestBasicWorkflow(t *testing.T) {
 	wfId := "TestBasicWorkflow" + strconv.Itoa(int(time.Now().Unix()))
 	runId, err := client.StartWorkflow(context.Background(), &basicWorkflow{}, wfId, 10, 1, &iwf.WorkflowOptions{
-		WorkflowIdReusePolicy: ptr.Any(iwfidl.REJECT_DUPLICATE),
+		WorkflowIdReusePolicy: ptr.Any(iwfidl.DISALLOW_REUSE),
 		WorkflowRetryPolicy: &iwfidl.WorkflowRetryPolicy{
 			InitialIntervalSeconds: iwfidl.PtrInt32(10),
 			MaximumAttempts:        iwfidl.PtrInt32(3),

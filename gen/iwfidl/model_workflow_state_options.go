@@ -20,13 +20,14 @@ var _ MappedNullable = &WorkflowStateOptions{}
 // WorkflowStateOptions struct for WorkflowStateOptions
 type WorkflowStateOptions struct {
 	SearchAttributesLoadingPolicy *PersistenceLoadingPolicy `json:"searchAttributesLoadingPolicy,omitempty"`
-	DataObjectsLoadingPolicy *PersistenceLoadingPolicy `json:"dataObjectsLoadingPolicy,omitempty"`
+	DataAttributesLoadingPolicy *PersistenceLoadingPolicy `json:"dataAttributesLoadingPolicy,omitempty"`
 	CommandCarryOverPolicy *CommandCarryOverPolicy `json:"commandCarryOverPolicy,omitempty"`
-	StartApiTimeoutSeconds *int32 `json:"startApiTimeoutSeconds,omitempty"`
-	DecideApiTimeoutSeconds *int32 `json:"decideApiTimeoutSeconds,omitempty"`
-	StartApiRetryPolicy *RetryPolicy `json:"startApiRetryPolicy,omitempty"`
-	DecideApiRetryPolicy *RetryPolicy `json:"decideApiRetryPolicy,omitempty"`
-	StartApiFailurePolicy *StartApiFailurePolicy `json:"startApiFailurePolicy,omitempty"`
+	WaitUntilApiTimeoutSeconds *int32 `json:"waitUntilApiTimeoutSeconds,omitempty"`
+	ExecuteApiTimeoutSeconds *int32 `json:"executeApiTimeoutSeconds,omitempty"`
+	WaitUntilApiRetryPolicy *RetryPolicy `json:"waitUntilApiRetryPolicy,omitempty"`
+	ExecuteApiRetryPolicy *RetryPolicy `json:"executeApiRetryPolicy,omitempty"`
+	WaitUntilApiFailurePolicy *WaitUntilApiFailurePolicy `json:"waitUntilApiFailurePolicy,omitempty"`
+	SkipWaitUntil *bool `json:"skipWaitUntil,omitempty"`
 }
 
 // NewWorkflowStateOptions instantiates a new WorkflowStateOptions object
@@ -78,36 +79,36 @@ func (o *WorkflowStateOptions) SetSearchAttributesLoadingPolicy(v PersistenceLoa
 	o.SearchAttributesLoadingPolicy = &v
 }
 
-// GetDataObjectsLoadingPolicy returns the DataObjectsLoadingPolicy field value if set, zero value otherwise.
-func (o *WorkflowStateOptions) GetDataObjectsLoadingPolicy() PersistenceLoadingPolicy {
-	if o == nil || IsNil(o.DataObjectsLoadingPolicy) {
+// GetDataAttributesLoadingPolicy returns the DataAttributesLoadingPolicy field value if set, zero value otherwise.
+func (o *WorkflowStateOptions) GetDataAttributesLoadingPolicy() PersistenceLoadingPolicy {
+	if o == nil || IsNil(o.DataAttributesLoadingPolicy) {
 		var ret PersistenceLoadingPolicy
 		return ret
 	}
-	return *o.DataObjectsLoadingPolicy
+	return *o.DataAttributesLoadingPolicy
 }
 
-// GetDataObjectsLoadingPolicyOk returns a tuple with the DataObjectsLoadingPolicy field value if set, nil otherwise
+// GetDataAttributesLoadingPolicyOk returns a tuple with the DataAttributesLoadingPolicy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *WorkflowStateOptions) GetDataObjectsLoadingPolicyOk() (*PersistenceLoadingPolicy, bool) {
-	if o == nil || IsNil(o.DataObjectsLoadingPolicy) {
+func (o *WorkflowStateOptions) GetDataAttributesLoadingPolicyOk() (*PersistenceLoadingPolicy, bool) {
+	if o == nil || IsNil(o.DataAttributesLoadingPolicy) {
 		return nil, false
 	}
-	return o.DataObjectsLoadingPolicy, true
+	return o.DataAttributesLoadingPolicy, true
 }
 
-// HasDataObjectsLoadingPolicy returns a boolean if a field has been set.
-func (o *WorkflowStateOptions) HasDataObjectsLoadingPolicy() bool {
-	if o != nil && !IsNil(o.DataObjectsLoadingPolicy) {
+// HasDataAttributesLoadingPolicy returns a boolean if a field has been set.
+func (o *WorkflowStateOptions) HasDataAttributesLoadingPolicy() bool {
+	if o != nil && !IsNil(o.DataAttributesLoadingPolicy) {
 		return true
 	}
 
 	return false
 }
 
-// SetDataObjectsLoadingPolicy gets a reference to the given PersistenceLoadingPolicy and assigns it to the DataObjectsLoadingPolicy field.
-func (o *WorkflowStateOptions) SetDataObjectsLoadingPolicy(v PersistenceLoadingPolicy) {
-	o.DataObjectsLoadingPolicy = &v
+// SetDataAttributesLoadingPolicy gets a reference to the given PersistenceLoadingPolicy and assigns it to the DataAttributesLoadingPolicy field.
+func (o *WorkflowStateOptions) SetDataAttributesLoadingPolicy(v PersistenceLoadingPolicy) {
+	o.DataAttributesLoadingPolicy = &v
 }
 
 // GetCommandCarryOverPolicy returns the CommandCarryOverPolicy field value if set, zero value otherwise.
@@ -142,164 +143,196 @@ func (o *WorkflowStateOptions) SetCommandCarryOverPolicy(v CommandCarryOverPolic
 	o.CommandCarryOverPolicy = &v
 }
 
-// GetStartApiTimeoutSeconds returns the StartApiTimeoutSeconds field value if set, zero value otherwise.
-func (o *WorkflowStateOptions) GetStartApiTimeoutSeconds() int32 {
-	if o == nil || IsNil(o.StartApiTimeoutSeconds) {
+// GetWaitUntilApiTimeoutSeconds returns the WaitUntilApiTimeoutSeconds field value if set, zero value otherwise.
+func (o *WorkflowStateOptions) GetWaitUntilApiTimeoutSeconds() int32 {
+	if o == nil || IsNil(o.WaitUntilApiTimeoutSeconds) {
 		var ret int32
 		return ret
 	}
-	return *o.StartApiTimeoutSeconds
+	return *o.WaitUntilApiTimeoutSeconds
 }
 
-// GetStartApiTimeoutSecondsOk returns a tuple with the StartApiTimeoutSeconds field value if set, nil otherwise
+// GetWaitUntilApiTimeoutSecondsOk returns a tuple with the WaitUntilApiTimeoutSeconds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *WorkflowStateOptions) GetStartApiTimeoutSecondsOk() (*int32, bool) {
-	if o == nil || IsNil(o.StartApiTimeoutSeconds) {
+func (o *WorkflowStateOptions) GetWaitUntilApiTimeoutSecondsOk() (*int32, bool) {
+	if o == nil || IsNil(o.WaitUntilApiTimeoutSeconds) {
 		return nil, false
 	}
-	return o.StartApiTimeoutSeconds, true
+	return o.WaitUntilApiTimeoutSeconds, true
 }
 
-// HasStartApiTimeoutSeconds returns a boolean if a field has been set.
-func (o *WorkflowStateOptions) HasStartApiTimeoutSeconds() bool {
-	if o != nil && !IsNil(o.StartApiTimeoutSeconds) {
+// HasWaitUntilApiTimeoutSeconds returns a boolean if a field has been set.
+func (o *WorkflowStateOptions) HasWaitUntilApiTimeoutSeconds() bool {
+	if o != nil && !IsNil(o.WaitUntilApiTimeoutSeconds) {
 		return true
 	}
 
 	return false
 }
 
-// SetStartApiTimeoutSeconds gets a reference to the given int32 and assigns it to the StartApiTimeoutSeconds field.
-func (o *WorkflowStateOptions) SetStartApiTimeoutSeconds(v int32) {
-	o.StartApiTimeoutSeconds = &v
+// SetWaitUntilApiTimeoutSeconds gets a reference to the given int32 and assigns it to the WaitUntilApiTimeoutSeconds field.
+func (o *WorkflowStateOptions) SetWaitUntilApiTimeoutSeconds(v int32) {
+	o.WaitUntilApiTimeoutSeconds = &v
 }
 
-// GetDecideApiTimeoutSeconds returns the DecideApiTimeoutSeconds field value if set, zero value otherwise.
-func (o *WorkflowStateOptions) GetDecideApiTimeoutSeconds() int32 {
-	if o == nil || IsNil(o.DecideApiTimeoutSeconds) {
+// GetExecuteApiTimeoutSeconds returns the ExecuteApiTimeoutSeconds field value if set, zero value otherwise.
+func (o *WorkflowStateOptions) GetExecuteApiTimeoutSeconds() int32 {
+	if o == nil || IsNil(o.ExecuteApiTimeoutSeconds) {
 		var ret int32
 		return ret
 	}
-	return *o.DecideApiTimeoutSeconds
+	return *o.ExecuteApiTimeoutSeconds
 }
 
-// GetDecideApiTimeoutSecondsOk returns a tuple with the DecideApiTimeoutSeconds field value if set, nil otherwise
+// GetExecuteApiTimeoutSecondsOk returns a tuple with the ExecuteApiTimeoutSeconds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *WorkflowStateOptions) GetDecideApiTimeoutSecondsOk() (*int32, bool) {
-	if o == nil || IsNil(o.DecideApiTimeoutSeconds) {
+func (o *WorkflowStateOptions) GetExecuteApiTimeoutSecondsOk() (*int32, bool) {
+	if o == nil || IsNil(o.ExecuteApiTimeoutSeconds) {
 		return nil, false
 	}
-	return o.DecideApiTimeoutSeconds, true
+	return o.ExecuteApiTimeoutSeconds, true
 }
 
-// HasDecideApiTimeoutSeconds returns a boolean if a field has been set.
-func (o *WorkflowStateOptions) HasDecideApiTimeoutSeconds() bool {
-	if o != nil && !IsNil(o.DecideApiTimeoutSeconds) {
+// HasExecuteApiTimeoutSeconds returns a boolean if a field has been set.
+func (o *WorkflowStateOptions) HasExecuteApiTimeoutSeconds() bool {
+	if o != nil && !IsNil(o.ExecuteApiTimeoutSeconds) {
 		return true
 	}
 
 	return false
 }
 
-// SetDecideApiTimeoutSeconds gets a reference to the given int32 and assigns it to the DecideApiTimeoutSeconds field.
-func (o *WorkflowStateOptions) SetDecideApiTimeoutSeconds(v int32) {
-	o.DecideApiTimeoutSeconds = &v
+// SetExecuteApiTimeoutSeconds gets a reference to the given int32 and assigns it to the ExecuteApiTimeoutSeconds field.
+func (o *WorkflowStateOptions) SetExecuteApiTimeoutSeconds(v int32) {
+	o.ExecuteApiTimeoutSeconds = &v
 }
 
-// GetStartApiRetryPolicy returns the StartApiRetryPolicy field value if set, zero value otherwise.
-func (o *WorkflowStateOptions) GetStartApiRetryPolicy() RetryPolicy {
-	if o == nil || IsNil(o.StartApiRetryPolicy) {
+// GetWaitUntilApiRetryPolicy returns the WaitUntilApiRetryPolicy field value if set, zero value otherwise.
+func (o *WorkflowStateOptions) GetWaitUntilApiRetryPolicy() RetryPolicy {
+	if o == nil || IsNil(o.WaitUntilApiRetryPolicy) {
 		var ret RetryPolicy
 		return ret
 	}
-	return *o.StartApiRetryPolicy
+	return *o.WaitUntilApiRetryPolicy
 }
 
-// GetStartApiRetryPolicyOk returns a tuple with the StartApiRetryPolicy field value if set, nil otherwise
+// GetWaitUntilApiRetryPolicyOk returns a tuple with the WaitUntilApiRetryPolicy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *WorkflowStateOptions) GetStartApiRetryPolicyOk() (*RetryPolicy, bool) {
-	if o == nil || IsNil(o.StartApiRetryPolicy) {
+func (o *WorkflowStateOptions) GetWaitUntilApiRetryPolicyOk() (*RetryPolicy, bool) {
+	if o == nil || IsNil(o.WaitUntilApiRetryPolicy) {
 		return nil, false
 	}
-	return o.StartApiRetryPolicy, true
+	return o.WaitUntilApiRetryPolicy, true
 }
 
-// HasStartApiRetryPolicy returns a boolean if a field has been set.
-func (o *WorkflowStateOptions) HasStartApiRetryPolicy() bool {
-	if o != nil && !IsNil(o.StartApiRetryPolicy) {
+// HasWaitUntilApiRetryPolicy returns a boolean if a field has been set.
+func (o *WorkflowStateOptions) HasWaitUntilApiRetryPolicy() bool {
+	if o != nil && !IsNil(o.WaitUntilApiRetryPolicy) {
 		return true
 	}
 
 	return false
 }
 
-// SetStartApiRetryPolicy gets a reference to the given RetryPolicy and assigns it to the StartApiRetryPolicy field.
-func (o *WorkflowStateOptions) SetStartApiRetryPolicy(v RetryPolicy) {
-	o.StartApiRetryPolicy = &v
+// SetWaitUntilApiRetryPolicy gets a reference to the given RetryPolicy and assigns it to the WaitUntilApiRetryPolicy field.
+func (o *WorkflowStateOptions) SetWaitUntilApiRetryPolicy(v RetryPolicy) {
+	o.WaitUntilApiRetryPolicy = &v
 }
 
-// GetDecideApiRetryPolicy returns the DecideApiRetryPolicy field value if set, zero value otherwise.
-func (o *WorkflowStateOptions) GetDecideApiRetryPolicy() RetryPolicy {
-	if o == nil || IsNil(o.DecideApiRetryPolicy) {
+// GetExecuteApiRetryPolicy returns the ExecuteApiRetryPolicy field value if set, zero value otherwise.
+func (o *WorkflowStateOptions) GetExecuteApiRetryPolicy() RetryPolicy {
+	if o == nil || IsNil(o.ExecuteApiRetryPolicy) {
 		var ret RetryPolicy
 		return ret
 	}
-	return *o.DecideApiRetryPolicy
+	return *o.ExecuteApiRetryPolicy
 }
 
-// GetDecideApiRetryPolicyOk returns a tuple with the DecideApiRetryPolicy field value if set, nil otherwise
+// GetExecuteApiRetryPolicyOk returns a tuple with the ExecuteApiRetryPolicy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *WorkflowStateOptions) GetDecideApiRetryPolicyOk() (*RetryPolicy, bool) {
-	if o == nil || IsNil(o.DecideApiRetryPolicy) {
+func (o *WorkflowStateOptions) GetExecuteApiRetryPolicyOk() (*RetryPolicy, bool) {
+	if o == nil || IsNil(o.ExecuteApiRetryPolicy) {
 		return nil, false
 	}
-	return o.DecideApiRetryPolicy, true
+	return o.ExecuteApiRetryPolicy, true
 }
 
-// HasDecideApiRetryPolicy returns a boolean if a field has been set.
-func (o *WorkflowStateOptions) HasDecideApiRetryPolicy() bool {
-	if o != nil && !IsNil(o.DecideApiRetryPolicy) {
+// HasExecuteApiRetryPolicy returns a boolean if a field has been set.
+func (o *WorkflowStateOptions) HasExecuteApiRetryPolicy() bool {
+	if o != nil && !IsNil(o.ExecuteApiRetryPolicy) {
 		return true
 	}
 
 	return false
 }
 
-// SetDecideApiRetryPolicy gets a reference to the given RetryPolicy and assigns it to the DecideApiRetryPolicy field.
-func (o *WorkflowStateOptions) SetDecideApiRetryPolicy(v RetryPolicy) {
-	o.DecideApiRetryPolicy = &v
+// SetExecuteApiRetryPolicy gets a reference to the given RetryPolicy and assigns it to the ExecuteApiRetryPolicy field.
+func (o *WorkflowStateOptions) SetExecuteApiRetryPolicy(v RetryPolicy) {
+	o.ExecuteApiRetryPolicy = &v
 }
 
-// GetStartApiFailurePolicy returns the StartApiFailurePolicy field value if set, zero value otherwise.
-func (o *WorkflowStateOptions) GetStartApiFailurePolicy() StartApiFailurePolicy {
-	if o == nil || IsNil(o.StartApiFailurePolicy) {
-		var ret StartApiFailurePolicy
+// GetWaitUntilApiFailurePolicy returns the WaitUntilApiFailurePolicy field value if set, zero value otherwise.
+func (o *WorkflowStateOptions) GetWaitUntilApiFailurePolicy() WaitUntilApiFailurePolicy {
+	if o == nil || IsNil(o.WaitUntilApiFailurePolicy) {
+		var ret WaitUntilApiFailurePolicy
 		return ret
 	}
-	return *o.StartApiFailurePolicy
+	return *o.WaitUntilApiFailurePolicy
 }
 
-// GetStartApiFailurePolicyOk returns a tuple with the StartApiFailurePolicy field value if set, nil otherwise
+// GetWaitUntilApiFailurePolicyOk returns a tuple with the WaitUntilApiFailurePolicy field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *WorkflowStateOptions) GetStartApiFailurePolicyOk() (*StartApiFailurePolicy, bool) {
-	if o == nil || IsNil(o.StartApiFailurePolicy) {
+func (o *WorkflowStateOptions) GetWaitUntilApiFailurePolicyOk() (*WaitUntilApiFailurePolicy, bool) {
+	if o == nil || IsNil(o.WaitUntilApiFailurePolicy) {
 		return nil, false
 	}
-	return o.StartApiFailurePolicy, true
+	return o.WaitUntilApiFailurePolicy, true
 }
 
-// HasStartApiFailurePolicy returns a boolean if a field has been set.
-func (o *WorkflowStateOptions) HasStartApiFailurePolicy() bool {
-	if o != nil && !IsNil(o.StartApiFailurePolicy) {
+// HasWaitUntilApiFailurePolicy returns a boolean if a field has been set.
+func (o *WorkflowStateOptions) HasWaitUntilApiFailurePolicy() bool {
+	if o != nil && !IsNil(o.WaitUntilApiFailurePolicy) {
 		return true
 	}
 
 	return false
 }
 
-// SetStartApiFailurePolicy gets a reference to the given StartApiFailurePolicy and assigns it to the StartApiFailurePolicy field.
-func (o *WorkflowStateOptions) SetStartApiFailurePolicy(v StartApiFailurePolicy) {
-	o.StartApiFailurePolicy = &v
+// SetWaitUntilApiFailurePolicy gets a reference to the given WaitUntilApiFailurePolicy and assigns it to the WaitUntilApiFailurePolicy field.
+func (o *WorkflowStateOptions) SetWaitUntilApiFailurePolicy(v WaitUntilApiFailurePolicy) {
+	o.WaitUntilApiFailurePolicy = &v
+}
+
+// GetSkipWaitUntil returns the SkipWaitUntil field value if set, zero value otherwise.
+func (o *WorkflowStateOptions) GetSkipWaitUntil() bool {
+	if o == nil || IsNil(o.SkipWaitUntil) {
+		var ret bool
+		return ret
+	}
+	return *o.SkipWaitUntil
+}
+
+// GetSkipWaitUntilOk returns a tuple with the SkipWaitUntil field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WorkflowStateOptions) GetSkipWaitUntilOk() (*bool, bool) {
+	if o == nil || IsNil(o.SkipWaitUntil) {
+		return nil, false
+	}
+	return o.SkipWaitUntil, true
+}
+
+// HasSkipWaitUntil returns a boolean if a field has been set.
+func (o *WorkflowStateOptions) HasSkipWaitUntil() bool {
+	if o != nil && !IsNil(o.SkipWaitUntil) {
+		return true
+	}
+
+	return false
+}
+
+// SetSkipWaitUntil gets a reference to the given bool and assigns it to the SkipWaitUntil field.
+func (o *WorkflowStateOptions) SetSkipWaitUntil(v bool) {
+	o.SkipWaitUntil = &v
 }
 
 func (o WorkflowStateOptions) MarshalJSON() ([]byte, error) {
@@ -315,26 +348,29 @@ func (o WorkflowStateOptions) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.SearchAttributesLoadingPolicy) {
 		toSerialize["searchAttributesLoadingPolicy"] = o.SearchAttributesLoadingPolicy
 	}
-	if !IsNil(o.DataObjectsLoadingPolicy) {
-		toSerialize["dataObjectsLoadingPolicy"] = o.DataObjectsLoadingPolicy
+	if !IsNil(o.DataAttributesLoadingPolicy) {
+		toSerialize["dataAttributesLoadingPolicy"] = o.DataAttributesLoadingPolicy
 	}
 	if !IsNil(o.CommandCarryOverPolicy) {
 		toSerialize["commandCarryOverPolicy"] = o.CommandCarryOverPolicy
 	}
-	if !IsNil(o.StartApiTimeoutSeconds) {
-		toSerialize["startApiTimeoutSeconds"] = o.StartApiTimeoutSeconds
+	if !IsNil(o.WaitUntilApiTimeoutSeconds) {
+		toSerialize["waitUntilApiTimeoutSeconds"] = o.WaitUntilApiTimeoutSeconds
 	}
-	if !IsNil(o.DecideApiTimeoutSeconds) {
-		toSerialize["decideApiTimeoutSeconds"] = o.DecideApiTimeoutSeconds
+	if !IsNil(o.ExecuteApiTimeoutSeconds) {
+		toSerialize["executeApiTimeoutSeconds"] = o.ExecuteApiTimeoutSeconds
 	}
-	if !IsNil(o.StartApiRetryPolicy) {
-		toSerialize["startApiRetryPolicy"] = o.StartApiRetryPolicy
+	if !IsNil(o.WaitUntilApiRetryPolicy) {
+		toSerialize["waitUntilApiRetryPolicy"] = o.WaitUntilApiRetryPolicy
 	}
-	if !IsNil(o.DecideApiRetryPolicy) {
-		toSerialize["decideApiRetryPolicy"] = o.DecideApiRetryPolicy
+	if !IsNil(o.ExecuteApiRetryPolicy) {
+		toSerialize["executeApiRetryPolicy"] = o.ExecuteApiRetryPolicy
 	}
-	if !IsNil(o.StartApiFailurePolicy) {
-		toSerialize["startApiFailurePolicy"] = o.StartApiFailurePolicy
+	if !IsNil(o.WaitUntilApiFailurePolicy) {
+		toSerialize["waitUntilApiFailurePolicy"] = o.WaitUntilApiFailurePolicy
+	}
+	if !IsNil(o.SkipWaitUntil) {
+		toSerialize["skipWaitUntil"] = o.SkipWaitUntil
 	}
 	return toSerialize, nil
 }

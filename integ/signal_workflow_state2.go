@@ -14,7 +14,7 @@ type signalWorkflowState2 struct {
 const timerCommandId = "timerId"
 const signalCommandId = "s1"
 
-func (b signalWorkflowState2) Start(ctx iwf.WorkflowContext, input iwf.Object, persistence iwf.Persistence, communication iwf.Communication) (*iwf.CommandRequest, error) {
+func (b signalWorkflowState2) WaitUntil(ctx iwf.WorkflowContext, input iwf.Object, persistence iwf.Persistence, communication iwf.Communication) (*iwf.CommandRequest, error) {
 	var val int
 	input.Get(&val)
 	if val != 10 {
@@ -31,7 +31,7 @@ func (b signalWorkflowState2) Start(ctx iwf.WorkflowContext, input iwf.Object, p
 	), nil
 }
 
-func (b signalWorkflowState2) Decide(ctx iwf.WorkflowContext, input iwf.Object, commandResults iwf.CommandResults, persistence iwf.Persistence, communication iwf.Communication) (*iwf.StateDecision, error) {
+func (b signalWorkflowState2) Execute(ctx iwf.WorkflowContext, input iwf.Object, commandResults iwf.CommandResults, persistence iwf.Persistence, communication iwf.Communication) (*iwf.StateDecision, error) {
 	signal0 := commandResults.Signals[0]
 	signal1 := commandResults.Signals[1]
 	timer := commandResults.Timers[0]

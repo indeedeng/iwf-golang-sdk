@@ -21,13 +21,13 @@ func TestMain(m *testing.M) {
 }
 
 func apiV1WorkflowStateStart(c *gin.Context) {
-	var req iwfidl.WorkflowStateStartRequest
+	var req iwfidl.WorkflowStateWaitUntilRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	resp, err := workerService.HandleWorkflowStateStart(c.Request.Context(), req)
+	resp, err := workerService.HandleWorkflowStateWaitUntil(c.Request.Context(), req)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -36,13 +36,13 @@ func apiV1WorkflowStateStart(c *gin.Context) {
 	return
 }
 func apiV1WorkflowStateDecide(c *gin.Context) {
-	var req iwfidl.WorkflowStateDecideRequest
+	var req iwfidl.WorkflowStateExecuteRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	resp, err := workerService.HandleWorkflowStateDecide(c.Request.Context(), req)
+	resp, err := workerService.HandleWorkflowStateExecute(c.Request.Context(), req)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

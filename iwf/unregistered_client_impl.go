@@ -34,10 +34,10 @@ func (u *unregisteredClientImpl) StartWorkflow(ctx context.Context, workflowType
 		}
 		stateOptions = options.StartStateOptions
 		startOptions = &iwfidl.WorkflowStartOptions{
-			WorkflowIDReusePolicy: options.WorkflowIdReusePolicy,
-			CronSchedule:          options.WorkflowCronSchedule,
-			RetryPolicy:           options.WorkflowRetryPolicy,
-			SearchAttributes:      options.InitialSearchAttributes,
+			IdReusePolicy:    options.WorkflowIdReusePolicy,
+			CronSchedule:     options.WorkflowCronSchedule,
+			RetryPolicy:      options.WorkflowRetryPolicy,
+			SearchAttributes: options.InitialSearchAttributes,
 		}
 	}
 
@@ -47,7 +47,7 @@ func (u *unregisteredClientImpl) StartWorkflow(ctx context.Context, workflowType
 		IwfWorkflowType:        workflowType,
 		WorkflowTimeoutSeconds: timeoutSecs,
 		IwfWorkerUrl:           u.options.WorkerUrl,
-		StartStateId:           startStateId,
+		StartStateId:           &startStateId,
 		StateInput:             encodedInput,
 		StateOptions:           stateOptions,
 		WorkflowStartOptions:   startOptions,
@@ -73,14 +73,14 @@ func (u *unregisteredClientImpl) SignalWorkflow(ctx context.Context, workflowId,
 	return u.processError(err, httpResp)
 }
 
-func (u *unregisteredClientImpl) GetWorkflowDataObjects(ctx context.Context, workflowId, workflowRunId string, keys []string) (map[string]Object, error) {
+func (u *unregisteredClientImpl) GetWorkflowDataAttributes(ctx context.Context, workflowId, workflowRunId string, keys []string) (map[string]Object, error) {
 	if len(keys) == 0 {
-		return nil, fmt.Errorf("must specify keys to return, use GetAllWorkflowDataObjects if intended to get all keys")
+		return nil, fmt.Errorf("must specify keys to return, use GetAllWorkflowDataAttributes if intended to get all keys")
 	}
 	return u.doGetWorkflowDataObjects(ctx, workflowId, workflowRunId, keys)
 }
 
-func (u *unregisteredClientImpl) GetAllWorkflowDataObjects(ctx context.Context, workflowId, workflowRunId string) (map[string]Object, error) {
+func (u *unregisteredClientImpl) GetAllWorkflowDataAttributes(ctx context.Context, workflowId, workflowRunId string) (map[string]Object, error) {
 	return u.doGetWorkflowDataObjects(ctx, workflowId, workflowRunId, nil)
 }
 
@@ -151,10 +151,20 @@ func (u *unregisteredClientImpl) GetSimpleWorkflowResult(ctx context.Context, wo
 	if resp.WorkflowStatus != iwfidl.COMPLETED {
 		return u.processUncompletedError(resp)
 	}
-	if len(resp.Results) != 1 {
+	count := 0
+	var output *iwfidl.EncodedObject
+	for _, res := range resp.Results {
+		if res.HasCompletedStateOutput() && res.CompletedStateOutput.HasData() {
+			output = res.CompletedStateOutput
+			count++
+		}
+	}
+	if count > 1 {
 		return NewWorkflowDefinitionError("this workflow should have one or zero state output for using this API")
 	}
-	output := resp.Results[0].CompletedStateOutput
+	if count == 0 {
+		return nil
+	}
 	return u.options.ObjectEncoder.Decode(output, resultPtr)
 }
 
@@ -174,7 +184,7 @@ func (u *unregisteredClientImpl) GetComplexWorkflowResults(ctx context.Context, 
 	return resp.Results, nil
 }
 
-func (u *unregisteredClientImpl) ResetWorkflow(ctx context.Context, workflowId, workflowRunId string, options *ResetWorkflowTypeAndOptions) (string, error) {
+func (u *unregisteredClientImpl) ResetWorkflow(ctx context.Context, workflowId, workflowRunId string, options *ResetWorkflowOptions) (string, error) {
 	resetType := iwfidl.BEGINNING
 	reason := ptr.Any("")
 	if options != nil {

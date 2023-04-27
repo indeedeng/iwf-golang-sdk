@@ -4,10 +4,10 @@ import "github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
 
 type (
 	CommandResults struct {
-		Timers                    []TimerCommandResult
-		Signals                   []SignalCommandResult
-		InterStateChannelCommands []InterStateChannelCommandResult
-		StateStartApiSucceeded    *bool
+		Timers                     []TimerCommandResult
+		Signals                    []SignalCommandResult
+		InternalChannelCommands    []InternalChannelCommandResult
+		StateWaitUntilApiSucceeded *bool
 	}
 
 	SignalCommandResult struct {
@@ -22,7 +22,7 @@ type (
 		Status    iwfidl.TimerStatus
 	}
 
-	InterStateChannelCommandResult struct {
+	InternalChannelCommandResult struct {
 		CommandId   string
 		ChannelName string
 		Value       Object
@@ -48,8 +48,8 @@ func (c CommandResults) GetSignalCommandResultById(id string) *SignalCommandResu
 	return nil
 }
 
-func (c CommandResults) GetInterStateChannelCommandResultById(id string) *InterStateChannelCommandResult {
-	for _, cmd := range c.InterStateChannelCommands {
+func (c CommandResults) GetInternalChannelCommandResultById(id string) *InternalChannelCommandResult {
+	for _, cmd := range c.InternalChannelCommands {
 		if cmd.CommandId == id {
 			return &cmd
 		}
@@ -66,8 +66,8 @@ func (c CommandResults) GetSignalCommandResultByChannel(channelName string) *Sig
 	return nil
 }
 
-func (c CommandResults) GetInterStateChannelCommandResultByChannel(channelName string) *InterStateChannelCommandResult {
-	for _, cmd := range c.InterStateChannelCommands {
+func (c CommandResults) GetInternalChannelCommandResultByChannel(channelName string) *InternalChannelCommandResult {
+	for _, cmd := range c.InternalChannelCommands {
 		if cmd.ChannelName == channelName {
 			return &cmd
 		}
@@ -75,6 +75,6 @@ func (c CommandResults) GetInterStateChannelCommandResultByChannel(channelName s
 	return nil
 }
 
-func (c CommandResults) GetStateStartApiSucceeded() *bool {
-	return c.StateStartApiSucceeded
+func (c CommandResults) GetStateWaitUntilApiSucceeded() *bool {
+	return c.StateWaitUntilApiSucceeded
 }

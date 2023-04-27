@@ -36,7 +36,7 @@ func TestPersistenceWorkflow(t *testing.T) {
 	info, err := client.DescribeWorkflow(context.Background(), wfId, "")
 	assert.Nil(t, err)
 	assert.Equal(t, iwfidl.COMPLETED, info.Status)
-	dos, err := client.GetWorkflowDataObjects(context.Background(), &persistenceWorkflow{}, wfId, "", []string{
+	dos, err := client.GetWorkflowDataAttributes(context.Background(), &persistenceWorkflow{}, wfId, "", []string{
 		testDataObjectKey,
 	})
 	assert.Nil(t, err)
@@ -45,7 +45,7 @@ func TestPersistenceWorkflow(t *testing.T) {
 	dos[testDataObjectKey].Get(&do)
 	assert.Equal(t, wfId, do.StrValue)
 
-	dos, err = client.GetAllWorkflowDataObjects(context.Background(), wfId, "")
+	dos, err = client.GetAllWorkflowDataAttributes(context.Background(), wfId, "")
 	assert.Nil(t, err)
 	assert.Equal(t, 2, len(dos))
 	var str string

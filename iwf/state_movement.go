@@ -4,7 +4,6 @@ type StateMovement struct {
 	// NextStateId is required
 	NextStateId string
 	// NextStateInput is optional, it's also used as workflow result for GracefulCompletingWorkflowStateId and ForceCompletingWorkflowStateId
-	// ForceFailingWorkflowStateId is not supported with result yet
 	NextStateInput interface{}
 }
 

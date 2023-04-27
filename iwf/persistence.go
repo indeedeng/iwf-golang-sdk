@@ -5,13 +5,14 @@ import (
 	"time"
 )
 
-// Persistence APIs will panic on error but the error can still be accessible,
-// if really need to do some customized handling(mostly you don't need to):
+// Persistence APIs are for read/write persistence of workflow
+// All API would panic on error but the error --
+// if you really need to do some customized handling(mostly you don't need to):
 // 1. capturing panic yourself
 // 2. get the error from WorkerService API, because WorkerService will use captureStateExecutionError to capture the error
 type Persistence interface {
-	GetDataObject(key string, valuePtr interface{})
-	SetDataObject(key string, value interface{})
+	GetDataAttribute(key string, valuePtr interface{})
+	SetDataAttribute(key string, value interface{})
 
 	GetSearchAttributeInt(key string) int64
 	SetSearchAttributeInt(key string, value int64)
@@ -34,16 +35,16 @@ type Persistence interface {
 	GetSearchAttributeKeywordArray(key string) []string
 	SetSearchAttributeKeywordArray(key string, value []string)
 
-	// GetStateLocal retrieves a local state attribute
+	// GetStateExecutionLocal retrieves a local state attribute
 	// User code must make sure using the same type for both get and set
-	GetStateLocal(key string, valuePtr interface{})
-	// SetStateLocal sets a local attribute. The scope of the attribute is only within the execution of this state.
-	// Usually it's for passing from State Start API to State Decide API
+	GetStateExecutionLocal(key string, valuePtr interface{})
+	// SetStateExecutionLocal sets a local attribute. The scope of the attribute is only within the execution of this state.
+	// Usually it's for passing from State WaitUntil API to State Execute API
 	// User code must make sure using the same type for both get and set
-	SetStateLocal(key string, value interface{})
+	SetStateExecutionLocal(key string, value interface{})
 
-	// RecordEvent records an arbitrary event in State Start/Decide API for debugging/tracking purpose
-	//  Name is the name of the event. Within a Start/Decide API, the same Name cannot be used for more than once.
+	// RecordEvent records an arbitrary event in State WaitUntil/Execute API for debugging/tracking purpose
+	//  Name is the name of the event. Within a WaitUntil/Execute API, the same Name cannot be used for more than once.
 	//  eventData is the data of the event.
 	RecordEvent(key string, value interface{})
 

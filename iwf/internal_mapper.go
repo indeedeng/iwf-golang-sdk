@@ -12,7 +12,7 @@ func fromIdlCommandResults(results *iwfidl.CommandResults, encoder ObjectEncoder
 	}
 	var timerResults []TimerCommandResult
 	var signalResults []SignalCommandResult
-	var interStateChannelResults []InterStateChannelCommandResult
+	var internalChannelResults []InternalChannelCommandResult
 	for _, t := range results.TimerResults {
 		timerResult := TimerCommandResult{
 			CommandId: t.CommandId,
@@ -30,19 +30,19 @@ func fromIdlCommandResults(results *iwfidl.CommandResults, encoder ObjectEncoder
 		signalResults = append(signalResults, signalResult)
 	}
 	for _, t := range results.InterStateChannelResults {
-		interStateChannelResult := InterStateChannelCommandResult{
+		interStateChannelResult := InternalChannelCommandResult{
 			CommandId:   t.CommandId,
 			ChannelName: t.ChannelName,
 			Status:      t.RequestStatus,
 			Value:       NewObject(t.Value, encoder),
 		}
-		interStateChannelResults = append(interStateChannelResults, interStateChannelResult)
+		internalChannelResults = append(internalChannelResults, interStateChannelResult)
 	}
 	return CommandResults{
-		Timers:                    timerResults,
-		Signals:                   signalResults,
-		InterStateChannelCommands: interStateChannelResults,
-		StateStartApiSucceeded:    results.StateStartApiSucceeded,
+		Timers:                     timerResults,
+		Signals:                    signalResults,
+		InternalChannelCommands:    internalChannelResults,
+		StateWaitUntilApiSucceeded: results.StateStartApiSucceeded,
 	}, nil
 }
 
@@ -65,17 +65,17 @@ func toIdlCommandRequest(commandRequest *CommandRequest) (*iwfidl.CommandRequest
 			}
 			signalCmds = append(signalCmds, signalCmd)
 		}
-		if t.CommandType == CommandTypeInterStateChannel {
+		if t.CommandType == CommandTypeInternalChannel {
 			interstateChannelCmd := iwfidl.InterStateChannelCommand{
 				CommandId:   t.CommandId,
-				ChannelName: t.InterStateChannelCommand.ChannelName,
+				ChannelName: t.InternalChannelCommand.ChannelName,
 			}
 			interStateCmds = append(interStateCmds, interstateChannelCmd)
 		}
 	}
 
 	idlCmdReq := &iwfidl.CommandRequest{
-		DeciderTriggerType: commandRequest.DeciderTriggerType,
+		CommandWaitingType: commandRequest.CommandWaitingType,
 	}
 	if len(timerCmds) > 0 {
 		idlCmdReq.TimerCommands = timerCmds

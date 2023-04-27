@@ -1,4 +1,4 @@
-# WorkflowStateDecideRequest
+# WorkflowStateExecuteRequest
 
 ## Properties
 
@@ -15,205 +15,205 @@ Name | Type | Description | Notes
 
 ## Methods
 
-### NewWorkflowStateDecideRequest
+### NewWorkflowStateExecuteRequest
 
-`func NewWorkflowStateDecideRequest(context Context, workflowType string, workflowStateId string, ) *WorkflowStateDecideRequest`
+`func NewWorkflowStateExecuteRequest(context Context, workflowType string, workflowStateId string, ) *WorkflowStateExecuteRequest`
 
-NewWorkflowStateDecideRequest instantiates a new WorkflowStateDecideRequest object
+NewWorkflowStateExecuteRequest instantiates a new WorkflowStateExecuteRequest object
 This constructor will assign default values to properties that have it defined,
 and makes sure properties required by API are set, but the set of arguments
 will change when the set of required properties is changed
 
-### NewWorkflowStateDecideRequestWithDefaults
+### NewWorkflowStateExecuteRequestWithDefaults
 
-`func NewWorkflowStateDecideRequestWithDefaults() *WorkflowStateDecideRequest`
+`func NewWorkflowStateExecuteRequestWithDefaults() *WorkflowStateExecuteRequest`
 
-NewWorkflowStateDecideRequestWithDefaults instantiates a new WorkflowStateDecideRequest object
+NewWorkflowStateExecuteRequestWithDefaults instantiates a new WorkflowStateExecuteRequest object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
 ### GetContext
 
-`func (o *WorkflowStateDecideRequest) GetContext() Context`
+`func (o *WorkflowStateExecuteRequest) GetContext() Context`
 
 GetContext returns the Context field if non-nil, zero value otherwise.
 
 ### GetContextOk
 
-`func (o *WorkflowStateDecideRequest) GetContextOk() (*Context, bool)`
+`func (o *WorkflowStateExecuteRequest) GetContextOk() (*Context, bool)`
 
 GetContextOk returns a tuple with the Context field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetContext
 
-`func (o *WorkflowStateDecideRequest) SetContext(v Context)`
+`func (o *WorkflowStateExecuteRequest) SetContext(v Context)`
 
 SetContext sets Context field to given value.
 
 
 ### GetWorkflowType
 
-`func (o *WorkflowStateDecideRequest) GetWorkflowType() string`
+`func (o *WorkflowStateExecuteRequest) GetWorkflowType() string`
 
 GetWorkflowType returns the WorkflowType field if non-nil, zero value otherwise.
 
 ### GetWorkflowTypeOk
 
-`func (o *WorkflowStateDecideRequest) GetWorkflowTypeOk() (*string, bool)`
+`func (o *WorkflowStateExecuteRequest) GetWorkflowTypeOk() (*string, bool)`
 
 GetWorkflowTypeOk returns a tuple with the WorkflowType field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetWorkflowType
 
-`func (o *WorkflowStateDecideRequest) SetWorkflowType(v string)`
+`func (o *WorkflowStateExecuteRequest) SetWorkflowType(v string)`
 
 SetWorkflowType sets WorkflowType field to given value.
 
 
 ### GetWorkflowStateId
 
-`func (o *WorkflowStateDecideRequest) GetWorkflowStateId() string`
+`func (o *WorkflowStateExecuteRequest) GetWorkflowStateId() string`
 
 GetWorkflowStateId returns the WorkflowStateId field if non-nil, zero value otherwise.
 
 ### GetWorkflowStateIdOk
 
-`func (o *WorkflowStateDecideRequest) GetWorkflowStateIdOk() (*string, bool)`
+`func (o *WorkflowStateExecuteRequest) GetWorkflowStateIdOk() (*string, bool)`
 
 GetWorkflowStateIdOk returns a tuple with the WorkflowStateId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetWorkflowStateId
 
-`func (o *WorkflowStateDecideRequest) SetWorkflowStateId(v string)`
+`func (o *WorkflowStateExecuteRequest) SetWorkflowStateId(v string)`
 
 SetWorkflowStateId sets WorkflowStateId field to given value.
 
 
 ### GetStateInput
 
-`func (o *WorkflowStateDecideRequest) GetStateInput() EncodedObject`
+`func (o *WorkflowStateExecuteRequest) GetStateInput() EncodedObject`
 
 GetStateInput returns the StateInput field if non-nil, zero value otherwise.
 
 ### GetStateInputOk
 
-`func (o *WorkflowStateDecideRequest) GetStateInputOk() (*EncodedObject, bool)`
+`func (o *WorkflowStateExecuteRequest) GetStateInputOk() (*EncodedObject, bool)`
 
 GetStateInputOk returns a tuple with the StateInput field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetStateInput
 
-`func (o *WorkflowStateDecideRequest) SetStateInput(v EncodedObject)`
+`func (o *WorkflowStateExecuteRequest) SetStateInput(v EncodedObject)`
 
 SetStateInput sets StateInput field to given value.
 
 ### HasStateInput
 
-`func (o *WorkflowStateDecideRequest) HasStateInput() bool`
+`func (o *WorkflowStateExecuteRequest) HasStateInput() bool`
 
 HasStateInput returns a boolean if a field has been set.
 
 ### GetSearchAttributes
 
-`func (o *WorkflowStateDecideRequest) GetSearchAttributes() []SearchAttribute`
+`func (o *WorkflowStateExecuteRequest) GetSearchAttributes() []SearchAttribute`
 
 GetSearchAttributes returns the SearchAttributes field if non-nil, zero value otherwise.
 
 ### GetSearchAttributesOk
 
-`func (o *WorkflowStateDecideRequest) GetSearchAttributesOk() (*[]SearchAttribute, bool)`
+`func (o *WorkflowStateExecuteRequest) GetSearchAttributesOk() (*[]SearchAttribute, bool)`
 
 GetSearchAttributesOk returns a tuple with the SearchAttributes field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSearchAttributes
 
-`func (o *WorkflowStateDecideRequest) SetSearchAttributes(v []SearchAttribute)`
+`func (o *WorkflowStateExecuteRequest) SetSearchAttributes(v []SearchAttribute)`
 
 SetSearchAttributes sets SearchAttributes field to given value.
 
 ### HasSearchAttributes
 
-`func (o *WorkflowStateDecideRequest) HasSearchAttributes() bool`
+`func (o *WorkflowStateExecuteRequest) HasSearchAttributes() bool`
 
 HasSearchAttributes returns a boolean if a field has been set.
 
 ### GetDataObjects
 
-`func (o *WorkflowStateDecideRequest) GetDataObjects() []KeyValue`
+`func (o *WorkflowStateExecuteRequest) GetDataObjects() []KeyValue`
 
 GetDataObjects returns the DataObjects field if non-nil, zero value otherwise.
 
 ### GetDataObjectsOk
 
-`func (o *WorkflowStateDecideRequest) GetDataObjectsOk() (*[]KeyValue, bool)`
+`func (o *WorkflowStateExecuteRequest) GetDataObjectsOk() (*[]KeyValue, bool)`
 
 GetDataObjectsOk returns a tuple with the DataObjects field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetDataObjects
 
-`func (o *WorkflowStateDecideRequest) SetDataObjects(v []KeyValue)`
+`func (o *WorkflowStateExecuteRequest) SetDataObjects(v []KeyValue)`
 
 SetDataObjects sets DataObjects field to given value.
 
 ### HasDataObjects
 
-`func (o *WorkflowStateDecideRequest) HasDataObjects() bool`
+`func (o *WorkflowStateExecuteRequest) HasDataObjects() bool`
 
 HasDataObjects returns a boolean if a field has been set.
 
 ### GetStateLocals
 
-`func (o *WorkflowStateDecideRequest) GetStateLocals() []KeyValue`
+`func (o *WorkflowStateExecuteRequest) GetStateLocals() []KeyValue`
 
 GetStateLocals returns the StateLocals field if non-nil, zero value otherwise.
 
 ### GetStateLocalsOk
 
-`func (o *WorkflowStateDecideRequest) GetStateLocalsOk() (*[]KeyValue, bool)`
+`func (o *WorkflowStateExecuteRequest) GetStateLocalsOk() (*[]KeyValue, bool)`
 
 GetStateLocalsOk returns a tuple with the StateLocals field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetStateLocals
 
-`func (o *WorkflowStateDecideRequest) SetStateLocals(v []KeyValue)`
+`func (o *WorkflowStateExecuteRequest) SetStateLocals(v []KeyValue)`
 
 SetStateLocals sets StateLocals field to given value.
 
 ### HasStateLocals
 
-`func (o *WorkflowStateDecideRequest) HasStateLocals() bool`
+`func (o *WorkflowStateExecuteRequest) HasStateLocals() bool`
 
 HasStateLocals returns a boolean if a field has been set.
 
 ### GetCommandResults
 
-`func (o *WorkflowStateDecideRequest) GetCommandResults() CommandResults`
+`func (o *WorkflowStateExecuteRequest) GetCommandResults() CommandResults`
 
 GetCommandResults returns the CommandResults field if non-nil, zero value otherwise.
 
 ### GetCommandResultsOk
 
-`func (o *WorkflowStateDecideRequest) GetCommandResultsOk() (*CommandResults, bool)`
+`func (o *WorkflowStateExecuteRequest) GetCommandResultsOk() (*CommandResults, bool)`
 
 GetCommandResultsOk returns a tuple with the CommandResults field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCommandResults
 
-`func (o *WorkflowStateDecideRequest) SetCommandResults(v CommandResults)`
+`func (o *WorkflowStateExecuteRequest) SetCommandResults(v CommandResults)`
 
 SetCommandResults sets CommandResults field to given value.
 
 ### HasCommandResults
 
-`func (o *WorkflowStateDecideRequest) HasCommandResults() bool`
+`func (o *WorkflowStateExecuteRequest) HasCommandResults() bool`
 
 HasCommandResults returns a boolean if a field has been set.
 
