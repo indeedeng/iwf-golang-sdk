@@ -133,6 +133,7 @@ func (u *unregisteredClientImpl) StopWorkflow(ctx context.Context, workflowId, w
 	}
 	if options != nil {
 		req.StopType = &options.StopType
+		req.Reason = &options.Reason
 	}
 	httpResp, err := reqPost.WorkflowStopRequest(*req).Execute()
 	return u.processError(err, httpResp)
