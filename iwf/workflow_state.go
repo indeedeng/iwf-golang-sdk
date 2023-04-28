@@ -1,7 +1,9 @@
 package iwf
 
 import (
+	"fmt"
 	"github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
+	"reflect"
 )
 
 type WorkflowState interface {
@@ -81,4 +83,20 @@ type DefaultStateOptions struct{}
 
 func (d DefaultStateOptions) GetStateOptions() *iwfidl.WorkflowStateOptions {
 	return nil
+}
+
+// NoWaitUntil is a struct to tell that the state doesn't implement a WaitUntil API
+// The State will then invoke the Execute API without invoking WaitUntil API and waiting for any commands
+type NoWaitUntil struct{}
+
+func (d NoWaitUntil) WaitUntil(ctx WorkflowContext, input Object, persistence Persistence, communication Communication) (*CommandRequest, error) {
+	return nil, nil
+}
+
+func ShouldSkipWaitUntilAPI(state WorkflowState) bool {
+	t := reflect.TypeOf(state)
+	for i := 0; i < t.NumField(); i++ {
+		fmt.Print(t.Field(i).Type, " ")
+		fmt.Println(reflect.ValueOf(t.Field(i).Anonymous))
+	}
 }
