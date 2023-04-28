@@ -1,6 +1,7 @@
 package iwf
 
 import (
+	"github.com/indeedeng/iwf-golang-sdk/iwf/ptr"
 	"strings"
 
 	"github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
@@ -103,6 +104,15 @@ func toIdlDecision(from *StateDecision, wfType string, registry Registry, encode
 		if !strings.HasPrefix(fromMv.NextStateId, ReservedStateIdPrefix) {
 			stateDef := registry.getWorkflowStateDef(wfType, fromMv.NextStateId)
 			options = stateDef.State.GetStateOptions()
+			if ShouldSkipWaitUntilAPI(stateDef.State) {
+				if options == nil {
+					options = &iwfidl.WorkflowStateOptions{
+						SkipWaitUntil: ptr.Any(true),
+					}
+				} else {
+					options.SkipWaitUntil = ptr.Any(true)
+				}
+			}
 		}
 		mv := iwfidl.StateMovement{
 			StateId:      fromMv.NextStateId,

@@ -133,6 +133,7 @@ func (u *unregisteredClientImpl) StopWorkflow(ctx context.Context, workflowId, w
 	}
 	if options != nil {
 		req.StopType = &options.StopType
+		req.Reason = &options.Reason
 	}
 	httpResp, err := reqPost.WorkflowStopRequest(*req).Execute()
 	return u.processError(err, httpResp)
@@ -247,6 +248,16 @@ func (u *unregisteredClientImpl) SkipTimerByCommandId(ctx context.Context, workf
 
 func (u *unregisteredClientImpl) SkipTimerByCommandIndex(ctx context.Context, workflowId, workflowRunId, workflowStateId string, stateExecutionNumber int, timerCommandIndex int) error {
 	return u.doSkipTimer(ctx, workflowId, workflowRunId, workflowStateId, stateExecutionNumber, "", timerCommandIndex)
+}
+
+func (u *unregisteredClientImpl) UpdateWorkflowConfig(ctx context.Context, workflowId, workflowRunId string, config iwfidl.WorkflowConfig) error {
+	req := u.apiClient.DefaultApi.ApiV1WorkflowConfigUpdatePost(ctx)
+	httpResp, err := req.WorkflowConfigUpdateRequest(iwfidl.WorkflowConfigUpdateRequest{
+		WorkflowId:     workflowId,
+		WorkflowRunId:  &workflowRunId,
+		WorkflowConfig: config,
+	}).Execute()
+	return u.processError(err, httpResp)
 }
 
 func (u *unregisteredClientImpl) doSkipTimer(ctx context.Context, workflowId, workflowRunId, workflowStateId string, stateExecutionNumber int, timerCommandId string, timerCommandIndex int) error {

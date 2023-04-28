@@ -19,8 +19,19 @@ func (c *clientImpl) StartWorkflow(ctx context.Context, workflow ObjectWorkflow,
 	wfType := GetFinalWorkflowType(workflow)
 	state := c.registry.getWorkflowStartingState(wfType)
 
+	startStateOpt := state.GetStateOptions()
+	if ShouldSkipWaitUntilAPI(state) {
+		if startStateOpt == nil {
+			startStateOpt = &iwfidl.WorkflowStateOptions{
+				SkipWaitUntil: ptr.Any(true),
+			}
+		} else {
+			startStateOpt.SkipWaitUntil = ptr.Any(true)
+		}
+	}
+
 	unregOpt := &UnregisteredWorkflowOptions{
-		StartStateOptions: state.GetStateOptions(),
+		StartStateOptions: startStateOpt,
 	}
 
 	if options != nil {
