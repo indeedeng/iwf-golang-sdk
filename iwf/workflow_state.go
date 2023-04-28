@@ -94,21 +94,19 @@ func (d NoWaitUntil) WaitUntil(ctx WorkflowContext, input Object, persistence Pe
 
 func ShouldSkipWaitUntilAPI(state WorkflowState) bool {
 	rt := reflect.TypeOf(state)
+	var t reflect.Type
 	if rt.Kind() == reflect.Pointer {
-		t := reflect.TypeOf(state).Elem()
-		for i := 0; i < t.NumField(); i++ {
-			field := t.Field(i)
-			if field.Type.String() == "iwf.NoWaitUntil" {
-				return true
-			}
-		}
+		t = rt.Elem()
 	} else if rt.Kind() == reflect.Struct {
-		t := reflect.TypeOf(state)
-		for i := 0; i < t.NumField(); i++ {
-			field := t.Field(i)
-			if field.Type.String() == "iwf.NoWaitUntil" {
-				return true
-			}
+		t = rt
+	} else {
+		panic("a workflow state must be an pointer or a struct")
+	}
+
+	for i := 0; i < t.NumField(); i++ {
+		field := t.Field(i)
+		if field.Type.String() == "iwf.NoWaitUntil" {
+			return true
 		}
 	}
 
