@@ -19,6 +19,8 @@ func init() {
 		&forceFailWorkflow{},
 		&stateApiFailWorkflow{},
 		&stateApiTimeoutWorkflow{},
+		&skipWaitUntilWorkflow{},
+		skipWaitUntilWorkflow2{}, // test register by struct
 	)
 	if err != nil {
 		panic(err)

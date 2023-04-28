@@ -1,7 +1,6 @@
 package iwf
 
 import (
-	"fmt"
 	"github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
 	"reflect"
 )
@@ -90,13 +89,28 @@ func (d DefaultStateOptions) GetStateOptions() *iwfidl.WorkflowStateOptions {
 type NoWaitUntil struct{}
 
 func (d NoWaitUntil) WaitUntil(ctx WorkflowContext, input Object, persistence Persistence, communication Communication) (*CommandRequest, error) {
-	return nil, nil
+	panic("this method is for skipping WaitUntil. It should never be called")
 }
 
 func ShouldSkipWaitUntilAPI(state WorkflowState) bool {
-	t := reflect.TypeOf(state)
-	for i := 0; i < t.NumField(); i++ {
-		fmt.Print(t.Field(i).Type, " ")
-		fmt.Println(reflect.ValueOf(t.Field(i).Anonymous))
+	rt := reflect.TypeOf(state)
+	if rt.Kind() == reflect.Pointer {
+		t := reflect.TypeOf(state).Elem()
+		for i := 0; i < t.NumField(); i++ {
+			field := t.Field(i)
+			if field.Type.String() == "iwf.NoWaitUntil" {
+				return true
+			}
+		}
+	} else if rt.Kind() == reflect.Struct {
+		t := reflect.TypeOf(state)
+		for i := 0; i < t.NumField(); i++ {
+			field := t.Field(i)
+			if field.Type.String() == "iwf.NoWaitUntil" {
+				return true
+			}
+		}
 	}
+
+	return false
 }
