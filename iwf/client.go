@@ -42,6 +42,9 @@ type clientCommon interface {
 	// workflowId is required, workflowRunId is optional and default to current runId of the workflowId
 	// options is optional, default (when nil)to use Cancel as stopType
 	StopWorkflow(ctx context.Context, workflowId, workflowRunId string, options *WorkflowStopOptions) error
+	// UpdateWorkflowConfig updates the config of a workflow
+	// workflowId is required, workflowRunId is optional and default to current runId of the workflowId
+	UpdateWorkflowConfig(ctx context.Context, workflowId, workflowRunId string, config iwfidl.WorkflowConfig) error
 	// GetSimpleWorkflowResult returns the result of a workflow execution, for simple case that only one WorkflowState completes with result
 	// If there are more than one WorkflowStates complete with result, GetComplexWorkflowResults must be used instead
 	// workflowId is required, workflowRunId is optional and default to current runId of the workflowId
