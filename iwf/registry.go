@@ -13,6 +13,7 @@ type Registry interface {
 	// below are all for internal implementation
 	getWorkflowStartingState(wfType string) WorkflowState
 	getWorkflowStateDef(wfType string, id string) StateDef
+	getWorkflowRPC(wfType string, rpcMethod string) CommunicationMethodDef
 	getWorkflowSignalNameStore(wfType string) map[string]bool
 	getWorkflowInternalChannelNameStore(wfType string) map[string]bool
 	getWorkflowDataAttributesKeyStore(wfType string) map[string]bool

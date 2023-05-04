@@ -54,6 +54,9 @@ type ObjectWorkflow interface {
 	GetWorkflowType() string
 }
 
+// RPC is the signature of an RPC of workflow, which will be registered as RPCMethod under CommunicationSchema
+type RPC func(ctx WorkflowContext, input Object, persistence Persistence, communication Communication, outputPtr interface{}) error
+
 // GetFinalWorkflowType returns the workflow type that will be registered and used as IwfWorkflowType
 // if the workflow is from &myStruct{} or myStruct{} under mywf package, the method returns "mywf.myStruct"
 func GetFinalWorkflowType(wf ObjectWorkflow) string {
