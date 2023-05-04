@@ -260,6 +260,33 @@ func (u *unregisteredClientImpl) UpdateWorkflowConfig(ctx context.Context, workf
 	return u.processError(err, httpResp)
 }
 
+func (u *unregisteredClientImpl) InvokeRPCByName(ctx context.Context, workflowId, workflowRunId, rpcName string, input interface{}, outputPtr interface{}, rpcOptions *RPCOptions) error {
+	req := u.apiClient.DefaultApi.ApiV1WorkflowRpcPost(ctx)
+	encodedInput, err := u.options.ObjectEncoder.Encode(input)
+	if err != nil {
+		return err
+	}
+	request := iwfidl.WorkflowRpcRequest{
+		WorkflowId:    workflowId,
+		WorkflowRunId: &workflowRunId,
+		RpcName:       rpcName,
+		Input:         encodedInput,
+	}
+	if rpcOptions != nil {
+		request.SearchAttributesLoadingPolicy = rpcOptions.SearchAttributesLoadingPolicy
+		request.DataAttributesLoadingPolicy = rpcOptions.DataAttributesLoadingPolicy
+	}
+
+	resp, httpResp, err := req.WorkflowRpcRequest(request).Execute()
+	if err := u.processError(err, httpResp); err != nil {
+		return err
+	}
+	if outputPtr != nil {
+		return u.options.ObjectEncoder.Decode(resp.Output, outputPtr)
+	}
+	return nil
+}
+
 func (u *unregisteredClientImpl) doSkipTimer(ctx context.Context, workflowId, workflowRunId, workflowStateId string, stateExecutionNumber int, timerCommandId string, timerCommandIndex int) error {
 	workflowStateExecutionId := fmt.Sprintf("%v-%v", workflowStateId, stateExecutionNumber)
 	reqPost := u.apiClient.DefaultApi.ApiV1WorkflowTimerSkipPost(ctx)
