@@ -123,7 +123,11 @@ func (r *registryImpl) registerWorkflowCommunicationSchema(wf ObjectWorkflow) er
 		} else if methodDef.CommunicationMethod == CommunicationMethodInternalChannel {
 			internalChannel[methodDef.Name] = true
 		} else if methodDef.CommunicationMethod == CommunicationMethodRPCMethod {
-			rpcMap[methodDef.Name] = methodDef
+			rpcName, wfTypeFromRpc := extractRPCNameAndWorkflowType(methodDef.RPC)
+			if wfTypeFromRpc != wfType {
+				return NewWorkflowDefinitionError("invalid CommunicationMethod definition for RPC" + string(methodDef.CommunicationMethod) + " :" + rpcName)
+			}
+			rpcMap[rpcName] = methodDef
 		} else {
 			return NewWorkflowDefinitionError("invalid CommunicationMethod definition " + string(methodDef.CommunicationMethod))
 		}

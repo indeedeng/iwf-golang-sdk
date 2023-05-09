@@ -38,7 +38,7 @@ type Client interface {
 	// workflowId is required, workflowRunId is optional and default to current runId of the workflowId
 	// rpc is required
 	// input and outputPtr are optional
-	InvokeRPC(ctx context.Context, workflow ObjectWorkflow, workflowId, workflowRunId string, rpc RPC, input interface{}, outputPtr interface{}) error
+	InvokeRPC(ctx context.Context, workflowId, workflowRunId string, rpc RPC, input interface{}, outputPtr interface{}) error
 }
 
 // clientCommon is the common APIs between Client and UnregisteredClient

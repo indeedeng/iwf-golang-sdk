@@ -21,6 +21,7 @@ func init() {
 		&stateApiTimeoutWorkflow{},
 		&skipWaitUntilWorkflow{},
 		skipWaitUntilWorkflow2{}, // test register by struct
+		rpcWorkflow{},
 	)
 	if err != nil {
 		panic(err)

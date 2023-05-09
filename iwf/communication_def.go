@@ -1,10 +1,10 @@
 package iwf
 
 type CommunicationMethodDef struct {
-	Name                string
+	Name                string // for signal and internal channel
 	CommunicationMethod CommunicationMethod
-	RPC                 RPC
-	RPCOptions          *RPCOptions
+	RPC                 RPC         // only for CommunicationMethodRPCMethod
+	RPCOptions          *RPCOptions // only for CommunicationMethodRPCMethod
 }
 
 type CommunicationMethod string
@@ -31,7 +31,6 @@ func InternalChannelDef(channelName string) CommunicationMethodDef {
 
 func RPCMethodDef(rpc RPC, rpcOptions *RPCOptions) CommunicationMethodDef {
 	return CommunicationMethodDef{
-		Name:                GetFinalRPCMethodName(rpc, rpcOptions),
 		CommunicationMethod: CommunicationMethodRPCMethod,
 		RPC:                 rpc,
 		RPCOptions:          rpcOptions,

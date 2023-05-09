@@ -29,5 +29,6 @@ func NewRegistry() Registry {
 		internalChannelNameStore: map[string]map[string]bool{},
 		dataAttrsKeyStore:        map[string]map[string]bool{},
 		searchAttributeTypeStore: map[string]map[string]iwfidl.SearchAttributeValueType{},
+		workflowRPCStore:         map[string]map[string]CommunicationMethodDef{},
 	}
 }
