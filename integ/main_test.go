@@ -60,7 +60,10 @@ func apiV1WorkflowWorkerRpc(c *gin.Context) {
 
 	resp, err := workerService.HandleWorkflowWorkerRPC(c.Request.Context(), req)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.JSON(501, iwfidl.WorkerErrorResponse{
+			Detail:    iwfidl.PtrString(err.Error()),
+			ErrorType: iwfidl.PtrString("test-error-type"),
+		})
 		return
 	}
 	c.JSON(http.StatusOK, resp)

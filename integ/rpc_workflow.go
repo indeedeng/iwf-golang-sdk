@@ -1,6 +1,9 @@
 package integ
 
-import "github.com/indeedeng/iwf-golang-sdk/iwf"
+import (
+	"fmt"
+	"github.com/indeedeng/iwf-golang-sdk/iwf"
+)
 
 type rpcWorkflow struct {
 	iwf.DefaultWorkflowType
@@ -11,6 +14,7 @@ func (b rpcWorkflow) GetCommunicationSchema() []iwf.CommunicationMethodDef {
 	return []iwf.CommunicationMethodDef{
 		iwf.InternalChannelDef("test"),
 		iwf.RPCMethodDef(b.TestRPC, nil),
+		iwf.RPCMethodDef(b.TestErrorRPC, nil),
 	}
 }
 
@@ -26,6 +30,10 @@ func (b rpcWorkflow) TestRPC(ctx iwf.WorkflowContext, input iwf.Object, persiste
 	i++
 	communication.PublishInternalChannel("test", i)
 	return i, nil
+}
+
+func (b rpcWorkflow) TestErrorRPC(ctx iwf.WorkflowContext, input iwf.Object, persistence iwf.Persistence, communication iwf.Communication) (interface{}, error) {
+	return nil, fmt.Errorf("test error")
 }
 
 type rpcWorkflowState1 struct {

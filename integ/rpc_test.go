@@ -3,6 +3,7 @@ package integ
 import (
 	"context"
 	"github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
+	"github.com/indeedeng/iwf-golang-sdk/iwf"
 	"strconv"
 	"testing"
 	"time"
@@ -22,6 +23,12 @@ func TestRPCWorkflow(t *testing.T) {
 	info, err := client.DescribeWorkflow(context.Background(), wfId, "")
 	assert.Nil(t, err)
 	assert.Equal(t, iwfidl.RUNNING, info.Status)
+
+	err = client.InvokeRPC(context.Background(), wfId, "", wf.TestErrorRPC, 1, nil)
+	assert.NotNil(t, err)
+	assert.True(t, iwf.IsRPCError(err))
+	rpcErr, _ := err.(*iwf.ApiError)
+	assert.Equal(t, "worker API error, status:501, errorType:test-error-type", rpcErr.Response.GetDetail())
 
 	var rpcOutput int
 	err = client.InvokeRPC(context.Background(), wfId, "", wf.TestRPC, 1, &rpcOutput)
