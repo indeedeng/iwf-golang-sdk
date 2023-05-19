@@ -89,7 +89,8 @@ func getSimpleTypeNameFromReflect(obj interface{}) string {
 }
 
 // WorkflowDefaults is a convenient struct to put into your workflow implementation to save the boilerplate code.
-// Example usage : 
+// Example usage :
+//
 //	type myStateImpl struct{
 //	    WorkflowDefaults
 //	}
