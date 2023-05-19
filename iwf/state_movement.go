@@ -12,6 +12,7 @@ const (
 	GracefulCompletingWorkflowStateId = "_SYS_GRACEFUL_COMPLETING_WORKFLOW"
 	ForceCompletingWorkflowStateId    = "_SYS_FORCE_COMPLETING_WORKFLOW"
 	ForceFailingWorkflowStateId       = "_SYS_FORCE_FAILING_WORKFLOW"
+	DeadEndStateId                    = "_SYS_DEAD_END"
 )
 
 func NewStateMovement(st WorkflowState, in interface{}) StateMovement {
