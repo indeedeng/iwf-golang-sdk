@@ -51,10 +51,27 @@ func apiV1WorkflowStateDecide(c *gin.Context) {
 	return
 }
 
+func apiV1WorkflowWorkerRpc(c *gin.Context) {
+	var req iwfidl.WorkflowWorkerRpcRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	resp, err := workerService.HandleWorkflowWorkerRPC(c.Request.Context(), req)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, resp)
+	return
+}
+
 func startWorkflowWorker() (closeFunc func()) {
 	router := gin.Default()
-	router.POST(iwf.WorkflowStateStartApi, apiV1WorkflowStateStart)
-	router.POST(iwf.WorkflowStateDecideApi, apiV1WorkflowStateDecide)
+	router.POST(iwf.WorkflowStateWaitUntilApi, apiV1WorkflowStateStart)
+	router.POST(iwf.WorkflowStateExecuteApi, apiV1WorkflowStateDecide)
+	router.POST(iwf.WorkflowWorkerRPCAPI, apiV1WorkflowWorkerRpc)
 
 	wfServer := &http.Server{
 		Addr:    ":" + iwf.DefaultWorkerPort,

@@ -7,9 +7,9 @@ import (
 )
 
 const (
-	WorkflowStateStartApi  = "/api/v1/workflowState/start"
-	WorkflowStateDecideApi = "/api/v1/workflowState/decide"
-	WorkflowWorkerRPCAPI   = "/api/v1/workflowWorker/rpc"
+	WorkflowStateWaitUntilApi = "/api/v1/workflowState/start"
+	WorkflowStateExecuteApi   = "/api/v1/workflowState/decide"
+	WorkflowWorkerRPCAPI      = "/api/v1/workflowWorker/rpc"
 )
 
 type WorkerService interface {
