@@ -7,7 +7,7 @@ import (
 
 // Client is a full-featured client
 type Client interface {
-	clientCommon
+	ClientCommon
 	// StartWorkflow starts a workflow execution
 	// workflowId is the required identifier for the workflow execution(see Cadence/Temporal for more details about WorkflowId uniqueness)
 	// timeoutSecs is required as the workflow execution timeout in seconds
@@ -41,8 +41,8 @@ type Client interface {
 	InvokeRPC(ctx context.Context, workflowId, workflowRunId string, rpc RPC, input interface{}, outputPtr interface{}) error
 }
 
-// clientCommon is the common APIs between Client and UnregisteredClient
-type clientCommon interface {
+// ClientCommon is the common APIs between Client and UnregisteredClient
+type ClientCommon interface {
 	// StopWorkflow stops a workflow execution.
 	// workflowId is required, workflowRunId is optional and default to current runId of the workflowId
 	// options is optional, default (when nil)to use Cancel as stopType
@@ -79,7 +79,7 @@ type clientCommon interface {
 
 // UnregisteredClient is a client without workflow registry
 type UnregisteredClient interface {
-	clientCommon
+	ClientCommon
 	// StartWorkflow starts a workflow execution
 	// startStateId is the first stateId to start
 	// workflowId is the required identifier for the workflow execution(see Cadence/Temporal for more details about WorkflowId uniqueness)
