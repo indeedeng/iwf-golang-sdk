@@ -213,6 +213,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Invalid input
+        "420":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: RPC execution error
       summary: execute an RPC of a workflow
   /api/v1/workflow/timer/skip:
     post:
@@ -454,6 +460,9 @@ components:
     WorkflowStateOptions:
       example:
         searchAttributesLoadingPolicy:
+          lockingKeys:
+          - lockingKeys
+          - lockingKeys
           partialLoadingKeys:
           - partialLoadingKeys
           - partialLoadingKeys
@@ -477,6 +486,9 @@ components:
           maximumIntervalSeconds: 2
           backoffCoefficient: 5.637377
         dataAttributesLoadingPolicy:
+          lockingKeys:
+          - lockingKeys
+          - lockingKeys
           partialLoadingKeys:
           - partialLoadingKeys
           - partialLoadingKeys
@@ -556,6 +568,9 @@ components:
       type: string
     PersistenceLoadingPolicy:
       example:
+        lockingKeys:
+        - lockingKeys
+        - lockingKeys
         partialLoadingKeys:
         - partialLoadingKeys
         - partialLoadingKeys
@@ -567,11 +582,16 @@ components:
           items:
             type: string
           type: array
+        lockingKeys:
+          items:
+            type: string
+          type: array
       type: object
     PersistenceLoadingType:
       enum:
       - LOAD_ALL_WITHOUT_LOCKING
       - LOAD_PARTIAL_WITHOUT_LOCKING
+      - LOAD_PARTIAL_WITH_EXCLUSIVE_LOCK
       type: string
     CommandCarryOverPolicy:
       example:
@@ -617,6 +637,9 @@ components:
         workflowTimeoutSeconds: 0
         stateOptions:
           searchAttributesLoadingPolicy:
+            lockingKeys:
+            - lockingKeys
+            - lockingKeys
             partialLoadingKeys:
             - partialLoadingKeys
             - partialLoadingKeys
@@ -640,6 +663,9 @@ components:
             maximumIntervalSeconds: 2
             backoffCoefficient: 5.637377
           dataAttributesLoadingPolicy:
+            lockingKeys:
+            - lockingKeys
+            - lockingKeys
             partialLoadingKeys:
             - partialLoadingKeys
             - partialLoadingKeys
@@ -1068,6 +1094,9 @@ components:
           data: data
           encoding: encoding
         searchAttributesLoadingPolicy:
+          lockingKeys:
+          - lockingKeys
+          - lockingKeys
           partialLoadingKeys:
           - partialLoadingKeys
           - partialLoadingKeys
@@ -1077,6 +1106,9 @@ components:
         rpcName: rpcName
         workflowId: workflowId
         dataAttributesLoadingPolicy:
+          lockingKeys:
+          - lockingKeys
+          - lockingKeys
           partialLoadingKeys:
           - partialLoadingKeys
           - partialLoadingKeys
@@ -1211,6 +1243,9 @@ components:
           - stateId: stateId
             stateOptions:
               searchAttributesLoadingPolicy:
+                lockingKeys:
+                - lockingKeys
+                - lockingKeys
                 partialLoadingKeys:
                 - partialLoadingKeys
                 - partialLoadingKeys
@@ -1234,6 +1269,9 @@ components:
                 maximumIntervalSeconds: 2
                 backoffCoefficient: 5.637377
               dataAttributesLoadingPolicy:
+                lockingKeys:
+                - lockingKeys
+                - lockingKeys
                 partialLoadingKeys:
                 - partialLoadingKeys
                 - partialLoadingKeys
@@ -1244,6 +1282,9 @@ components:
           - stateId: stateId
             stateOptions:
               searchAttributesLoadingPolicy:
+                lockingKeys:
+                - lockingKeys
+                - lockingKeys
                 partialLoadingKeys:
                 - partialLoadingKeys
                 - partialLoadingKeys
@@ -1267,6 +1308,9 @@ components:
                 maximumIntervalSeconds: 2
                 backoffCoefficient: 5.637377
               dataAttributesLoadingPolicy:
+                lockingKeys:
+                - lockingKeys
+                - lockingKeys
                 partialLoadingKeys:
                 - partialLoadingKeys
                 - partialLoadingKeys
@@ -1684,6 +1728,9 @@ components:
           - stateId: stateId
             stateOptions:
               searchAttributesLoadingPolicy:
+                lockingKeys:
+                - lockingKeys
+                - lockingKeys
                 partialLoadingKeys:
                 - partialLoadingKeys
                 - partialLoadingKeys
@@ -1707,6 +1754,9 @@ components:
                 maximumIntervalSeconds: 2
                 backoffCoefficient: 5.637377
               dataAttributesLoadingPolicy:
+                lockingKeys:
+                - lockingKeys
+                - lockingKeys
                 partialLoadingKeys:
                 - partialLoadingKeys
                 - partialLoadingKeys
@@ -1717,6 +1767,9 @@ components:
           - stateId: stateId
             stateOptions:
               searchAttributesLoadingPolicy:
+                lockingKeys:
+                - lockingKeys
+                - lockingKeys
                 partialLoadingKeys:
                 - partialLoadingKeys
                 - partialLoadingKeys
@@ -1740,6 +1793,9 @@ components:
                 maximumIntervalSeconds: 2
                 backoffCoefficient: 5.637377
               dataAttributesLoadingPolicy:
+                lockingKeys:
+                - lockingKeys
+                - lockingKeys
                 partialLoadingKeys:
                 - partialLoadingKeys
                 - partialLoadingKeys
@@ -1804,6 +1860,9 @@ components:
         - stateId: stateId
           stateOptions:
             searchAttributesLoadingPolicy:
+              lockingKeys:
+              - lockingKeys
+              - lockingKeys
               partialLoadingKeys:
               - partialLoadingKeys
               - partialLoadingKeys
@@ -1827,6 +1886,9 @@ components:
               maximumIntervalSeconds: 2
               backoffCoefficient: 5.637377
             dataAttributesLoadingPolicy:
+              lockingKeys:
+              - lockingKeys
+              - lockingKeys
               partialLoadingKeys:
               - partialLoadingKeys
               - partialLoadingKeys
@@ -1837,6 +1899,9 @@ components:
         - stateId: stateId
           stateOptions:
             searchAttributesLoadingPolicy:
+              lockingKeys:
+              - lockingKeys
+              - lockingKeys
               partialLoadingKeys:
               - partialLoadingKeys
               - partialLoadingKeys
@@ -1860,6 +1925,9 @@ components:
               maximumIntervalSeconds: 2
               backoffCoefficient: 5.637377
             dataAttributesLoadingPolicy:
+              lockingKeys:
+              - lockingKeys
+              - lockingKeys
               partialLoadingKeys:
               - partialLoadingKeys
               - partialLoadingKeys
@@ -1878,6 +1946,9 @@ components:
         stateId: stateId
         stateOptions:
           searchAttributesLoadingPolicy:
+            lockingKeys:
+            - lockingKeys
+            - lockingKeys
             partialLoadingKeys:
             - partialLoadingKeys
             - partialLoadingKeys
@@ -1901,6 +1972,9 @@ components:
             maximumIntervalSeconds: 2
             backoffCoefficient: 5.637377
           dataAttributesLoadingPolicy:
+            lockingKeys:
+            - lockingKeys
+            - lockingKeys
             partialLoadingKeys:
             - partialLoadingKeys
             - partialLoadingKeys

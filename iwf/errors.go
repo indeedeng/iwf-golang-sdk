@@ -116,6 +116,9 @@ type ApiError struct {
 }
 
 func (i *ApiError) Error() string {
+	if i.Response != nil {
+		return i.OriginalError.Error() + "\n" + i.Response.GetOriginalWorkerErrorDetail()
+	}
 	return i.OriginalError.Error()
 }
 
@@ -164,6 +167,14 @@ func IsWorkflowNotExistsError(err error) bool {
 		return false
 	}
 	return apiError.Response.GetSubStatus() == iwfidl.WORKFLOW_NOT_EXISTS_SUB_STATUS
+}
+
+func IsRPCError(err error) bool {
+	apiError, ok := err.(*ApiError)
+	if !ok || apiError.Response == nil {
+		return false
+	}
+	return apiError.StatusCode == 420
 }
 
 type WorkflowUncompletedError struct {

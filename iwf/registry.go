@@ -13,6 +13,7 @@ type Registry interface {
 	// below are all for internal implementation
 	getWorkflowStartingState(wfType string) WorkflowState
 	getWorkflowStateDef(wfType string, id string) StateDef
+	getWorkflowRPC(wfType string, rpcMethod string) CommunicationMethodDef
 	getWorkflowSignalNameStore(wfType string) map[string]bool
 	getWorkflowInternalChannelNameStore(wfType string) map[string]bool
 	getWorkflowDataAttributesKeyStore(wfType string) map[string]bool
@@ -28,5 +29,6 @@ func NewRegistry() Registry {
 		internalChannelNameStore: map[string]map[string]bool{},
 		dataAttrsKeyStore:        map[string]map[string]bool{},
 		searchAttributeTypeStore: map[string]map[string]iwfidl.SearchAttributeValueType{},
+		workflowRPCStore:         map[string]map[string]CommunicationMethodDef{},
 	}
 }

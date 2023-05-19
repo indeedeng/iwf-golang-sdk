@@ -34,6 +34,11 @@ type Client interface {
 	SkipTimerByCommandId(ctx context.Context, workflowId, workflowRunId string, workflowState WorkflowState, stateExecutionNumber int, timerCommandId string) error
 	// SkipTimerByCommandIndex skips a timer for the state execution based on the timerCommandId
 	SkipTimerByCommandIndex(ctx context.Context, workflowId, workflowRunId string, workflowState WorkflowState, stateExecutionNumber, timerCommandIndex int) error
+	// InvokeRPC invokes an RPC
+	// workflowId is required, workflowRunId is optional and default to current runId of the workflowId
+	// rpc is required
+	// input and outputPtr are optional
+	InvokeRPC(ctx context.Context, workflowId, workflowRunId string, rpc RPC, input interface{}, outputPtr interface{}) error
 }
 
 // clientCommon is the common APIs between Client and UnregisteredClient
@@ -99,6 +104,11 @@ type UnregisteredClient interface {
 	SkipTimerByCommandIndex(ctx context.Context, workflowId, workflowRunId, workflowStateId string, stateExecutionNumber, timerCommandIndex int) error
 	// SkipTimerByCommandId skips a timer for the state execution based on the timerCommandId
 	SkipTimerByCommandId(ctx context.Context, workflowId, workflowRunId, workflowStateId string, stateExecutionNumber int, timerCommandId string) error
+	// InvokeRPCByName invokes an RPC
+	// workflowId is required, workflowRunId is optional and default to current runId of the workflowId
+	// rpcName is required
+	// input and outputPtr are optional
+	InvokeRPCByName(ctx context.Context, workflowId, workflowRunId, rpcName string, input interface{}, outputPtr interface{}, rpcOptions *RPCOptions) error
 }
 
 // NewUnregisteredClient returns a UnregisteredClient

@@ -169,3 +169,9 @@ func (c *clientImpl) SkipTimerByCommandIndex(ctx context.Context, workflowId, wo
 	stateId := GetFinalWorkflowStateId(workflowState)
 	return c.UnregisteredClient.SkipTimerByCommandIndex(ctx, workflowId, workflowRunId, stateId, stateExecutionNumber, timerCommandIndex)
 }
+
+func (c *clientImpl) InvokeRPC(ctx context.Context, workflowId, workflowRunId string, rpc RPC, input interface{}, outputPtr interface{}) error {
+	rpcName, wfType := extractRPCNameAndWorkflowType(rpc)
+	rpcDef := c.registry.getWorkflowRPC(wfType, rpcName)
+	return c.InvokeRPCByName(ctx, workflowId, workflowRunId, rpcName, input, outputPtr, rpcDef.RPCOptions)
+}

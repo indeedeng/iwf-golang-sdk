@@ -2,6 +2,7 @@ package iwf
 
 import (
 	"reflect"
+	"runtime"
 	"strings"
 )
 
@@ -52,6 +53,22 @@ type ObjectWorkflow interface {
 	// 1. To avoid type name conflicts because the GetFinalWorkflowType is not long enough
 	// 2. In case of dynamic workflow implementation, return customized values instead of using empty string
 	GetWorkflowType() string
+}
+
+// RPC is the signature of an RPC of workflow, which will be defined as a workflow method, and registered as RPCMethod under CommunicationSchema
+type RPC func(ctx WorkflowContext, input Object, persistence Persistence, communication Communication) (output interface{}, err error)
+
+func extractRPCNameAndWorkflowType(fn RPC) (rpcName string, wfType string) {
+	fullName := runtime.FuncForPC(reflect.ValueOf(fn).Pointer()).Name()
+
+	elements := strings.Split(fullName, ".")
+	shortName := elements[len(elements)-1]
+	wfTypeShort := elements[len(elements)-2]
+	prefix := elements[len(elements)-3]
+	pkgEles := strings.Split(prefix, "/")
+	wfType = pkgEles[len(pkgEles)-1] + "." + wfTypeShort
+
+	return strings.TrimSuffix(shortName, "-fm"), wfType
 }
 
 // GetFinalWorkflowType returns the workflow type that will be registered and used as IwfWorkflowType

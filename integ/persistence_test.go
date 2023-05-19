@@ -56,7 +56,7 @@ func TestPersistenceWorkflow(t *testing.T) {
 		testSearchAttributeKeyword,
 		testSearchAttributeText,
 		testSearchAttributeBool,
-		testSearchAttributeDatetime,
+		// testSearchAttributeDatetime, // TODO https://github.com/indeedeng/iwf/issues/261
 		testSearchAttributeInt,
 		testSearchAttributeDouble,
 	})
@@ -65,7 +65,7 @@ func TestPersistenceWorkflow(t *testing.T) {
 		testSearchAttributeKeyword:  "iWF",
 		testSearchAttributeText:     "Hail iWF!",
 		testSearchAttributeBool:     true,
-		testSearchAttributeDatetime: sas[testSearchAttributeDatetime], // skip this one
+		// testSearchAttributeDatetime: sas[testSearchAttributeDatetime], // // TODO https://github.com/indeedeng/iwf/issues/261
 		testSearchAttributeInt:      int64(1),
 		testSearchAttributeDouble:   1.0,
 	}

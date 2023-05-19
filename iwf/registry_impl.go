@@ -8,11 +8,13 @@ type registryImpl struct {
 	workflowStore            map[string]ObjectWorkflow
 	workflowStartingState    map[string]WorkflowState
 	workflowStateStore       map[string]map[string]StateDef
+	workflowRPCStore         map[string]map[string]CommunicationMethodDef
 	signalNameStore          map[string]map[string]bool
 	internalChannelNameStore map[string]map[string]bool
 	dataAttrsKeyStore        map[string]map[string]bool
 	searchAttributeTypeStore map[string]map[string]iwfidl.SearchAttributeValueType
 }
+
 
 func (r *registryImpl) AddWorkflows(workflows ...ObjectWorkflow) error {
 	for _, wf := range workflows {
@@ -69,6 +71,10 @@ func (r *registryImpl) getSearchAttributeTypeStore(wfType string) map[string]iwf
 	return r.searchAttributeTypeStore[wfType]
 }
 
+func (r *registryImpl) getWorkflowRPC(wfType string, rpcMethod string) CommunicationMethodDef {
+	return r.workflowRPCStore[wfType][rpcMethod]
+}
+
 func (r *registryImpl) registerWorkflow(wf ObjectWorkflow) error {
 	wfType := GetFinalWorkflowType(wf)
 	_, ok := r.workflowStore[wfType]
@@ -110,17 +116,25 @@ func (r *registryImpl) registerWorkflowCommunicationSchema(wf ObjectWorkflow) er
 	wfType := GetFinalWorkflowType(wf)
 	signalMap := map[string]bool{}
 	internalChannel := map[string]bool{}
+	rpcMap := map[string]CommunicationMethodDef{}
 	for _, methodDef := range wf.GetCommunicationSchema() {
 		if methodDef.CommunicationMethod == CommunicationMethodSignalChannel {
 			signalMap[methodDef.Name] = true
 		} else if methodDef.CommunicationMethod == CommunicationMethodInternalChannel {
 			internalChannel[methodDef.Name] = true
+		} else if methodDef.CommunicationMethod == CommunicationMethodRPCMethod {
+			rpcName, wfTypeFromRpc := extractRPCNameAndWorkflowType(methodDef.RPC)
+			if wfTypeFromRpc != wfType {
+				return NewWorkflowDefinitionError("invalid CommunicationMethod definition for RPC" + string(methodDef.CommunicationMethod) + " :" + rpcName)
+			}
+			rpcMap[rpcName] = methodDef
 		} else {
 			return NewWorkflowDefinitionError("invalid CommunicationMethod definition " + string(methodDef.CommunicationMethod))
 		}
 	}
 	r.signalNameStore[wfType] = signalMap
 	r.internalChannelNameStore[wfType] = internalChannel
+	r.workflowRPCStore[wfType] = rpcMap
 	return nil
 }
 
