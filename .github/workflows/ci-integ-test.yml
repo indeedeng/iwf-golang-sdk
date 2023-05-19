@@ -14,7 +14,7 @@ jobs:
       - name: "Set up iWF environment"
         run: docker compose -f integ/docker-compose.yml up -d
       - name: "Unit test and Integration test"
-        run: make ci-tests
+        run: sleep 30 && make ci-tests #sleep 30s to wait for the server to be ready
       - name: Dump docker logs
         if: always()
         uses: jwalton/gh-docker-logs@v2
