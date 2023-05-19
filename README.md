@@ -49,7 +49,7 @@ See [contribution guide](CONTRIBUTION.md)
 - [x] Support failing workflow with results
 - [x] Improve workflow uncompleted error return(canceled, failed, timeout, terminated)
 
-### 2.0
+### 1.4
 
 - [x] Renaming some concepts/APIs with breaking changes(see releaste notes)
 - [x] Support workflow RPC
