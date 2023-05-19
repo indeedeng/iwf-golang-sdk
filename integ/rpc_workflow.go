@@ -6,8 +6,7 @@ import (
 )
 
 type rpcWorkflow struct {
-	iwf.DefaultWorkflowType
-	iwf.EmptyPersistenceSchema
+	iwf.WorkflowDefaults
 }
 
 func (b rpcWorkflow) GetCommunicationSchema() []iwf.CommunicationMethodDef {
@@ -37,7 +36,7 @@ func (b rpcWorkflow) TestErrorRPC(ctx iwf.WorkflowContext, input iwf.Object, per
 }
 
 type rpcWorkflowState1 struct {
-	iwf.DefaultStateIdAndOptions
+	iwf.WorkflowStateDefaults
 }
 
 func (b rpcWorkflowState1) WaitUntil(ctx iwf.WorkflowContext, input iwf.Object, persistence iwf.Persistence, communication iwf.Communication) (*iwf.CommandRequest, error) {

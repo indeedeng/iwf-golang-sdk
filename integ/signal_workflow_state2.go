@@ -8,7 +8,7 @@ import (
 )
 
 type signalWorkflowState2 struct {
-	iwf.DefaultStateIdAndOptions
+	iwf.WorkflowStateDefaults
 }
 
 const timerCommandId = "timerId"

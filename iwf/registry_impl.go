@@ -74,6 +74,10 @@ func (r *registryImpl) getWorkflowRPC(wfType string, rpcMethod string) Communica
 	return r.workflowRPCStore[wfType][rpcMethod]
 }
 
+func (r *registryImpl) getWorkflow(wfType string) ObjectWorkflow {
+	return r.workflowStore[wfType]
+}
+
 func (r *registryImpl) registerWorkflow(wf ObjectWorkflow) error {
 	wfType := GetFinalWorkflowType(wf)
 	_, ok := r.workflowStore[wfType]
@@ -86,9 +90,6 @@ func (r *registryImpl) registerWorkflow(wf ObjectWorkflow) error {
 
 func (r *registryImpl) registerWorkflowState(wf ObjectWorkflow) error {
 	wfType := GetFinalWorkflowType(wf)
-	if len(wf.GetWorkflowStates()) == 0 {
-		return NewWorkflowDefinitionErrorFmt("Workflow type %s must contain at least one workflow state", wfType)
-	}
 	stateMap := map[string]StateDef{}
 	var startingState WorkflowState
 	for _, state := range wf.GetWorkflowStates() {
@@ -106,8 +107,9 @@ func (r *registryImpl) registerWorkflowState(wf ObjectWorkflow) error {
 			}
 		}
 	}
-	r.workflowStartingState[wfType] = startingState
 	r.workflowStateStore[wfType] = stateMap
+	r.workflowStartingState[wfType] = startingState
+
 	return nil
 }
 

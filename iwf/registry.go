@@ -11,6 +11,7 @@ type Registry interface {
 	GetAllRegisteredWorkflowTypes() []string
 
 	// below are all for internal implementation
+	getWorkflow(wfType string) ObjectWorkflow
 	getWorkflowStartingState(wfType string) WorkflowState
 	getWorkflowStateDef(wfType string, id string) StateDef
 	getWorkflowRPC(wfType string, rpcMethod string) CommunicationMethodDef

@@ -5,7 +5,7 @@ import (
 )
 
 type skipWaitUntilState1 struct {
-	iwf.DefaultStateIdAndOptions
+	iwf.WorkflowStateDefaults
 	iwf.NoWaitUntil
 }
 

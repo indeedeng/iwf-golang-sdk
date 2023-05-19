@@ -17,21 +17,29 @@ type clientImpl struct {
 
 func (c *clientImpl) StartWorkflow(ctx context.Context, workflow ObjectWorkflow, workflowId string, timeoutSecs int32, input interface{}, options *WorkflowOptions) (string, error) {
 	wfType := GetFinalWorkflowType(workflow)
-	state := c.registry.getWorkflowStartingState(wfType)
-
-	startStateOpt := state.GetStateOptions()
-	if ShouldSkipWaitUntilAPI(state) {
-		if startStateOpt == nil {
-			startStateOpt = &iwfidl.WorkflowStateOptions{
-				SkipWaitUntil: ptr.Any(true),
-			}
-		} else {
-			startStateOpt.SkipWaitUntil = ptr.Any(true)
-		}
+	wf := c.registry.getWorkflow(wfType)
+	if wf == nil {
+		return "", NewInvalidArgumentError("workflow is not registered")
 	}
 
-	unregOpt := &UnregisteredWorkflowOptions{
-		StartStateOptions: startStateOpt,
+	state := c.registry.getWorkflowStartingState(wfType)
+
+	unregOpt := &UnregisteredWorkflowOptions{}
+
+	startStateId := ""
+	if state != nil {
+		startStateId = GetFinalWorkflowStateId(state)
+		startStateOpt := state.GetStateOptions()
+		if ShouldSkipWaitUntilAPI(state) {
+			if startStateOpt == nil {
+				startStateOpt = &iwfidl.WorkflowStateOptions{
+					SkipWaitUntil: ptr.Any(true),
+				}
+			} else {
+				startStateOpt.SkipWaitUntil = ptr.Any(true)
+			}
+		}
+		unregOpt.StartStateOptions = startStateOpt
 	}
 
 	if options != nil {
@@ -47,7 +55,7 @@ func (c *clientImpl) StartWorkflow(ctx context.Context, workflow ObjectWorkflow,
 		}
 		unregOpt.InitialSearchAttributes = convertedSAs
 	}
-	return c.UnregisteredClient.StartWorkflow(ctx, wfType, GetFinalWorkflowStateId(state), workflowId, timeoutSecs, input, unregOpt)
+	return c.UnregisteredClient.StartWorkflow(ctx, wfType, startStateId, workflowId, timeoutSecs, input, unregOpt)
 }
 
 func convertToSearchAttributeList(types map[string]iwfidl.SearchAttributeValueType, attributes map[string]interface{}) ([]iwfidl.SearchAttribute, error) {

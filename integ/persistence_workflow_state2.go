@@ -5,7 +5,7 @@ import (
 )
 
 type persistenceWorkflowState2 struct {
-	iwf.DefaultStateIdAndOptions
+	iwf.WorkflowStateDefaults
 }
 
 const testText = "Hail iWF!"
