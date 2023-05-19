@@ -16,18 +16,16 @@ See [contribution guide](CONTRIBUTION.md)
 - [x] Parallel execution of multiple states
 - [x] Timer command
 - [x] Signal command
-- [x] SearchAttributeRW
-- [x] DataObjectRW
-- [x] StateLocal
+- [x] SearchAttribute
+- [x] DataAttributes
+- [x] StateExecutionLocal
 - [x] Signal workflow API
-- [x] Get workflow DataObjects/SearchAttributes API
 - [x] Get workflow result API
 - [x] Search workflow API
 - [x] Describe workflow API
 - [x] Stop workflow API
 - [x] Reset workflow API
 - [x] Command type(s) for inter-state communications (e.g. internal channel)
-- [X] AnyCommandCompleted Decider trigger type
 - [x] More workflow start options: IdReusePolicy, cron schedule, retry
 - [x] StateOption: Start/Decide API timeout and retry policy
 - [x] Reset workflow by stateId/StateExecutionId
@@ -45,11 +43,8 @@ See [contribution guide](CONTRIBUTION.md)
 - [x] Support failing workflow with results
 - [x] Improve workflow uncompleted error return(canceled, failed, timeout, terminated)
 
-## Future
-- [ ] Decider trigger type: AnyCommandClosed
-- [ ] WaitForMoreResults in StateDecision
-- [ ] LongRunningActivityCommand
-- [ ] Failing workflow details
-- [ ] Auto ContinueAsNew
-- [ ] StateOption: more AttributeLoadingPolicy
-- [ ] StateOption: more CommandCarryOverPolicy
+### 2.0
+
+- [x] Renaming some concepts/APIs with breaking changes(see releaste notes)
+- [x] Support workflow RPC
+- [x] PARTIAL_WITH_EXCLUSIVE_LOCK persistence loading type
