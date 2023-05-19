@@ -25,4 +25,3 @@ func (o Object) Get(resultPtr interface{}) {
 		panic(err)
 	}
 }
-

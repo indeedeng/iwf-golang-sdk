@@ -21,7 +21,7 @@ type WaitUntilApiFailurePolicy string
 // List of WaitUntilApiFailurePolicy
 const (
 	FAIL_WORKFLOW_ON_FAILURE WaitUntilApiFailurePolicy = "FAIL_WORKFLOW_ON_FAILURE"
-	PROCEED_ON_FAILURE WaitUntilApiFailurePolicy = "PROCEED_ON_FAILURE"
+	PROCEED_ON_FAILURE       WaitUntilApiFailurePolicy = "PROCEED_ON_FAILURE"
 )
 
 // All allowed values of WaitUntilApiFailurePolicy enum
@@ -108,4 +108,3 @@ func (v *NullableWaitUntilApiFailurePolicy) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

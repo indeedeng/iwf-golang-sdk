@@ -1,0 +1,22 @@
+name: Integration Test
+on:
+  pull_request:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  tests:
+    name: "Integration testing"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: "Set up iWF environment"
+        run: docker compose -f integ/docker-compose.yml up -d
+      - name: "Unit test and Integration test"
+        run: sleep 30 && make ci-tests #sleep 30s to wait for the server to be ready
+      - name: Dump docker logs
+        if: always()
+        uses: jwalton/gh-docker-logs@v2
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3

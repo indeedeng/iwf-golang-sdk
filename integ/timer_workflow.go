@@ -13,4 +13,3 @@ func (b timerWorkflow) GetWorkflowStates() []iwf.StateDef {
 		iwf.StartingStateDef(&timerWorkflowState1{}),
 	}
 }
-

@@ -55,7 +55,7 @@ func (w *workerServiceImpl) HandleWorkflowWorkerRPC(ctx context.Context, request
 			NextStates: idlDecision.NextStates,
 		}
 	}
-	
+
 	dataObjectsToReturn, stateLocalToReturn, recordedEvents, upsertSearchAttributes := pers.GetToReturn()
 	if len(dataObjectsToReturn) > 0 {
 		resp.UpsertDataAttributes = dataObjectsToReturn

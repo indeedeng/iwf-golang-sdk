@@ -64,9 +64,10 @@ func GetFinalWorkflowStateId(workflowState WorkflowState) string {
 }
 
 // DefaultStateIdAndOptions is a convenient struct to put into your state implementation to save the boilerplate code. Eg:
-// type myStateImpl struct{
-//     DefaultStateIdAndOptions
-// }
+//
+//	type myStateImpl struct{
+//	    DefaultStateIdAndOptions
+//	}
 type DefaultStateIdAndOptions struct {
 	DefaultStateId
 	DefaultStateOptions
