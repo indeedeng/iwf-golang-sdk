@@ -19,7 +19,7 @@ var _ MappedNullable = &WorkerErrorResponse{}
 
 // WorkerErrorResponse struct for WorkerErrorResponse
 type WorkerErrorResponse struct {
-	Detail *string `json:"detail,omitempty"`
+	Detail    *string `json:"detail,omitempty"`
 	ErrorType *string `json:"errorType,omitempty"`
 }
 
@@ -105,7 +105,7 @@ func (o *WorkerErrorResponse) SetErrorType(v string) {
 }
 
 func (o WorkerErrorResponse) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -158,5 +158,3 @@ func (v *NullableWorkerErrorResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

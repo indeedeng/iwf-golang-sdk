@@ -19,11 +19,11 @@ var _ MappedNullable = &CommandRequest{}
 
 // CommandRequest struct for CommandRequest
 type CommandRequest struct {
-	CommandWaitingType CommandWaitingType `json:"commandWaitingType"`
-	TimerCommands []TimerCommand `json:"timerCommands,omitempty"`
-	SignalCommands []SignalCommand `json:"signalCommands,omitempty"`
+	CommandWaitingType        CommandWaitingType         `json:"commandWaitingType"`
+	TimerCommands             []TimerCommand             `json:"timerCommands,omitempty"`
+	SignalCommands            []SignalCommand            `json:"signalCommands,omitempty"`
 	InterStateChannelCommands []InterStateChannelCommand `json:"interStateChannelCommands,omitempty"`
-	CommandCombinations []CommandCombination `json:"commandCombinations,omitempty"`
+	CommandCombinations       []CommandCombination       `json:"commandCombinations,omitempty"`
 }
 
 // NewCommandRequest instantiates a new CommandRequest object
@@ -197,7 +197,7 @@ func (o *CommandRequest) SetCommandCombinations(v []CommandCombination) {
 }
 
 func (o CommandRequest) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -257,5 +257,3 @@ func (v *NullableCommandRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

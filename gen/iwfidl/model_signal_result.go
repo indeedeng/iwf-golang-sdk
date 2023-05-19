@@ -19,10 +19,10 @@ var _ MappedNullable = &SignalResult{}
 
 // SignalResult struct for SignalResult
 type SignalResult struct {
-	CommandId string `json:"commandId"`
+	CommandId           string               `json:"commandId"`
 	SignalRequestStatus ChannelRequestStatus `json:"signalRequestStatus"`
-	SignalChannelName string `json:"signalChannelName"`
-	SignalValue *EncodedObject `json:"signalValue,omitempty"`
+	SignalChannelName   string               `json:"signalChannelName"`
+	SignalValue         *EncodedObject       `json:"signalValue,omitempty"`
 }
 
 // NewSignalResult instantiates a new SignalResult object
@@ -150,7 +150,7 @@ func (o *SignalResult) SetSignalValue(v EncodedObject) {
 }
 
 func (o SignalResult) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -203,5 +203,3 @@ func (v *NullableSignalResult) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

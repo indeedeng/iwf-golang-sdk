@@ -19,10 +19,10 @@ var _ MappedNullable = &WorkflowStopRequest{}
 
 // WorkflowStopRequest struct for WorkflowStopRequest
 type WorkflowStopRequest struct {
-	WorkflowId string `json:"workflowId"`
-	WorkflowRunId *string `json:"workflowRunId,omitempty"`
-	Reason *string `json:"reason,omitempty"`
-	StopType *WorkflowStopType `json:"stopType,omitempty"`
+	WorkflowId    string            `json:"workflowId"`
+	WorkflowRunId *string           `json:"workflowRunId,omitempty"`
+	Reason        *string           `json:"reason,omitempty"`
+	StopType      *WorkflowStopType `json:"stopType,omitempty"`
 }
 
 // NewWorkflowStopRequest instantiates a new WorkflowStopRequest object
@@ -164,7 +164,7 @@ func (o *WorkflowStopRequest) SetStopType(v WorkflowStopType) {
 }
 
 func (o WorkflowStopRequest) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -221,5 +221,3 @@ func (v *NullableWorkflowStopRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

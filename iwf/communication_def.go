@@ -36,4 +36,3 @@ func RPCMethodDef(rpc RPC, rpcOptions *RPCOptions) CommunicationMethodDef {
 		RPCOptions:          rpcOptions,
 	}
 }
-

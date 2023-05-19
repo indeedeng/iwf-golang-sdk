@@ -24,4 +24,3 @@ func (b interStateWorkflow) GetCommunicationSchema() []iwf.CommunicationMethodDe
 		iwf.InternalChannelDef(interStateChannel2),
 	}
 }
-

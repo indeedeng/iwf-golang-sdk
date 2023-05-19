@@ -19,13 +19,13 @@ var _ MappedNullable = &SearchAttribute{}
 
 // SearchAttribute struct for SearchAttribute
 type SearchAttribute struct {
-	Key *string `json:"key,omitempty"`
-	StringValue *string `json:"stringValue,omitempty"`
-	IntegerValue *int64 `json:"integerValue,omitempty"`
-	DoubleValue *float64 `json:"doubleValue,omitempty"`
-	BoolValue *bool `json:"boolValue,omitempty"`
-	StringArrayValue []string `json:"stringArrayValue,omitempty"`
-	ValueType *SearchAttributeValueType `json:"valueType,omitempty"`
+	Key              *string                   `json:"key,omitempty"`
+	StringValue      *string                   `json:"stringValue,omitempty"`
+	IntegerValue     *int64                    `json:"integerValue,omitempty"`
+	DoubleValue      *float64                  `json:"doubleValue,omitempty"`
+	BoolValue        *bool                     `json:"boolValue,omitempty"`
+	StringArrayValue []string                  `json:"stringArrayValue,omitempty"`
+	ValueType        *SearchAttributeValueType `json:"valueType,omitempty"`
 }
 
 // NewSearchAttribute instantiates a new SearchAttribute object
@@ -270,7 +270,7 @@ func (o *SearchAttribute) SetValueType(v SearchAttributeValueType) {
 }
 
 func (o SearchAttribute) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -338,5 +338,3 @@ func (v *NullableSearchAttribute) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

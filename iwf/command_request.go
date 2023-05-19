@@ -40,7 +40,7 @@ func AnyCommandCombinationsCompletedRequest(listsOfCommandIds [][]string, comman
 			panic("commandId must be provided for using ANY_COMMAND_COMBINATION_COMPLETED")
 		}
 	}
-	
+
 	var comList []iwfidl.CommandCombination
 	for _, commandIds := range listsOfCommandIds {
 		com := iwfidl.CommandCombination{

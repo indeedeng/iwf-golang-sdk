@@ -19,11 +19,11 @@ var _ MappedNullable = &WorkflowStartOptions{}
 
 // WorkflowStartOptions struct for WorkflowStartOptions
 type WorkflowStartOptions struct {
-	IdReusePolicy *IDReusePolicy `json:"idReusePolicy,omitempty"`
-	CronSchedule *string `json:"cronSchedule,omitempty"`
-	RetryPolicy *WorkflowRetryPolicy `json:"retryPolicy,omitempty"`
-	SearchAttributes []SearchAttribute `json:"searchAttributes,omitempty"`
-	WorkflowConfigOverride *WorkflowConfig `json:"workflowConfigOverride,omitempty"`
+	IdReusePolicy          *IDReusePolicy       `json:"idReusePolicy,omitempty"`
+	CronSchedule           *string              `json:"cronSchedule,omitempty"`
+	RetryPolicy            *WorkflowRetryPolicy `json:"retryPolicy,omitempty"`
+	SearchAttributes       []SearchAttribute    `json:"searchAttributes,omitempty"`
+	WorkflowConfigOverride *WorkflowConfig      `json:"workflowConfigOverride,omitempty"`
 }
 
 // NewWorkflowStartOptions instantiates a new WorkflowStartOptions object
@@ -204,7 +204,7 @@ func (o *WorkflowStartOptions) SetWorkflowConfigOverride(v WorkflowConfig) {
 }
 
 func (o WorkflowStartOptions) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -266,5 +266,3 @@ func (v *NullableWorkflowStartOptions) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

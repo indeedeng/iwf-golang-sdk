@@ -128,7 +128,7 @@ fmt: $(BUILD)/fmt ## run goimports
 idl-code-gen: #generate/refresh go clent code for idl, do this after update the idl file
 	rm -Rf ./gen ; true
 	openapi-generator generate -i iwf-idl/iwf-sdk.yaml -g go -o gen/iwfidl/ -p packageName=iwfidl -p generateInterfaces=true -p isGoSubmodule=false --git-user-id indeedeng --git-repo-id iwf-idl
-	rm ./gen/iwfidl/go.* ; rm -rf ./gen/iwfidl/test; true
+	rm ./gen/iwfidl/go.* ; rm -rf ./gen/iwfidl/test; gofmt -s -w gen; true
 
 clean: ## Clean binaries and build folder
 	rm -f $(BINS)
@@ -157,8 +157,11 @@ unitTests:
 tests: integTests unitTests
 
 ci-tests:
-	$Q go test -v -cover ./integ ./iwf -coverprofile coverage.out -coverpkg ./iwf/... 
+	$Q go test -v -cover ./integ ./iwf -coverprofile coverage.out -coverpkg ./iwf/...
 
+fmt: 
+	$Q gofmt -s -w ./iwf ./iwftest ./integ
+  
 help:
 	@# print help first, so it's visible
 	@printf "\033[36m%-20s\033[0m %s\n" 'help' 'Prints a help message showing any specially-commented targets'

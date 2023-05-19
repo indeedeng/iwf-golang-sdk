@@ -15,7 +15,6 @@ type registryImpl struct {
 	searchAttributeTypeStore map[string]map[string]iwfidl.SearchAttributeValueType
 }
 
-
 func (r *registryImpl) AddWorkflows(workflows ...ObjectWorkflow) error {
 	for _, wf := range workflows {
 		err := r.AddWorkflow(wf)

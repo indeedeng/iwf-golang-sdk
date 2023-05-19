@@ -88,11 +88,11 @@ func getSimpleTypeNameFromReflect(obj interface{}) string {
 	return rtStr
 }
 
-
 // DefaultWorkflowType is a convenient struct to put into your workflow implementation to save the boilerplate code. Eg:
-// type myStateImpl struct{
-//     DefaultWorkflowType
-// }
+//
+//	type myStateImpl struct{
+//	    DefaultWorkflowType
+//	}
 type DefaultWorkflowType struct{}
 
 func (d DefaultWorkflowType) GetWorkflowType() string {
@@ -100,9 +100,10 @@ func (d DefaultWorkflowType) GetWorkflowType() string {
 }
 
 // EmptyPersistenceSchema is a convenient struct to put into your workflow implementation to save the boilerplate code. Eg:
-// type myStateImpl struct{
-//     EmptyPersistenceSchema
-// }
+//
+//	type myStateImpl struct{
+//	    EmptyPersistenceSchema
+//	}
 type EmptyPersistenceSchema struct{}
 
 func (d EmptyPersistenceSchema) GetPersistenceSchema() []PersistenceFieldDef {
@@ -110,9 +111,10 @@ func (d EmptyPersistenceSchema) GetPersistenceSchema() []PersistenceFieldDef {
 }
 
 // EmptyCommunicationSchema is a convenient struct to put into your workflow implementation to save the boilerplate code. Eg:
-// type myStateImpl struct{
-//     EmptyCommunicationSchema
-// }
+//
+//	type myStateImpl struct{
+//	    EmptyCommunicationSchema
+//	}
 type EmptyCommunicationSchema struct{}
 
 func (d EmptyCommunicationSchema) GetCommunicationSchema() []CommunicationMethodDef {

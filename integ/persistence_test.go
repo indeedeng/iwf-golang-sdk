@@ -62,12 +62,12 @@ func TestPersistenceWorkflow(t *testing.T) {
 	})
 	assert.Nil(t, err)
 	expectedSas := map[string]interface{}{
-		testSearchAttributeKeyword:  "iWF",
-		testSearchAttributeText:     "Hail iWF!",
-		testSearchAttributeBool:     true,
+		testSearchAttributeKeyword: "iWF",
+		testSearchAttributeText:    "Hail iWF!",
+		testSearchAttributeBool:    true,
 		// testSearchAttributeDatetime: sas[testSearchAttributeDatetime], // // TODO https://github.com/indeedeng/iwf/issues/261
-		testSearchAttributeInt:      int64(1),
-		testSearchAttributeDouble:   1.0,
+		testSearchAttributeInt:    int64(1),
+		testSearchAttributeDouble: 1.0,
 	}
 	assert.Equal(t, expectedSas, sas)
 

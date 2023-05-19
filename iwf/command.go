@@ -61,4 +61,3 @@ func NewTimerCommand(commandId string, firingTime time.Time) Command {
 		},
 	}
 }
-

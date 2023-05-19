@@ -19,15 +19,15 @@ var _ MappedNullable = &WorkflowStateOptions{}
 
 // WorkflowStateOptions struct for WorkflowStateOptions
 type WorkflowStateOptions struct {
-	SearchAttributesLoadingPolicy *PersistenceLoadingPolicy `json:"searchAttributesLoadingPolicy,omitempty"`
-	DataAttributesLoadingPolicy *PersistenceLoadingPolicy `json:"dataAttributesLoadingPolicy,omitempty"`
-	CommandCarryOverPolicy *CommandCarryOverPolicy `json:"commandCarryOverPolicy,omitempty"`
-	WaitUntilApiTimeoutSeconds *int32 `json:"waitUntilApiTimeoutSeconds,omitempty"`
-	ExecuteApiTimeoutSeconds *int32 `json:"executeApiTimeoutSeconds,omitempty"`
-	WaitUntilApiRetryPolicy *RetryPolicy `json:"waitUntilApiRetryPolicy,omitempty"`
-	ExecuteApiRetryPolicy *RetryPolicy `json:"executeApiRetryPolicy,omitempty"`
-	WaitUntilApiFailurePolicy *WaitUntilApiFailurePolicy `json:"waitUntilApiFailurePolicy,omitempty"`
-	SkipWaitUntil *bool `json:"skipWaitUntil,omitempty"`
+	SearchAttributesLoadingPolicy *PersistenceLoadingPolicy  `json:"searchAttributesLoadingPolicy,omitempty"`
+	DataAttributesLoadingPolicy   *PersistenceLoadingPolicy  `json:"dataAttributesLoadingPolicy,omitempty"`
+	CommandCarryOverPolicy        *CommandCarryOverPolicy    `json:"commandCarryOverPolicy,omitempty"`
+	WaitUntilApiTimeoutSeconds    *int32                     `json:"waitUntilApiTimeoutSeconds,omitempty"`
+	ExecuteApiTimeoutSeconds      *int32                     `json:"executeApiTimeoutSeconds,omitempty"`
+	WaitUntilApiRetryPolicy       *RetryPolicy               `json:"waitUntilApiRetryPolicy,omitempty"`
+	ExecuteApiRetryPolicy         *RetryPolicy               `json:"executeApiRetryPolicy,omitempty"`
+	WaitUntilApiFailurePolicy     *WaitUntilApiFailurePolicy `json:"waitUntilApiFailurePolicy,omitempty"`
+	SkipWaitUntil                 *bool                      `json:"skipWaitUntil,omitempty"`
 }
 
 // NewWorkflowStateOptions instantiates a new WorkflowStateOptions object
@@ -336,7 +336,7 @@ func (o *WorkflowStateOptions) SetSkipWaitUntil(v bool) {
 }
 
 func (o WorkflowStateOptions) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -410,5 +410,3 @@ func (v *NullableWorkflowStateOptions) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

@@ -19,10 +19,10 @@ var _ MappedNullable = &InterStateChannelResult{}
 
 // InterStateChannelResult struct for InterStateChannelResult
 type InterStateChannelResult struct {
-	CommandId string `json:"commandId"`
+	CommandId     string               `json:"commandId"`
 	RequestStatus ChannelRequestStatus `json:"requestStatus"`
-	ChannelName string `json:"channelName"`
-	Value *EncodedObject `json:"value,omitempty"`
+	ChannelName   string               `json:"channelName"`
+	Value         *EncodedObject       `json:"value,omitempty"`
 }
 
 // NewInterStateChannelResult instantiates a new InterStateChannelResult object
@@ -150,7 +150,7 @@ func (o *InterStateChannelResult) SetValue(v EncodedObject) {
 }
 
 func (o InterStateChannelResult) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -203,5 +203,3 @@ func (v *NullableInterStateChannelResult) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-
