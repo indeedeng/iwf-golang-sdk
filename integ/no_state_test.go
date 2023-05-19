@@ -34,6 +34,7 @@ func TestNoStateWorkflow(t *testing.T) {
 		StopType: iwfidl.FAIL,
 		Reason:   "test",
 	})
+	assert.Nil(t, err)
 	time.Sleep(time.Second * 2)
 	info, err = client.DescribeWorkflow(context.Background(), wfId, "")
 	assert.Nil(t, err)
