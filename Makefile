@@ -115,13 +115,6 @@ define remake
 @+$(MAKE) --no-print-directory $(addprefix $(BUILD)/,$(1))
 endef
 
-# useful to actually re-run to get output again.
-# reuse the intermediates for simplicity and consistency.
-lint: ## (re)run the linter
-	$(call remake,proto-lint lint)
-
-# intentionally not re-making, goimports is slow and it's clear when it's unnecessary
-fmt: $(BUILD)/fmt ## run goimports
 
 .PHONY: release clean
 
@@ -159,7 +152,7 @@ tests: integTests unitTests
 ci-tests:
 	$Q go test -v -cover ./integ ./iwf -coverprofile coverage.out -coverpkg ./iwf/...
 
-fmt: 
+fmt:
 	$Q gofmt -s -w ./iwf ./iwftest ./integ
   
 help:
