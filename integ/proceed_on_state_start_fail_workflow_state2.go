@@ -5,7 +5,7 @@ import (
 )
 
 type proceedOnStateStartFailWorkflowState2 struct {
-	iwf.DefaultStateIdAndOptions
+	iwf.WorkflowStateDefaults
 	output string
 }
 

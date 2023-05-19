@@ -5,7 +5,7 @@ import (
 )
 
 type persistenceWorkflowState1 struct {
-	iwf.DefaultStateIdAndOptions
+	iwf.WorkflowStateDefaults
 }
 
 func (b persistenceWorkflowState1) WaitUntil(ctx iwf.WorkflowContext, input iwf.Object, persistence iwf.Persistence, communication iwf.Communication) (*iwf.CommandRequest, error) {

@@ -74,6 +74,10 @@ func (r *registryImpl) getWorkflowRPC(wfType string, rpcMethod string) Communica
 	return r.workflowRPCStore[wfType][rpcMethod]
 }
 
+func (r *registryImpl) getWorkflow(wfType string) ObjectWorkflow {
+	return r.workflowStore[wfType]
+}
+
 func (r *registryImpl) registerWorkflow(wf ObjectWorkflow) error {
 	wfType := GetFinalWorkflowType(wf)
 	_, ok := r.workflowStore[wfType]

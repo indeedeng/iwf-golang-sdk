@@ -13,3 +13,10 @@ const (
 	ForceCompletingWorkflowStateId    = "_SYS_FORCE_COMPLETING_WORKFLOW"
 	ForceFailingWorkflowStateId       = "_SYS_FORCE_FAILING_WORKFLOW"
 )
+
+func NewStateMovement(st WorkflowState, in interface{}) StateMovement {
+	return StateMovement{
+		NextStateId:    GetFinalWorkflowStateId(st),
+		NextStateInput: in,
+	}
+}
