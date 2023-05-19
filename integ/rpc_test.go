@@ -39,5 +39,4 @@ func TestRPCWorkflow(t *testing.T) {
 	err = client.GetSimpleWorkflowResult(context.Background(), wfId, "", &output)
 	assert.Nil(t, err)
 	assert.Equal(t, 3, output)
-	
 }
