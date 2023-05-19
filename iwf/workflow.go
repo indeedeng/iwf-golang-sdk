@@ -68,7 +68,6 @@ func extractRPCNameAndWorkflowType(fn RPC) (rpcName string, wfType string) {
 	pkgEles := strings.Split(prefix, "/")
 	wfType = pkgEles[len(pkgEles)-1] + "." + wfTypeShort
 
-	// TODO check if method of a workflow instance 
 	return strings.TrimSuffix(shortName, "-fm"), wfType
 }
 

@@ -5,7 +5,16 @@ import "github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
 type communicationImpl struct {
 	internalChannelNames     map[string]bool
 	toPublishInternalChannel map[string][]iwfidl.EncodedObject
+	stateMovements           []StateMovement
 	encoder                  ObjectEncoder
+}
+
+func (c *communicationImpl) GetToTriggerStateMovements() []StateMovement {
+	return c.stateMovements
+}
+
+func (c *communicationImpl) TriggerStateMovements(movements ...StateMovement) {
+	c.stateMovements = append(c.stateMovements, movements...)
 }
 
 func (c *communicationImpl) GetToPublishInternalChannel() map[string][]iwfidl.EncodedObject {
