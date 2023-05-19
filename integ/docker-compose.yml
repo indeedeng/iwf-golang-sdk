@@ -65,18 +65,6 @@ services:
     volumes:
      - ./docker-compose-init.sh:/etc/temporal/init.sh
     entrypoint: sh -c "/etc/temporal/init.sh"
-  temporal-ui:
-    container_name: temporal-ui-iwf
-    depends_on:
-      - temporal
-    environment:
-      - TEMPORAL_ADDRESS=temporal:7233
-      - TEMPORAL_CORS_ORIGINS=http://localhost:3000
-    image: temporalio/ui:${TEMPORAL_UI_VERSION}
-    networks:
-      - temporal-network
-    ports:
-      - 8233:8080
   iwf-server:
     container_name: iwf-server
     image: iworkflowio/iwf-server:latest #NOTE: you can change to version tag like v1.0.0-RC6
