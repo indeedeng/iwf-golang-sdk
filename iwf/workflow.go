@@ -120,3 +120,14 @@ type EmptyCommunicationSchema struct{}
 func (d EmptyCommunicationSchema) GetCommunicationSchema() []CommunicationMethodDef {
 	return nil
 }
+
+// EmptyWorkflowStates is a convenient struct to put into your workflow implementation to save the boilerplate code. Eg:
+//
+//	type myStateImpl struct{
+//	    EmptyWorkflowStates
+//	}
+type EmptyWorkflowStates struct{}
+
+func (d EmptyWorkflowStates) GetWorkflowStates() []StateDef {
+	return nil
+}

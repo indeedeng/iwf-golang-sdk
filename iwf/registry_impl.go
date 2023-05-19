@@ -86,9 +86,6 @@ func (r *registryImpl) registerWorkflow(wf ObjectWorkflow) error {
 
 func (r *registryImpl) registerWorkflowState(wf ObjectWorkflow) error {
 	wfType := GetFinalWorkflowType(wf)
-	if len(wf.GetWorkflowStates()) == 0 {
-		return NewWorkflowDefinitionErrorFmt("Workflow type %s must contain at least one workflow state", wfType)
-	}
 	stateMap := map[string]StateDef{}
 	var startingState WorkflowState
 	for _, state := range wf.GetWorkflowStates() {
@@ -106,8 +103,9 @@ func (r *registryImpl) registerWorkflowState(wf ObjectWorkflow) error {
 			}
 		}
 	}
-	r.workflowStartingState[wfType] = startingState
 	r.workflowStateStore[wfType] = stateMap
+	r.workflowStartingState[wfType] = startingState
+
 	return nil
 }
 

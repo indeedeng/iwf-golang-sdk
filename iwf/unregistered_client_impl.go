@@ -23,6 +23,10 @@ func (u *unregisteredClientImpl) StartWorkflow(ctx context.Context, workflowType
 		}
 	}
 
+	var startStateIdPtr *string
+	if startStateId != "" {
+		startStateIdPtr = &startStateId
+	}
 	var stateOptions *iwfidl.WorkflowStateOptions
 	var startOptions *iwfidl.WorkflowStartOptions
 	if options != nil {
@@ -47,7 +51,7 @@ func (u *unregisteredClientImpl) StartWorkflow(ctx context.Context, workflowType
 		IwfWorkflowType:        workflowType,
 		WorkflowTimeoutSeconds: timeoutSecs,
 		IwfWorkerUrl:           u.options.WorkerUrl,
-		StartStateId:           &startStateId,
+		StartStateId:           startStateIdPtr,
 		StateInput:             encodedInput,
 		StateOptions:           stateOptions,
 		WorkflowStartOptions:   startOptions,
