@@ -119,7 +119,7 @@ func ShouldSkipWaitUntilAPI(state WorkflowState) bool {
 
 	for i := 0; i < t.NumField(); i++ {
 		field := t.Field(i)
-		if field.Type.String() == "iwf.NoWaitUntil" {
+		if field.Type.String() == "iwf.NoWaitUntil" || field.Type.String() == "iwf.WorkflowStateDefaultsNoWaitUntil" {
 			return true
 		}
 	}
