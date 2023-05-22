@@ -18,7 +18,8 @@ type WorkflowState interface {
 	// 3. In case of dynamic workflow state implementation, return customized values instead of using empty string
 	GetStateId() string
 
-	// WaitUntil is the method to set up commands set up to wait for, before `Execute` API is invoked
+	// WaitUntil is the method to set up commands set up to wait for, before `Execute` API is invoked.
+	//           It's optional -- use iwf.WorkflowStateDefaultsNoWaitUntil or iwf.NoWaitUntil to skip this step( Execute will be invoked instead)
 	//
 	//  ctx              the context info of this API invocation, like workflow start time, workflowId, etc
 	//  input            the state input
@@ -33,7 +34,7 @@ type WorkflowState interface {
 	///
 	WaitUntil(ctx WorkflowContext, input Object, persistence Persistence, communication Communication) (*CommandRequest, error)
 
-	// Execute is the method to execute and decide what to do next
+	// Execute is the method to execute and decide what to do next. Invoke after commands from WaitUntil are completed, or there is WaitUntil is not implemented for the state.
 	//
 	//  ctx              the context info of this API invocation, like workflow start time, workflowId, etc
 	//  input            the state input
