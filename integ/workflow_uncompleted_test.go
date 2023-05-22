@@ -29,7 +29,7 @@ func TestWorkflowTimeout(t *testing.T) {
 	assert.Nil(t, out)
 	assert.Equal(t, err, err2)
 
-	assert.Equal(t, "workflow is not completed succesfully, closedStatus: TIMEOUT, failedErrorType(applies if failed as closedStatus):<nil>, error message:<nil>", err.Error())
+	assert.Equal(t, "workflow is not completed successfully, closedStatus: TIMEOUT, failedErrorType(applies if failed as closedStatus):<nil>, error message:<nil>", err.Error())
 }
 
 func TestWorkflowCancel(t *testing.T) {
@@ -51,7 +51,7 @@ func TestWorkflowCancel(t *testing.T) {
 	assert.Nil(t, out)
 	assert.Equal(t, err, err2)
 
-	assert.Equal(t, "workflow is not completed succesfully, closedStatus: CANCELED, failedErrorType(applies if failed as closedStatus):<nil>, error message:<nil>", err.Error())
+	assert.Equal(t, "workflow is not completed successfully, closedStatus: CANCELED, failedErrorType(applies if failed as closedStatus):<nil>, error message:<nil>", err.Error())
 }
 
 func TestForceFailWorkflow(t *testing.T) {
@@ -69,7 +69,7 @@ func TestForceFailWorkflow(t *testing.T) {
 	out, err2 := client.GetComplexWorkflowResults(context.Background(), wfId, "")
 	assert.Nil(t, out)
 	assert.Equal(t, err, err2)
-	assert.Equal(t, "workflow is not completed succesfully, closedStatus: FAILED, failedErrorType(applies if failed as closedStatus):STATE_DECISION_FAILING_WORKFLOW_ERROR_TYPE, error message:<nil>", err.Error())
+	assert.Equal(t, "workflow is not completed successfully, closedStatus: FAILED, failedErrorType(applies if failed as closedStatus):STATE_DECISION_FAILING_WORKFLOW_ERROR_TYPE, error message:<nil>", err.Error())
 
 	var output string
 	err = wErr.GetStateResult(0, &output)
@@ -95,7 +95,7 @@ func TestStateApiFailWorkflow(t *testing.T) {
 	assert.Nil(t, out)
 	assert.Equal(t, err, err2)
 
-	assert.True(t, strings.Contains(err.Error(), "workflow is not completed succesfully, closedStatus: FAILED, failedErrorType(applies if failed as closedStatus):STATE_API_FAIL_MAX_OUT_RETRY_ERROR_TYPE, error message:statusCode: 400, responseBody: {\"error\":\"error message:test api failing"))
+	assert.True(t, strings.Contains(err.Error(), "workflow is not completed successfully, closedStatus: FAILED, failedErrorType(applies if failed as closedStatus):STATE_API_FAIL_MAX_OUT_RETRY_ERROR_TYPE, error message:statusCode: 400, responseBody: {\"error\":\"error message:test api failing"))
 }
 
 func TestStateApiTimeoutWorkflow(t *testing.T) {
@@ -112,7 +112,7 @@ func TestStateApiTimeoutWorkflow(t *testing.T) {
 
 	fmt.Println(err)
 
-	expectedMsg := "workflow is not completed succesfully, closedStatus: FAILED, failedErrorType(applies if failed as closedStatus):STATE_API_FAIL_MAX_OUT_RETRY_ERROR_TYPE, error message:activity error (type: StateApiWaitUntil, scheduledEventID: 9, startedEventID: 10, identity: ): activity StartToClose timeout (type: StartToClose)"
+	expectedMsg := "workflow is not completed successfully, closedStatus: FAILED, failedErrorType(applies if failed as closedStatus):STATE_API_FAIL_MAX_OUT_RETRY_ERROR_TYPE, error message:activity error (type: StateApiWaitUntil, scheduledEventID: 9, startedEventID: 10, identity: ): activity StartToClose timeout (type: StartToClose)"
 	assert.Equal(t, expectedMsg, err.Error())
 
 	out, err2 := client.GetComplexWorkflowResults(context.Background(), wfId, "")
