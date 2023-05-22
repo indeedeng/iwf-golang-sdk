@@ -9,6 +9,7 @@ import (
 
 	gomock "github.com/golang/mock/gomock"
 	iwfidl "github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
+	iwf "github.com/indeedeng/iwf-golang-sdk/iwf"
 )
 
 // MockCommunication is a mock of Communication interface.
@@ -48,6 +49,20 @@ func (mr *MockCommunicationMockRecorder) GetToPublishInternalChannel() *gomock.C
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetToPublishInternalChannel", reflect.TypeOf((*MockCommunication)(nil).GetToPublishInternalChannel))
 }
 
+// GetToTriggerStateMovements mocks base method.
+func (m *MockCommunication) GetToTriggerStateMovements() []iwf.StateMovement {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetToTriggerStateMovements")
+	ret0, _ := ret[0].([]iwf.StateMovement)
+	return ret0
+}
+
+// GetToTriggerStateMovements indicates an expected call of GetToTriggerStateMovements.
+func (mr *MockCommunicationMockRecorder) GetToTriggerStateMovements() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetToTriggerStateMovements", reflect.TypeOf((*MockCommunication)(nil).GetToTriggerStateMovements))
+}
+
 // PublishInternalChannel mocks base method.
 func (m *MockCommunication) PublishInternalChannel(channelName string, value interface{}) {
 	m.ctrl.T.Helper()
@@ -58,6 +73,22 @@ func (m *MockCommunication) PublishInternalChannel(channelName string, value int
 func (mr *MockCommunicationMockRecorder) PublishInternalChannel(channelName, value interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PublishInternalChannel", reflect.TypeOf((*MockCommunication)(nil).PublishInternalChannel), channelName, value)
+}
+
+// TriggerStateMovements mocks base method.
+func (m *MockCommunication) TriggerStateMovements(movements ...iwf.StateMovement) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{}
+	for _, a := range movements {
+		varargs = append(varargs, a)
+	}
+	m.ctrl.Call(m, "TriggerStateMovements", varargs...)
+}
+
+// TriggerStateMovements indicates an expected call of TriggerStateMovements.
+func (mr *MockCommunicationMockRecorder) TriggerStateMovements(movements ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "TriggerStateMovements", reflect.TypeOf((*MockCommunication)(nil).TriggerStateMovements), movements...)
 }
 
 // MockcommunicationInternal is a mock of communicationInternal interface.
@@ -95,4 +126,18 @@ func (m *MockcommunicationInternal) GetToPublishInternalChannel() map[string][]i
 func (mr *MockcommunicationInternalMockRecorder) GetToPublishInternalChannel() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetToPublishInternalChannel", reflect.TypeOf((*MockcommunicationInternal)(nil).GetToPublishInternalChannel))
+}
+
+// GetToTriggerStateMovements mocks base method.
+func (m *MockcommunicationInternal) GetToTriggerStateMovements() []iwf.StateMovement {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetToTriggerStateMovements")
+	ret0, _ := ret[0].([]iwf.StateMovement)
+	return ret0
+}
+
+// GetToTriggerStateMovements indicates an expected call of GetToTriggerStateMovements.
+func (mr *MockcommunicationInternalMockRecorder) GetToTriggerStateMovements() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetToTriggerStateMovements", reflect.TypeOf((*MockcommunicationInternal)(nil).GetToTriggerStateMovements))
 }
