@@ -74,6 +74,18 @@ type WorkflowStateDefaults struct {
 	DefaultStateOptions
 }
 
+// WorkflowStateDefaultsNoWaitUntil is a convenient struct to put into your state implementation to save the boilerplate code. Eg:
+// Example usage:
+//
+//	type myStateImpl struct{
+//	    WorkflowStateDefaultsNoWaitUntil
+//	}
+type WorkflowStateDefaultsNoWaitUntil struct {
+	DefaultStateId
+	DefaultStateOptions
+	NoWaitUntil
+}
+
 type DefaultStateId struct{}
 
 func (d DefaultStateId) GetStateId() string {

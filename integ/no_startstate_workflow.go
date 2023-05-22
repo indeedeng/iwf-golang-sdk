@@ -29,8 +29,7 @@ func (b noStartStateWorkflow) TestRPC(ctx iwf.WorkflowContext, input iwf.Object,
 }
 
 type noStartStateWorkflowState1 struct {
-	iwf.WorkflowStateDefaults
-	iwf.NoWaitUntil
+	iwf.WorkflowStateDefaultsNoWaitUntil
 }
 
 func (b noStartStateWorkflowState1) Execute(ctx iwf.WorkflowContext, input iwf.Object, commandResults iwf.CommandResults, persistence iwf.Persistence, communication iwf.Communication) (*iwf.StateDecision, error) {
