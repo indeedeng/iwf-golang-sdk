@@ -207,7 +207,7 @@ func (w *WorkflowUncompletedError) Error() string {
 	if w.ErrorMessage != nil {
 		message = fmt.Sprintf("%v", *w.ErrorMessage)
 	}
-	return fmt.Sprintf("workflow is not completed succesfully, closedStatus: %v, failedErrorType(applies if failed as closedStatus):%v, error message:%v",
+	return fmt.Sprintf("workflow is not completed successfully, closedStatus: %v, failedErrorType(applies if failed as closedStatus):%v, error message:%v",
 		w.ClosedStatus, errTypeMsg, message)
 }
 
