@@ -55,6 +55,8 @@ func (c *clientImpl) StartWorkflow(ctx context.Context, workflow ObjectWorkflow,
 		}
 		unregOpt.InitialSearchAttributes = convertedSAs
 	}
+	schemaOptions := c.registry.getPersistenceSchemaOptions(wfType)
+	unregOpt.UsingMemoForDataAttributes = schemaOptions.CachingDataAttributesByMemo
 	return c.UnregisteredClient.StartWorkflow(ctx, wfType, startStateId, workflowId, timeoutSecs, input, unregOpt)
 }
 
@@ -130,7 +132,8 @@ func (c *clientImpl) GetWorkflowDataAttributes(ctx context.Context, workflow Obj
 			return nil, fmt.Errorf("data object type %v is not registered", k)
 		}
 	}
-	return c.UnregisteredClient.GetWorkflowDataAttributes(ctx, workflowId, workflowRunId, keys)
+	persistenceSchemaOptions := c.registry.getPersistenceSchemaOptions(wfType)
+	return c.UnregisteredClient.GetWorkflowDataAttributes(ctx, workflowId, workflowRunId, keys, persistenceSchemaOptions.CachingDataAttributesByMemo)
 }
 
 func (c *clientImpl) GetWorkflowSearchAttributes(ctx context.Context, workflow ObjectWorkflow, workflowId, workflowRunId string, keys []string) (map[string]interface{}, error) {

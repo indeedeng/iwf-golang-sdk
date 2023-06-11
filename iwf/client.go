@@ -95,7 +95,7 @@ type UnregisteredClient interface {
 	// GetWorkflowDataAttributes returns the data objects of a workflow execution
 	// workflowId is required, workflowRunId is optional and default to current runId of the workflowId
 	// keys is required to be non-empty. If you intend to return all data objects, use GetAllWorkflowDataAttributes API instead
-	GetWorkflowDataAttributes(ctx context.Context, workflowId, workflowRunId string, keys []string) (map[string]Object, error)
+	GetWorkflowDataAttributes(ctx context.Context, workflowId, workflowRunId string, keys []string, useMemoForDataAttributes bool) (map[string]Object, error)
 	// GetWorkflowSearchAttributes returns search attributes of a workflow execution
 	// workflowId is required, workflowRunId is optional and default to current runId of the workflowId
 	// keys is required to be non-empty. If you intend to return all data objects, use GetAllWorkflowSearchAttributes API instead

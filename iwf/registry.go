@@ -14,6 +14,7 @@ type Registry interface {
 	getWorkflow(wfType string) ObjectWorkflow
 	getWorkflowStartingState(wfType string) WorkflowState
 	getWorkflowStateDef(wfType string, id string) StateDef
+	getPersistenceSchemaOptions(wfType string) PersistenceSchemaOptions
 	getWorkflowRPC(wfType string, rpcMethod string) CommunicationMethodDef
 	getWorkflowSignalNameStore(wfType string) map[string]bool
 	getWorkflowInternalChannelNameStore(wfType string) map[string]bool
@@ -31,5 +32,6 @@ func NewRegistry() Registry {
 		dataAttrsKeyStore:        map[string]map[string]bool{},
 		searchAttributeTypeStore: map[string]map[string]iwfidl.SearchAttributeValueType{},
 		workflowRPCStore:         map[string]map[string]CommunicationMethodDef{},
+		persistenceSchemaOptions: map[string]PersistenceSchemaOptions{},
 	}
 }

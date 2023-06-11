@@ -31,6 +31,15 @@ type ObjectWorkflow interface {
 	// External applications can also use "SearchWorkflow" API to find workflows by SQL-like query
 	GetPersistenceSchema() []PersistenceFieldDef
 
+	// PersistenceSchemaOptions defines options for load/search attributes
+	//
+	// By default, RPC implementations will load data/search attributes using the Cadence/Temporal
+	// query API, which is not optimized for very high volume requests a single workflow execution(like 100 rps),
+	// because it could cause too many replay with history, especially when workflows are closed.
+	//
+	// You can use the PersistenceSchema Options to enable caching
+	GetPersistenceSchemaOptions() PersistenceSchemaOptions
+
 	// GetCommunicationSchema defines all the communication methods for this workflow, this includes
 	// 1. Signal channel
 	// 2. Interstate channel

@@ -60,3 +60,7 @@ type persistenceInternal interface {
 		searchAttributes []iwfidl.SearchAttribute,
 	)
 }
+
+type PersistenceSchemaOptions struct {
+	CachingDataAttributesByMemo bool
+}
