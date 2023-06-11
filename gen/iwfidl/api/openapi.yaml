@@ -544,6 +544,7 @@ components:
           - stringArrayValue
           - stringArrayValue
           key: key
+        useMemoForDataAttributes: true
         cronSchedule: cronSchedule
       properties:
         idReusePolicy:
@@ -558,6 +559,8 @@ components:
           type: array
         workflowConfigOverride:
           $ref: '#/components/schemas/WorkflowConfig'
+        useMemoForDataAttributes:
+          type: boolean
       type: object
     IDReusePolicy:
       enum:
@@ -701,6 +704,7 @@ components:
             - stringArrayValue
             - stringArrayValue
             key: key
+          useMemoForDataAttributes: true
           cronSchedule: cronSchedule
         iwfWorkerUrl: iwfWorkerUrl
         workflowId: workflowId
@@ -787,6 +791,7 @@ components:
         keys:
         - keys
         - keys
+        useMemoForDataAttributes: true
         workflowRunId: workflowRunId
         workflowId: workflowId
       properties:
@@ -798,6 +803,8 @@ components:
           items:
             type: string
           type: array
+        useMemoForDataAttributes:
+          type: boolean
       required:
       - workflowId
       type: object
@@ -1102,6 +1109,12 @@ components:
           - partialLoadingKeys
           persistenceLoadingType: null
         timeoutSeconds: 0
+        searchAttributes:
+        - valueType: null
+          key: key
+        - valueType: null
+          key: key
+        useMemoForDataAttributes: true
         workflowRunId: workflowRunId
         rpcName: rpcName
         workflowId: workflowId
@@ -1128,6 +1141,12 @@ components:
           $ref: '#/components/schemas/PersistenceLoadingPolicy'
         timeoutSeconds:
           type: integer
+        useMemoForDataAttributes:
+          type: boolean
+        searchAttributes:
+          items:
+            $ref: '#/components/schemas/SearchAttributeKeyAndType'
+          type: array
       required:
       - rpcName
       - workflowId

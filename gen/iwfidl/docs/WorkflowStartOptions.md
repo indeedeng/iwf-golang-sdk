@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **RetryPolicy** | Pointer to [**WorkflowRetryPolicy**](WorkflowRetryPolicy.md) |  | [optional] 
 **SearchAttributes** | Pointer to [**[]SearchAttribute**](SearchAttribute.md) |  | [optional] 
 **WorkflowConfigOverride** | Pointer to [**WorkflowConfig**](WorkflowConfig.md) |  | [optional] 
+**UseMemoForDataAttributes** | Pointer to **bool** |  | [optional] 
 
 ## Methods
 
@@ -153,6 +154,31 @@ SetWorkflowConfigOverride sets WorkflowConfigOverride field to given value.
 `func (o *WorkflowStartOptions) HasWorkflowConfigOverride() bool`
 
 HasWorkflowConfigOverride returns a boolean if a field has been set.
+
+### GetUseMemoForDataAttributes
+
+`func (o *WorkflowStartOptions) GetUseMemoForDataAttributes() bool`
+
+GetUseMemoForDataAttributes returns the UseMemoForDataAttributes field if non-nil, zero value otherwise.
+
+### GetUseMemoForDataAttributesOk
+
+`func (o *WorkflowStartOptions) GetUseMemoForDataAttributesOk() (*bool, bool)`
+
+GetUseMemoForDataAttributesOk returns a tuple with the UseMemoForDataAttributes field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUseMemoForDataAttributes
+
+`func (o *WorkflowStartOptions) SetUseMemoForDataAttributes(v bool)`
+
+SetUseMemoForDataAttributes sets UseMemoForDataAttributes field to given value.
+
+### HasUseMemoForDataAttributes
+
+`func (o *WorkflowStartOptions) HasUseMemoForDataAttributes() bool`
+
+HasUseMemoForDataAttributes returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

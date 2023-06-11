@@ -19,11 +19,12 @@ var _ MappedNullable = &WorkflowStartOptions{}
 
 // WorkflowStartOptions struct for WorkflowStartOptions
 type WorkflowStartOptions struct {
-	IdReusePolicy          *IDReusePolicy       `json:"idReusePolicy,omitempty"`
-	CronSchedule           *string              `json:"cronSchedule,omitempty"`
-	RetryPolicy            *WorkflowRetryPolicy `json:"retryPolicy,omitempty"`
-	SearchAttributes       []SearchAttribute    `json:"searchAttributes,omitempty"`
-	WorkflowConfigOverride *WorkflowConfig      `json:"workflowConfigOverride,omitempty"`
+	IdReusePolicy            *IDReusePolicy       `json:"idReusePolicy,omitempty"`
+	CronSchedule             *string              `json:"cronSchedule,omitempty"`
+	RetryPolicy              *WorkflowRetryPolicy `json:"retryPolicy,omitempty"`
+	SearchAttributes         []SearchAttribute    `json:"searchAttributes,omitempty"`
+	WorkflowConfigOverride   *WorkflowConfig      `json:"workflowConfigOverride,omitempty"`
+	UseMemoForDataAttributes *bool                `json:"useMemoForDataAttributes,omitempty"`
 }
 
 // NewWorkflowStartOptions instantiates a new WorkflowStartOptions object
@@ -203,6 +204,38 @@ func (o *WorkflowStartOptions) SetWorkflowConfigOverride(v WorkflowConfig) {
 	o.WorkflowConfigOverride = &v
 }
 
+// GetUseMemoForDataAttributes returns the UseMemoForDataAttributes field value if set, zero value otherwise.
+func (o *WorkflowStartOptions) GetUseMemoForDataAttributes() bool {
+	if o == nil || IsNil(o.UseMemoForDataAttributes) {
+		var ret bool
+		return ret
+	}
+	return *o.UseMemoForDataAttributes
+}
+
+// GetUseMemoForDataAttributesOk returns a tuple with the UseMemoForDataAttributes field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WorkflowStartOptions) GetUseMemoForDataAttributesOk() (*bool, bool) {
+	if o == nil || IsNil(o.UseMemoForDataAttributes) {
+		return nil, false
+	}
+	return o.UseMemoForDataAttributes, true
+}
+
+// HasUseMemoForDataAttributes returns a boolean if a field has been set.
+func (o *WorkflowStartOptions) HasUseMemoForDataAttributes() bool {
+	if o != nil && !IsNil(o.UseMemoForDataAttributes) {
+		return true
+	}
+
+	return false
+}
+
+// SetUseMemoForDataAttributes gets a reference to the given bool and assigns it to the UseMemoForDataAttributes field.
+func (o *WorkflowStartOptions) SetUseMemoForDataAttributes(v bool) {
+	o.UseMemoForDataAttributes = &v
+}
+
 func (o WorkflowStartOptions) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -227,6 +260,9 @@ func (o WorkflowStartOptions) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.WorkflowConfigOverride) {
 		toSerialize["workflowConfigOverride"] = o.WorkflowConfigOverride
+	}
+	if !IsNil(o.UseMemoForDataAttributes) {
+		toSerialize["useMemoForDataAttributes"] = o.UseMemoForDataAttributes
 	}
 	return toSerialize, nil
 }
