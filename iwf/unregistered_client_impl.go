@@ -77,23 +77,24 @@ func (u *unregisteredClientImpl) SignalWorkflow(ctx context.Context, workflowId,
 	return u.processError(err, httpResp)
 }
 
-func (u *unregisteredClientImpl) GetWorkflowDataAttributes(ctx context.Context, workflowId, workflowRunId string, keys []string) (map[string]Object, error) {
+func (u *unregisteredClientImpl) GetWorkflowDataAttributes(ctx context.Context, workflowId, workflowRunId string, keys []string, useMemoForDataAttributes bool) (map[string]Object, error) {
 	if len(keys) == 0 {
 		return nil, fmt.Errorf("must specify keys to return, use GetAllWorkflowDataAttributes if intended to get all keys")
 	}
-	return u.doGetWorkflowDataObjects(ctx, workflowId, workflowRunId, keys)
+	return u.doGetWorkflowDataObjects(ctx, workflowId, workflowRunId, keys, useMemoForDataAttributes)
 }
 
-func (u *unregisteredClientImpl) GetAllWorkflowDataAttributes(ctx context.Context, workflowId, workflowRunId string) (map[string]Object, error) {
-	return u.doGetWorkflowDataObjects(ctx, workflowId, workflowRunId, nil)
+func (u *unregisteredClientImpl) GetAllWorkflowDataAttributes(ctx context.Context, workflowId, workflowRunId string, useMemoForDataAttributes bool) (map[string]Object, error) {
+	return u.doGetWorkflowDataObjects(ctx, workflowId, workflowRunId, nil, useMemoForDataAttributes)
 }
 
-func (u *unregisteredClientImpl) doGetWorkflowDataObjects(ctx context.Context, workflowId, workflowRunId string, keys []string) (map[string]Object, error) {
+func (u *unregisteredClientImpl) doGetWorkflowDataObjects(ctx context.Context, workflowId, workflowRunId string, keys []string, useMemoForDataAttributes bool) (map[string]Object, error) {
 	reqPost := u.apiClient.DefaultApi.ApiV1WorkflowDataobjectsGetPost(ctx)
 	resp, httpResp, err := reqPost.WorkflowGetDataObjectsRequest(iwfidl.WorkflowGetDataObjectsRequest{
-		WorkflowId:    workflowId,
-		WorkflowRunId: iwfidl.PtrString(workflowRunId),
-		Keys:          keys,
+		WorkflowId:               workflowId,
+		WorkflowRunId:            iwfidl.PtrString(workflowRunId),
+		Keys:                     keys,
+		UseMemoForDataAttributes: &useMemoForDataAttributes,
 	}).Execute()
 	if err := u.processError(err, httpResp); err != nil {
 		return nil, err

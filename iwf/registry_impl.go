@@ -13,6 +13,7 @@ type registryImpl struct {
 	internalChannelNameStore map[string]map[string]bool
 	dataAttrsKeyStore        map[string]map[string]bool
 	searchAttributeTypeStore map[string]map[string]iwfidl.SearchAttributeValueType
+	persistenceSchemaOptions map[string]PersistenceSchemaOptions
 }
 
 func (r *registryImpl) AddWorkflows(workflows ...ObjectWorkflow) error {
@@ -35,6 +36,9 @@ func (r *registryImpl) AddWorkflow(wf ObjectWorkflow) error {
 	if err := r.registerWorkflowCommunicationSchema(wf); err != nil {
 		return err
 	}
+	if err := r.registerWorkflowPersistenceSchemaOptions(wf); err != nil {
+		return err
+	}
 	return r.registerWorkflowPersistenceSchema(wf)
 }
 
@@ -48,6 +52,10 @@ func (r *registryImpl) GetAllRegisteredWorkflowTypes() []string {
 
 func (r *registryImpl) getWorkflowStartingState(wfType string) WorkflowState {
 	return r.workflowStartingState[wfType]
+}
+
+func (r *registryImpl) getPersistenceSchemaOptions(wfType string) PersistenceSchemaOptions {
+	return r.persistenceSchemaOptions[wfType]
 }
 
 func (r *registryImpl) getWorkflowStateDef(wfType string, id string) StateDef {
@@ -154,5 +162,10 @@ func (r *registryImpl) registerWorkflowPersistenceSchema(wf ObjectWorkflow) erro
 	}
 	r.dataAttrsKeyStore[wfType] = dataAttrsKeys
 	r.searchAttributeTypeStore[wfType] = searchAttributes
+	return nil
+}
+func (r *registryImpl) registerWorkflowPersistenceSchemaOptions(wf ObjectWorkflow) error {
+	wfType := GetFinalWorkflowType(wf)
+	r.persistenceSchemaOptions[wfType] = wf.GetPersistenceSchemaOptions()
 	return nil
 }
