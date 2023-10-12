@@ -6,12 +6,14 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **SearchAttributesLoadingPolicy** | Pointer to [**PersistenceLoadingPolicy**](PersistenceLoadingPolicy.md) |  | [optional] 
 **DataAttributesLoadingPolicy** | Pointer to [**PersistenceLoadingPolicy**](PersistenceLoadingPolicy.md) |  | [optional] 
-**CommandCarryOverPolicy** | Pointer to [**CommandCarryOverPolicy**](CommandCarryOverPolicy.md) |  | [optional] 
 **WaitUntilApiTimeoutSeconds** | Pointer to **int32** |  | [optional] 
 **ExecuteApiTimeoutSeconds** | Pointer to **int32** |  | [optional] 
 **WaitUntilApiRetryPolicy** | Pointer to [**RetryPolicy**](RetryPolicy.md) |  | [optional] 
 **ExecuteApiRetryPolicy** | Pointer to [**RetryPolicy**](RetryPolicy.md) |  | [optional] 
 **WaitUntilApiFailurePolicy** | Pointer to [**WaitUntilApiFailurePolicy**](WaitUntilApiFailurePolicy.md) |  | [optional] 
+**ExecuteApiFailurePolicy** | Pointer to [**ExecuteApiFailurePolicy**](ExecuteApiFailurePolicy.md) |  | [optional] 
+**ExecuteApiFailureProceedStateId** | Pointer to **string** |  | [optional] 
+**ExecuteApiFailureProceedStateOptions** | Pointer to [**WorkflowStateOptions**](WorkflowStateOptions.md) |  | [optional] 
 **SkipWaitUntil** | Pointer to **bool** |  | [optional] 
 
 ## Methods
@@ -82,31 +84,6 @@ SetDataAttributesLoadingPolicy sets DataAttributesLoadingPolicy field to given v
 `func (o *WorkflowStateOptions) HasDataAttributesLoadingPolicy() bool`
 
 HasDataAttributesLoadingPolicy returns a boolean if a field has been set.
-
-### GetCommandCarryOverPolicy
-
-`func (o *WorkflowStateOptions) GetCommandCarryOverPolicy() CommandCarryOverPolicy`
-
-GetCommandCarryOverPolicy returns the CommandCarryOverPolicy field if non-nil, zero value otherwise.
-
-### GetCommandCarryOverPolicyOk
-
-`func (o *WorkflowStateOptions) GetCommandCarryOverPolicyOk() (*CommandCarryOverPolicy, bool)`
-
-GetCommandCarryOverPolicyOk returns a tuple with the CommandCarryOverPolicy field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetCommandCarryOverPolicy
-
-`func (o *WorkflowStateOptions) SetCommandCarryOverPolicy(v CommandCarryOverPolicy)`
-
-SetCommandCarryOverPolicy sets CommandCarryOverPolicy field to given value.
-
-### HasCommandCarryOverPolicy
-
-`func (o *WorkflowStateOptions) HasCommandCarryOverPolicy() bool`
-
-HasCommandCarryOverPolicy returns a boolean if a field has been set.
 
 ### GetWaitUntilApiTimeoutSeconds
 
@@ -232,6 +209,81 @@ SetWaitUntilApiFailurePolicy sets WaitUntilApiFailurePolicy field to given value
 `func (o *WorkflowStateOptions) HasWaitUntilApiFailurePolicy() bool`
 
 HasWaitUntilApiFailurePolicy returns a boolean if a field has been set.
+
+### GetExecuteApiFailurePolicy
+
+`func (o *WorkflowStateOptions) GetExecuteApiFailurePolicy() ExecuteApiFailurePolicy`
+
+GetExecuteApiFailurePolicy returns the ExecuteApiFailurePolicy field if non-nil, zero value otherwise.
+
+### GetExecuteApiFailurePolicyOk
+
+`func (o *WorkflowStateOptions) GetExecuteApiFailurePolicyOk() (*ExecuteApiFailurePolicy, bool)`
+
+GetExecuteApiFailurePolicyOk returns a tuple with the ExecuteApiFailurePolicy field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExecuteApiFailurePolicy
+
+`func (o *WorkflowStateOptions) SetExecuteApiFailurePolicy(v ExecuteApiFailurePolicy)`
+
+SetExecuteApiFailurePolicy sets ExecuteApiFailurePolicy field to given value.
+
+### HasExecuteApiFailurePolicy
+
+`func (o *WorkflowStateOptions) HasExecuteApiFailurePolicy() bool`
+
+HasExecuteApiFailurePolicy returns a boolean if a field has been set.
+
+### GetExecuteApiFailureProceedStateId
+
+`func (o *WorkflowStateOptions) GetExecuteApiFailureProceedStateId() string`
+
+GetExecuteApiFailureProceedStateId returns the ExecuteApiFailureProceedStateId field if non-nil, zero value otherwise.
+
+### GetExecuteApiFailureProceedStateIdOk
+
+`func (o *WorkflowStateOptions) GetExecuteApiFailureProceedStateIdOk() (*string, bool)`
+
+GetExecuteApiFailureProceedStateIdOk returns a tuple with the ExecuteApiFailureProceedStateId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExecuteApiFailureProceedStateId
+
+`func (o *WorkflowStateOptions) SetExecuteApiFailureProceedStateId(v string)`
+
+SetExecuteApiFailureProceedStateId sets ExecuteApiFailureProceedStateId field to given value.
+
+### HasExecuteApiFailureProceedStateId
+
+`func (o *WorkflowStateOptions) HasExecuteApiFailureProceedStateId() bool`
+
+HasExecuteApiFailureProceedStateId returns a boolean if a field has been set.
+
+### GetExecuteApiFailureProceedStateOptions
+
+`func (o *WorkflowStateOptions) GetExecuteApiFailureProceedStateOptions() WorkflowStateOptions`
+
+GetExecuteApiFailureProceedStateOptions returns the ExecuteApiFailureProceedStateOptions field if non-nil, zero value otherwise.
+
+### GetExecuteApiFailureProceedStateOptionsOk
+
+`func (o *WorkflowStateOptions) GetExecuteApiFailureProceedStateOptionsOk() (*WorkflowStateOptions, bool)`
+
+GetExecuteApiFailureProceedStateOptionsOk returns a tuple with the ExecuteApiFailureProceedStateOptions field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExecuteApiFailureProceedStateOptions
+
+`func (o *WorkflowStateOptions) SetExecuteApiFailureProceedStateOptions(v WorkflowStateOptions)`
+
+SetExecuteApiFailureProceedStateOptions sets ExecuteApiFailureProceedStateOptions field to given value.
+
+### HasExecuteApiFailureProceedStateOptions
+
+`func (o *WorkflowStateOptions) HasExecuteApiFailureProceedStateOptions() bool`
+
+HasExecuteApiFailureProceedStateOptions returns a boolean if a field has been set.
 
 ### GetSkipWaitUntil
 

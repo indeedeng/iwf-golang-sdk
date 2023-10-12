@@ -19,15 +19,17 @@ var _ MappedNullable = &WorkflowStateOptions{}
 
 // WorkflowStateOptions struct for WorkflowStateOptions
 type WorkflowStateOptions struct {
-	SearchAttributesLoadingPolicy *PersistenceLoadingPolicy  `json:"searchAttributesLoadingPolicy,omitempty"`
-	DataAttributesLoadingPolicy   *PersistenceLoadingPolicy  `json:"dataAttributesLoadingPolicy,omitempty"`
-	CommandCarryOverPolicy        *CommandCarryOverPolicy    `json:"commandCarryOverPolicy,omitempty"`
-	WaitUntilApiTimeoutSeconds    *int32                     `json:"waitUntilApiTimeoutSeconds,omitempty"`
-	ExecuteApiTimeoutSeconds      *int32                     `json:"executeApiTimeoutSeconds,omitempty"`
-	WaitUntilApiRetryPolicy       *RetryPolicy               `json:"waitUntilApiRetryPolicy,omitempty"`
-	ExecuteApiRetryPolicy         *RetryPolicy               `json:"executeApiRetryPolicy,omitempty"`
-	WaitUntilApiFailurePolicy     *WaitUntilApiFailurePolicy `json:"waitUntilApiFailurePolicy,omitempty"`
-	SkipWaitUntil                 *bool                      `json:"skipWaitUntil,omitempty"`
+	SearchAttributesLoadingPolicy        *PersistenceLoadingPolicy  `json:"searchAttributesLoadingPolicy,omitempty"`
+	DataAttributesLoadingPolicy          *PersistenceLoadingPolicy  `json:"dataAttributesLoadingPolicy,omitempty"`
+	WaitUntilApiTimeoutSeconds           *int32                     `json:"waitUntilApiTimeoutSeconds,omitempty"`
+	ExecuteApiTimeoutSeconds             *int32                     `json:"executeApiTimeoutSeconds,omitempty"`
+	WaitUntilApiRetryPolicy              *RetryPolicy               `json:"waitUntilApiRetryPolicy,omitempty"`
+	ExecuteApiRetryPolicy                *RetryPolicy               `json:"executeApiRetryPolicy,omitempty"`
+	WaitUntilApiFailurePolicy            *WaitUntilApiFailurePolicy `json:"waitUntilApiFailurePolicy,omitempty"`
+	ExecuteApiFailurePolicy              *ExecuteApiFailurePolicy   `json:"executeApiFailurePolicy,omitempty"`
+	ExecuteApiFailureProceedStateId      *string                    `json:"executeApiFailureProceedStateId,omitempty"`
+	ExecuteApiFailureProceedStateOptions *WorkflowStateOptions      `json:"executeApiFailureProceedStateOptions,omitempty"`
+	SkipWaitUntil                        *bool                      `json:"skipWaitUntil,omitempty"`
 }
 
 // NewWorkflowStateOptions instantiates a new WorkflowStateOptions object
@@ -109,38 +111,6 @@ func (o *WorkflowStateOptions) HasDataAttributesLoadingPolicy() bool {
 // SetDataAttributesLoadingPolicy gets a reference to the given PersistenceLoadingPolicy and assigns it to the DataAttributesLoadingPolicy field.
 func (o *WorkflowStateOptions) SetDataAttributesLoadingPolicy(v PersistenceLoadingPolicy) {
 	o.DataAttributesLoadingPolicy = &v
-}
-
-// GetCommandCarryOverPolicy returns the CommandCarryOverPolicy field value if set, zero value otherwise.
-func (o *WorkflowStateOptions) GetCommandCarryOverPolicy() CommandCarryOverPolicy {
-	if o == nil || IsNil(o.CommandCarryOverPolicy) {
-		var ret CommandCarryOverPolicy
-		return ret
-	}
-	return *o.CommandCarryOverPolicy
-}
-
-// GetCommandCarryOverPolicyOk returns a tuple with the CommandCarryOverPolicy field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *WorkflowStateOptions) GetCommandCarryOverPolicyOk() (*CommandCarryOverPolicy, bool) {
-	if o == nil || IsNil(o.CommandCarryOverPolicy) {
-		return nil, false
-	}
-	return o.CommandCarryOverPolicy, true
-}
-
-// HasCommandCarryOverPolicy returns a boolean if a field has been set.
-func (o *WorkflowStateOptions) HasCommandCarryOverPolicy() bool {
-	if o != nil && !IsNil(o.CommandCarryOverPolicy) {
-		return true
-	}
-
-	return false
-}
-
-// SetCommandCarryOverPolicy gets a reference to the given CommandCarryOverPolicy and assigns it to the CommandCarryOverPolicy field.
-func (o *WorkflowStateOptions) SetCommandCarryOverPolicy(v CommandCarryOverPolicy) {
-	o.CommandCarryOverPolicy = &v
 }
 
 // GetWaitUntilApiTimeoutSeconds returns the WaitUntilApiTimeoutSeconds field value if set, zero value otherwise.
@@ -303,6 +273,102 @@ func (o *WorkflowStateOptions) SetWaitUntilApiFailurePolicy(v WaitUntilApiFailur
 	o.WaitUntilApiFailurePolicy = &v
 }
 
+// GetExecuteApiFailurePolicy returns the ExecuteApiFailurePolicy field value if set, zero value otherwise.
+func (o *WorkflowStateOptions) GetExecuteApiFailurePolicy() ExecuteApiFailurePolicy {
+	if o == nil || IsNil(o.ExecuteApiFailurePolicy) {
+		var ret ExecuteApiFailurePolicy
+		return ret
+	}
+	return *o.ExecuteApiFailurePolicy
+}
+
+// GetExecuteApiFailurePolicyOk returns a tuple with the ExecuteApiFailurePolicy field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WorkflowStateOptions) GetExecuteApiFailurePolicyOk() (*ExecuteApiFailurePolicy, bool) {
+	if o == nil || IsNil(o.ExecuteApiFailurePolicy) {
+		return nil, false
+	}
+	return o.ExecuteApiFailurePolicy, true
+}
+
+// HasExecuteApiFailurePolicy returns a boolean if a field has been set.
+func (o *WorkflowStateOptions) HasExecuteApiFailurePolicy() bool {
+	if o != nil && !IsNil(o.ExecuteApiFailurePolicy) {
+		return true
+	}
+
+	return false
+}
+
+// SetExecuteApiFailurePolicy gets a reference to the given ExecuteApiFailurePolicy and assigns it to the ExecuteApiFailurePolicy field.
+func (o *WorkflowStateOptions) SetExecuteApiFailurePolicy(v ExecuteApiFailurePolicy) {
+	o.ExecuteApiFailurePolicy = &v
+}
+
+// GetExecuteApiFailureProceedStateId returns the ExecuteApiFailureProceedStateId field value if set, zero value otherwise.
+func (o *WorkflowStateOptions) GetExecuteApiFailureProceedStateId() string {
+	if o == nil || IsNil(o.ExecuteApiFailureProceedStateId) {
+		var ret string
+		return ret
+	}
+	return *o.ExecuteApiFailureProceedStateId
+}
+
+// GetExecuteApiFailureProceedStateIdOk returns a tuple with the ExecuteApiFailureProceedStateId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WorkflowStateOptions) GetExecuteApiFailureProceedStateIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ExecuteApiFailureProceedStateId) {
+		return nil, false
+	}
+	return o.ExecuteApiFailureProceedStateId, true
+}
+
+// HasExecuteApiFailureProceedStateId returns a boolean if a field has been set.
+func (o *WorkflowStateOptions) HasExecuteApiFailureProceedStateId() bool {
+	if o != nil && !IsNil(o.ExecuteApiFailureProceedStateId) {
+		return true
+	}
+
+	return false
+}
+
+// SetExecuteApiFailureProceedStateId gets a reference to the given string and assigns it to the ExecuteApiFailureProceedStateId field.
+func (o *WorkflowStateOptions) SetExecuteApiFailureProceedStateId(v string) {
+	o.ExecuteApiFailureProceedStateId = &v
+}
+
+// GetExecuteApiFailureProceedStateOptions returns the ExecuteApiFailureProceedStateOptions field value if set, zero value otherwise.
+func (o *WorkflowStateOptions) GetExecuteApiFailureProceedStateOptions() WorkflowStateOptions {
+	if o == nil || IsNil(o.ExecuteApiFailureProceedStateOptions) {
+		var ret WorkflowStateOptions
+		return ret
+	}
+	return *o.ExecuteApiFailureProceedStateOptions
+}
+
+// GetExecuteApiFailureProceedStateOptionsOk returns a tuple with the ExecuteApiFailureProceedStateOptions field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WorkflowStateOptions) GetExecuteApiFailureProceedStateOptionsOk() (*WorkflowStateOptions, bool) {
+	if o == nil || IsNil(o.ExecuteApiFailureProceedStateOptions) {
+		return nil, false
+	}
+	return o.ExecuteApiFailureProceedStateOptions, true
+}
+
+// HasExecuteApiFailureProceedStateOptions returns a boolean if a field has been set.
+func (o *WorkflowStateOptions) HasExecuteApiFailureProceedStateOptions() bool {
+	if o != nil && !IsNil(o.ExecuteApiFailureProceedStateOptions) {
+		return true
+	}
+
+	return false
+}
+
+// SetExecuteApiFailureProceedStateOptions gets a reference to the given WorkflowStateOptions and assigns it to the ExecuteApiFailureProceedStateOptions field.
+func (o *WorkflowStateOptions) SetExecuteApiFailureProceedStateOptions(v WorkflowStateOptions) {
+	o.ExecuteApiFailureProceedStateOptions = &v
+}
+
 // GetSkipWaitUntil returns the SkipWaitUntil field value if set, zero value otherwise.
 func (o *WorkflowStateOptions) GetSkipWaitUntil() bool {
 	if o == nil || IsNil(o.SkipWaitUntil) {
@@ -351,9 +417,6 @@ func (o WorkflowStateOptions) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.DataAttributesLoadingPolicy) {
 		toSerialize["dataAttributesLoadingPolicy"] = o.DataAttributesLoadingPolicy
 	}
-	if !IsNil(o.CommandCarryOverPolicy) {
-		toSerialize["commandCarryOverPolicy"] = o.CommandCarryOverPolicy
-	}
 	if !IsNil(o.WaitUntilApiTimeoutSeconds) {
 		toSerialize["waitUntilApiTimeoutSeconds"] = o.WaitUntilApiTimeoutSeconds
 	}
@@ -368,6 +431,15 @@ func (o WorkflowStateOptions) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.WaitUntilApiFailurePolicy) {
 		toSerialize["waitUntilApiFailurePolicy"] = o.WaitUntilApiFailurePolicy
+	}
+	if !IsNil(o.ExecuteApiFailurePolicy) {
+		toSerialize["executeApiFailurePolicy"] = o.ExecuteApiFailurePolicy
+	}
+	if !IsNil(o.ExecuteApiFailureProceedStateId) {
+		toSerialize["executeApiFailureProceedStateId"] = o.ExecuteApiFailureProceedStateId
+	}
+	if !IsNil(o.ExecuteApiFailureProceedStateOptions) {
+		toSerialize["executeApiFailureProceedStateOptions"] = o.ExecuteApiFailureProceedStateOptions
 	}
 	if !IsNil(o.SkipWaitUntil) {
 		toSerialize["skipWaitUntil"] = o.SkipWaitUntil
