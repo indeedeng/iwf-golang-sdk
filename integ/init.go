@@ -24,6 +24,7 @@ func init() {
 		rpcWorkflow{},
 		noStateWorkflow{},
 		noStartStateWorkflow{},
+		executeApiFailRecoveryWorkflow{},
 	)
 	if err != nil {
 		panic(err)
