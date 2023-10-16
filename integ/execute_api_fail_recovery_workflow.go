@@ -3,9 +3,7 @@ package integ
 import "github.com/indeedeng/iwf-golang-sdk/iwf"
 
 type executeApiFailRecoveryWorkflow struct {
-	iwf.DefaultWorkflowType
-	iwf.EmptyPersistenceSchema
-	iwf.EmptyCommunicationSchema
+	iwf.WorkflowDefaults
 }
 
 func (b executeApiFailRecoveryWorkflow) GetWorkflowStates() []iwf.StateDef {
