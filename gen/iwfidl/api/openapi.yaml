@@ -149,6 +149,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Invalid input
+        "420":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: wait has exceeded timeout
       summary: "get a workflow's status and results(if completed & requested), wait\
         \ if the workflow is still running"
   /api/v1/workflow/search:
@@ -219,6 +225,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
           description: RPC execution error
+        "450":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: RPC acquire locking failure
       summary: execute an RPC of a workflow
   /api/v1/workflow/timer/skip:
     post:
@@ -256,6 +268,32 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Invalid input
       summary: update the config of a workflow
+  /api/v1/workflow/waitForStateCompletion:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkflowWaitForStateCompletionRequest'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowWaitForStateCompletionResponse'
+          description: successful operation
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Invalid input
+        "420":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: wait has exceeded timeout
   /api/v1/workflow/internal/dump:
     post:
       requestBody:
@@ -277,6 +315,16 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Invalid input
       summary: dump internal info of a workflow
+  /info/healthcheck:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthInfo'
+          description: successful operation
+      summary: return health info of the server
   /api/v1/workflowState/start:
     post:
       requestBody:
@@ -452,6 +500,11 @@ components:
         maximumAttempts:
           type: integer
       type: object
+    ExecuteApiFailurePolicy:
+      enum:
+      - FAIL_WORKFLOW_ON_EXECUTE_API_FAILURE
+      - PROCEED_TO_CONFIGURED_STATE
+      type: string
     WaitUntilApiFailurePolicy:
       enum:
       - FAIL_WORKFLOW_ON_FAILURE
@@ -467,10 +520,11 @@ components:
           - partialLoadingKeys
           - partialLoadingKeys
           persistenceLoadingType: null
-        commandCarryOverPolicy:
-          commandCarryOverType: null
         executeApiTimeoutSeconds: 1
+        executeApiFailureProceedStateId: executeApiFailureProceedStateId
         waitUntilApiFailurePolicy: null
+        executeApiFailurePolicy: null
+        executeApiFailureProceedStateOptions: null
         skipWaitUntil: true
         waitUntilApiRetryPolicy:
           maximumAttemptsDurationSeconds: 9
@@ -498,8 +552,6 @@ components:
           $ref: '#/components/schemas/PersistenceLoadingPolicy'
         dataAttributesLoadingPolicy:
           $ref: '#/components/schemas/PersistenceLoadingPolicy'
-        commandCarryOverPolicy:
-          $ref: '#/components/schemas/CommandCarryOverPolicy'
         waitUntilApiTimeoutSeconds:
           type: integer
         executeApiTimeoutSeconds:
@@ -510,6 +562,12 @@ components:
           $ref: '#/components/schemas/RetryPolicy'
         waitUntilApiFailurePolicy:
           $ref: '#/components/schemas/WaitUntilApiFailurePolicy'
+        executeApiFailurePolicy:
+          $ref: '#/components/schemas/ExecuteApiFailurePolicy'
+        executeApiFailureProceedStateId:
+          type: string
+        executeApiFailureProceedStateOptions:
+          $ref: '#/components/schemas/WorkflowStateOptions'
         skipWaitUntil:
           type: boolean
       type: object
@@ -595,17 +653,7 @@ components:
       - LOAD_ALL_WITHOUT_LOCKING
       - LOAD_PARTIAL_WITHOUT_LOCKING
       - LOAD_PARTIAL_WITH_EXCLUSIVE_LOCK
-      type: string
-    CommandCarryOverPolicy:
-      example:
-        commandCarryOverType: null
-      properties:
-        commandCarryOverType:
-          $ref: '#/components/schemas/CommandCarryOverType'
-      type: object
-    CommandCarryOverType:
-      enum:
-      - NONE
+      - LOAD_NONE
       type: string
     WorkerErrorResponse:
       properties:
@@ -613,6 +661,19 @@ components:
           type: string
         errorType:
           type: string
+      type: object
+    HealthInfo:
+      example:
+        duration: 0
+        condition: condition
+        hostname: hostname
+      properties:
+        condition:
+          type: string
+        hostname:
+          type: string
+        duration:
+          type: integer
       type: object
     ErrorResponse:
       properties:
@@ -633,11 +694,15 @@ components:
       - WORKFLOW_ALREADY_STARTED_SUB_STATUS
       - WORKFLOW_NOT_EXISTS_SUB_STATUS
       - WORKER_API_ERROR
+      - LONG_POLL_TIME_OUT_SUB_STATUS
       type: string
     WorkflowStartRequest:
       example:
         startStateId: startStateId
         workflowTimeoutSeconds: 0
+        waitForCompletionStateExecutionIds:
+        - waitForCompletionStateExecutionIds
+        - waitForCompletionStateExecutionIds
         stateOptions:
           searchAttributesLoadingPolicy:
             lockingKeys:
@@ -647,10 +712,11 @@ components:
             - partialLoadingKeys
             - partialLoadingKeys
             persistenceLoadingType: null
-          commandCarryOverPolicy:
-            commandCarryOverType: null
           executeApiTimeoutSeconds: 1
+          executeApiFailureProceedStateId: executeApiFailureProceedStateId
           waitUntilApiFailurePolicy: null
+          executeApiFailurePolicy: null
+          executeApiFailureProceedStateOptions: null
           skipWaitUntil: true
           waitUntilApiRetryPolicy:
             maximumAttemptsDurationSeconds: 9
@@ -722,6 +788,10 @@ components:
           type: string
         startStateId:
           type: string
+        waitForCompletionStateExecutionIds:
+          items:
+            type: string
+          type: array
         stateInput:
           $ref: '#/components/schemas/EncodedObject'
         stateOptions:
@@ -931,6 +1001,7 @@ components:
       - CLIENT_API_FAILING_WORKFLOW_ERROR_TYPE
       - STATE_API_FAIL_MAX_OUT_RETRY_ERROR_TYPE
       - INVALID_USER_WORKFLOW_CODE_ERROR_TYPE
+      - RPC_ACQUIRE_LOCK_FAILURE
       - SERVER_INTERNAL_ERROR_TYPE
       type: string
     WorkflowStatus:
@@ -1269,10 +1340,11 @@ components:
                 - partialLoadingKeys
                 - partialLoadingKeys
                 persistenceLoadingType: null
-              commandCarryOverPolicy:
-                commandCarryOverType: null
               executeApiTimeoutSeconds: 1
+              executeApiFailureProceedStateId: executeApiFailureProceedStateId
               waitUntilApiFailurePolicy: null
+              executeApiFailurePolicy: null
+              executeApiFailureProceedStateOptions: null
               skipWaitUntil: true
               waitUntilApiRetryPolicy:
                 maximumAttemptsDurationSeconds: 9
@@ -1308,10 +1380,11 @@ components:
                 - partialLoadingKeys
                 - partialLoadingKeys
                 persistenceLoadingType: null
-              commandCarryOverPolicy:
-                commandCarryOverType: null
               executeApiTimeoutSeconds: 1
+              executeApiFailureProceedStateId: executeApiFailureProceedStateId
               waitUntilApiFailurePolicy: null
+              executeApiFailurePolicy: null
+              executeApiFailureProceedStateOptions: null
               skipWaitUntil: true
               waitUntilApiRetryPolicy:
                 maximumAttemptsDurationSeconds: 9
@@ -1337,6 +1410,12 @@ components:
             stateInput:
               data: data
               encoding: encoding
+          conditionalClose:
+            closeInput:
+              data: data
+              encoding: encoding
+            channelName: channelName
+            conditionalCloseType: null
         upsertDataAttributes:
         - value:
             data: data
@@ -1754,10 +1833,11 @@ components:
                 - partialLoadingKeys
                 - partialLoadingKeys
                 persistenceLoadingType: null
-              commandCarryOverPolicy:
-                commandCarryOverType: null
               executeApiTimeoutSeconds: 1
+              executeApiFailureProceedStateId: executeApiFailureProceedStateId
               waitUntilApiFailurePolicy: null
+              executeApiFailurePolicy: null
+              executeApiFailureProceedStateOptions: null
               skipWaitUntil: true
               waitUntilApiRetryPolicy:
                 maximumAttemptsDurationSeconds: 9
@@ -1793,10 +1873,11 @@ components:
                 - partialLoadingKeys
                 - partialLoadingKeys
                 persistenceLoadingType: null
-              commandCarryOverPolicy:
-                commandCarryOverType: null
               executeApiTimeoutSeconds: 1
+              executeApiFailureProceedStateId: executeApiFailureProceedStateId
               waitUntilApiFailurePolicy: null
+              executeApiFailurePolicy: null
+              executeApiFailureProceedStateOptions: null
               skipWaitUntil: true
               waitUntilApiRetryPolicy:
                 maximumAttemptsDurationSeconds: 9
@@ -1822,6 +1903,12 @@ components:
             stateInput:
               data: data
               encoding: encoding
+          conditionalClose:
+            closeInput:
+              data: data
+              encoding: encoding
+            channelName: channelName
+            conditionalCloseType: null
         publishToInterStateChannel:
         - channelName: channelName
           value:
@@ -1873,6 +1960,34 @@ components:
             $ref: '#/components/schemas/InterStateChannelPublishing'
           type: array
       type: object
+    WorkflowWaitForStateCompletionRequest:
+      example:
+        waitTimeSeconds: 0
+        workflowId: workflowId
+        stateExecutionId: stateExecutionId
+      properties:
+        workflowId:
+          type: string
+        stateExecutionId:
+          type: string
+        waitTimeSeconds:
+          type: integer
+      required:
+      - stateExecutionId
+      - workflowId
+      type: object
+    WorkflowWaitForStateCompletionResponse:
+      example:
+        stateCompletionOutput:
+          completedStateOutput:
+            data: data
+            encoding: encoding
+          completedStateExecutionId: completedStateExecutionId
+          completedStateId: completedStateId
+      properties:
+        stateCompletionOutput:
+          $ref: '#/components/schemas/StateCompletionOutput'
+      type: object
     StateDecision:
       example:
         nextStates:
@@ -1886,10 +2001,11 @@ components:
               - partialLoadingKeys
               - partialLoadingKeys
               persistenceLoadingType: null
-            commandCarryOverPolicy:
-              commandCarryOverType: null
             executeApiTimeoutSeconds: 1
+            executeApiFailureProceedStateId: executeApiFailureProceedStateId
             waitUntilApiFailurePolicy: null
+            executeApiFailurePolicy: null
+            executeApiFailureProceedStateOptions: null
             skipWaitUntil: true
             waitUntilApiRetryPolicy:
               maximumAttemptsDurationSeconds: 9
@@ -1925,10 +2041,11 @@ components:
               - partialLoadingKeys
               - partialLoadingKeys
               persistenceLoadingType: null
-            commandCarryOverPolicy:
-              commandCarryOverType: null
             executeApiTimeoutSeconds: 1
+            executeApiFailureProceedStateId: executeApiFailureProceedStateId
             waitUntilApiFailurePolicy: null
+            executeApiFailurePolicy: null
+            executeApiFailureProceedStateOptions: null
             skipWaitUntil: true
             waitUntilApiRetryPolicy:
               maximumAttemptsDurationSeconds: 9
@@ -1954,12 +2071,41 @@ components:
           stateInput:
             data: data
             encoding: encoding
+        conditionalClose:
+          closeInput:
+            data: data
+            encoding: encoding
+          channelName: channelName
+          conditionalCloseType: null
       properties:
         nextStates:
           items:
             $ref: '#/components/schemas/StateMovement'
           type: array
+        conditionalClose:
+          $ref: '#/components/schemas/WorkflowConditionalClose'
       type: object
+    WorkflowConditionalClose:
+      example:
+        closeInput:
+          data: data
+          encoding: encoding
+        channelName: channelName
+        conditionalCloseType: null
+      properties:
+        conditionalCloseType:
+          $ref: '#/components/schemas/WorkflowConditionalCloseType'
+        channelName:
+          type: string
+        closeInput:
+          $ref: '#/components/schemas/EncodedObject'
+      type: object
+    WorkflowConditionalCloseType:
+      enum:
+      - FORCE_COMPLETE_ON_INTERNAL_CHANNEL_EMPTY
+      - FORCE_COMPLETE_ON_SIGNAL_CHANNEL_EMPTY
+      - GRACEFUL_COMPLETE_ON_ALL_CHANNELS_EMPTY
+      type: string
     StateMovement:
       example:
         stateId: stateId
@@ -1972,10 +2118,11 @@ components:
             - partialLoadingKeys
             - partialLoadingKeys
             persistenceLoadingType: null
-          commandCarryOverPolicy:
-            commandCarryOverType: null
           executeApiTimeoutSeconds: 1
+          executeApiFailureProceedStateId: executeApiFailureProceedStateId
           waitUntilApiFailurePolicy: null
+          executeApiFailurePolicy: null
+          executeApiFailureProceedStateOptions: null
           skipWaitUntil: true
           waitUntilApiRetryPolicy:
             maximumAttemptsDurationSeconds: 9
