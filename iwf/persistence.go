@@ -1,8 +1,11 @@
 package iwf
 
+//go:generate mockgen -source=./persistence.go -package=iwftest -destination=../iwftest/persistence.go
+
 import (
-	"github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
 	"time"
+
+	"github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
 )
 
 // Persistence APIs are for read/write persistence of workflow

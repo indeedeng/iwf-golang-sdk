@@ -1,5 +1,7 @@
 package iwf
 
+//go:generate mockgen -source=./communication.go -package=iwftest -destination=../iwftest/communication.go
+
 import "github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
 
 type Communication interface {
