@@ -2,6 +2,7 @@ package iwf
 
 import (
 	"context"
+
 	"github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
 )
 
@@ -33,6 +34,9 @@ func (w *workerServiceImpl) HandleWorkflowWorkerRPC(ctx context.Context, request
 	}
 
 	outputEncoded, err := w.options.ObjectEncoder.Encode(output)
+	if err != nil {
+		return nil, err
+	}
 	resp = &iwfidl.WorkflowWorkerRpcResponse{
 		Output: outputEncoded,
 	}
@@ -178,6 +182,9 @@ func (w *workerServiceImpl) HandleWorkflowStateExecute(ctx context.Context, requ
 		return nil, err
 	}
 	idlDecision, err := toIdlDecision(decision, wfType, w.registry, w.options.ObjectEncoder)
+	if err != nil {
+		return nil, err
+	}
 	resp = &iwfidl.WorkflowStateExecuteResponse{
 		StateDecision: idlDecision,
 	}

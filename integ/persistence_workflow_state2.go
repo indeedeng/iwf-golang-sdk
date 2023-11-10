@@ -21,7 +21,7 @@ func (b persistenceWorkflowState2) WaitUntil(ctx iwf.WorkflowContext, input iwf.
 	dv := persistence.GetSearchAttributeDatetime(testSearchAttributeDatetime)
 	bv := persistence.GetSearchAttributeBool(testSearchAttributeBool)
 	persistence.SetSearchAttributeDouble(testSearchAttributeDouble, 1.0)
-	if dv.Unix() == do.Datetime.Unix() && bv == true {
+	if dv.Unix() == do.Datetime.Unix() && bv {
 		persistence.SetSearchAttributeText(testSearchAttributeText, testText)
 		return iwf.EmptyCommandRequest(), nil
 	}

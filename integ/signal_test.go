@@ -2,11 +2,12 @@ package integ
 
 import (
 	"context"
-	"github.com/indeedeng/iwf-golang-sdk/iwf"
-	"github.com/stretchr/testify/assert"
 	"strconv"
 	"testing"
 	"time"
+
+	"github.com/indeedeng/iwf-golang-sdk/iwf"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestSignalWorkflow(t *testing.T) {
@@ -15,11 +16,15 @@ func TestSignalWorkflow(t *testing.T) {
 	assert.Nil(t, err)
 	assert.NotEmpty(t, runId)
 	err = client.SignalWorkflow(context.Background(), &signalWorkflow{}, wfId, "", testChannelName2, 10)
+	assert.Nil(t, err)
 
 	// wait for timer to be ready to be skipped
 	time.Sleep(time.Second)
 	err = client.SignalWorkflow(context.Background(), &signalWorkflow{}, wfId, "", testChannelName1, 100)
+	assert.Nil(t, err)
+
 	err = client.SkipTimerByCommandIndex(context.Background(), wfId, "", signalWorkflowState2{}, 1, 0)
+	assert.Nil(t, err)
 
 	var output int
 	err = client.GetSimpleWorkflowResult(context.Background(), wfId, "", &output)
@@ -39,11 +44,15 @@ func TestSignalWorkflowWithUntypedClient(t *testing.T) {
 	assert.Nil(t, err)
 	assert.NotEmpty(t, runId)
 	err = unregisteredClient.SignalWorkflow(context.Background(), wfId, "", testChannelName2, 10)
+	assert.Nil(t, err)
 
 	// wait for timer to be ready to be skipped
 	time.Sleep(time.Second)
 	err = unregisteredClient.SignalWorkflow(context.Background(), wfId, "", testChannelName1, 100)
+	assert.Nil(t, err)
+
 	err = unregisteredClient.SkipTimerByCommandIndex(context.Background(), wfId, "", iwf.GetFinalWorkflowStateId(signalWorkflowState2{}), 1, 0)
+	assert.Nil(t, err)
 
 	var output int
 	err = unregisteredClient.GetSimpleWorkflowResult(context.Background(), wfId, "", &output)
