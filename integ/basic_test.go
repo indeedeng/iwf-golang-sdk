@@ -51,4 +51,5 @@ func TestProceedOnStateStartFailWorkflow(t *testing.T) {
 	var output string
 	err = client.GetSimpleWorkflowResult(context.Background(), wfId, "", &output)
 	assert.Equal(t, "input_state1_start_state1_decide_state2_start_state2_decide", output)
+	assert.Nil(t, err)
 }

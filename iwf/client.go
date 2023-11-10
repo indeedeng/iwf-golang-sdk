@@ -1,7 +1,10 @@
 package iwf
 
+//go:generate mockgen -source=./client.go -package=iwftest -destination=../iwftest/client.go
+
 import (
 	"context"
+
 	"github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
 )
 

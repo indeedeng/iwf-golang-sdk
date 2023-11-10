@@ -1,5 +1,7 @@
 package iwf
 
+//go:generate mockgen -source=./workflow_context.go -package=iwftest -destination=../iwftest/workflow_context.go
+
 import "context"
 
 type WorkflowContext interface {

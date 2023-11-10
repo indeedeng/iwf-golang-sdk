@@ -1,11 +1,12 @@
 package example
 
 import (
-	"github.com/golang/mock/gomock"
+	"testing"
+
 	"github.com/indeedeng/iwf-golang-sdk/iwf"
 	"github.com/indeedeng/iwf-golang-sdk/iwftest"
 	"github.com/stretchr/testify/assert"
-	"testing"
+	"go.uber.org/mock/gomock"
 )
 
 var mockWfCtx *iwftest.MockWorkflowContext

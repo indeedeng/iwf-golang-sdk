@@ -2,13 +2,14 @@ package integ
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
-	"github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
-	"github.com/indeedeng/iwf-golang-sdk/iwf"
 	"log"
 	"net/http"
 	"os"
 	"testing"
+
+	"github.com/gin-gonic/gin"
+	"github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
+	"github.com/indeedeng/iwf-golang-sdk/iwf"
 )
 
 func TestMain(m *testing.M) {
@@ -33,7 +34,6 @@ func apiV1WorkflowStateStart(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, resp)
-	return
 }
 func apiV1WorkflowStateDecide(c *gin.Context) {
 	var req iwfidl.WorkflowStateExecuteRequest
@@ -48,7 +48,6 @@ func apiV1WorkflowStateDecide(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, resp)
-	return
 }
 
 func apiV1WorkflowWorkerRpc(c *gin.Context) {
@@ -67,7 +66,6 @@ func apiV1WorkflowWorkerRpc(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, resp)
-	return
 }
 
 func startWorkflowWorker() (closeFunc func()) {
