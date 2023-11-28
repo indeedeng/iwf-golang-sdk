@@ -103,16 +103,7 @@ func toIdlDecision(from *StateDecision, wfType string, registry Registry, encode
 		var options *iwfidl.WorkflowStateOptions
 		if !strings.HasPrefix(fromMv.NextStateId, ReservedStateIdPrefix) {
 			stateDef := registry.getWorkflowStateDef(wfType, fromMv.NextStateId)
-			options = stateDef.State.GetStateOptions()
-			if ShouldSkipWaitUntilAPI(stateDef.State) {
-				if options == nil {
-					options = &iwfidl.WorkflowStateOptions{
-						SkipWaitUntil: ptr.Any(true),
-					}
-				} else {
-					options.SkipWaitUntil = ptr.Any(true)
-				}
-			}
+			options = toIdlStateOptions(ShouldSkipWaitUntilAPI(stateDef.State), stateDef.State.GetStateOptions())
 		}
 		mv := iwfidl.StateMovement{
 			StateId:      fromMv.NextStateId,
@@ -124,4 +115,38 @@ func toIdlDecision(from *StateDecision, wfType string, registry Registry, encode
 	return &iwfidl.StateDecision{
 		NextStates: mvs,
 	}, nil
+}
+
+func toIdlStateOptions(skipWaitUntil bool, stateOptions *StateOptions) *iwfidl.WorkflowStateOptions {
+	if stateOptions == nil {
+		stateOptions = &StateOptions{}
+	}
+
+	idlStOptions := &iwfidl.WorkflowStateOptions{
+		SearchAttributesLoadingPolicy: stateOptions.SearchAttributesLoadingPolicy,
+		DataAttributesLoadingPolicy:   stateOptions.DataAttributesLoadingPolicy,
+		WaitUntilApiTimeoutSeconds:    stateOptions.WaitUntilApiTimeoutSeconds,
+		ExecuteApiTimeoutSeconds:      stateOptions.ExecuteApiTimeoutSeconds,
+		WaitUntilApiRetryPolicy:       stateOptions.WaitUntilApiRetryPolicy,
+		ExecuteApiRetryPolicy:         stateOptions.ExecuteApiRetryPolicy,
+		WaitUntilApiFailurePolicy:     stateOptions.WaitUntilApiFailurePolicy,
+	}
+
+	if skipWaitUntil {
+		idlStOptions.SkipWaitUntil = ptr.Any(true)
+	}
+
+	if stateOptions.ExecuteApiFailureProceedState != nil {
+		idlStOptions.ExecuteApiFailurePolicy = iwfidl.PROCEED_TO_CONFIGURED_STATE.Ptr()
+		idlStOptions.ExecuteApiFailureProceedStateId = ptr.Any(GetFinalWorkflowStateId(stateOptions.ExecuteApiFailureProceedState))
+
+		proceedStateOptions := stateOptions.ExecuteApiFailureProceedState.GetStateOptions()
+		if proceedStateOptions != nil && proceedStateOptions.ExecuteApiFailureProceedState != nil {
+			panic("nested failure handling/recovery is not supported: ExecuteApiFailureProceedState cannot have ExecuteApiFailureProceedState")
+		}
+		idlStOptions.ExecuteApiFailureProceedStateOptions =
+			toIdlStateOptions(ShouldSkipWaitUntilAPI(stateOptions.ExecuteApiFailureProceedState), proceedStateOptions)
+	}
+
+	return idlStOptions
 }

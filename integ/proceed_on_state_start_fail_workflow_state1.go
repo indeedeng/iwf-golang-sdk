@@ -27,8 +27,8 @@ func (b *proceedOnStateStartFailWorkflowState1) Execute(ctx iwf.WorkflowContext,
 	return iwf.SingleNextState(&proceedOnStateStartFailWorkflowState2{}, b.output), nil
 }
 
-func (b *proceedOnStateStartFailWorkflowState1) GetStateOptions() *iwfidl.WorkflowStateOptions {
-	return &iwfidl.WorkflowStateOptions{
+func (b *proceedOnStateStartFailWorkflowState1) GetStateOptions() *iwf.StateOptions {
+	return &iwf.StateOptions{
 		WaitUntilApiRetryPolicy: &iwfidl.RetryPolicy{
 			InitialIntervalSeconds: iwfidl.PtrInt32(1),
 			MaximumAttempts:        iwfidl.PtrInt32(2),
