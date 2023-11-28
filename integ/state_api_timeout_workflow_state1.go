@@ -19,8 +19,8 @@ func (b stateApiTimeoutWorkflowState1) Execute(ctx iwf.WorkflowContext, input iw
 	return iwf.ForceFailWorkflow("a failing message"), nil
 }
 
-func (b stateApiTimeoutWorkflowState1) GetStateOptions() *iwfidl.WorkflowStateOptions {
-	return &iwfidl.WorkflowStateOptions{
+func (b stateApiTimeoutWorkflowState1) GetStateOptions() *iwf.StateOptions {
+	return &iwf.StateOptions{
 		WaitUntilApiRetryPolicy: &iwfidl.RetryPolicy{
 			MaximumAttempts: iwfidl.PtrInt32(1),
 		},

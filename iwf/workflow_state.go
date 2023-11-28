@@ -1,7 +1,6 @@
 package iwf
 
 import (
-	"github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
 	"reflect"
 )
 
@@ -51,7 +50,7 @@ type WorkflowState interface {
 
 	// GetStateOptions can just return nil to use the default Options
 	// StateOptions is optional configuration to adjust the state behaviors
-	GetStateOptions() *iwfidl.WorkflowStateOptions
+	GetStateOptions() *StateOptions
 }
 
 // GetFinalWorkflowStateId returns the stateId that will be registered and used
@@ -95,7 +94,7 @@ func (d DefaultStateId) GetStateId() string {
 
 type DefaultStateOptions struct{}
 
-func (d DefaultStateOptions) GetStateOptions() *iwfidl.WorkflowStateOptions {
+func (d DefaultStateOptions) GetStateOptions() *StateOptions {
 	return nil
 }
 

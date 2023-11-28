@@ -13,8 +13,10 @@ func (b executeApiFailRecoveryWorkflowState1) GetStateId() string {
 	return "execute_api_fail_recovery_workflow_state1"
 }
 
-func (b executeApiFailRecoveryWorkflowState1) GetStateOptions() *iwfidl.WorkflowStateOptions {
-	options := iwf.NewWorkflowStateOptionsExtension(nil).SetProceedOnExecuteFailure(executeApiFailRecoveryWorkflowState2{}, nil)
+func (b executeApiFailRecoveryWorkflowState1) GetStateOptions() *iwf.StateOptions {
+	options := &iwf.StateOptions{
+		ExecuteApiFailureProceedState: &executeApiFailRecoveryWorkflowState2{},
+	}
 	options.ExecuteApiRetryPolicy = &iwfidl.RetryPolicy{
 		InitialIntervalSeconds: iwfidl.PtrInt32(1),
 		MaximumAttempts:        iwfidl.PtrInt32(1),
