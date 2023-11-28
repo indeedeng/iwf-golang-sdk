@@ -14,8 +14,3 @@ type StateOptions struct {
 	WaitUntilApiFailurePolicy     *iwfidl.WaitUntilApiFailurePolicy
 	ExecuteApiFailureProceedState WorkflowState
 }
-
-func (s *StateOptions) SetProceedOnExecuteFailure(state WorkflowState) *StateOptions {
-	s.ExecuteApiFailureProceedState = state
-	return s
-}
