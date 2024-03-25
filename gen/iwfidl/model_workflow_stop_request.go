@@ -12,6 +12,7 @@ package iwfidl
 
 import (
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the WorkflowStopRequest type satisfies the MappedNullable interface at compile time
@@ -24,6 +25,8 @@ type WorkflowStopRequest struct {
 	Reason        *string           `json:"reason,omitempty"`
 	StopType      *WorkflowStopType `json:"stopType,omitempty"`
 }
+
+type _WorkflowStopRequest WorkflowStopRequest
 
 // NewWorkflowStopRequest instantiates a new WorkflowStopRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -184,6 +187,41 @@ func (o WorkflowStopRequest) ToMap() (map[string]interface{}, error) {
 		toSerialize["stopType"] = o.StopType
 	}
 	return toSerialize, nil
+}
+
+func (o *WorkflowStopRequest) UnmarshalJSON(bytes []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"workflowId",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(bytes, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varWorkflowStopRequest := _WorkflowStopRequest{}
+
+	err = json.Unmarshal(bytes, &varWorkflowStopRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = WorkflowStopRequest(varWorkflowStopRequest)
+
+	return err
 }
 
 type NullableWorkflowStopRequest struct {

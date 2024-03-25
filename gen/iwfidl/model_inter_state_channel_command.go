@@ -12,6 +12,7 @@ package iwfidl
 
 import (
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the InterStateChannelCommand type satisfies the MappedNullable interface at compile time
@@ -22,6 +23,8 @@ type InterStateChannelCommand struct {
 	CommandId   string `json:"commandId"`
 	ChannelName string `json:"channelName"`
 }
+
+type _InterStateChannelCommand InterStateChannelCommand
 
 // NewInterStateChannelCommand instantiates a new InterStateChannelCommand object
 // This constructor will assign default values to properties that have it defined,
@@ -103,6 +106,42 @@ func (o InterStateChannelCommand) ToMap() (map[string]interface{}, error) {
 	toSerialize["commandId"] = o.CommandId
 	toSerialize["channelName"] = o.ChannelName
 	return toSerialize, nil
+}
+
+func (o *InterStateChannelCommand) UnmarshalJSON(bytes []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"commandId",
+		"channelName",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(bytes, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varInterStateChannelCommand := _InterStateChannelCommand{}
+
+	err = json.Unmarshal(bytes, &varInterStateChannelCommand)
+
+	if err != nil {
+		return err
+	}
+
+	*o = InterStateChannelCommand(varInterStateChannelCommand)
+
+	return err
 }
 
 type NullableInterStateChannelCommand struct {

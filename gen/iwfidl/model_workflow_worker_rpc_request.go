@@ -12,6 +12,7 @@ package iwfidl
 
 import (
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the WorkflowWorkerRpcRequest type satisfies the MappedNullable interface at compile time
@@ -26,6 +27,8 @@ type WorkflowWorkerRpcRequest struct {
 	SearchAttributes []SearchAttribute `json:"searchAttributes,omitempty"`
 	DataAttributes   []KeyValue        `json:"dataAttributes,omitempty"`
 }
+
+type _WorkflowWorkerRpcRequest WorkflowWorkerRpcRequest
 
 // NewWorkflowWorkerRpcRequest instantiates a new WorkflowWorkerRpcRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -238,6 +241,43 @@ func (o WorkflowWorkerRpcRequest) ToMap() (map[string]interface{}, error) {
 		toSerialize["dataAttributes"] = o.DataAttributes
 	}
 	return toSerialize, nil
+}
+
+func (o *WorkflowWorkerRpcRequest) UnmarshalJSON(bytes []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"context",
+		"workflowType",
+		"rpcName",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(bytes, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varWorkflowWorkerRpcRequest := _WorkflowWorkerRpcRequest{}
+
+	err = json.Unmarshal(bytes, &varWorkflowWorkerRpcRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = WorkflowWorkerRpcRequest(varWorkflowWorkerRpcRequest)
+
+	return err
 }
 
 type NullableWorkflowWorkerRpcRequest struct {

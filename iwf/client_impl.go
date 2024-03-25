@@ -37,6 +37,7 @@ func (c *clientImpl) StartWorkflow(ctx context.Context, workflow ObjectWorkflow,
 		unregOpt.WorkflowIdReusePolicy = options.WorkflowIdReusePolicy
 		unregOpt.WorkflowRetryPolicy = options.WorkflowRetryPolicy
 		unregOpt.WorkflowCronSchedule = options.WorkflowCronSchedule
+		unregOpt.WorkflowStartDelaySeconds = options.WorkflowStartDelaySeconds
 
 		saTypes := c.registry.getSearchAttributeTypeStore(wfType)
 

@@ -12,6 +12,7 @@ package iwfidl
 
 import (
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the WorkflowSkipTimerRequest type satisfies the MappedNullable interface at compile time
@@ -25,6 +26,8 @@ type WorkflowSkipTimerRequest struct {
 	TimerCommandId           *string `json:"timerCommandId,omitempty"`
 	TimerCommandIndex        *int32  `json:"timerCommandIndex,omitempty"`
 }
+
+type _WorkflowSkipTimerRequest WorkflowSkipTimerRequest
 
 // NewWorkflowSkipTimerRequest instantiates a new WorkflowSkipTimerRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -211,6 +214,42 @@ func (o WorkflowSkipTimerRequest) ToMap() (map[string]interface{}, error) {
 		toSerialize["timerCommandIndex"] = o.TimerCommandIndex
 	}
 	return toSerialize, nil
+}
+
+func (o *WorkflowSkipTimerRequest) UnmarshalJSON(bytes []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"workflowId",
+		"workflowStateExecutionId",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(bytes, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varWorkflowSkipTimerRequest := _WorkflowSkipTimerRequest{}
+
+	err = json.Unmarshal(bytes, &varWorkflowSkipTimerRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = WorkflowSkipTimerRequest(varWorkflowSkipTimerRequest)
+
+	return err
 }
 
 type NullableWorkflowSkipTimerRequest struct {

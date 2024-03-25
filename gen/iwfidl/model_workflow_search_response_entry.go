@@ -12,6 +12,7 @@ package iwfidl
 
 import (
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the WorkflowSearchResponseEntry type satisfies the MappedNullable interface at compile time
@@ -22,6 +23,8 @@ type WorkflowSearchResponseEntry struct {
 	WorkflowId    string `json:"workflowId"`
 	WorkflowRunId string `json:"workflowRunId"`
 }
+
+type _WorkflowSearchResponseEntry WorkflowSearchResponseEntry
 
 // NewWorkflowSearchResponseEntry instantiates a new WorkflowSearchResponseEntry object
 // This constructor will assign default values to properties that have it defined,
@@ -103,6 +106,42 @@ func (o WorkflowSearchResponseEntry) ToMap() (map[string]interface{}, error) {
 	toSerialize["workflowId"] = o.WorkflowId
 	toSerialize["workflowRunId"] = o.WorkflowRunId
 	return toSerialize, nil
+}
+
+func (o *WorkflowSearchResponseEntry) UnmarshalJSON(bytes []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"workflowId",
+		"workflowRunId",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(bytes, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varWorkflowSearchResponseEntry := _WorkflowSearchResponseEntry{}
+
+	err = json.Unmarshal(bytes, &varWorkflowSearchResponseEntry)
+
+	if err != nil {
+		return err
+	}
+
+	*o = WorkflowSearchResponseEntry(varWorkflowSearchResponseEntry)
+
+	return err
 }
 
 type NullableWorkflowSearchResponseEntry struct {

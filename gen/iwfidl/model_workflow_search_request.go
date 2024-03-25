@@ -12,6 +12,7 @@ package iwfidl
 
 import (
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the WorkflowSearchRequest type satisfies the MappedNullable interface at compile time
@@ -23,6 +24,8 @@ type WorkflowSearchRequest struct {
 	PageSize      *int32  `json:"pageSize,omitempty"`
 	NextPageToken *string `json:"nextPageToken,omitempty"`
 }
+
+type _WorkflowSearchRequest WorkflowSearchRequest
 
 // NewWorkflowSearchRequest instantiates a new WorkflowSearchRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -148,6 +151,41 @@ func (o WorkflowSearchRequest) ToMap() (map[string]interface{}, error) {
 		toSerialize["nextPageToken"] = o.NextPageToken
 	}
 	return toSerialize, nil
+}
+
+func (o *WorkflowSearchRequest) UnmarshalJSON(bytes []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"query",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(bytes, &allProperties)
+
+	if err != nil {
+		return err
+	}
+
+	for _, requiredProperty := range requiredProperties {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varWorkflowSearchRequest := _WorkflowSearchRequest{}
+
+	err = json.Unmarshal(bytes, &varWorkflowSearchRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = WorkflowSearchRequest(varWorkflowSearchRequest)
+
+	return err
 }
 
 type NullableWorkflowSearchRequest struct {
