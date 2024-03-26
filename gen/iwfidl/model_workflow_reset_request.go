@@ -19,15 +19,15 @@ var _ MappedNullable = &WorkflowResetRequest{}
 
 // WorkflowResetRequest struct for WorkflowResetRequest
 type WorkflowResetRequest struct {
-	WorkflowId string `json:"workflowId"`
-	WorkflowRunId *string `json:"workflowRunId,omitempty"`
-	ResetType WorkflowResetType `json:"resetType"`
-	HistoryEventId *int32 `json:"historyEventId,omitempty"`
-	Reason *string `json:"reason,omitempty"`
-	HistoryEventTime *string `json:"historyEventTime,omitempty"`
-	StateId *string `json:"stateId,omitempty"`
-	StateExecutionId *string `json:"stateExecutionId,omitempty"`
-	SkipSignalReapply *bool `json:"skipSignalReapply,omitempty"`
+	WorkflowId        string            `json:"workflowId"`
+	WorkflowRunId     *string           `json:"workflowRunId,omitempty"`
+	ResetType         WorkflowResetType `json:"resetType"`
+	HistoryEventId    *int32            `json:"historyEventId,omitempty"`
+	Reason            *string           `json:"reason,omitempty"`
+	HistoryEventTime  *string           `json:"historyEventTime,omitempty"`
+	StateId           *string           `json:"stateId,omitempty"`
+	StateExecutionId  *string           `json:"stateExecutionId,omitempty"`
+	SkipSignalReapply *bool             `json:"skipSignalReapply,omitempty"`
 }
 
 // NewWorkflowResetRequest instantiates a new WorkflowResetRequest object
@@ -322,7 +322,7 @@ func (o *WorkflowResetRequest) SetSkipSignalReapply(v bool) {
 }
 
 func (o WorkflowResetRequest) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -392,5 +392,3 @@ func (v *NullableWorkflowResetRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

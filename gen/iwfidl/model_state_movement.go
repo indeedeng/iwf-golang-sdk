@@ -19,8 +19,8 @@ var _ MappedNullable = &StateMovement{}
 
 // StateMovement struct for StateMovement
 type StateMovement struct {
-	StateId string `json:"stateId"`
-	StateInput *EncodedObject `json:"stateInput,omitempty"`
+	StateId      string                `json:"stateId"`
+	StateInput   *EncodedObject        `json:"stateInput,omitempty"`
 	StateOptions *WorkflowStateOptions `json:"stateOptions,omitempty"`
 }
 
@@ -131,7 +131,7 @@ func (o *StateMovement) SetStateOptions(v WorkflowStateOptions) {
 }
 
 func (o StateMovement) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -185,5 +185,3 @@ func (v *NullableStateMovement) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

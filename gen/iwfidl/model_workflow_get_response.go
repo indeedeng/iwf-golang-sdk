@@ -19,11 +19,11 @@ var _ MappedNullable = &WorkflowGetResponse{}
 
 // WorkflowGetResponse struct for WorkflowGetResponse
 type WorkflowGetResponse struct {
-	WorkflowRunId string `json:"workflowRunId"`
-	WorkflowStatus WorkflowStatus `json:"workflowStatus"`
-	Results []StateCompletionOutput `json:"results,omitempty"`
-	ErrorType *WorkflowErrorType `json:"errorType,omitempty"`
-	ErrorMessage *string `json:"errorMessage,omitempty"`
+	WorkflowRunId  string                  `json:"workflowRunId"`
+	WorkflowStatus WorkflowStatus          `json:"workflowStatus"`
+	Results        []StateCompletionOutput `json:"results,omitempty"`
+	ErrorType      *WorkflowErrorType      `json:"errorType,omitempty"`
+	ErrorMessage   *string                 `json:"errorMessage,omitempty"`
 }
 
 // NewWorkflowGetResponse instantiates a new WorkflowGetResponse object
@@ -190,7 +190,7 @@ func (o *WorkflowGetResponse) SetErrorMessage(v string) {
 }
 
 func (o WorkflowGetResponse) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -248,5 +248,3 @@ func (v *NullableWorkflowGetResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

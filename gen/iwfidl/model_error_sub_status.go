@@ -20,11 +20,11 @@ type ErrorSubStatus string
 
 // List of ErrorSubStatus
 const (
-	UNCATEGORIZED_SUB_STATUS ErrorSubStatus = "UNCATEGORIZED_SUB_STATUS"
+	UNCATEGORIZED_SUB_STATUS            ErrorSubStatus = "UNCATEGORIZED_SUB_STATUS"
 	WORKFLOW_ALREADY_STARTED_SUB_STATUS ErrorSubStatus = "WORKFLOW_ALREADY_STARTED_SUB_STATUS"
-	WORKFLOW_NOT_EXISTS_SUB_STATUS ErrorSubStatus = "WORKFLOW_NOT_EXISTS_SUB_STATUS"
-	WORKER_API_ERROR ErrorSubStatus = "WORKER_API_ERROR"
-	LONG_POLL_TIME_OUT_SUB_STATUS ErrorSubStatus = "LONG_POLL_TIME_OUT_SUB_STATUS"
+	WORKFLOW_NOT_EXISTS_SUB_STATUS      ErrorSubStatus = "WORKFLOW_NOT_EXISTS_SUB_STATUS"
+	WORKER_API_ERROR                    ErrorSubStatus = "WORKER_API_ERROR"
+	LONG_POLL_TIME_OUT_SUB_STATUS       ErrorSubStatus = "LONG_POLL_TIME_OUT_SUB_STATUS"
 )
 
 // All allowed values of ErrorSubStatus enum
@@ -114,4 +114,3 @@ func (v *NullableErrorSubStatus) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

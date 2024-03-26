@@ -19,11 +19,11 @@ var _ MappedNullable = &WorkflowStateWaitUntilResponse{}
 
 // WorkflowStateWaitUntilResponse struct for WorkflowStateWaitUntilResponse
 type WorkflowStateWaitUntilResponse struct {
-	UpsertSearchAttributes []SearchAttribute `json:"upsertSearchAttributes,omitempty"`
-	UpsertDataObjects []KeyValue `json:"upsertDataObjects,omitempty"`
-	CommandRequest *CommandRequest `json:"commandRequest,omitempty"`
-	UpsertStateLocals []KeyValue `json:"upsertStateLocals,omitempty"`
-	RecordEvents []KeyValue `json:"recordEvents,omitempty"`
+	UpsertSearchAttributes     []SearchAttribute             `json:"upsertSearchAttributes,omitempty"`
+	UpsertDataObjects          []KeyValue                    `json:"upsertDataObjects,omitempty"`
+	CommandRequest             *CommandRequest               `json:"commandRequest,omitempty"`
+	UpsertStateLocals          []KeyValue                    `json:"upsertStateLocals,omitempty"`
+	RecordEvents               []KeyValue                    `json:"recordEvents,omitempty"`
 	PublishToInterStateChannel []InterStateChannelPublishing `json:"publishToInterStateChannel,omitempty"`
 }
 
@@ -237,7 +237,7 @@ func (o *WorkflowStateWaitUntilResponse) SetPublishToInterStateChannel(v []Inter
 }
 
 func (o WorkflowStateWaitUntilResponse) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -302,5 +302,3 @@ func (v *NullableWorkflowStateWaitUntilResponse) UnmarshalJSON(src []byte) error
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

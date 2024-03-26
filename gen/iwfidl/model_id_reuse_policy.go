@@ -21,9 +21,9 @@ type IDReusePolicy string
 // List of IDReusePolicy
 const (
 	ALLOW_IF_PREVIOUS_EXISTS_ABNORMALLY IDReusePolicy = "ALLOW_IF_PREVIOUS_EXISTS_ABNORMALLY"
-	ALLOW_IF_NO_RUNNING IDReusePolicy = "ALLOW_IF_NO_RUNNING"
-	DISALLOW_REUSE IDReusePolicy = "DISALLOW_REUSE"
-	ALLOW_TERMINATE_IF_RUNNING IDReusePolicy = "ALLOW_TERMINATE_IF_RUNNING"
+	ALLOW_IF_NO_RUNNING                 IDReusePolicy = "ALLOW_IF_NO_RUNNING"
+	DISALLOW_REUSE                      IDReusePolicy = "DISALLOW_REUSE"
+	ALLOW_TERMINATE_IF_RUNNING          IDReusePolicy = "ALLOW_TERMINATE_IF_RUNNING"
 )
 
 // All allowed values of IDReusePolicy enum
@@ -112,4 +112,3 @@ func (v *NullableIDReusePolicy) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-

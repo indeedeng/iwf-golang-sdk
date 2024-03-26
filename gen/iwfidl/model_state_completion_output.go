@@ -19,9 +19,9 @@ var _ MappedNullable = &StateCompletionOutput{}
 
 // StateCompletionOutput struct for StateCompletionOutput
 type StateCompletionOutput struct {
-	CompletedStateId string `json:"completedStateId"`
-	CompletedStateExecutionId string `json:"completedStateExecutionId"`
-	CompletedStateOutput *EncodedObject `json:"completedStateOutput,omitempty"`
+	CompletedStateId          string         `json:"completedStateId"`
+	CompletedStateExecutionId string         `json:"completedStateExecutionId"`
+	CompletedStateOutput      *EncodedObject `json:"completedStateOutput,omitempty"`
 }
 
 // NewStateCompletionOutput instantiates a new StateCompletionOutput object
@@ -124,7 +124,7 @@ func (o *StateCompletionOutput) SetCompletedStateOutput(v EncodedObject) {
 }
 
 func (o StateCompletionOutput) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -176,5 +176,3 @@ func (v *NullableStateCompletionOutput) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-
