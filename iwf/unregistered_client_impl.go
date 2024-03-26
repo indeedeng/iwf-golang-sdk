@@ -39,10 +39,11 @@ func (u *unregisteredClientImpl) StartWorkflow(ctx context.Context, workflowType
 		}
 		stateOptions = options.StartStateOptions
 		startOptions = &iwfidl.WorkflowStartOptions{
-			IdReusePolicy:    options.WorkflowIdReusePolicy,
-			CronSchedule:     options.WorkflowCronSchedule,
-			RetryPolicy:      options.WorkflowRetryPolicy,
-			SearchAttributes: options.InitialSearchAttributes,
+			IdReusePolicy:             options.WorkflowIdReusePolicy,
+			CronSchedule:              options.WorkflowCronSchedule,
+			WorkflowStartDelaySeconds: options.WorkflowStartDelaySeconds,
+			RetryPolicy:               options.WorkflowRetryPolicy,
+			SearchAttributes:          options.InitialSearchAttributes,
 		}
 	}
 
