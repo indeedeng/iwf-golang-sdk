@@ -1,4 +1,4 @@
-module github.com/indeedeng/iwf-id
+module github.com/indeedeng/iwf-idl
 
 go 1.18
 
