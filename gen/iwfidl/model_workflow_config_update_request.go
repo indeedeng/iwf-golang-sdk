@@ -12,7 +12,6 @@ package iwfidl
 
 import (
 	"encoding/json"
-	"fmt"
 )
 
 // checks if the WorkflowConfigUpdateRequest type satisfies the MappedNullable interface at compile time
@@ -20,12 +19,10 @@ var _ MappedNullable = &WorkflowConfigUpdateRequest{}
 
 // WorkflowConfigUpdateRequest struct for WorkflowConfigUpdateRequest
 type WorkflowConfigUpdateRequest struct {
-	WorkflowId     string         `json:"workflowId"`
-	WorkflowRunId  *string        `json:"workflowRunId,omitempty"`
+	WorkflowId string `json:"workflowId"`
+	WorkflowRunId *string `json:"workflowRunId,omitempty"`
 	WorkflowConfig WorkflowConfig `json:"workflowConfig"`
 }
-
-type _WorkflowConfigUpdateRequest WorkflowConfigUpdateRequest
 
 // NewWorkflowConfigUpdateRequest instantiates a new WorkflowConfigUpdateRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -127,7 +124,7 @@ func (o *WorkflowConfigUpdateRequest) SetWorkflowConfig(v WorkflowConfig) {
 }
 
 func (o WorkflowConfigUpdateRequest) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
+	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -142,42 +139,6 @@ func (o WorkflowConfigUpdateRequest) ToMap() (map[string]interface{}, error) {
 	}
 	toSerialize["workflowConfig"] = o.WorkflowConfig
 	return toSerialize, nil
-}
-
-func (o *WorkflowConfigUpdateRequest) UnmarshalJSON(bytes []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"workflowId",
-		"workflowConfig",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(bytes, &allProperties)
-
-	if err != nil {
-		return err
-	}
-
-	for _, requiredProperty := range requiredProperties {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
-	varWorkflowConfigUpdateRequest := _WorkflowConfigUpdateRequest{}
-
-	err = json.Unmarshal(bytes, &varWorkflowConfigUpdateRequest)
-
-	if err != nil {
-		return err
-	}
-
-	*o = WorkflowConfigUpdateRequest(varWorkflowConfigUpdateRequest)
-
-	return err
 }
 
 type NullableWorkflowConfigUpdateRequest struct {
@@ -215,3 +176,5 @@ func (v *NullableWorkflowConfigUpdateRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+

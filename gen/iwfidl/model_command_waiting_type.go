@@ -20,8 +20,8 @@ type CommandWaitingType string
 
 // List of CommandWaitingType
 const (
-	ALL_COMPLETED             CommandWaitingType = "ALL_COMPLETED"
-	ANY_COMPLETED             CommandWaitingType = "ANY_COMPLETED"
+	ALL_COMPLETED CommandWaitingType = "ALL_COMPLETED"
+	ANY_COMPLETED CommandWaitingType = "ANY_COMPLETED"
 	ANY_COMBINATION_COMPLETED CommandWaitingType = "ANY_COMBINATION_COMPLETED"
 )
 
@@ -110,3 +110,4 @@ func (v *NullableCommandWaitingType) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+

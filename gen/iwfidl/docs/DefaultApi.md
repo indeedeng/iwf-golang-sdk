@@ -40,7 +40,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/indeedeng/iwf-idl"
+    openapiclient "github.com/indeedeng/iwf-id"
 )
 
 func main() {
@@ -102,7 +102,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/indeedeng/iwf-idl"
+    openapiclient "github.com/indeedeng/iwf-id"
 )
 
 func main() {
@@ -166,7 +166,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/indeedeng/iwf-idl"
+    openapiclient "github.com/indeedeng/iwf-id"
 )
 
 func main() {
@@ -230,7 +230,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/indeedeng/iwf-idl"
+    openapiclient "github.com/indeedeng/iwf-id"
 )
 
 func main() {
@@ -294,7 +294,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/indeedeng/iwf-idl"
+    openapiclient "github.com/indeedeng/iwf-id"
 )
 
 func main() {
@@ -358,7 +358,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/indeedeng/iwf-idl"
+    openapiclient "github.com/indeedeng/iwf-id"
 )
 
 func main() {
@@ -422,7 +422,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/indeedeng/iwf-idl"
+    openapiclient "github.com/indeedeng/iwf-id"
 )
 
 func main() {
@@ -486,7 +486,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/indeedeng/iwf-idl"
+    openapiclient "github.com/indeedeng/iwf-id"
 )
 
 func main() {
@@ -550,7 +550,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/indeedeng/iwf-idl"
+    openapiclient "github.com/indeedeng/iwf-id"
 )
 
 func main() {
@@ -614,7 +614,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/indeedeng/iwf-idl"
+    openapiclient "github.com/indeedeng/iwf-id"
 )
 
 func main() {
@@ -676,7 +676,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/indeedeng/iwf-idl"
+    openapiclient "github.com/indeedeng/iwf-id"
 )
 
 func main() {
@@ -740,7 +740,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/indeedeng/iwf-idl"
+    openapiclient "github.com/indeedeng/iwf-id"
 )
 
 func main() {
@@ -804,7 +804,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/indeedeng/iwf-idl"
+    openapiclient "github.com/indeedeng/iwf-id"
 )
 
 func main() {
@@ -868,7 +868,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/indeedeng/iwf-idl"
+    openapiclient "github.com/indeedeng/iwf-id"
 )
 
 func main() {
@@ -930,7 +930,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/indeedeng/iwf-idl"
+    openapiclient "github.com/indeedeng/iwf-id"
 )
 
 func main() {
@@ -992,7 +992,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/indeedeng/iwf-idl"
+    openapiclient "github.com/indeedeng/iwf-id"
 )
 
 func main() {
@@ -1056,7 +1056,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/indeedeng/iwf-idl"
+    openapiclient "github.com/indeedeng/iwf-id"
 )
 
 func main() {
@@ -1120,7 +1120,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/indeedeng/iwf-idl"
+    openapiclient "github.com/indeedeng/iwf-id"
 )
 
 func main() {

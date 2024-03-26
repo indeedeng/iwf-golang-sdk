@@ -12,7 +12,6 @@ package iwfidl
 
 import (
 	"encoding/json"
-	"fmt"
 )
 
 // checks if the WorkflowRpcRequest type satisfies the MappedNullable interface at compile time
@@ -20,18 +19,16 @@ var _ MappedNullable = &WorkflowRpcRequest{}
 
 // WorkflowRpcRequest struct for WorkflowRpcRequest
 type WorkflowRpcRequest struct {
-	WorkflowId                    string                      `json:"workflowId"`
-	WorkflowRunId                 *string                     `json:"workflowRunId,omitempty"`
-	RpcName                       string                      `json:"rpcName"`
-	Input                         *EncodedObject              `json:"input,omitempty"`
-	SearchAttributesLoadingPolicy *PersistenceLoadingPolicy   `json:"searchAttributesLoadingPolicy,omitempty"`
-	DataAttributesLoadingPolicy   *PersistenceLoadingPolicy   `json:"dataAttributesLoadingPolicy,omitempty"`
-	TimeoutSeconds                *int32                      `json:"timeoutSeconds,omitempty"`
-	UseMemoForDataAttributes      *bool                       `json:"useMemoForDataAttributes,omitempty"`
-	SearchAttributes              []SearchAttributeKeyAndType `json:"searchAttributes,omitempty"`
+	WorkflowId string `json:"workflowId"`
+	WorkflowRunId *string `json:"workflowRunId,omitempty"`
+	RpcName string `json:"rpcName"`
+	Input *EncodedObject `json:"input,omitempty"`
+	SearchAttributesLoadingPolicy *PersistenceLoadingPolicy `json:"searchAttributesLoadingPolicy,omitempty"`
+	DataAttributesLoadingPolicy *PersistenceLoadingPolicy `json:"dataAttributesLoadingPolicy,omitempty"`
+	TimeoutSeconds *int32 `json:"timeoutSeconds,omitempty"`
+	UseMemoForDataAttributes *bool `json:"useMemoForDataAttributes,omitempty"`
+	SearchAttributes []SearchAttributeKeyAndType `json:"searchAttributes,omitempty"`
 }
-
-type _WorkflowRpcRequest WorkflowRpcRequest
 
 // NewWorkflowRpcRequest instantiates a new WorkflowRpcRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -325,7 +322,7 @@ func (o *WorkflowRpcRequest) SetSearchAttributes(v []SearchAttributeKeyAndType) 
 }
 
 func (o WorkflowRpcRequest) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
+	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -358,42 +355,6 @@ func (o WorkflowRpcRequest) ToMap() (map[string]interface{}, error) {
 		toSerialize["searchAttributes"] = o.SearchAttributes
 	}
 	return toSerialize, nil
-}
-
-func (o *WorkflowRpcRequest) UnmarshalJSON(bytes []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"workflowId",
-		"rpcName",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(bytes, &allProperties)
-
-	if err != nil {
-		return err
-	}
-
-	for _, requiredProperty := range requiredProperties {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
-	varWorkflowRpcRequest := _WorkflowRpcRequest{}
-
-	err = json.Unmarshal(bytes, &varWorkflowRpcRequest)
-
-	if err != nil {
-		return err
-	}
-
-	*o = WorkflowRpcRequest(varWorkflowRpcRequest)
-
-	return err
 }
 
 type NullableWorkflowRpcRequest struct {
@@ -431,3 +392,5 @@ func (v *NullableWorkflowRpcRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+

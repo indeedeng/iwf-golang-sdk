@@ -19,11 +19,11 @@ var _ MappedNullable = &WorkflowStateExecuteResponse{}
 
 // WorkflowStateExecuteResponse struct for WorkflowStateExecuteResponse
 type WorkflowStateExecuteResponse struct {
-	StateDecision              *StateDecision                `json:"stateDecision,omitempty"`
-	UpsertSearchAttributes     []SearchAttribute             `json:"upsertSearchAttributes,omitempty"`
-	UpsertDataObjects          []KeyValue                    `json:"upsertDataObjects,omitempty"`
-	RecordEvents               []KeyValue                    `json:"recordEvents,omitempty"`
-	UpsertStateLocals          []KeyValue                    `json:"upsertStateLocals,omitempty"`
+	StateDecision *StateDecision `json:"stateDecision,omitempty"`
+	UpsertSearchAttributes []SearchAttribute `json:"upsertSearchAttributes,omitempty"`
+	UpsertDataObjects []KeyValue `json:"upsertDataObjects,omitempty"`
+	RecordEvents []KeyValue `json:"recordEvents,omitempty"`
+	UpsertStateLocals []KeyValue `json:"upsertStateLocals,omitempty"`
 	PublishToInterStateChannel []InterStateChannelPublishing `json:"publishToInterStateChannel,omitempty"`
 }
 
@@ -237,7 +237,7 @@ func (o *WorkflowStateExecuteResponse) SetPublishToInterStateChannel(v []InterSt
 }
 
 func (o WorkflowStateExecuteResponse) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
+	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -302,3 +302,5 @@ func (v *NullableWorkflowStateExecuteResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+

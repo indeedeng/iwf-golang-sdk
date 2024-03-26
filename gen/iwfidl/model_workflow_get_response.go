@@ -12,7 +12,6 @@ package iwfidl
 
 import (
 	"encoding/json"
-	"fmt"
 )
 
 // checks if the WorkflowGetResponse type satisfies the MappedNullable interface at compile time
@@ -20,14 +19,12 @@ var _ MappedNullable = &WorkflowGetResponse{}
 
 // WorkflowGetResponse struct for WorkflowGetResponse
 type WorkflowGetResponse struct {
-	WorkflowRunId  string                  `json:"workflowRunId"`
-	WorkflowStatus WorkflowStatus          `json:"workflowStatus"`
-	Results        []StateCompletionOutput `json:"results,omitempty"`
-	ErrorType      *WorkflowErrorType      `json:"errorType,omitempty"`
-	ErrorMessage   *string                 `json:"errorMessage,omitempty"`
+	WorkflowRunId string `json:"workflowRunId"`
+	WorkflowStatus WorkflowStatus `json:"workflowStatus"`
+	Results []StateCompletionOutput `json:"results,omitempty"`
+	ErrorType *WorkflowErrorType `json:"errorType,omitempty"`
+	ErrorMessage *string `json:"errorMessage,omitempty"`
 }
-
-type _WorkflowGetResponse WorkflowGetResponse
 
 // NewWorkflowGetResponse instantiates a new WorkflowGetResponse object
 // This constructor will assign default values to properties that have it defined,
@@ -193,7 +190,7 @@ func (o *WorkflowGetResponse) SetErrorMessage(v string) {
 }
 
 func (o WorkflowGetResponse) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
+	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -214,42 +211,6 @@ func (o WorkflowGetResponse) ToMap() (map[string]interface{}, error) {
 		toSerialize["errorMessage"] = o.ErrorMessage
 	}
 	return toSerialize, nil
-}
-
-func (o *WorkflowGetResponse) UnmarshalJSON(bytes []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"workflowRunId",
-		"workflowStatus",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(bytes, &allProperties)
-
-	if err != nil {
-		return err
-	}
-
-	for _, requiredProperty := range requiredProperties {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
-	varWorkflowGetResponse := _WorkflowGetResponse{}
-
-	err = json.Unmarshal(bytes, &varWorkflowGetResponse)
-
-	if err != nil {
-		return err
-	}
-
-	*o = WorkflowGetResponse(varWorkflowGetResponse)
-
-	return err
 }
 
 type NullableWorkflowGetResponse struct {
@@ -287,3 +248,5 @@ func (v *NullableWorkflowGetResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+

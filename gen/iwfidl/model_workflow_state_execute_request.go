@@ -12,7 +12,6 @@ package iwfidl
 
 import (
 	"encoding/json"
-	"fmt"
 )
 
 // checks if the WorkflowStateExecuteRequest type satisfies the MappedNullable interface at compile time
@@ -20,17 +19,15 @@ var _ MappedNullable = &WorkflowStateExecuteRequest{}
 
 // WorkflowStateExecuteRequest struct for WorkflowStateExecuteRequest
 type WorkflowStateExecuteRequest struct {
-	Context          Context           `json:"context"`
-	WorkflowType     string            `json:"workflowType"`
-	WorkflowStateId  string            `json:"workflowStateId"`
-	StateInput       *EncodedObject    `json:"stateInput,omitempty"`
+	Context Context `json:"context"`
+	WorkflowType string `json:"workflowType"`
+	WorkflowStateId string `json:"workflowStateId"`
+	StateInput *EncodedObject `json:"stateInput,omitempty"`
 	SearchAttributes []SearchAttribute `json:"searchAttributes,omitempty"`
-	DataObjects      []KeyValue        `json:"DataObjects,omitempty"`
-	StateLocals      []KeyValue        `json:"stateLocals,omitempty"`
-	CommandResults   *CommandResults   `json:"commandResults,omitempty"`
+	DataObjects []KeyValue `json:"DataObjects,omitempty"`
+	StateLocals []KeyValue `json:"stateLocals,omitempty"`
+	CommandResults *CommandResults `json:"commandResults,omitempty"`
 }
-
-type _WorkflowStateExecuteRequest WorkflowStateExecuteRequest
 
 // NewWorkflowStateExecuteRequest instantiates a new WorkflowStateExecuteRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -285,7 +282,7 @@ func (o *WorkflowStateExecuteRequest) SetCommandResults(v CommandResults) {
 }
 
 func (o WorkflowStateExecuteRequest) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
+	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -313,43 +310,6 @@ func (o WorkflowStateExecuteRequest) ToMap() (map[string]interface{}, error) {
 		toSerialize["commandResults"] = o.CommandResults
 	}
 	return toSerialize, nil
-}
-
-func (o *WorkflowStateExecuteRequest) UnmarshalJSON(bytes []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"context",
-		"workflowType",
-		"workflowStateId",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(bytes, &allProperties)
-
-	if err != nil {
-		return err
-	}
-
-	for _, requiredProperty := range requiredProperties {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
-	varWorkflowStateExecuteRequest := _WorkflowStateExecuteRequest{}
-
-	err = json.Unmarshal(bytes, &varWorkflowStateExecuteRequest)
-
-	if err != nil {
-		return err
-	}
-
-	*o = WorkflowStateExecuteRequest(varWorkflowStateExecuteRequest)
-
-	return err
 }
 
 type NullableWorkflowStateExecuteRequest struct {
@@ -387,3 +347,5 @@ func (v *NullableWorkflowStateExecuteRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+

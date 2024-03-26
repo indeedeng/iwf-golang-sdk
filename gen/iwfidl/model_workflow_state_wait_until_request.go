@@ -12,7 +12,6 @@ package iwfidl
 
 import (
 	"encoding/json"
-	"fmt"
 )
 
 // checks if the WorkflowStateWaitUntilRequest type satisfies the MappedNullable interface at compile time
@@ -20,15 +19,13 @@ var _ MappedNullable = &WorkflowStateWaitUntilRequest{}
 
 // WorkflowStateWaitUntilRequest struct for WorkflowStateWaitUntilRequest
 type WorkflowStateWaitUntilRequest struct {
-	Context          Context           `json:"context"`
-	WorkflowType     string            `json:"workflowType"`
-	WorkflowStateId  string            `json:"workflowStateId"`
-	StateInput       *EncodedObject    `json:"stateInput,omitempty"`
+	Context Context `json:"context"`
+	WorkflowType string `json:"workflowType"`
+	WorkflowStateId string `json:"workflowStateId"`
+	StateInput *EncodedObject `json:"stateInput,omitempty"`
 	SearchAttributes []SearchAttribute `json:"searchAttributes,omitempty"`
-	DataObjects      []KeyValue        `json:"dataObjects,omitempty"`
+	DataObjects []KeyValue `json:"dataObjects,omitempty"`
 }
-
-type _WorkflowStateWaitUntilRequest WorkflowStateWaitUntilRequest
 
 // NewWorkflowStateWaitUntilRequest instantiates a new WorkflowStateWaitUntilRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -219,7 +216,7 @@ func (o *WorkflowStateWaitUntilRequest) SetDataObjects(v []KeyValue) {
 }
 
 func (o WorkflowStateWaitUntilRequest) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
+	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -241,43 +238,6 @@ func (o WorkflowStateWaitUntilRequest) ToMap() (map[string]interface{}, error) {
 		toSerialize["dataObjects"] = o.DataObjects
 	}
 	return toSerialize, nil
-}
-
-func (o *WorkflowStateWaitUntilRequest) UnmarshalJSON(bytes []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"context",
-		"workflowType",
-		"workflowStateId",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(bytes, &allProperties)
-
-	if err != nil {
-		return err
-	}
-
-	for _, requiredProperty := range requiredProperties {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
-	varWorkflowStateWaitUntilRequest := _WorkflowStateWaitUntilRequest{}
-
-	err = json.Unmarshal(bytes, &varWorkflowStateWaitUntilRequest)
-
-	if err != nil {
-		return err
-	}
-
-	*o = WorkflowStateWaitUntilRequest(varWorkflowStateWaitUntilRequest)
-
-	return err
 }
 
 type NullableWorkflowStateWaitUntilRequest struct {
@@ -315,3 +275,5 @@ func (v *NullableWorkflowStateWaitUntilRequest) UnmarshalJSON(src []byte) error 
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+

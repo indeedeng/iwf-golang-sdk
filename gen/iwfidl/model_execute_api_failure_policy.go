@@ -21,7 +21,7 @@ type ExecuteApiFailurePolicy string
 // List of ExecuteApiFailurePolicy
 const (
 	FAIL_WORKFLOW_ON_EXECUTE_API_FAILURE ExecuteApiFailurePolicy = "FAIL_WORKFLOW_ON_EXECUTE_API_FAILURE"
-	PROCEED_TO_CONFIGURED_STATE          ExecuteApiFailurePolicy = "PROCEED_TO_CONFIGURED_STATE"
+	PROCEED_TO_CONFIGURED_STATE ExecuteApiFailurePolicy = "PROCEED_TO_CONFIGURED_STATE"
 )
 
 // All allowed values of ExecuteApiFailurePolicy enum
@@ -108,3 +108,4 @@ func (v *NullableExecuteApiFailurePolicy) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
