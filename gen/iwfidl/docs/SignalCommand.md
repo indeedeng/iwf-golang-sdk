@@ -4,14 +4,16 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**CommandId** | **string** |  | 
+**CommandId** | Pointer to **string** |  | [optional] 
 **SignalChannelName** | **string** |  | 
+**AtLeast** | Pointer to **int32** |  | [optional] 
+**AtMost** | Pointer to **int32** |  | [optional] 
 
 ## Methods
 
 ### NewSignalCommand
 
-`func NewSignalCommand(commandId string, signalChannelName string, ) *SignalCommand`
+`func NewSignalCommand(signalChannelName string, ) *SignalCommand`
 
 NewSignalCommand instantiates a new SignalCommand object
 This constructor will assign default values to properties that have it defined,
@@ -45,6 +47,11 @@ and a boolean to check if the value has been set.
 
 SetCommandId sets CommandId field to given value.
 
+### HasCommandId
+
+`func (o *SignalCommand) HasCommandId() bool`
+
+HasCommandId returns a boolean if a field has been set.
 
 ### GetSignalChannelName
 
@@ -65,6 +72,56 @@ and a boolean to check if the value has been set.
 
 SetSignalChannelName sets SignalChannelName field to given value.
 
+
+### GetAtLeast
+
+`func (o *SignalCommand) GetAtLeast() int32`
+
+GetAtLeast returns the AtLeast field if non-nil, zero value otherwise.
+
+### GetAtLeastOk
+
+`func (o *SignalCommand) GetAtLeastOk() (*int32, bool)`
+
+GetAtLeastOk returns a tuple with the AtLeast field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAtLeast
+
+`func (o *SignalCommand) SetAtLeast(v int32)`
+
+SetAtLeast sets AtLeast field to given value.
+
+### HasAtLeast
+
+`func (o *SignalCommand) HasAtLeast() bool`
+
+HasAtLeast returns a boolean if a field has been set.
+
+### GetAtMost
+
+`func (o *SignalCommand) GetAtMost() int32`
+
+GetAtMost returns the AtMost field if non-nil, zero value otherwise.
+
+### GetAtMostOk
+
+`func (o *SignalCommand) GetAtMostOk() (*int32, bool)`
+
+GetAtMostOk returns a tuple with the AtMost field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAtMost
+
+`func (o *SignalCommand) SetAtMost(v int32)`
+
+SetAtMost sets AtMost field to given value.
+
+### HasAtMost
+
+`func (o *SignalCommand) HasAtMost() bool`
+
+HasAtMost returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

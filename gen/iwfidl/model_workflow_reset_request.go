@@ -12,6 +12,8 @@ package iwfidl
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the WorkflowResetRequest type satisfies the MappedNullable interface at compile time
@@ -19,16 +21,18 @@ var _ MappedNullable = &WorkflowResetRequest{}
 
 // WorkflowResetRequest struct for WorkflowResetRequest
 type WorkflowResetRequest struct {
-	WorkflowId        string            `json:"workflowId"`
-	WorkflowRunId     *string           `json:"workflowRunId,omitempty"`
-	ResetType         WorkflowResetType `json:"resetType"`
-	HistoryEventId    *int32            `json:"historyEventId,omitempty"`
-	Reason            *string           `json:"reason,omitempty"`
-	HistoryEventTime  *string           `json:"historyEventTime,omitempty"`
-	StateId           *string           `json:"stateId,omitempty"`
-	StateExecutionId  *string           `json:"stateExecutionId,omitempty"`
-	SkipSignalReapply *bool             `json:"skipSignalReapply,omitempty"`
+	WorkflowId string `json:"workflowId"`
+	WorkflowRunId *string `json:"workflowRunId,omitempty"`
+	ResetType WorkflowResetType `json:"resetType"`
+	HistoryEventId *int32 `json:"historyEventId,omitempty"`
+	Reason *string `json:"reason,omitempty"`
+	HistoryEventTime *string `json:"historyEventTime,omitempty"`
+	StateId *string `json:"stateId,omitempty"`
+	StateExecutionId *string `json:"stateExecutionId,omitempty"`
+	SkipSignalReapply *bool `json:"skipSignalReapply,omitempty"`
 }
+
+type _WorkflowResetRequest WorkflowResetRequest
 
 // NewWorkflowResetRequest instantiates a new WorkflowResetRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -322,7 +326,7 @@ func (o *WorkflowResetRequest) SetSkipSignalReapply(v bool) {
 }
 
 func (o WorkflowResetRequest) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
+	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -355,6 +359,44 @@ func (o WorkflowResetRequest) ToMap() (map[string]interface{}, error) {
 		toSerialize["skipSignalReapply"] = o.SkipSignalReapply
 	}
 	return toSerialize, nil
+}
+
+func (o *WorkflowResetRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"workflowId",
+		"resetType",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varWorkflowResetRequest := _WorkflowResetRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varWorkflowResetRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = WorkflowResetRequest(varWorkflowResetRequest)
+
+	return err
 }
 
 type NullableWorkflowResetRequest struct {
@@ -392,3 +434,5 @@ func (v *NullableWorkflowResetRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+

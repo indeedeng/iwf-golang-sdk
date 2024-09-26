@@ -12,6 +12,8 @@ package iwfidl
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the WorkflowStartRequest type satisfies the MappedNullable interface at compile time
@@ -19,16 +21,19 @@ var _ MappedNullable = &WorkflowStartRequest{}
 
 // WorkflowStartRequest struct for WorkflowStartRequest
 type WorkflowStartRequest struct {
-	WorkflowId                         string                `json:"workflowId"`
-	IwfWorkflowType                    string                `json:"iwfWorkflowType"`
-	WorkflowTimeoutSeconds             int32                 `json:"workflowTimeoutSeconds"`
-	IwfWorkerUrl                       string                `json:"iwfWorkerUrl"`
-	StartStateId                       *string               `json:"startStateId,omitempty"`
-	WaitForCompletionStateExecutionIds []string              `json:"waitForCompletionStateExecutionIds,omitempty"`
-	StateInput                         *EncodedObject        `json:"stateInput,omitempty"`
-	StateOptions                       *WorkflowStateOptions `json:"stateOptions,omitempty"`
-	WorkflowStartOptions               *WorkflowStartOptions `json:"workflowStartOptions,omitempty"`
+	WorkflowId string `json:"workflowId"`
+	IwfWorkflowType string `json:"iwfWorkflowType"`
+	WorkflowTimeoutSeconds int32 `json:"workflowTimeoutSeconds"`
+	IwfWorkerUrl string `json:"iwfWorkerUrl"`
+	StartStateId *string `json:"startStateId,omitempty"`
+	WaitForCompletionStateIds []string `json:"waitForCompletionStateIds,omitempty"`
+	WaitForCompletionStateExecutionIds []string `json:"waitForCompletionStateExecutionIds,omitempty"`
+	StateInput *EncodedObject `json:"stateInput,omitempty"`
+	StateOptions *WorkflowStateOptions `json:"stateOptions,omitempty"`
+	WorkflowStartOptions *WorkflowStartOptions `json:"workflowStartOptions,omitempty"`
 }
+
+type _WorkflowStartRequest WorkflowStartRequest
 
 // NewWorkflowStartRequest instantiates a new WorkflowStartRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -179,6 +184,38 @@ func (o *WorkflowStartRequest) SetStartStateId(v string) {
 	o.StartStateId = &v
 }
 
+// GetWaitForCompletionStateIds returns the WaitForCompletionStateIds field value if set, zero value otherwise.
+func (o *WorkflowStartRequest) GetWaitForCompletionStateIds() []string {
+	if o == nil || IsNil(o.WaitForCompletionStateIds) {
+		var ret []string
+		return ret
+	}
+	return o.WaitForCompletionStateIds
+}
+
+// GetWaitForCompletionStateIdsOk returns a tuple with the WaitForCompletionStateIds field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WorkflowStartRequest) GetWaitForCompletionStateIdsOk() ([]string, bool) {
+	if o == nil || IsNil(o.WaitForCompletionStateIds) {
+		return nil, false
+	}
+	return o.WaitForCompletionStateIds, true
+}
+
+// HasWaitForCompletionStateIds returns a boolean if a field has been set.
+func (o *WorkflowStartRequest) HasWaitForCompletionStateIds() bool {
+	if o != nil && !IsNil(o.WaitForCompletionStateIds) {
+		return true
+	}
+
+	return false
+}
+
+// SetWaitForCompletionStateIds gets a reference to the given []string and assigns it to the WaitForCompletionStateIds field.
+func (o *WorkflowStartRequest) SetWaitForCompletionStateIds(v []string) {
+	o.WaitForCompletionStateIds = v
+}
+
 // GetWaitForCompletionStateExecutionIds returns the WaitForCompletionStateExecutionIds field value if set, zero value otherwise.
 func (o *WorkflowStartRequest) GetWaitForCompletionStateExecutionIds() []string {
 	if o == nil || IsNil(o.WaitForCompletionStateExecutionIds) {
@@ -308,7 +345,7 @@ func (o *WorkflowStartRequest) SetWorkflowStartOptions(v WorkflowStartOptions) {
 }
 
 func (o WorkflowStartRequest) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
+	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -324,6 +361,9 @@ func (o WorkflowStartRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.StartStateId) {
 		toSerialize["startStateId"] = o.StartStateId
 	}
+	if !IsNil(o.WaitForCompletionStateIds) {
+		toSerialize["waitForCompletionStateIds"] = o.WaitForCompletionStateIds
+	}
 	if !IsNil(o.WaitForCompletionStateExecutionIds) {
 		toSerialize["waitForCompletionStateExecutionIds"] = o.WaitForCompletionStateExecutionIds
 	}
@@ -337,6 +377,46 @@ func (o WorkflowStartRequest) ToMap() (map[string]interface{}, error) {
 		toSerialize["workflowStartOptions"] = o.WorkflowStartOptions
 	}
 	return toSerialize, nil
+}
+
+func (o *WorkflowStartRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"workflowId",
+		"iwfWorkflowType",
+		"workflowTimeoutSeconds",
+		"iwfWorkerUrl",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varWorkflowStartRequest := _WorkflowStartRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varWorkflowStartRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = WorkflowStartRequest(varWorkflowStartRequest)
+
+	return err
 }
 
 type NullableWorkflowStartRequest struct {
@@ -374,3 +454,5 @@ func (v *NullableWorkflowStartRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+

@@ -12,6 +12,8 @@ package iwfidl
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the Context type satisfies the MappedNullable interface at compile time
@@ -19,13 +21,15 @@ var _ MappedNullable = &Context{}
 
 // Context struct for Context
 type Context struct {
-	WorkflowId               string  `json:"workflowId"`
-	WorkflowRunId            string  `json:"workflowRunId"`
-	WorkflowStartedTimestamp int64   `json:"workflowStartedTimestamp"`
-	StateExecutionId         *string `json:"stateExecutionId,omitempty"`
-	FirstAttemptTimestamp    *int64  `json:"firstAttemptTimestamp,omitempty"`
-	Attempt                  *int32  `json:"attempt,omitempty"`
+	WorkflowId string `json:"workflowId"`
+	WorkflowRunId string `json:"workflowRunId"`
+	WorkflowStartedTimestamp int64 `json:"workflowStartedTimestamp"`
+	StateExecutionId *string `json:"stateExecutionId,omitempty"`
+	FirstAttemptTimestamp *int64 `json:"firstAttemptTimestamp,omitempty"`
+	Attempt *int32 `json:"attempt,omitempty"`
 }
+
+type _Context Context
 
 // NewContext instantiates a new Context object
 // This constructor will assign default values to properties that have it defined,
@@ -216,7 +220,7 @@ func (o *Context) SetAttempt(v int32) {
 }
 
 func (o Context) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
+	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -238,6 +242,45 @@ func (o Context) ToMap() (map[string]interface{}, error) {
 		toSerialize["attempt"] = o.Attempt
 	}
 	return toSerialize, nil
+}
+
+func (o *Context) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"workflowId",
+		"workflowRunId",
+		"workflowStartedTimestamp",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varContext := _Context{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varContext)
+
+	if err != nil {
+		return err
+	}
+
+	*o = Context(varContext)
+
+	return err
 }
 
 type NullableContext struct {
@@ -275,3 +318,5 @@ func (v *NullableContext) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+

@@ -12,6 +12,8 @@ package iwfidl
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the TimerCommand type satisfies the MappedNullable interface at compile time
@@ -19,18 +21,19 @@ var _ MappedNullable = &TimerCommand{}
 
 // TimerCommand struct for TimerCommand
 type TimerCommand struct {
-	CommandId                  string `json:"commandId"`
-	FiringUnixTimestampSeconds int64  `json:"firingUnixTimestampSeconds"`
+	CommandId *string `json:"commandId,omitempty"`
+	DurationSeconds int64 `json:"durationSeconds"`
 }
+
+type _TimerCommand TimerCommand
 
 // NewTimerCommand instantiates a new TimerCommand object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewTimerCommand(commandId string, firingUnixTimestampSeconds int64) *TimerCommand {
+func NewTimerCommand(durationSeconds int64) *TimerCommand {
 	this := TimerCommand{}
-	this.CommandId = commandId
-	this.FiringUnixTimestampSeconds = firingUnixTimestampSeconds
+	this.DurationSeconds = durationSeconds
 	return &this
 }
 
@@ -42,56 +45,64 @@ func NewTimerCommandWithDefaults() *TimerCommand {
 	return &this
 }
 
-// GetCommandId returns the CommandId field value
+// GetCommandId returns the CommandId field value if set, zero value otherwise.
 func (o *TimerCommand) GetCommandId() string {
-	if o == nil {
+	if o == nil || IsNil(o.CommandId) {
 		var ret string
 		return ret
 	}
-
-	return o.CommandId
+	return *o.CommandId
 }
 
-// GetCommandIdOk returns a tuple with the CommandId field value
+// GetCommandIdOk returns a tuple with the CommandId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *TimerCommand) GetCommandIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.CommandId) {
 		return nil, false
 	}
-	return &o.CommandId, true
+	return o.CommandId, true
 }
 
-// SetCommandId sets field value
+// HasCommandId returns a boolean if a field has been set.
+func (o *TimerCommand) HasCommandId() bool {
+	if o != nil && !IsNil(o.CommandId) {
+		return true
+	}
+
+	return false
+}
+
+// SetCommandId gets a reference to the given string and assigns it to the CommandId field.
 func (o *TimerCommand) SetCommandId(v string) {
-	o.CommandId = v
+	o.CommandId = &v
 }
 
-// GetFiringUnixTimestampSeconds returns the FiringUnixTimestampSeconds field value
-func (o *TimerCommand) GetFiringUnixTimestampSeconds() int64 {
+// GetDurationSeconds returns the DurationSeconds field value
+func (o *TimerCommand) GetDurationSeconds() int64 {
 	if o == nil {
 		var ret int64
 		return ret
 	}
 
-	return o.FiringUnixTimestampSeconds
+	return o.DurationSeconds
 }
 
-// GetFiringUnixTimestampSecondsOk returns a tuple with the FiringUnixTimestampSeconds field value
+// GetDurationSecondsOk returns a tuple with the DurationSeconds field value
 // and a boolean to check if the value has been set.
-func (o *TimerCommand) GetFiringUnixTimestampSecondsOk() (*int64, bool) {
+func (o *TimerCommand) GetDurationSecondsOk() (*int64, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.FiringUnixTimestampSeconds, true
+	return &o.DurationSeconds, true
 }
 
-// SetFiringUnixTimestampSeconds sets field value
-func (o *TimerCommand) SetFiringUnixTimestampSeconds(v int64) {
-	o.FiringUnixTimestampSeconds = v
+// SetDurationSeconds sets field value
+func (o *TimerCommand) SetDurationSeconds(v int64) {
+	o.DurationSeconds = v
 }
 
 func (o TimerCommand) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
+	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -100,9 +111,48 @@ func (o TimerCommand) MarshalJSON() ([]byte, error) {
 
 func (o TimerCommand) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["commandId"] = o.CommandId
-	toSerialize["firingUnixTimestampSeconds"] = o.FiringUnixTimestampSeconds
+	if !IsNil(o.CommandId) {
+		toSerialize["commandId"] = o.CommandId
+	}
+	toSerialize["durationSeconds"] = o.DurationSeconds
 	return toSerialize, nil
+}
+
+func (o *TimerCommand) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"durationSeconds",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varTimerCommand := _TimerCommand{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varTimerCommand)
+
+	if err != nil {
+		return err
+	}
+
+	*o = TimerCommand(varTimerCommand)
+
+	return err
 }
 
 type NullableTimerCommand struct {
@@ -140,3 +190,5 @@ func (v *NullableTimerCommand) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+

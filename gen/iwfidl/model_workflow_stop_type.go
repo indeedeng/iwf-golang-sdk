@@ -20,9 +20,9 @@ type WorkflowStopType string
 
 // List of WorkflowStopType
 const (
-	CANCEL    WorkflowStopType = "CANCEL"
+	CANCEL WorkflowStopType = "CANCEL"
 	TERMINATE WorkflowStopType = "TERMINATE"
-	FAIL      WorkflowStopType = "FAIL"
+	FAIL WorkflowStopType = "FAIL"
 )
 
 // All allowed values of WorkflowStopType enum
@@ -110,3 +110,4 @@ func (v *NullableWorkflowStopType) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+

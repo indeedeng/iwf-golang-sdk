@@ -12,6 +12,8 @@ package iwfidl
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the SignalCommand type satisfies the MappedNullable interface at compile time
@@ -19,17 +21,20 @@ var _ MappedNullable = &SignalCommand{}
 
 // SignalCommand struct for SignalCommand
 type SignalCommand struct {
-	CommandId         string `json:"commandId"`
+	CommandId *string `json:"commandId,omitempty"`
 	SignalChannelName string `json:"signalChannelName"`
+	AtLeast *int32 `json:"atLeast,omitempty"`
+	AtMost *int32 `json:"atMost,omitempty"`
 }
+
+type _SignalCommand SignalCommand
 
 // NewSignalCommand instantiates a new SignalCommand object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSignalCommand(commandId string, signalChannelName string) *SignalCommand {
+func NewSignalCommand(signalChannelName string) *SignalCommand {
 	this := SignalCommand{}
-	this.CommandId = commandId
 	this.SignalChannelName = signalChannelName
 	return &this
 }
@@ -42,28 +47,36 @@ func NewSignalCommandWithDefaults() *SignalCommand {
 	return &this
 }
 
-// GetCommandId returns the CommandId field value
+// GetCommandId returns the CommandId field value if set, zero value otherwise.
 func (o *SignalCommand) GetCommandId() string {
-	if o == nil {
+	if o == nil || IsNil(o.CommandId) {
 		var ret string
 		return ret
 	}
-
-	return o.CommandId
+	return *o.CommandId
 }
 
-// GetCommandIdOk returns a tuple with the CommandId field value
+// GetCommandIdOk returns a tuple with the CommandId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SignalCommand) GetCommandIdOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.CommandId) {
 		return nil, false
 	}
-	return &o.CommandId, true
+	return o.CommandId, true
 }
 
-// SetCommandId sets field value
+// HasCommandId returns a boolean if a field has been set.
+func (o *SignalCommand) HasCommandId() bool {
+	if o != nil && !IsNil(o.CommandId) {
+		return true
+	}
+
+	return false
+}
+
+// SetCommandId gets a reference to the given string and assigns it to the CommandId field.
 func (o *SignalCommand) SetCommandId(v string) {
-	o.CommandId = v
+	o.CommandId = &v
 }
 
 // GetSignalChannelName returns the SignalChannelName field value
@@ -90,8 +103,72 @@ func (o *SignalCommand) SetSignalChannelName(v string) {
 	o.SignalChannelName = v
 }
 
+// GetAtLeast returns the AtLeast field value if set, zero value otherwise.
+func (o *SignalCommand) GetAtLeast() int32 {
+	if o == nil || IsNil(o.AtLeast) {
+		var ret int32
+		return ret
+	}
+	return *o.AtLeast
+}
+
+// GetAtLeastOk returns a tuple with the AtLeast field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SignalCommand) GetAtLeastOk() (*int32, bool) {
+	if o == nil || IsNil(o.AtLeast) {
+		return nil, false
+	}
+	return o.AtLeast, true
+}
+
+// HasAtLeast returns a boolean if a field has been set.
+func (o *SignalCommand) HasAtLeast() bool {
+	if o != nil && !IsNil(o.AtLeast) {
+		return true
+	}
+
+	return false
+}
+
+// SetAtLeast gets a reference to the given int32 and assigns it to the AtLeast field.
+func (o *SignalCommand) SetAtLeast(v int32) {
+	o.AtLeast = &v
+}
+
+// GetAtMost returns the AtMost field value if set, zero value otherwise.
+func (o *SignalCommand) GetAtMost() int32 {
+	if o == nil || IsNil(o.AtMost) {
+		var ret int32
+		return ret
+	}
+	return *o.AtMost
+}
+
+// GetAtMostOk returns a tuple with the AtMost field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SignalCommand) GetAtMostOk() (*int32, bool) {
+	if o == nil || IsNil(o.AtMost) {
+		return nil, false
+	}
+	return o.AtMost, true
+}
+
+// HasAtMost returns a boolean if a field has been set.
+func (o *SignalCommand) HasAtMost() bool {
+	if o != nil && !IsNil(o.AtMost) {
+		return true
+	}
+
+	return false
+}
+
+// SetAtMost gets a reference to the given int32 and assigns it to the AtMost field.
+func (o *SignalCommand) SetAtMost(v int32) {
+	o.AtMost = &v
+}
+
 func (o SignalCommand) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
+	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -100,9 +177,54 @@ func (o SignalCommand) MarshalJSON() ([]byte, error) {
 
 func (o SignalCommand) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["commandId"] = o.CommandId
+	if !IsNil(o.CommandId) {
+		toSerialize["commandId"] = o.CommandId
+	}
 	toSerialize["signalChannelName"] = o.SignalChannelName
+	if !IsNil(o.AtLeast) {
+		toSerialize["atLeast"] = o.AtLeast
+	}
+	if !IsNil(o.AtMost) {
+		toSerialize["atMost"] = o.AtMost
+	}
 	return toSerialize, nil
+}
+
+func (o *SignalCommand) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"signalChannelName",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varSignalCommand := _SignalCommand{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varSignalCommand)
+
+	if err != nil {
+		return err
+	}
+
+	*o = SignalCommand(varSignalCommand)
+
+	return err
 }
 
 type NullableSignalCommand struct {
@@ -140,3 +262,5 @@ func (v *NullableSignalCommand) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+

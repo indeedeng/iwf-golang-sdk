@@ -12,6 +12,8 @@ package iwfidl
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the WorkflowSignalRequest type satisfies the MappedNullable interface at compile time
@@ -19,11 +21,13 @@ var _ MappedNullable = &WorkflowSignalRequest{}
 
 // WorkflowSignalRequest struct for WorkflowSignalRequest
 type WorkflowSignalRequest struct {
-	WorkflowId        string         `json:"workflowId"`
-	WorkflowRunId     *string        `json:"workflowRunId,omitempty"`
-	SignalChannelName string         `json:"signalChannelName"`
-	SignalValue       *EncodedObject `json:"signalValue,omitempty"`
+	WorkflowId string `json:"workflowId"`
+	WorkflowRunId *string `json:"workflowRunId,omitempty"`
+	SignalChannelName string `json:"signalChannelName"`
+	SignalValue *EncodedObject `json:"signalValue,omitempty"`
 }
+
+type _WorkflowSignalRequest WorkflowSignalRequest
 
 // NewWorkflowSignalRequest instantiates a new WorkflowSignalRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -157,7 +161,7 @@ func (o *WorkflowSignalRequest) SetSignalValue(v EncodedObject) {
 }
 
 func (o WorkflowSignalRequest) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
+	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -175,6 +179,44 @@ func (o WorkflowSignalRequest) ToMap() (map[string]interface{}, error) {
 		toSerialize["signalValue"] = o.SignalValue
 	}
 	return toSerialize, nil
+}
+
+func (o *WorkflowSignalRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"workflowId",
+		"signalChannelName",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varWorkflowSignalRequest := _WorkflowSignalRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varWorkflowSignalRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = WorkflowSignalRequest(varWorkflowSignalRequest)
+
+	return err
 }
 
 type NullableWorkflowSignalRequest struct {
@@ -212,3 +254,5 @@ func (v *NullableWorkflowSignalRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+

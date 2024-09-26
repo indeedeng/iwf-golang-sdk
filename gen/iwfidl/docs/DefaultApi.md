@@ -19,6 +19,7 @@ Method | HTTP request | Description
 [**ApiV1WorkflowStateStartPost**](DefaultAPI.md#ApiV1WorkflowStateStartPost) | **Post** /api/v1/workflowState/start | for invoking WorkflowState.waitUntil API
 [**ApiV1WorkflowStopPost**](DefaultAPI.md#ApiV1WorkflowStopPost) | **Post** /api/v1/workflow/stop | stop a workflow
 [**ApiV1WorkflowTimerSkipPost**](DefaultAPI.md#ApiV1WorkflowTimerSkipPost) | **Post** /api/v1/workflow/timer/skip | skip the timer of a workflow
+[**ApiV1WorkflowTriggerContinueAsNewPost**](DefaultAPI.md#ApiV1WorkflowTriggerContinueAsNewPost) | **Post** /api/v1/workflow/triggerContinueAsNew | trigger ContinueAsNew for a workflow
 [**ApiV1WorkflowWaitForStateCompletionPost**](DefaultAPI.md#ApiV1WorkflowWaitForStateCompletionPost) | **Post** /api/v1/workflow/waitForStateCompletion | 
 [**ApiV1WorkflowWorkerRpcPost**](DefaultAPI.md#ApiV1WorkflowWorkerRpcPost) | **Post** /api/v1/workflowWorker/rpc | for invoking workflow RPC API in the worker
 [**InfoHealthcheckGet**](DefaultAPI.md#InfoHealthcheckGet) | **Get** /info/healthcheck | return health info of the server
@@ -37,22 +38,22 @@ update the config of a workflow
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/indeedeng/iwf-idl"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/indeedeng/iwf-idl"
 )
 
 func main() {
-    workflowConfigUpdateRequest := *openapiclient.NewWorkflowConfigUpdateRequest("WorkflowId_example", *openapiclient.NewWorkflowConfig()) // WorkflowConfigUpdateRequest |  (optional)
+	workflowConfigUpdateRequest := *openapiclient.NewWorkflowConfigUpdateRequest("WorkflowId_example", *openapiclient.NewWorkflowConfig()) // WorkflowConfigUpdateRequest |  (optional)
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultAPI.ApiV1WorkflowConfigUpdatePost(context.Background()).WorkflowConfigUpdateRequest(workflowConfigUpdateRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowConfigUpdatePost``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.ApiV1WorkflowConfigUpdatePost(context.Background()).WorkflowConfigUpdateRequest(workflowConfigUpdateRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowConfigUpdatePost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -99,24 +100,24 @@ get workflow data objects
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/indeedeng/iwf-idl"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/indeedeng/iwf-idl"
 )
 
 func main() {
-    workflowGetDataObjectsRequest := *openapiclient.NewWorkflowGetDataObjectsRequest("WorkflowId_example") // WorkflowGetDataObjectsRequest |  (optional)
+	workflowGetDataObjectsRequest := *openapiclient.NewWorkflowGetDataObjectsRequest("WorkflowId_example") // WorkflowGetDataObjectsRequest |  (optional)
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultAPI.ApiV1WorkflowDataobjectsGetPost(context.Background()).WorkflowGetDataObjectsRequest(workflowGetDataObjectsRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowDataobjectsGetPost``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `ApiV1WorkflowDataobjectsGetPost`: WorkflowGetDataObjectsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1WorkflowDataobjectsGetPost`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.ApiV1WorkflowDataobjectsGetPost(context.Background()).WorkflowGetDataObjectsRequest(workflowGetDataObjectsRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowDataobjectsGetPost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ApiV1WorkflowDataobjectsGetPost`: WorkflowGetDataObjectsResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1WorkflowDataobjectsGetPost`: %v\n", resp)
 }
 ```
 
@@ -163,24 +164,24 @@ get a workflow's status and results(if completed & requested)
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/indeedeng/iwf-idl"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/indeedeng/iwf-idl"
 )
 
 func main() {
-    workflowGetRequest := *openapiclient.NewWorkflowGetRequest("WorkflowId_example") // WorkflowGetRequest |  (optional)
+	workflowGetRequest := *openapiclient.NewWorkflowGetRequest("WorkflowId_example") // WorkflowGetRequest |  (optional)
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultAPI.ApiV1WorkflowGetPost(context.Background()).WorkflowGetRequest(workflowGetRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowGetPost``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `ApiV1WorkflowGetPost`: WorkflowGetResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1WorkflowGetPost`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.ApiV1WorkflowGetPost(context.Background()).WorkflowGetRequest(workflowGetRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowGetPost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ApiV1WorkflowGetPost`: WorkflowGetResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1WorkflowGetPost`: %v\n", resp)
 }
 ```
 
@@ -227,24 +228,24 @@ get a workflow's status and results(if completed & requested), wait if the workf
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/indeedeng/iwf-idl"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/indeedeng/iwf-idl"
 )
 
 func main() {
-    workflowGetRequest := *openapiclient.NewWorkflowGetRequest("WorkflowId_example") // WorkflowGetRequest |  (optional)
+	workflowGetRequest := *openapiclient.NewWorkflowGetRequest("WorkflowId_example") // WorkflowGetRequest |  (optional)
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultAPI.ApiV1WorkflowGetWithWaitPost(context.Background()).WorkflowGetRequest(workflowGetRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowGetWithWaitPost``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `ApiV1WorkflowGetWithWaitPost`: WorkflowGetResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1WorkflowGetWithWaitPost`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.ApiV1WorkflowGetWithWaitPost(context.Background()).WorkflowGetRequest(workflowGetRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowGetWithWaitPost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ApiV1WorkflowGetWithWaitPost`: WorkflowGetResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1WorkflowGetWithWaitPost`: %v\n", resp)
 }
 ```
 
@@ -291,24 +292,24 @@ dump internal info of a workflow
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/indeedeng/iwf-idl"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/indeedeng/iwf-idl"
 )
 
 func main() {
-    workflowDumpRequest := *openapiclient.NewWorkflowDumpRequest("WorkflowId_example", "WorkflowRunId_example", int32(123), int32(123)) // WorkflowDumpRequest |  (optional)
+	workflowDumpRequest := *openapiclient.NewWorkflowDumpRequest("WorkflowId_example", "WorkflowRunId_example", int32(123), int32(123)) // WorkflowDumpRequest |  (optional)
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultAPI.ApiV1WorkflowInternalDumpPost(context.Background()).WorkflowDumpRequest(workflowDumpRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowInternalDumpPost``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `ApiV1WorkflowInternalDumpPost`: WorkflowDumpResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1WorkflowInternalDumpPost`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.ApiV1WorkflowInternalDumpPost(context.Background()).WorkflowDumpRequest(workflowDumpRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowInternalDumpPost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ApiV1WorkflowInternalDumpPost`: WorkflowDumpResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1WorkflowInternalDumpPost`: %v\n", resp)
 }
 ```
 
@@ -355,24 +356,24 @@ reset a workflow
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/indeedeng/iwf-idl"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/indeedeng/iwf-idl"
 )
 
 func main() {
-    workflowResetRequest := *openapiclient.NewWorkflowResetRequest("WorkflowId_example", openapiclient.WorkflowResetType("HISTORY_EVENT_ID")) // WorkflowResetRequest |  (optional)
+	workflowResetRequest := *openapiclient.NewWorkflowResetRequest("WorkflowId_example", openapiclient.WorkflowResetType("HISTORY_EVENT_ID")) // WorkflowResetRequest |  (optional)
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultAPI.ApiV1WorkflowResetPost(context.Background()).WorkflowResetRequest(workflowResetRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowResetPost``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `ApiV1WorkflowResetPost`: WorkflowResetResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1WorkflowResetPost`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.ApiV1WorkflowResetPost(context.Background()).WorkflowResetRequest(workflowResetRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowResetPost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ApiV1WorkflowResetPost`: WorkflowResetResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1WorkflowResetPost`: %v\n", resp)
 }
 ```
 
@@ -419,24 +420,24 @@ execute an RPC of a workflow
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/indeedeng/iwf-idl"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/indeedeng/iwf-idl"
 )
 
 func main() {
-    workflowRpcRequest := *openapiclient.NewWorkflowRpcRequest("WorkflowId_example", "RpcName_example") // WorkflowRpcRequest |  (optional)
+	workflowRpcRequest := *openapiclient.NewWorkflowRpcRequest("WorkflowId_example", "RpcName_example") // WorkflowRpcRequest |  (optional)
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultAPI.ApiV1WorkflowRpcPost(context.Background()).WorkflowRpcRequest(workflowRpcRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowRpcPost``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `ApiV1WorkflowRpcPost`: WorkflowRpcResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1WorkflowRpcPost`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.ApiV1WorkflowRpcPost(context.Background()).WorkflowRpcRequest(workflowRpcRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowRpcPost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ApiV1WorkflowRpcPost`: WorkflowRpcResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1WorkflowRpcPost`: %v\n", resp)
 }
 ```
 
@@ -483,24 +484,24 @@ search for workflows by a search attribute query
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/indeedeng/iwf-idl"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/indeedeng/iwf-idl"
 )
 
 func main() {
-    workflowSearchRequest := *openapiclient.NewWorkflowSearchRequest("Query_example") // WorkflowSearchRequest |  (optional)
+	workflowSearchRequest := *openapiclient.NewWorkflowSearchRequest("Query_example") // WorkflowSearchRequest |  (optional)
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultAPI.ApiV1WorkflowSearchPost(context.Background()).WorkflowSearchRequest(workflowSearchRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowSearchPost``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `ApiV1WorkflowSearchPost`: WorkflowSearchResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1WorkflowSearchPost`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.ApiV1WorkflowSearchPost(context.Background()).WorkflowSearchRequest(workflowSearchRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowSearchPost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ApiV1WorkflowSearchPost`: WorkflowSearchResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1WorkflowSearchPost`: %v\n", resp)
 }
 ```
 
@@ -547,24 +548,24 @@ get workflow search attributes
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/indeedeng/iwf-idl"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/indeedeng/iwf-idl"
 )
 
 func main() {
-    workflowGetSearchAttributesRequest := *openapiclient.NewWorkflowGetSearchAttributesRequest("WorkflowId_example") // WorkflowGetSearchAttributesRequest |  (optional)
+	workflowGetSearchAttributesRequest := *openapiclient.NewWorkflowGetSearchAttributesRequest("WorkflowId_example") // WorkflowGetSearchAttributesRequest |  (optional)
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultAPI.ApiV1WorkflowSearchattributesGetPost(context.Background()).WorkflowGetSearchAttributesRequest(workflowGetSearchAttributesRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowSearchattributesGetPost``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `ApiV1WorkflowSearchattributesGetPost`: WorkflowGetSearchAttributesResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1WorkflowSearchattributesGetPost`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.ApiV1WorkflowSearchattributesGetPost(context.Background()).WorkflowGetSearchAttributesRequest(workflowGetSearchAttributesRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowSearchattributesGetPost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ApiV1WorkflowSearchattributesGetPost`: WorkflowGetSearchAttributesResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1WorkflowSearchattributesGetPost`: %v\n", resp)
 }
 ```
 
@@ -611,22 +612,22 @@ signal a workflow
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/indeedeng/iwf-idl"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/indeedeng/iwf-idl"
 )
 
 func main() {
-    workflowSignalRequest := *openapiclient.NewWorkflowSignalRequest("WorkflowId_example", "SignalChannelName_example") // WorkflowSignalRequest |  (optional)
+	workflowSignalRequest := *openapiclient.NewWorkflowSignalRequest("WorkflowId_example", "SignalChannelName_example") // WorkflowSignalRequest |  (optional)
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultAPI.ApiV1WorkflowSignalPost(context.Background()).WorkflowSignalRequest(workflowSignalRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowSignalPost``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.ApiV1WorkflowSignalPost(context.Background()).WorkflowSignalRequest(workflowSignalRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowSignalPost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -673,24 +674,24 @@ start a workflow
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/indeedeng/iwf-idl"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/indeedeng/iwf-idl"
 )
 
 func main() {
-    workflowStartRequest := *openapiclient.NewWorkflowStartRequest("WorkflowId_example", "IwfWorkflowType_example", int32(123), "IwfWorkerUrl_example") // WorkflowStartRequest |  (optional)
+	workflowStartRequest := *openapiclient.NewWorkflowStartRequest("WorkflowId_example", "IwfWorkflowType_example", int32(123), "IwfWorkerUrl_example") // WorkflowStartRequest |  (optional)
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultAPI.ApiV1WorkflowStartPost(context.Background()).WorkflowStartRequest(workflowStartRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowStartPost``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `ApiV1WorkflowStartPost`: WorkflowStartResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1WorkflowStartPost`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.ApiV1WorkflowStartPost(context.Background()).WorkflowStartRequest(workflowStartRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowStartPost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ApiV1WorkflowStartPost`: WorkflowStartResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1WorkflowStartPost`: %v\n", resp)
 }
 ```
 
@@ -737,24 +738,24 @@ for invoking WorkflowState.execute API
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/indeedeng/iwf-idl"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/indeedeng/iwf-idl"
 )
 
 func main() {
-    workflowStateExecuteRequest := *openapiclient.NewWorkflowStateExecuteRequest(*openapiclient.NewContext("WorkflowId_example", "WorkflowRunId_example", int64(123)), "WorkflowType_example", "WorkflowStateId_example") // WorkflowStateExecuteRequest |  (optional)
+	workflowStateExecuteRequest := *openapiclient.NewWorkflowStateExecuteRequest(*openapiclient.NewContext("WorkflowId_example", "WorkflowRunId_example", int64(123)), "WorkflowType_example", "WorkflowStateId_example") // WorkflowStateExecuteRequest |  (optional)
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultAPI.ApiV1WorkflowStateDecidePost(context.Background()).WorkflowStateExecuteRequest(workflowStateExecuteRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowStateDecidePost``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `ApiV1WorkflowStateDecidePost`: WorkflowStateExecuteResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1WorkflowStateDecidePost`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.ApiV1WorkflowStateDecidePost(context.Background()).WorkflowStateExecuteRequest(workflowStateExecuteRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowStateDecidePost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ApiV1WorkflowStateDecidePost`: WorkflowStateExecuteResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1WorkflowStateDecidePost`: %v\n", resp)
 }
 ```
 
@@ -801,24 +802,24 @@ for invoking WorkflowState.waitUntil API
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/indeedeng/iwf-idl"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/indeedeng/iwf-idl"
 )
 
 func main() {
-    workflowStateWaitUntilRequest := *openapiclient.NewWorkflowStateWaitUntilRequest(*openapiclient.NewContext("WorkflowId_example", "WorkflowRunId_example", int64(123)), "WorkflowType_example", "WorkflowStateId_example") // WorkflowStateWaitUntilRequest |  (optional)
+	workflowStateWaitUntilRequest := *openapiclient.NewWorkflowStateWaitUntilRequest(*openapiclient.NewContext("WorkflowId_example", "WorkflowRunId_example", int64(123)), "WorkflowType_example", "WorkflowStateId_example") // WorkflowStateWaitUntilRequest |  (optional)
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultAPI.ApiV1WorkflowStateStartPost(context.Background()).WorkflowStateWaitUntilRequest(workflowStateWaitUntilRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowStateStartPost``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `ApiV1WorkflowStateStartPost`: WorkflowStateWaitUntilResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1WorkflowStateStartPost`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.ApiV1WorkflowStateStartPost(context.Background()).WorkflowStateWaitUntilRequest(workflowStateWaitUntilRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowStateStartPost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ApiV1WorkflowStateStartPost`: WorkflowStateWaitUntilResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1WorkflowStateStartPost`: %v\n", resp)
 }
 ```
 
@@ -865,22 +866,22 @@ stop a workflow
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/indeedeng/iwf-idl"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/indeedeng/iwf-idl"
 )
 
 func main() {
-    workflowStopRequest := *openapiclient.NewWorkflowStopRequest("WorkflowId_example") // WorkflowStopRequest |  (optional)
+	workflowStopRequest := *openapiclient.NewWorkflowStopRequest("WorkflowId_example") // WorkflowStopRequest |  (optional)
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultAPI.ApiV1WorkflowStopPost(context.Background()).WorkflowStopRequest(workflowStopRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowStopPost``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.ApiV1WorkflowStopPost(context.Background()).WorkflowStopRequest(workflowStopRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowStopPost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -927,22 +928,22 @@ skip the timer of a workflow
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/indeedeng/iwf-idl"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/indeedeng/iwf-idl"
 )
 
 func main() {
-    workflowSkipTimerRequest := *openapiclient.NewWorkflowSkipTimerRequest("WorkflowId_example", "WorkflowStateExecutionId_example") // WorkflowSkipTimerRequest |  (optional)
+	workflowSkipTimerRequest := *openapiclient.NewWorkflowSkipTimerRequest("WorkflowId_example", "WorkflowStateExecutionId_example") // WorkflowSkipTimerRequest |  (optional)
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultAPI.ApiV1WorkflowTimerSkipPost(context.Background()).WorkflowSkipTimerRequest(workflowSkipTimerRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowTimerSkipPost``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.ApiV1WorkflowTimerSkipPost(context.Background()).WorkflowSkipTimerRequest(workflowSkipTimerRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowTimerSkipPost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
 }
 ```
 
@@ -977,6 +978,68 @@ No authorization required
 [[Back to README]](../README.md)
 
 
+## ApiV1WorkflowTriggerContinueAsNewPost
+
+> ApiV1WorkflowTriggerContinueAsNewPost(ctx).TriggerContinueAsNewRequest(triggerContinueAsNewRequest).Execute()
+
+trigger ContinueAsNew for a workflow
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/indeedeng/iwf-idl"
+)
+
+func main() {
+	triggerContinueAsNewRequest := *openapiclient.NewTriggerContinueAsNewRequest("WorkflowId_example") // TriggerContinueAsNewRequest |  (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.DefaultAPI.ApiV1WorkflowTriggerContinueAsNewPost(context.Background()).TriggerContinueAsNewRequest(triggerContinueAsNewRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowTriggerContinueAsNewPost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiApiV1WorkflowTriggerContinueAsNewPostRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **triggerContinueAsNewRequest** | [**TriggerContinueAsNewRequest**](TriggerContinueAsNewRequest.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ApiV1WorkflowWaitForStateCompletionPost
 
 > WorkflowWaitForStateCompletionResponse ApiV1WorkflowWaitForStateCompletionPost(ctx).WorkflowWaitForStateCompletionRequest(workflowWaitForStateCompletionRequest).Execute()
@@ -989,24 +1052,24 @@ No authorization required
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/indeedeng/iwf-idl"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/indeedeng/iwf-idl"
 )
 
 func main() {
-    workflowWaitForStateCompletionRequest := *openapiclient.NewWorkflowWaitForStateCompletionRequest("WorkflowId_example", "StateExecutionId_example") // WorkflowWaitForStateCompletionRequest |  (optional)
+	workflowWaitForStateCompletionRequest := *openapiclient.NewWorkflowWaitForStateCompletionRequest("WorkflowId_example") // WorkflowWaitForStateCompletionRequest |  (optional)
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultAPI.ApiV1WorkflowWaitForStateCompletionPost(context.Background()).WorkflowWaitForStateCompletionRequest(workflowWaitForStateCompletionRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowWaitForStateCompletionPost``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `ApiV1WorkflowWaitForStateCompletionPost`: WorkflowWaitForStateCompletionResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1WorkflowWaitForStateCompletionPost`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.ApiV1WorkflowWaitForStateCompletionPost(context.Background()).WorkflowWaitForStateCompletionRequest(workflowWaitForStateCompletionRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowWaitForStateCompletionPost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ApiV1WorkflowWaitForStateCompletionPost`: WorkflowWaitForStateCompletionResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1WorkflowWaitForStateCompletionPost`: %v\n", resp)
 }
 ```
 
@@ -1053,24 +1116,24 @@ for invoking workflow RPC API in the worker
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/indeedeng/iwf-idl"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/indeedeng/iwf-idl"
 )
 
 func main() {
-    workflowWorkerRpcRequest := *openapiclient.NewWorkflowWorkerRpcRequest(*openapiclient.NewContext("WorkflowId_example", "WorkflowRunId_example", int64(123)), "WorkflowType_example", "RpcName_example") // WorkflowWorkerRpcRequest |  (optional)
+	workflowWorkerRpcRequest := *openapiclient.NewWorkflowWorkerRpcRequest(*openapiclient.NewContext("WorkflowId_example", "WorkflowRunId_example", int64(123)), "WorkflowType_example", "RpcName_example") // WorkflowWorkerRpcRequest |  (optional)
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultAPI.ApiV1WorkflowWorkerRpcPost(context.Background()).WorkflowWorkerRpcRequest(workflowWorkerRpcRequest).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowWorkerRpcPost``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `ApiV1WorkflowWorkerRpcPost`: WorkflowWorkerRpcResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1WorkflowWorkerRpcPost`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.ApiV1WorkflowWorkerRpcPost(context.Background()).WorkflowWorkerRpcRequest(workflowWorkerRpcRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowWorkerRpcPost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ApiV1WorkflowWorkerRpcPost`: WorkflowWorkerRpcResponse
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1WorkflowWorkerRpcPost`: %v\n", resp)
 }
 ```
 
@@ -1117,23 +1180,23 @@ return health info of the server
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "github.com/indeedeng/iwf-idl"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/indeedeng/iwf-idl"
 )
 
 func main() {
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultAPI.InfoHealthcheckGet(context.Background()).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.InfoHealthcheckGet``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `InfoHealthcheckGet`: HealthInfo
-    fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.InfoHealthcheckGet`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DefaultAPI.InfoHealthcheckGet(context.Background()).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.InfoHealthcheckGet``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `InfoHealthcheckGet`: HealthInfo
+	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.InfoHealthcheckGet`: %v\n", resp)
 }
 ```
 

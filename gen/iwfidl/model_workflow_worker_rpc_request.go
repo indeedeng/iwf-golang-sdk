@@ -12,6 +12,8 @@ package iwfidl
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the WorkflowWorkerRpcRequest type satisfies the MappedNullable interface at compile time
@@ -19,13 +21,15 @@ var _ MappedNullable = &WorkflowWorkerRpcRequest{}
 
 // WorkflowWorkerRpcRequest struct for WorkflowWorkerRpcRequest
 type WorkflowWorkerRpcRequest struct {
-	Context          Context           `json:"context"`
-	WorkflowType     string            `json:"workflowType"`
-	RpcName          string            `json:"rpcName"`
-	Input            *EncodedObject    `json:"input,omitempty"`
+	Context Context `json:"context"`
+	WorkflowType string `json:"workflowType"`
+	RpcName string `json:"rpcName"`
+	Input *EncodedObject `json:"input,omitempty"`
 	SearchAttributes []SearchAttribute `json:"searchAttributes,omitempty"`
-	DataAttributes   []KeyValue        `json:"dataAttributes,omitempty"`
+	DataAttributes []KeyValue `json:"dataAttributes,omitempty"`
 }
+
+type _WorkflowWorkerRpcRequest WorkflowWorkerRpcRequest
 
 // NewWorkflowWorkerRpcRequest instantiates a new WorkflowWorkerRpcRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -216,7 +220,7 @@ func (o *WorkflowWorkerRpcRequest) SetDataAttributes(v []KeyValue) {
 }
 
 func (o WorkflowWorkerRpcRequest) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
+	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -238,6 +242,45 @@ func (o WorkflowWorkerRpcRequest) ToMap() (map[string]interface{}, error) {
 		toSerialize["dataAttributes"] = o.DataAttributes
 	}
 	return toSerialize, nil
+}
+
+func (o *WorkflowWorkerRpcRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"context",
+		"workflowType",
+		"rpcName",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varWorkflowWorkerRpcRequest := _WorkflowWorkerRpcRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varWorkflowWorkerRpcRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = WorkflowWorkerRpcRequest(varWorkflowWorkerRpcRequest)
+
+	return err
 }
 
 type NullableWorkflowWorkerRpcRequest struct {
@@ -275,3 +318,5 @@ func (v *NullableWorkflowWorkerRpcRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+
