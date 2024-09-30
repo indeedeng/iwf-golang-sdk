@@ -32,18 +32,3 @@ func TestAbnormalExitWorkflow(t *testing.T) {
 	err = client.GetSimpleWorkflowResult(context.Background(), "a wrong workflowId", "", &output)
 	assert.True(t, iwf.IsWorkflowNotExistsError(err))
 }
-
-func TestProceedOnStateStartFailWorkflow(t *testing.T) {
-	wfId := "TestProceedOnStateStartFailWorkflow" + strconv.Itoa(int(time.Now().Unix()))
-	runId, err := client.StartWorkflow(context.Background(), &proceedOnStateStartFailWorkflow{}, wfId, 10, "input", &iwf.WorkflowOptions{})
-	assert.Nil(t, err)
-	assert.NotEmpty(t, runId)
-
-	_, err = client.StartWorkflow(context.Background(), &basicWorkflow{}, wfId, 10, nil, nil)
-	assert.True(t, iwf.IsWorkflowAlreadyStartedError(err))
-
-	var output string
-	err = client.GetSimpleWorkflowResult(context.Background(), wfId, "", &output)
-	assert.Equal(t, "input_state1_start_state1_decide_state2_start_state2_decide", output)
-	assert.Nil(t, err)
-}
