@@ -19,12 +19,12 @@ var _ MappedNullable = &WorkflowStateWaitUntilRequest{}
 
 // WorkflowStateWaitUntilRequest struct for WorkflowStateWaitUntilRequest
 type WorkflowStateWaitUntilRequest struct {
-	Context          Context           `json:"context"`
-	WorkflowType     string            `json:"workflowType"`
-	WorkflowStateId  string            `json:"workflowStateId"`
-	StateInput       *EncodedObject    `json:"stateInput,omitempty"`
+	Context Context `json:"context"`
+	WorkflowType string `json:"workflowType"`
+	WorkflowStateId string `json:"workflowStateId"`
+	StateInput *EncodedObject `json:"stateInput,omitempty"`
 	SearchAttributes []SearchAttribute `json:"searchAttributes,omitempty"`
-	DataObjects      []KeyValue        `json:"dataObjects,omitempty"`
+	DataObjects []KeyValue `json:"dataObjects,omitempty"`
 }
 
 // NewWorkflowStateWaitUntilRequest instantiates a new WorkflowStateWaitUntilRequest object
@@ -216,7 +216,7 @@ func (o *WorkflowStateWaitUntilRequest) SetDataObjects(v []KeyValue) {
 }
 
 func (o WorkflowStateWaitUntilRequest) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
+	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -275,3 +275,5 @@ func (v *NullableWorkflowStateWaitUntilRequest) UnmarshalJSON(src []byte) error 
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+

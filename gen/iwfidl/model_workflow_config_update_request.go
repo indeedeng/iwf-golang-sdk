@@ -19,8 +19,8 @@ var _ MappedNullable = &WorkflowConfigUpdateRequest{}
 
 // WorkflowConfigUpdateRequest struct for WorkflowConfigUpdateRequest
 type WorkflowConfigUpdateRequest struct {
-	WorkflowId     string         `json:"workflowId"`
-	WorkflowRunId  *string        `json:"workflowRunId,omitempty"`
+	WorkflowId string `json:"workflowId"`
+	WorkflowRunId *string `json:"workflowRunId,omitempty"`
 	WorkflowConfig WorkflowConfig `json:"workflowConfig"`
 }
 
@@ -124,7 +124,7 @@ func (o *WorkflowConfigUpdateRequest) SetWorkflowConfig(v WorkflowConfig) {
 }
 
 func (o WorkflowConfigUpdateRequest) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
+	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -176,3 +176,5 @@ func (v *NullableWorkflowConfigUpdateRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+

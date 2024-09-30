@@ -19,12 +19,12 @@ var _ MappedNullable = &WorkflowWorkerRpcResponse{}
 
 // WorkflowWorkerRpcResponse struct for WorkflowWorkerRpcResponse
 type WorkflowWorkerRpcResponse struct {
-	Output                     *EncodedObject                `json:"output,omitempty"`
-	StateDecision              *StateDecision                `json:"stateDecision,omitempty"`
-	UpsertSearchAttributes     []SearchAttribute             `json:"upsertSearchAttributes,omitempty"`
-	UpsertDataAttributes       []KeyValue                    `json:"upsertDataAttributes,omitempty"`
-	RecordEvents               []KeyValue                    `json:"recordEvents,omitempty"`
-	UpsertStateLocals          []KeyValue                    `json:"upsertStateLocals,omitempty"`
+	Output *EncodedObject `json:"output,omitempty"`
+	StateDecision *StateDecision `json:"stateDecision,omitempty"`
+	UpsertSearchAttributes []SearchAttribute `json:"upsertSearchAttributes,omitempty"`
+	UpsertDataAttributes []KeyValue `json:"upsertDataAttributes,omitempty"`
+	RecordEvents []KeyValue `json:"recordEvents,omitempty"`
+	UpsertStateLocals []KeyValue `json:"upsertStateLocals,omitempty"`
 	PublishToInterStateChannel []InterStateChannelPublishing `json:"publishToInterStateChannel,omitempty"`
 }
 
@@ -270,7 +270,7 @@ func (o *WorkflowWorkerRpcResponse) SetPublishToInterStateChannel(v []InterState
 }
 
 func (o WorkflowWorkerRpcResponse) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
+	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -338,3 +338,5 @@ func (v *NullableWorkflowWorkerRpcResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+

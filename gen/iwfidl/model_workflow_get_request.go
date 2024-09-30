@@ -19,10 +19,10 @@ var _ MappedNullable = &WorkflowGetRequest{}
 
 // WorkflowGetRequest struct for WorkflowGetRequest
 type WorkflowGetRequest struct {
-	WorkflowId      string  `json:"workflowId"`
-	WorkflowRunId   *string `json:"workflowRunId,omitempty"`
-	NeedsResults    *bool   `json:"needsResults,omitempty"`
-	WaitTimeSeconds *int32  `json:"waitTimeSeconds,omitempty"`
+	WorkflowId string `json:"workflowId"`
+	WorkflowRunId *string `json:"workflowRunId,omitempty"`
+	NeedsResults *bool `json:"needsResults,omitempty"`
+	WaitTimeSeconds *int32 `json:"waitTimeSeconds,omitempty"`
 }
 
 // NewWorkflowGetRequest instantiates a new WorkflowGetRequest object
@@ -164,7 +164,7 @@ func (o *WorkflowGetRequest) SetWaitTimeSeconds(v int32) {
 }
 
 func (o WorkflowGetRequest) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
+	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -221,3 +221,5 @@ func (v *NullableWorkflowGetRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+

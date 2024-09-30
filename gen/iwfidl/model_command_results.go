@@ -19,10 +19,10 @@ var _ MappedNullable = &CommandResults{}
 
 // CommandResults struct for CommandResults
 type CommandResults struct {
-	SignalResults            []SignalResult            `json:"signalResults,omitempty"`
+	SignalResults []SignalResult `json:"signalResults,omitempty"`
 	InterStateChannelResults []InterStateChannelResult `json:"interStateChannelResults,omitempty"`
-	TimerResults             []TimerResult             `json:"timerResults,omitempty"`
-	StateStartApiSucceeded   *bool                     `json:"stateStartApiSucceeded,omitempty"`
+	TimerResults []TimerResult `json:"timerResults,omitempty"`
+	StateStartApiSucceeded *bool `json:"stateStartApiSucceeded,omitempty"`
 }
 
 // NewCommandResults instantiates a new CommandResults object
@@ -171,7 +171,7 @@ func (o *CommandResults) SetStateStartApiSucceeded(v bool) {
 }
 
 func (o CommandResults) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
+	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -230,3 +230,5 @@ func (v *NullableCommandResults) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+

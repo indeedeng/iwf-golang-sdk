@@ -19,10 +19,10 @@ var _ MappedNullable = &WorkflowGetDataObjectsRequest{}
 
 // WorkflowGetDataObjectsRequest struct for WorkflowGetDataObjectsRequest
 type WorkflowGetDataObjectsRequest struct {
-	WorkflowId               string   `json:"workflowId"`
-	WorkflowRunId            *string  `json:"workflowRunId,omitempty"`
-	Keys                     []string `json:"keys,omitempty"`
-	UseMemoForDataAttributes *bool    `json:"useMemoForDataAttributes,omitempty"`
+	WorkflowId string `json:"workflowId"`
+	WorkflowRunId *string `json:"workflowRunId,omitempty"`
+	Keys []string `json:"keys,omitempty"`
+	UseMemoForDataAttributes *bool `json:"useMemoForDataAttributes,omitempty"`
 }
 
 // NewWorkflowGetDataObjectsRequest instantiates a new WorkflowGetDataObjectsRequest object
@@ -164,7 +164,7 @@ func (o *WorkflowGetDataObjectsRequest) SetUseMemoForDataAttributes(v bool) {
 }
 
 func (o WorkflowGetDataObjectsRequest) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
+	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -221,3 +221,5 @@ func (v *NullableWorkflowGetDataObjectsRequest) UnmarshalJSON(src []byte) error 
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+

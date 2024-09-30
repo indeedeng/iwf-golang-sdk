@@ -19,9 +19,9 @@ var _ MappedNullable = &WorkflowDumpResponse{}
 
 // WorkflowDumpResponse struct for WorkflowDumpResponse
 type WorkflowDumpResponse struct {
-	Checksum   string `json:"checksum"`
-	TotalPages int32  `json:"totalPages"`
-	JsonData   string `json:"jsonData"`
+	Checksum string `json:"checksum"`
+	TotalPages int32 `json:"totalPages"`
+	JsonData string `json:"jsonData"`
 }
 
 // NewWorkflowDumpResponse instantiates a new WorkflowDumpResponse object
@@ -117,7 +117,7 @@ func (o *WorkflowDumpResponse) SetJsonData(v string) {
 }
 
 func (o WorkflowDumpResponse) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
+	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -167,3 +167,5 @@ func (v *NullableWorkflowDumpResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+

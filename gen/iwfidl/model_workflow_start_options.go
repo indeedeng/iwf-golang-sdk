@@ -19,13 +19,14 @@ var _ MappedNullable = &WorkflowStartOptions{}
 
 // WorkflowStartOptions struct for WorkflowStartOptions
 type WorkflowStartOptions struct {
-	IdReusePolicy             *IDReusePolicy       `json:"idReusePolicy,omitempty"`
-	CronSchedule              *string              `json:"cronSchedule,omitempty"`
-	WorkflowStartDelaySeconds *int32               `json:"workflowStartDelaySeconds,omitempty"`
-	RetryPolicy               *WorkflowRetryPolicy `json:"retryPolicy,omitempty"`
-	SearchAttributes          []SearchAttribute    `json:"searchAttributes,omitempty"`
-	WorkflowConfigOverride    *WorkflowConfig      `json:"workflowConfigOverride,omitempty"`
-	UseMemoForDataAttributes  *bool                `json:"useMemoForDataAttributes,omitempty"`
+	IdReusePolicy *IDReusePolicy `json:"idReusePolicy,omitempty"`
+	CronSchedule *string `json:"cronSchedule,omitempty"`
+	WorkflowStartDelaySeconds *int32 `json:"workflowStartDelaySeconds,omitempty"`
+	RetryPolicy *WorkflowRetryPolicy `json:"retryPolicy,omitempty"`
+	SearchAttributes []SearchAttribute `json:"searchAttributes,omitempty"`
+	DataAttributes []KeyValue `json:"dataAttributes,omitempty"`
+	WorkflowConfigOverride *WorkflowConfig `json:"workflowConfigOverride,omitempty"`
+	UseMemoForDataAttributes *bool `json:"useMemoForDataAttributes,omitempty"`
 }
 
 // NewWorkflowStartOptions instantiates a new WorkflowStartOptions object
@@ -205,6 +206,38 @@ func (o *WorkflowStartOptions) SetSearchAttributes(v []SearchAttribute) {
 	o.SearchAttributes = v
 }
 
+// GetDataAttributes returns the DataAttributes field value if set, zero value otherwise.
+func (o *WorkflowStartOptions) GetDataAttributes() []KeyValue {
+	if o == nil || IsNil(o.DataAttributes) {
+		var ret []KeyValue
+		return ret
+	}
+	return o.DataAttributes
+}
+
+// GetDataAttributesOk returns a tuple with the DataAttributes field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WorkflowStartOptions) GetDataAttributesOk() ([]KeyValue, bool) {
+	if o == nil || IsNil(o.DataAttributes) {
+		return nil, false
+	}
+	return o.DataAttributes, true
+}
+
+// HasDataAttributes returns a boolean if a field has been set.
+func (o *WorkflowStartOptions) HasDataAttributes() bool {
+	if o != nil && !IsNil(o.DataAttributes) {
+		return true
+	}
+
+	return false
+}
+
+// SetDataAttributes gets a reference to the given []KeyValue and assigns it to the DataAttributes field.
+func (o *WorkflowStartOptions) SetDataAttributes(v []KeyValue) {
+	o.DataAttributes = v
+}
+
 // GetWorkflowConfigOverride returns the WorkflowConfigOverride field value if set, zero value otherwise.
 func (o *WorkflowStartOptions) GetWorkflowConfigOverride() WorkflowConfig {
 	if o == nil || IsNil(o.WorkflowConfigOverride) {
@@ -270,7 +303,7 @@ func (o *WorkflowStartOptions) SetUseMemoForDataAttributes(v bool) {
 }
 
 func (o WorkflowStartOptions) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
+	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -293,6 +326,9 @@ func (o WorkflowStartOptions) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.SearchAttributes) {
 		toSerialize["searchAttributes"] = o.SearchAttributes
+	}
+	if !IsNil(o.DataAttributes) {
+		toSerialize["dataAttributes"] = o.DataAttributes
 	}
 	if !IsNil(o.WorkflowConfigOverride) {
 		toSerialize["workflowConfigOverride"] = o.WorkflowConfigOverride
@@ -338,3 +374,5 @@ func (v *NullableWorkflowStartOptions) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+

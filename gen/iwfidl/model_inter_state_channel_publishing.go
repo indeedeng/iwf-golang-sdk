@@ -19,8 +19,8 @@ var _ MappedNullable = &InterStateChannelPublishing{}
 
 // InterStateChannelPublishing struct for InterStateChannelPublishing
 type InterStateChannelPublishing struct {
-	ChannelName string         `json:"channelName"`
-	Value       *EncodedObject `json:"value,omitempty"`
+	ChannelName string `json:"channelName"`
+	Value *EncodedObject `json:"value,omitempty"`
 }
 
 // NewInterStateChannelPublishing instantiates a new InterStateChannelPublishing object
@@ -98,7 +98,7 @@ func (o *InterStateChannelPublishing) SetValue(v EncodedObject) {
 }
 
 func (o InterStateChannelPublishing) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
+	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -149,3 +149,5 @@ func (v *NullableInterStateChannelPublishing) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+

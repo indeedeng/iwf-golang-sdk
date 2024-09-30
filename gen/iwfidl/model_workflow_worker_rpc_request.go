@@ -19,12 +19,12 @@ var _ MappedNullable = &WorkflowWorkerRpcRequest{}
 
 // WorkflowWorkerRpcRequest struct for WorkflowWorkerRpcRequest
 type WorkflowWorkerRpcRequest struct {
-	Context          Context           `json:"context"`
-	WorkflowType     string            `json:"workflowType"`
-	RpcName          string            `json:"rpcName"`
-	Input            *EncodedObject    `json:"input,omitempty"`
+	Context Context `json:"context"`
+	WorkflowType string `json:"workflowType"`
+	RpcName string `json:"rpcName"`
+	Input *EncodedObject `json:"input,omitempty"`
 	SearchAttributes []SearchAttribute `json:"searchAttributes,omitempty"`
-	DataAttributes   []KeyValue        `json:"dataAttributes,omitempty"`
+	DataAttributes []KeyValue `json:"dataAttributes,omitempty"`
 }
 
 // NewWorkflowWorkerRpcRequest instantiates a new WorkflowWorkerRpcRequest object
@@ -216,7 +216,7 @@ func (o *WorkflowWorkerRpcRequest) SetDataAttributes(v []KeyValue) {
 }
 
 func (o WorkflowWorkerRpcRequest) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
+	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -275,3 +275,5 @@ func (v *NullableWorkflowWorkerRpcRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+

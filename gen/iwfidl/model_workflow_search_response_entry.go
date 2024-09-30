@@ -19,7 +19,7 @@ var _ MappedNullable = &WorkflowSearchResponseEntry{}
 
 // WorkflowSearchResponseEntry struct for WorkflowSearchResponseEntry
 type WorkflowSearchResponseEntry struct {
-	WorkflowId    string `json:"workflowId"`
+	WorkflowId string `json:"workflowId"`
 	WorkflowRunId string `json:"workflowRunId"`
 }
 
@@ -91,7 +91,7 @@ func (o *WorkflowSearchResponseEntry) SetWorkflowRunId(v string) {
 }
 
 func (o WorkflowSearchResponseEntry) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
+	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -140,3 +140,5 @@ func (v *NullableWorkflowSearchResponseEntry) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+

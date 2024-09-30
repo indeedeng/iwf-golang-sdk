@@ -1,27 +1,28 @@
-# \DefaultAPI
+# \DefaultApi
 
 All URIs are relative to *http://petstore.swagger.io/v2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**ApiV1WorkflowConfigUpdatePost**](DefaultAPI.md#ApiV1WorkflowConfigUpdatePost) | **Post** /api/v1/workflow/config/update | update the config of a workflow
-[**ApiV1WorkflowDataobjectsGetPost**](DefaultAPI.md#ApiV1WorkflowDataobjectsGetPost) | **Post** /api/v1/workflow/dataobjects/get | get workflow data objects
-[**ApiV1WorkflowGetPost**](DefaultAPI.md#ApiV1WorkflowGetPost) | **Post** /api/v1/workflow/get | get a workflow&#39;s status and results(if completed &amp; requested)
-[**ApiV1WorkflowGetWithWaitPost**](DefaultAPI.md#ApiV1WorkflowGetWithWaitPost) | **Post** /api/v1/workflow/getWithWait | get a workflow&#39;s status and results(if completed &amp; requested), wait if the workflow is still running
-[**ApiV1WorkflowInternalDumpPost**](DefaultAPI.md#ApiV1WorkflowInternalDumpPost) | **Post** /api/v1/workflow/internal/dump | dump internal info of a workflow
-[**ApiV1WorkflowResetPost**](DefaultAPI.md#ApiV1WorkflowResetPost) | **Post** /api/v1/workflow/reset | reset a workflow
-[**ApiV1WorkflowRpcPost**](DefaultAPI.md#ApiV1WorkflowRpcPost) | **Post** /api/v1/workflow/rpc | execute an RPC of a workflow
-[**ApiV1WorkflowSearchPost**](DefaultAPI.md#ApiV1WorkflowSearchPost) | **Post** /api/v1/workflow/search | search for workflows by a search attribute query
-[**ApiV1WorkflowSearchattributesGetPost**](DefaultAPI.md#ApiV1WorkflowSearchattributesGetPost) | **Post** /api/v1/workflow/searchattributes/get | get workflow search attributes
-[**ApiV1WorkflowSignalPost**](DefaultAPI.md#ApiV1WorkflowSignalPost) | **Post** /api/v1/workflow/signal | signal a workflow
-[**ApiV1WorkflowStartPost**](DefaultAPI.md#ApiV1WorkflowStartPost) | **Post** /api/v1/workflow/start | start a workflow
-[**ApiV1WorkflowStateDecidePost**](DefaultAPI.md#ApiV1WorkflowStateDecidePost) | **Post** /api/v1/workflowState/decide | for invoking WorkflowState.execute API
-[**ApiV1WorkflowStateStartPost**](DefaultAPI.md#ApiV1WorkflowStateStartPost) | **Post** /api/v1/workflowState/start | for invoking WorkflowState.waitUntil API
-[**ApiV1WorkflowStopPost**](DefaultAPI.md#ApiV1WorkflowStopPost) | **Post** /api/v1/workflow/stop | stop a workflow
-[**ApiV1WorkflowTimerSkipPost**](DefaultAPI.md#ApiV1WorkflowTimerSkipPost) | **Post** /api/v1/workflow/timer/skip | skip the timer of a workflow
-[**ApiV1WorkflowWaitForStateCompletionPost**](DefaultAPI.md#ApiV1WorkflowWaitForStateCompletionPost) | **Post** /api/v1/workflow/waitForStateCompletion | 
-[**ApiV1WorkflowWorkerRpcPost**](DefaultAPI.md#ApiV1WorkflowWorkerRpcPost) | **Post** /api/v1/workflowWorker/rpc | for invoking workflow RPC API in the worker
-[**InfoHealthcheckGet**](DefaultAPI.md#InfoHealthcheckGet) | **Get** /info/healthcheck | return health info of the server
+[**ApiV1WorkflowConfigUpdatePost**](DefaultApi.md#ApiV1WorkflowConfigUpdatePost) | **Post** /api/v1/workflow/config/update | update the config of a workflow
+[**ApiV1WorkflowDataobjectsGetPost**](DefaultApi.md#ApiV1WorkflowDataobjectsGetPost) | **Post** /api/v1/workflow/dataobjects/get | get workflow data objects
+[**ApiV1WorkflowGetPost**](DefaultApi.md#ApiV1WorkflowGetPost) | **Post** /api/v1/workflow/get | get a workflow&#39;s status and results(if completed &amp; requested)
+[**ApiV1WorkflowGetWithWaitPost**](DefaultApi.md#ApiV1WorkflowGetWithWaitPost) | **Post** /api/v1/workflow/getWithWait | get a workflow&#39;s status and results(if completed &amp; requested), wait if the workflow is still running
+[**ApiV1WorkflowInternalDumpPost**](DefaultApi.md#ApiV1WorkflowInternalDumpPost) | **Post** /api/v1/workflow/internal/dump | dump internal info of a workflow
+[**ApiV1WorkflowResetPost**](DefaultApi.md#ApiV1WorkflowResetPost) | **Post** /api/v1/workflow/reset | reset a workflow
+[**ApiV1WorkflowRpcPost**](DefaultApi.md#ApiV1WorkflowRpcPost) | **Post** /api/v1/workflow/rpc | execute an RPC of a workflow
+[**ApiV1WorkflowSearchPost**](DefaultApi.md#ApiV1WorkflowSearchPost) | **Post** /api/v1/workflow/search | search for workflows by a search attribute query
+[**ApiV1WorkflowSearchattributesGetPost**](DefaultApi.md#ApiV1WorkflowSearchattributesGetPost) | **Post** /api/v1/workflow/searchattributes/get | get workflow search attributes
+[**ApiV1WorkflowSignalPost**](DefaultApi.md#ApiV1WorkflowSignalPost) | **Post** /api/v1/workflow/signal | signal a workflow
+[**ApiV1WorkflowStartPost**](DefaultApi.md#ApiV1WorkflowStartPost) | **Post** /api/v1/workflow/start | start a workflow
+[**ApiV1WorkflowStateDecidePost**](DefaultApi.md#ApiV1WorkflowStateDecidePost) | **Post** /api/v1/workflowState/decide | for invoking WorkflowState.execute API
+[**ApiV1WorkflowStateStartPost**](DefaultApi.md#ApiV1WorkflowStateStartPost) | **Post** /api/v1/workflowState/start | for invoking WorkflowState.waitUntil API
+[**ApiV1WorkflowStopPost**](DefaultApi.md#ApiV1WorkflowStopPost) | **Post** /api/v1/workflow/stop | stop a workflow
+[**ApiV1WorkflowTimerSkipPost**](DefaultApi.md#ApiV1WorkflowTimerSkipPost) | **Post** /api/v1/workflow/timer/skip | skip the timer of a workflow
+[**ApiV1WorkflowTriggerContinueAsNewPost**](DefaultApi.md#ApiV1WorkflowTriggerContinueAsNewPost) | **Post** /api/v1/workflow/triggerContinueAsNew | trigger ContinueAsNew for a workflow
+[**ApiV1WorkflowWaitForStateCompletionPost**](DefaultApi.md#ApiV1WorkflowWaitForStateCompletionPost) | **Post** /api/v1/workflow/waitForStateCompletion | 
+[**ApiV1WorkflowWorkerRpcPost**](DefaultApi.md#ApiV1WorkflowWorkerRpcPost) | **Post** /api/v1/workflowWorker/rpc | for invoking workflow RPC API in the worker
+[**InfoHealthcheckGet**](DefaultApi.md#InfoHealthcheckGet) | **Get** /info/healthcheck | return health info of the server
 
 
 
@@ -48,9 +49,9 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultAPI.ApiV1WorkflowConfigUpdatePost(context.Background()).WorkflowConfigUpdateRequest(workflowConfigUpdateRequest).Execute()
+    r, err := apiClient.DefaultApi.ApiV1WorkflowConfigUpdatePost(context.Background()).WorkflowConfigUpdateRequest(workflowConfigUpdateRequest).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowConfigUpdatePost``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ApiV1WorkflowConfigUpdatePost``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
 }
@@ -110,13 +111,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultAPI.ApiV1WorkflowDataobjectsGetPost(context.Background()).WorkflowGetDataObjectsRequest(workflowGetDataObjectsRequest).Execute()
+    resp, r, err := apiClient.DefaultApi.ApiV1WorkflowDataobjectsGetPost(context.Background()).WorkflowGetDataObjectsRequest(workflowGetDataObjectsRequest).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowDataobjectsGetPost``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ApiV1WorkflowDataobjectsGetPost``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
     // response from `ApiV1WorkflowDataobjectsGetPost`: WorkflowGetDataObjectsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1WorkflowDataobjectsGetPost`: %v\n", resp)
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ApiV1WorkflowDataobjectsGetPost`: %v\n", resp)
 }
 ```
 
@@ -174,13 +175,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultAPI.ApiV1WorkflowGetPost(context.Background()).WorkflowGetRequest(workflowGetRequest).Execute()
+    resp, r, err := apiClient.DefaultApi.ApiV1WorkflowGetPost(context.Background()).WorkflowGetRequest(workflowGetRequest).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowGetPost``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ApiV1WorkflowGetPost``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
     // response from `ApiV1WorkflowGetPost`: WorkflowGetResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1WorkflowGetPost`: %v\n", resp)
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ApiV1WorkflowGetPost`: %v\n", resp)
 }
 ```
 
@@ -238,13 +239,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultAPI.ApiV1WorkflowGetWithWaitPost(context.Background()).WorkflowGetRequest(workflowGetRequest).Execute()
+    resp, r, err := apiClient.DefaultApi.ApiV1WorkflowGetWithWaitPost(context.Background()).WorkflowGetRequest(workflowGetRequest).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowGetWithWaitPost``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ApiV1WorkflowGetWithWaitPost``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
     // response from `ApiV1WorkflowGetWithWaitPost`: WorkflowGetResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1WorkflowGetWithWaitPost`: %v\n", resp)
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ApiV1WorkflowGetWithWaitPost`: %v\n", resp)
 }
 ```
 
@@ -302,13 +303,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultAPI.ApiV1WorkflowInternalDumpPost(context.Background()).WorkflowDumpRequest(workflowDumpRequest).Execute()
+    resp, r, err := apiClient.DefaultApi.ApiV1WorkflowInternalDumpPost(context.Background()).WorkflowDumpRequest(workflowDumpRequest).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowInternalDumpPost``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ApiV1WorkflowInternalDumpPost``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
     // response from `ApiV1WorkflowInternalDumpPost`: WorkflowDumpResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1WorkflowInternalDumpPost`: %v\n", resp)
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ApiV1WorkflowInternalDumpPost`: %v\n", resp)
 }
 ```
 
@@ -366,13 +367,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultAPI.ApiV1WorkflowResetPost(context.Background()).WorkflowResetRequest(workflowResetRequest).Execute()
+    resp, r, err := apiClient.DefaultApi.ApiV1WorkflowResetPost(context.Background()).WorkflowResetRequest(workflowResetRequest).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowResetPost``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ApiV1WorkflowResetPost``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
     // response from `ApiV1WorkflowResetPost`: WorkflowResetResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1WorkflowResetPost`: %v\n", resp)
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ApiV1WorkflowResetPost`: %v\n", resp)
 }
 ```
 
@@ -430,13 +431,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultAPI.ApiV1WorkflowRpcPost(context.Background()).WorkflowRpcRequest(workflowRpcRequest).Execute()
+    resp, r, err := apiClient.DefaultApi.ApiV1WorkflowRpcPost(context.Background()).WorkflowRpcRequest(workflowRpcRequest).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowRpcPost``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ApiV1WorkflowRpcPost``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
     // response from `ApiV1WorkflowRpcPost`: WorkflowRpcResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1WorkflowRpcPost`: %v\n", resp)
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ApiV1WorkflowRpcPost`: %v\n", resp)
 }
 ```
 
@@ -494,13 +495,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultAPI.ApiV1WorkflowSearchPost(context.Background()).WorkflowSearchRequest(workflowSearchRequest).Execute()
+    resp, r, err := apiClient.DefaultApi.ApiV1WorkflowSearchPost(context.Background()).WorkflowSearchRequest(workflowSearchRequest).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowSearchPost``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ApiV1WorkflowSearchPost``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
     // response from `ApiV1WorkflowSearchPost`: WorkflowSearchResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1WorkflowSearchPost`: %v\n", resp)
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ApiV1WorkflowSearchPost`: %v\n", resp)
 }
 ```
 
@@ -558,13 +559,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultAPI.ApiV1WorkflowSearchattributesGetPost(context.Background()).WorkflowGetSearchAttributesRequest(workflowGetSearchAttributesRequest).Execute()
+    resp, r, err := apiClient.DefaultApi.ApiV1WorkflowSearchattributesGetPost(context.Background()).WorkflowGetSearchAttributesRequest(workflowGetSearchAttributesRequest).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowSearchattributesGetPost``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ApiV1WorkflowSearchattributesGetPost``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
     // response from `ApiV1WorkflowSearchattributesGetPost`: WorkflowGetSearchAttributesResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1WorkflowSearchattributesGetPost`: %v\n", resp)
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ApiV1WorkflowSearchattributesGetPost`: %v\n", resp)
 }
 ```
 
@@ -622,9 +623,9 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultAPI.ApiV1WorkflowSignalPost(context.Background()).WorkflowSignalRequest(workflowSignalRequest).Execute()
+    r, err := apiClient.DefaultApi.ApiV1WorkflowSignalPost(context.Background()).WorkflowSignalRequest(workflowSignalRequest).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowSignalPost``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ApiV1WorkflowSignalPost``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
 }
@@ -684,13 +685,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultAPI.ApiV1WorkflowStartPost(context.Background()).WorkflowStartRequest(workflowStartRequest).Execute()
+    resp, r, err := apiClient.DefaultApi.ApiV1WorkflowStartPost(context.Background()).WorkflowStartRequest(workflowStartRequest).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowStartPost``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ApiV1WorkflowStartPost``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
     // response from `ApiV1WorkflowStartPost`: WorkflowStartResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1WorkflowStartPost`: %v\n", resp)
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ApiV1WorkflowStartPost`: %v\n", resp)
 }
 ```
 
@@ -748,13 +749,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultAPI.ApiV1WorkflowStateDecidePost(context.Background()).WorkflowStateExecuteRequest(workflowStateExecuteRequest).Execute()
+    resp, r, err := apiClient.DefaultApi.ApiV1WorkflowStateDecidePost(context.Background()).WorkflowStateExecuteRequest(workflowStateExecuteRequest).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowStateDecidePost``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ApiV1WorkflowStateDecidePost``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
     // response from `ApiV1WorkflowStateDecidePost`: WorkflowStateExecuteResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1WorkflowStateDecidePost`: %v\n", resp)
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ApiV1WorkflowStateDecidePost`: %v\n", resp)
 }
 ```
 
@@ -812,13 +813,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultAPI.ApiV1WorkflowStateStartPost(context.Background()).WorkflowStateWaitUntilRequest(workflowStateWaitUntilRequest).Execute()
+    resp, r, err := apiClient.DefaultApi.ApiV1WorkflowStateStartPost(context.Background()).WorkflowStateWaitUntilRequest(workflowStateWaitUntilRequest).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowStateStartPost``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ApiV1WorkflowStateStartPost``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
     // response from `ApiV1WorkflowStateStartPost`: WorkflowStateWaitUntilResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1WorkflowStateStartPost`: %v\n", resp)
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ApiV1WorkflowStateStartPost`: %v\n", resp)
 }
 ```
 
@@ -876,9 +877,9 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultAPI.ApiV1WorkflowStopPost(context.Background()).WorkflowStopRequest(workflowStopRequest).Execute()
+    r, err := apiClient.DefaultApi.ApiV1WorkflowStopPost(context.Background()).WorkflowStopRequest(workflowStopRequest).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowStopPost``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ApiV1WorkflowStopPost``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
 }
@@ -938,9 +939,9 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultAPI.ApiV1WorkflowTimerSkipPost(context.Background()).WorkflowSkipTimerRequest(workflowSkipTimerRequest).Execute()
+    r, err := apiClient.DefaultApi.ApiV1WorkflowTimerSkipPost(context.Background()).WorkflowSkipTimerRequest(workflowSkipTimerRequest).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowTimerSkipPost``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ApiV1WorkflowTimerSkipPost``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
 }
@@ -958,6 +959,68 @@ Other parameters are passed through a pointer to a apiApiV1WorkflowTimerSkipPost
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **workflowSkipTimerRequest** | [**WorkflowSkipTimerRequest**](WorkflowSkipTimerRequest.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ApiV1WorkflowTriggerContinueAsNewPost
+
+> ApiV1WorkflowTriggerContinueAsNewPost(ctx).TriggerContinueAsNewRequest(triggerContinueAsNewRequest).Execute()
+
+trigger ContinueAsNew for a workflow
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/indeedeng/iwf-idl"
+)
+
+func main() {
+    triggerContinueAsNewRequest := *openapiclient.NewTriggerContinueAsNewRequest("WorkflowId_example") // TriggerContinueAsNewRequest |  (optional)
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    r, err := apiClient.DefaultApi.ApiV1WorkflowTriggerContinueAsNewPost(context.Background()).TriggerContinueAsNewRequest(triggerContinueAsNewRequest).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ApiV1WorkflowTriggerContinueAsNewPost``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiApiV1WorkflowTriggerContinueAsNewPostRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **triggerContinueAsNewRequest** | [**TriggerContinueAsNewRequest**](TriggerContinueAsNewRequest.md) |  | 
 
 ### Return type
 
@@ -996,17 +1059,17 @@ import (
 )
 
 func main() {
-    workflowWaitForStateCompletionRequest := *openapiclient.NewWorkflowWaitForStateCompletionRequest("WorkflowId_example", "StateExecutionId_example") // WorkflowWaitForStateCompletionRequest |  (optional)
+    workflowWaitForStateCompletionRequest := *openapiclient.NewWorkflowWaitForStateCompletionRequest("WorkflowId_example") // WorkflowWaitForStateCompletionRequest |  (optional)
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultAPI.ApiV1WorkflowWaitForStateCompletionPost(context.Background()).WorkflowWaitForStateCompletionRequest(workflowWaitForStateCompletionRequest).Execute()
+    resp, r, err := apiClient.DefaultApi.ApiV1WorkflowWaitForStateCompletionPost(context.Background()).WorkflowWaitForStateCompletionRequest(workflowWaitForStateCompletionRequest).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowWaitForStateCompletionPost``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ApiV1WorkflowWaitForStateCompletionPost``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
     // response from `ApiV1WorkflowWaitForStateCompletionPost`: WorkflowWaitForStateCompletionResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1WorkflowWaitForStateCompletionPost`: %v\n", resp)
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ApiV1WorkflowWaitForStateCompletionPost`: %v\n", resp)
 }
 ```
 
@@ -1064,13 +1127,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultAPI.ApiV1WorkflowWorkerRpcPost(context.Background()).WorkflowWorkerRpcRequest(workflowWorkerRpcRequest).Execute()
+    resp, r, err := apiClient.DefaultApi.ApiV1WorkflowWorkerRpcPost(context.Background()).WorkflowWorkerRpcRequest(workflowWorkerRpcRequest).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiV1WorkflowWorkerRpcPost``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.ApiV1WorkflowWorkerRpcPost``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
     // response from `ApiV1WorkflowWorkerRpcPost`: WorkflowWorkerRpcResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiV1WorkflowWorkerRpcPost`: %v\n", resp)
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.ApiV1WorkflowWorkerRpcPost`: %v\n", resp)
 }
 ```
 
@@ -1127,13 +1190,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultAPI.InfoHealthcheckGet(context.Background()).Execute()
+    resp, r, err := apiClient.DefaultApi.InfoHealthcheckGet(context.Background()).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.InfoHealthcheckGet``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultApi.InfoHealthcheckGet``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
     // response from `InfoHealthcheckGet`: HealthInfo
-    fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.InfoHealthcheckGet`: %v\n", resp)
+    fmt.Fprintf(os.Stdout, "Response from `DefaultApi.InfoHealthcheckGet`: %v\n", resp)
 }
 ```
 

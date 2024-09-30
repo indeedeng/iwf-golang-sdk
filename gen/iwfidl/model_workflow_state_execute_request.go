@@ -19,14 +19,14 @@ var _ MappedNullable = &WorkflowStateExecuteRequest{}
 
 // WorkflowStateExecuteRequest struct for WorkflowStateExecuteRequest
 type WorkflowStateExecuteRequest struct {
-	Context          Context           `json:"context"`
-	WorkflowType     string            `json:"workflowType"`
-	WorkflowStateId  string            `json:"workflowStateId"`
-	StateInput       *EncodedObject    `json:"stateInput,omitempty"`
+	Context Context `json:"context"`
+	WorkflowType string `json:"workflowType"`
+	WorkflowStateId string `json:"workflowStateId"`
+	StateInput *EncodedObject `json:"stateInput,omitempty"`
 	SearchAttributes []SearchAttribute `json:"searchAttributes,omitempty"`
-	DataObjects      []KeyValue        `json:"DataObjects,omitempty"`
-	StateLocals      []KeyValue        `json:"stateLocals,omitempty"`
-	CommandResults   *CommandResults   `json:"commandResults,omitempty"`
+	DataObjects []KeyValue `json:"DataObjects,omitempty"`
+	StateLocals []KeyValue `json:"stateLocals,omitempty"`
+	CommandResults *CommandResults `json:"commandResults,omitempty"`
 }
 
 // NewWorkflowStateExecuteRequest instantiates a new WorkflowStateExecuteRequest object
@@ -282,7 +282,7 @@ func (o *WorkflowStateExecuteRequest) SetCommandResults(v CommandResults) {
 }
 
 func (o WorkflowStateExecuteRequest) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
+	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -347,3 +347,5 @@ func (v *NullableWorkflowStateExecuteRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+

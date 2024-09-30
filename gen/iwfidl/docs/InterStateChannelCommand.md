@@ -4,14 +4,16 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**CommandId** | **string** |  | 
+**CommandId** | Pointer to **string** |  | [optional] 
 **ChannelName** | **string** |  | 
+**AtLeast** | Pointer to **int32** |  | [optional] 
+**AtMost** | Pointer to **int32** |  | [optional] 
 
 ## Methods
 
 ### NewInterStateChannelCommand
 
-`func NewInterStateChannelCommand(commandId string, channelName string, ) *InterStateChannelCommand`
+`func NewInterStateChannelCommand(channelName string, ) *InterStateChannelCommand`
 
 NewInterStateChannelCommand instantiates a new InterStateChannelCommand object
 This constructor will assign default values to properties that have it defined,
@@ -45,6 +47,11 @@ and a boolean to check if the value has been set.
 
 SetCommandId sets CommandId field to given value.
 
+### HasCommandId
+
+`func (o *InterStateChannelCommand) HasCommandId() bool`
+
+HasCommandId returns a boolean if a field has been set.
 
 ### GetChannelName
 
@@ -65,6 +72,56 @@ and a boolean to check if the value has been set.
 
 SetChannelName sets ChannelName field to given value.
 
+
+### GetAtLeast
+
+`func (o *InterStateChannelCommand) GetAtLeast() int32`
+
+GetAtLeast returns the AtLeast field if non-nil, zero value otherwise.
+
+### GetAtLeastOk
+
+`func (o *InterStateChannelCommand) GetAtLeastOk() (*int32, bool)`
+
+GetAtLeastOk returns a tuple with the AtLeast field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAtLeast
+
+`func (o *InterStateChannelCommand) SetAtLeast(v int32)`
+
+SetAtLeast sets AtLeast field to given value.
+
+### HasAtLeast
+
+`func (o *InterStateChannelCommand) HasAtLeast() bool`
+
+HasAtLeast returns a boolean if a field has been set.
+
+### GetAtMost
+
+`func (o *InterStateChannelCommand) GetAtMost() int32`
+
+GetAtMost returns the AtMost field if non-nil, zero value otherwise.
+
+### GetAtMostOk
+
+`func (o *InterStateChannelCommand) GetAtMostOk() (*int32, bool)`
+
+GetAtMostOk returns a tuple with the AtMost field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAtMost
+
+`func (o *InterStateChannelCommand) SetAtMost(v int32)`
+
+SetAtMost sets AtMost field to given value.
+
+### HasAtMost
+
+`func (o *InterStateChannelCommand) HasAtMost() bool`
+
+HasAtMost returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

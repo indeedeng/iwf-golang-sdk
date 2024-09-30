@@ -19,9 +19,9 @@ var _ MappedNullable = &WorkflowGetSearchAttributesRequest{}
 
 // WorkflowGetSearchAttributesRequest struct for WorkflowGetSearchAttributesRequest
 type WorkflowGetSearchAttributesRequest struct {
-	WorkflowId    string                      `json:"workflowId"`
-	WorkflowRunId *string                     `json:"workflowRunId,omitempty"`
-	Keys          []SearchAttributeKeyAndType `json:"keys,omitempty"`
+	WorkflowId string `json:"workflowId"`
+	WorkflowRunId *string `json:"workflowRunId,omitempty"`
+	Keys []SearchAttributeKeyAndType `json:"keys,omitempty"`
 }
 
 // NewWorkflowGetSearchAttributesRequest instantiates a new WorkflowGetSearchAttributesRequest object
@@ -131,7 +131,7 @@ func (o *WorkflowGetSearchAttributesRequest) SetKeys(v []SearchAttributeKeyAndTy
 }
 
 func (o WorkflowGetSearchAttributesRequest) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
+	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -185,3 +185,5 @@ func (v *NullableWorkflowGetSearchAttributesRequest) UnmarshalJSON(src []byte) e
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+
