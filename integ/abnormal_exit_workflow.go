@@ -8,7 +8,7 @@ type abnormalExitWorkflow struct {
 	iwf.EmptyCommunicationSchema
 }
 
-func (wf abnormalExitWorkflow) GetWorkflowStates() []iwf.StateDef {
+func (b abnormalExitWorkflow) GetWorkflowStates() []iwf.StateDef {
 	return []iwf.StateDef{
 		iwf.StartingStateDef(&abnormalExitWorkflowState1{}),
 	}
