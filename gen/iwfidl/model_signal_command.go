@@ -19,10 +19,10 @@ var _ MappedNullable = &SignalCommand{}
 
 // SignalCommand struct for SignalCommand
 type SignalCommand struct {
-	CommandId *string `json:"commandId,omitempty"`
-	SignalChannelName string `json:"signalChannelName"`
-	AtLeast *int32 `json:"atLeast,omitempty"`
-	AtMost *int32 `json:"atMost,omitempty"`
+	CommandId         *string `json:"commandId,omitempty"`
+	SignalChannelName string  `json:"signalChannelName"`
+	AtLeast           *int32  `json:"atLeast,omitempty"`
+	AtMost            *int32  `json:"atMost,omitempty"`
 }
 
 // NewSignalCommand instantiates a new SignalCommand object
@@ -164,7 +164,7 @@ func (o *SignalCommand) SetAtMost(v int32) {
 }
 
 func (o SignalCommand) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -221,5 +221,3 @@ func (v *NullableSignalCommand) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

@@ -19,16 +19,16 @@ var _ MappedNullable = &WorkflowStartRequest{}
 
 // WorkflowStartRequest struct for WorkflowStartRequest
 type WorkflowStartRequest struct {
-	WorkflowId string `json:"workflowId"`
-	IwfWorkflowType string `json:"iwfWorkflowType"`
-	WorkflowTimeoutSeconds int32 `json:"workflowTimeoutSeconds"`
-	IwfWorkerUrl string `json:"iwfWorkerUrl"`
-	StartStateId *string `json:"startStateId,omitempty"`
-	WaitForCompletionStateIds []string `json:"waitForCompletionStateIds,omitempty"`
-	WaitForCompletionStateExecutionIds []string `json:"waitForCompletionStateExecutionIds,omitempty"`
-	StateInput *EncodedObject `json:"stateInput,omitempty"`
-	StateOptions *WorkflowStateOptions `json:"stateOptions,omitempty"`
-	WorkflowStartOptions *WorkflowStartOptions `json:"workflowStartOptions,omitempty"`
+	WorkflowId                         string                `json:"workflowId"`
+	IwfWorkflowType                    string                `json:"iwfWorkflowType"`
+	WorkflowTimeoutSeconds             int32                 `json:"workflowTimeoutSeconds"`
+	IwfWorkerUrl                       string                `json:"iwfWorkerUrl"`
+	StartStateId                       *string               `json:"startStateId,omitempty"`
+	WaitForCompletionStateIds          []string              `json:"waitForCompletionStateIds,omitempty"`
+	WaitForCompletionStateExecutionIds []string              `json:"waitForCompletionStateExecutionIds,omitempty"`
+	StateInput                         *EncodedObject        `json:"stateInput,omitempty"`
+	StateOptions                       *WorkflowStateOptions `json:"stateOptions,omitempty"`
+	WorkflowStartOptions               *WorkflowStartOptions `json:"workflowStartOptions,omitempty"`
 }
 
 // NewWorkflowStartRequest instantiates a new WorkflowStartRequest object
@@ -341,7 +341,7 @@ func (o *WorkflowStartRequest) SetWorkflowStartOptions(v WorkflowStartOptions) {
 }
 
 func (o WorkflowStartRequest) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -410,5 +410,3 @@ func (v *NullableWorkflowStartRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

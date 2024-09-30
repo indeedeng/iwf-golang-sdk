@@ -20,8 +20,8 @@ var _ MappedNullable = &WorkflowConditionalClose{}
 // WorkflowConditionalClose struct for WorkflowConditionalClose
 type WorkflowConditionalClose struct {
 	ConditionalCloseType *WorkflowConditionalCloseType `json:"conditionalCloseType,omitempty"`
-	ChannelName *string `json:"channelName,omitempty"`
-	CloseInput *EncodedObject `json:"closeInput,omitempty"`
+	ChannelName          *string                       `json:"channelName,omitempty"`
+	CloseInput           *EncodedObject                `json:"closeInput,omitempty"`
 }
 
 // NewWorkflowConditionalClose instantiates a new WorkflowConditionalClose object
@@ -138,7 +138,7 @@ func (o *WorkflowConditionalClose) SetCloseInput(v EncodedObject) {
 }
 
 func (o WorkflowConditionalClose) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -194,5 +194,3 @@ func (v *NullableWorkflowConditionalClose) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

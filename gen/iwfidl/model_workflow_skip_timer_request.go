@@ -19,11 +19,11 @@ var _ MappedNullable = &WorkflowSkipTimerRequest{}
 
 // WorkflowSkipTimerRequest struct for WorkflowSkipTimerRequest
 type WorkflowSkipTimerRequest struct {
-	WorkflowId string `json:"workflowId"`
-	WorkflowRunId *string `json:"workflowRunId,omitempty"`
-	WorkflowStateExecutionId string `json:"workflowStateExecutionId"`
-	TimerCommandId *string `json:"timerCommandId,omitempty"`
-	TimerCommandIndex *int32 `json:"timerCommandIndex,omitempty"`
+	WorkflowId               string  `json:"workflowId"`
+	WorkflowRunId            *string `json:"workflowRunId,omitempty"`
+	WorkflowStateExecutionId string  `json:"workflowStateExecutionId"`
+	TimerCommandId           *string `json:"timerCommandId,omitempty"`
+	TimerCommandIndex        *int32  `json:"timerCommandIndex,omitempty"`
 }
 
 // NewWorkflowSkipTimerRequest instantiates a new WorkflowSkipTimerRequest object
@@ -190,7 +190,7 @@ func (o *WorkflowSkipTimerRequest) SetTimerCommandIndex(v int32) {
 }
 
 func (o WorkflowSkipTimerRequest) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -248,5 +248,3 @@ func (v *NullableWorkflowSkipTimerRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

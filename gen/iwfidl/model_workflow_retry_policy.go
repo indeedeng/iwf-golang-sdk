@@ -19,10 +19,10 @@ var _ MappedNullable = &WorkflowRetryPolicy{}
 
 // WorkflowRetryPolicy struct for WorkflowRetryPolicy
 type WorkflowRetryPolicy struct {
-	InitialIntervalSeconds *int32 `json:"initialIntervalSeconds,omitempty"`
-	BackoffCoefficient *float32 `json:"backoffCoefficient,omitempty"`
-	MaximumIntervalSeconds *int32 `json:"maximumIntervalSeconds,omitempty"`
-	MaximumAttempts *int32 `json:"maximumAttempts,omitempty"`
+	InitialIntervalSeconds *int32   `json:"initialIntervalSeconds,omitempty"`
+	BackoffCoefficient     *float32 `json:"backoffCoefficient,omitempty"`
+	MaximumIntervalSeconds *int32   `json:"maximumIntervalSeconds,omitempty"`
+	MaximumAttempts        *int32   `json:"maximumAttempts,omitempty"`
 }
 
 // NewWorkflowRetryPolicy instantiates a new WorkflowRetryPolicy object
@@ -171,7 +171,7 @@ func (o *WorkflowRetryPolicy) SetMaximumAttempts(v int32) {
 }
 
 func (o WorkflowRetryPolicy) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -230,5 +230,3 @@ func (v *NullableWorkflowRetryPolicy) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

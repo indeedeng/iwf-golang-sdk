@@ -19,14 +19,14 @@ var _ MappedNullable = &WorkflowStartOptions{}
 
 // WorkflowStartOptions struct for WorkflowStartOptions
 type WorkflowStartOptions struct {
-	IdReusePolicy *IDReusePolicy `json:"idReusePolicy,omitempty"`
-	CronSchedule *string `json:"cronSchedule,omitempty"`
-	WorkflowStartDelaySeconds *int32 `json:"workflowStartDelaySeconds,omitempty"`
-	RetryPolicy *WorkflowRetryPolicy `json:"retryPolicy,omitempty"`
-	SearchAttributes []SearchAttribute `json:"searchAttributes,omitempty"`
-	DataAttributes []KeyValue `json:"dataAttributes,omitempty"`
-	WorkflowConfigOverride *WorkflowConfig `json:"workflowConfigOverride,omitempty"`
-	UseMemoForDataAttributes *bool `json:"useMemoForDataAttributes,omitempty"`
+	IdReusePolicy             *IDReusePolicy       `json:"idReusePolicy,omitempty"`
+	CronSchedule              *string              `json:"cronSchedule,omitempty"`
+	WorkflowStartDelaySeconds *int32               `json:"workflowStartDelaySeconds,omitempty"`
+	RetryPolicy               *WorkflowRetryPolicy `json:"retryPolicy,omitempty"`
+	SearchAttributes          []SearchAttribute    `json:"searchAttributes,omitempty"`
+	DataAttributes            []KeyValue           `json:"dataAttributes,omitempty"`
+	WorkflowConfigOverride    *WorkflowConfig      `json:"workflowConfigOverride,omitempty"`
+	UseMemoForDataAttributes  *bool                `json:"useMemoForDataAttributes,omitempty"`
 }
 
 // NewWorkflowStartOptions instantiates a new WorkflowStartOptions object
@@ -303,7 +303,7 @@ func (o *WorkflowStartOptions) SetUseMemoForDataAttributes(v bool) {
 }
 
 func (o WorkflowStartOptions) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -374,5 +374,3 @@ func (v *NullableWorkflowStartOptions) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

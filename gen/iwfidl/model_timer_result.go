@@ -19,7 +19,7 @@ var _ MappedNullable = &TimerResult{}
 
 // TimerResult struct for TimerResult
 type TimerResult struct {
-	CommandId string `json:"commandId"`
+	CommandId   string      `json:"commandId"`
 	TimerStatus TimerStatus `json:"timerStatus"`
 }
 
@@ -91,7 +91,7 @@ func (o *TimerResult) SetTimerStatus(v TimerStatus) {
 }
 
 func (o TimerResult) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -140,5 +140,3 @@ func (v *NullableTimerResult) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

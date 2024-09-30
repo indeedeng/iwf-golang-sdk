@@ -72,7 +72,7 @@ func (o *WorkflowWaitForStateCompletionResponse) SetStateCompletionOutput(v Stat
 }
 
 func (o WorkflowWaitForStateCompletionResponse) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -122,5 +122,3 @@ func (v *NullableWorkflowWaitForStateCompletionResponse) UnmarshalJSON(src []byt
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

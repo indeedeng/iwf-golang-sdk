@@ -20,7 +20,7 @@ var _ MappedNullable = &WorkflowSearchResponse{}
 // WorkflowSearchResponse struct for WorkflowSearchResponse
 type WorkflowSearchResponse struct {
 	WorkflowExecutions []WorkflowSearchResponseEntry `json:"workflowExecutions,omitempty"`
-	NextPageToken *string `json:"nextPageToken,omitempty"`
+	NextPageToken      *string                       `json:"nextPageToken,omitempty"`
 }
 
 // NewWorkflowSearchResponse instantiates a new WorkflowSearchResponse object
@@ -105,7 +105,7 @@ func (o *WorkflowSearchResponse) SetNextPageToken(v string) {
 }
 
 func (o WorkflowSearchResponse) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -158,5 +158,3 @@ func (v *NullableWorkflowSearchResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

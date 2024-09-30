@@ -20,7 +20,7 @@ var _ MappedNullable = &EncodedObject{}
 // EncodedObject struct for EncodedObject
 type EncodedObject struct {
 	Encoding *string `json:"encoding,omitempty"`
-	Data *string `json:"data,omitempty"`
+	Data     *string `json:"data,omitempty"`
 }
 
 // NewEncodedObject instantiates a new EncodedObject object
@@ -105,7 +105,7 @@ func (o *EncodedObject) SetData(v string) {
 }
 
 func (o EncodedObject) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -158,5 +158,3 @@ func (v *NullableEncodedObject) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

@@ -19,11 +19,11 @@ var _ MappedNullable = &WorkflowConfig{}
 
 // WorkflowConfig struct for WorkflowConfig
 type WorkflowConfig struct {
-	DisableSystemSearchAttribute *bool `json:"disableSystemSearchAttribute,omitempty"`
-	EnabledExecutingStateExecutionIds *bool `json:"enabledExecutingStateExecutionIds,omitempty"`
-	ContinueAsNewThreshold *int32 `json:"continueAsNewThreshold,omitempty"`
-	ContinueAsNewPageSizeInBytes *int32 `json:"continueAsNewPageSizeInBytes,omitempty"`
-	OptimizeActivity *bool `json:"optimizeActivity,omitempty"`
+	DisableSystemSearchAttribute      *bool  `json:"disableSystemSearchAttribute,omitempty"`
+	EnabledExecutingStateExecutionIds *bool  `json:"enabledExecutingStateExecutionIds,omitempty"`
+	ContinueAsNewThreshold            *int32 `json:"continueAsNewThreshold,omitempty"`
+	ContinueAsNewPageSizeInBytes      *int32 `json:"continueAsNewPageSizeInBytes,omitempty"`
+	OptimizeActivity                  *bool  `json:"optimizeActivity,omitempty"`
 }
 
 // NewWorkflowConfig instantiates a new WorkflowConfig object
@@ -204,7 +204,7 @@ func (o *WorkflowConfig) SetOptimizeActivity(v bool) {
 }
 
 func (o WorkflowConfig) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -266,5 +266,3 @@ func (v *NullableWorkflowConfig) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

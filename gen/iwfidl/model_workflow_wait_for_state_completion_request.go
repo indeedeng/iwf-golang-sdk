@@ -19,11 +19,11 @@ var _ MappedNullable = &WorkflowWaitForStateCompletionRequest{}
 
 // WorkflowWaitForStateCompletionRequest struct for WorkflowWaitForStateCompletionRequest
 type WorkflowWaitForStateCompletionRequest struct {
-	WorkflowId string `json:"workflowId"`
+	WorkflowId       string  `json:"workflowId"`
 	StateExecutionId *string `json:"stateExecutionId,omitempty"`
-	StateId *string `json:"stateId,omitempty"`
-	WaitForKey *string `json:"waitForKey,omitempty"`
-	WaitTimeSeconds *int32 `json:"waitTimeSeconds,omitempty"`
+	StateId          *string `json:"stateId,omitempty"`
+	WaitForKey       *string `json:"waitForKey,omitempty"`
+	WaitTimeSeconds  *int32  `json:"waitTimeSeconds,omitempty"`
 }
 
 // NewWorkflowWaitForStateCompletionRequest instantiates a new WorkflowWaitForStateCompletionRequest object
@@ -197,7 +197,7 @@ func (o *WorkflowWaitForStateCompletionRequest) SetWaitTimeSeconds(v int32) {
 }
 
 func (o WorkflowWaitForStateCompletionRequest) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -257,5 +257,3 @@ func (v *NullableWorkflowWaitForStateCompletionRequest) UnmarshalJSON(src []byte
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

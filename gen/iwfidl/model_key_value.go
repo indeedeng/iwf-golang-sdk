@@ -19,7 +19,7 @@ var _ MappedNullable = &KeyValue{}
 
 // KeyValue struct for KeyValue
 type KeyValue struct {
-	Key *string `json:"key,omitempty"`
+	Key   *string        `json:"key,omitempty"`
 	Value *EncodedObject `json:"value,omitempty"`
 }
 
@@ -105,7 +105,7 @@ func (o *KeyValue) SetValue(v EncodedObject) {
 }
 
 func (o KeyValue) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -158,5 +158,3 @@ func (v *NullableKeyValue) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

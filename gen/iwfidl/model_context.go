@@ -19,12 +19,12 @@ var _ MappedNullable = &Context{}
 
 // Context struct for Context
 type Context struct {
-	WorkflowId string `json:"workflowId"`
-	WorkflowRunId string `json:"workflowRunId"`
-	WorkflowStartedTimestamp int64 `json:"workflowStartedTimestamp"`
-	StateExecutionId *string `json:"stateExecutionId,omitempty"`
-	FirstAttemptTimestamp *int64 `json:"firstAttemptTimestamp,omitempty"`
-	Attempt *int32 `json:"attempt,omitempty"`
+	WorkflowId               string  `json:"workflowId"`
+	WorkflowRunId            string  `json:"workflowRunId"`
+	WorkflowStartedTimestamp int64   `json:"workflowStartedTimestamp"`
+	StateExecutionId         *string `json:"stateExecutionId,omitempty"`
+	FirstAttemptTimestamp    *int64  `json:"firstAttemptTimestamp,omitempty"`
+	Attempt                  *int32  `json:"attempt,omitempty"`
 }
 
 // NewContext instantiates a new Context object
@@ -216,7 +216,7 @@ func (o *Context) SetAttempt(v int32) {
 }
 
 func (o Context) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -275,5 +275,3 @@ func (v *NullableContext) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-
