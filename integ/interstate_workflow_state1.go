@@ -27,6 +27,14 @@ func (b interStateWorkflowState1) Execute(ctx iwf.WorkflowContext, input iwf.Obj
 		// dead code for testing
 	}
 
+	if iwfidl.WAITING == "" {
+		// dead code for testing
+	}
+
+	if cmd1.Status == "" {
+		// dead code for testing
+	}
+
 	if cmd1.Status == iwfidl.WAITING && i == 2 {
 		return iwf.GracefulCompletingWorkflow, nil
 	}
