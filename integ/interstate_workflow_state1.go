@@ -23,19 +23,15 @@ func (b interStateWorkflowState1) Execute(ctx iwf.WorkflowContext, input iwf.Obj
 	cmd2 := commandResults.GetInternalChannelCommandResultById("id2")
 	cmd2.Value.Get(&i)
 
-	if i > 0 {
-		// dead code for testing
+	if cmd1 == nil {
+		panic("nil cmd1")
 	}
 
-	if iwfidl.WAITING == "" {
-		// dead code for testing
+	if &cmd1.Status == nil {
+		panic("nil cmd1 Status")
 	}
 
-	if cmd1.Status == "" {
-		// dead code for testing
-	}
-
-	if cmd1.Status == iwfidl.WAITING && i == 2 {
+	if &cmd1.Status == iwfidl.WAITING && i == 2 {
 		return iwf.GracefulCompletingWorkflow, nil
 	}
 	return nil, fmt.Errorf("error in executing " + ctx.GetStateExecutionId())
