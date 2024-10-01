@@ -56,7 +56,7 @@ func toIdlCommandRequest(commandRequest *CommandRequest) (*iwfidl.CommandRequest
 		if t.CommandType == CommandTypeTimer {
 			timerCmd := iwfidl.TimerCommand{
 				CommandId:       &commandId,
-				DurationSeconds: t.TimerCommand.FiringUnixTimestampSeconds,
+				DurationSeconds: t.TimerCommand.DurationSeconds,
 			}
 			timerCmds = append(timerCmds, timerCmd)
 		}

@@ -1,7 +1,5 @@
 package iwf
 
-import "time"
-
 type (
 	CommandType string
 
@@ -14,7 +12,7 @@ type (
 	}
 
 	TimerCommand struct {
-		FiringUnixTimestampSeconds int64
+		DurationSeconds int64
 	}
 
 	SignalCommand struct {
@@ -52,12 +50,12 @@ func NewInternalChannelCommand(commandId, channelName string) Command {
 	}
 }
 
-func NewTimerCommand(commandId string, firingTime time.Time) Command {
+func NewTimerCommand(commandId string, durationSeconds int64) Command {
 	return Command{
 		CommandId:   commandId,
 		CommandType: CommandTypeTimer,
 		TimerCommand: &TimerCommand{
-			FiringUnixTimestampSeconds: firingTime.Unix(),
+			DurationSeconds: durationSeconds,
 		},
 	}
 }

@@ -2,7 +2,6 @@ package integ
 
 import (
 	"github.com/indeedeng/iwf-golang-sdk/iwf"
-	"time"
 )
 
 type timerWorkflowState1 struct {
@@ -11,10 +10,10 @@ type timerWorkflowState1 struct {
 }
 
 func (b timerWorkflowState1) WaitUntil(ctx iwf.WorkflowContext, input iwf.Object, persistence iwf.Persistence, communication iwf.Communication) (*iwf.CommandRequest, error) {
-	var i int
+	var i int64
 	input.Get(&i)
 	return iwf.AllCommandsCompletedRequest(
-		iwf.NewTimerCommand("", time.Now().Add(time.Duration(i)*time.Second)),
+		iwf.NewTimerCommand("", i),
 	), nil
 }
 

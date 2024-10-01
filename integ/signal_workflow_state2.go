@@ -27,7 +27,7 @@ func (b signalWorkflowState2) WaitUntil(ctx iwf.WorkflowContext, input iwf.Objec
 		},
 		iwf.NewSignalCommand(signalCommandId, testChannelName1),
 		iwf.NewSignalCommand(signalCommandId, testChannelName2),
-		iwf.NewTimerCommand(timerCommandId, time.Now().Add(time.Hour*24)),
+		iwf.NewTimerCommand(timerCommandId, int64(time.Duration(24)*time.Hour/time.Second)),
 	), nil
 }
 
