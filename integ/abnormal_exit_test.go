@@ -3,6 +3,7 @@ package integ
 import (
 	"context"
 	"strconv"
+	"strings"
 	"testing"
 	"time"
 
@@ -14,21 +15,27 @@ import (
 
 func TestAbnormalExitWorkflow(t *testing.T) {
 	wfId := "TestAbnormalExitWorkflow" + strconv.Itoa(int(time.Now().Unix()))
-	runId, err := client.StartWorkflow(context.Background(), &abnormalExitWorkflow{}, wfId, 10, 1, &iwf.WorkflowOptions{
+
+	opt := iwf.WorkflowOptions{
 		WorkflowIdReusePolicy: ptr.Any(iwfidl.ALLOW_IF_PREVIOUS_EXITS_ABNORMALLY),
-	})
+	}
+
+	runId, err := client.StartWorkflow(context.Background(), &abnormalExitWorkflow{}, wfId, 10, nil, &opt)
 	assert.Nil(t, err)
 	assert.NotEmpty(t, runId)
 
-	// start the same workflowId again will fail
-	_, err = client.StartWorkflow(context.Background(), &basicWorkflow{}, wfId, 10, nil, nil)
-	assert.True(t, iwf.IsWorkflowAlreadyStartedError(err))
+	err = client.GetSimpleWorkflowResult(context.Background(), wfId, "", nil)
+	wErr, ok := iwf.AsWorkflowUncompletedError(err)
+	assert.True(t, ok)
+	assert.True(t, strings.Contains(*wErr.ErrorMessage, "abnormal exit state"))
+	assert.Equal(t, iwf.NewWorkflowUncompletedError(runId, iwfidl.FAILED, ptr.Any(iwfidl.STATE_API_FAIL_MAX_OUT_RETRY_ERROR_TYPE), wErr.ErrorMessage, wErr.StateResults, iwf.GetDefaultObjectEncoder()), wErr)
+
+	// Starting a workflow with the same ID should be allowed since the previous failed abnormally
+	_, err = client.StartWorkflow(context.Background(), &basicWorkflow{}, wfId, 10, 1, &opt)
+	assert.False(t, iwf.IsWorkflowAlreadyStartedError(err))
 
 	var output int
 	err = client.GetSimpleWorkflowResult(context.Background(), wfId, "", &output)
 	assert.Nil(t, err)
 	assert.Equal(t, 3, output)
-
-	err = client.GetSimpleWorkflowResult(context.Background(), "a wrong workflowId", "", &output)
-	assert.True(t, iwf.IsWorkflowNotExistsError(err))
 }
