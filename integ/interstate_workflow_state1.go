@@ -27,11 +27,15 @@ func (b interStateWorkflowState1) Execute(ctx iwf.WorkflowContext, input iwf.Obj
 		panic("nil cmd1")
 	}
 
-	if &cmd1.Status == nil {
-		panic("nil cmd1 Status")
+	if iwfidl.WAITING == iwfidl.RECEIVED {
+		panic("enum error")
 	}
 
-	if &cmd1.Status == iwfidl.WAITING && i == 2 {
+	if cmd1.Status == iwfidl.RECEIVED {
+		panic("cmd1 Status error")
+	}
+
+	if cmd1.Status == iwfidl.WAITING && i == 2 {
 		return iwf.GracefulCompletingWorkflow, nil
 	}
 	return nil, fmt.Errorf("error in executing " + ctx.GetStateExecutionId())
