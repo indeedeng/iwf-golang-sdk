@@ -53,7 +53,7 @@ func NewInternalChannelCommand(commandId, channelName string) Command {
 }
 
 func NewTimerCommand(commandId string, firingTime time.Time) Command {
-	durationSeconds := int64(firingTime.Sub(time.Now()).Seconds())
+	durationSeconds := int64(time.Until(firingTime).Seconds())
 	if durationSeconds < 0 {
 		panic("Firing time is set in the past")
 	}
