@@ -1,5 +1,7 @@
 package iwf
 
+import "time"
+
 type (
 	CommandType string
 
@@ -50,12 +52,27 @@ func NewInternalChannelCommand(commandId, channelName string) Command {
 	}
 }
 
-func NewTimerCommand(commandId string, durationSeconds int64) Command {
+func NewTimerCommand(commandId string, firingTime time.Time) Command {
+	durationSeconds := int64(firingTime.Sub(time.Now()).Seconds())
+	if durationSeconds < 0 {
+		panic("Firing time is set in the past")
+	}
+
 	return Command{
 		CommandId:   commandId,
 		CommandType: CommandTypeTimer,
 		TimerCommand: &TimerCommand{
 			DurationSeconds: durationSeconds,
+		},
+	}
+}
+
+func NewTimerCommandByDuration(commandId string, durationSeconds time.Duration) Command {
+	return Command{
+		CommandId:   commandId,
+		CommandType: CommandTypeTimer,
+		TimerCommand: &TimerCommand{
+			DurationSeconds: int64(durationSeconds.Seconds()),
 		},
 	}
 }
