@@ -52,6 +52,7 @@ func NewInternalChannelCommand(commandId, channelName string) Command {
 	}
 }
 
+// Deprecated: Use NewTimerCommandByDuration instead.
 func NewTimerCommand(commandId string, firingTime time.Time) Command {
 	durationSeconds := int64(time.Until(firingTime).Seconds())
 	if durationSeconds < 0 {
