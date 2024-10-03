@@ -14,7 +14,7 @@ type (
 	}
 
 	TimerCommand struct {
-		FiringUnixTimestampSeconds int64
+		DurationSeconds int64
 	}
 
 	SignalCommand struct {
@@ -52,12 +52,28 @@ func NewInternalChannelCommand(commandId, channelName string) Command {
 	}
 }
 
+// Deprecated: Use NewTimerCommandByDuration instead.
 func NewTimerCommand(commandId string, firingTime time.Time) Command {
+	durationSeconds := int64(time.Until(firingTime).Seconds())
+	if durationSeconds < 0 {
+		panic("Firing time is set in the past")
+	}
+
 	return Command{
 		CommandId:   commandId,
 		CommandType: CommandTypeTimer,
 		TimerCommand: &TimerCommand{
-			FiringUnixTimestampSeconds: firingTime.Unix(),
+			DurationSeconds: durationSeconds,
+		},
+	}
+}
+
+func NewTimerCommandByDuration(commandId string, durationSeconds time.Duration) Command {
+	return Command{
+		CommandId:   commandId,
+		CommandType: CommandTypeTimer,
+		TimerCommand: &TimerCommand{
+			DurationSeconds: int64(durationSeconds.Seconds()),
 		},
 	}
 }

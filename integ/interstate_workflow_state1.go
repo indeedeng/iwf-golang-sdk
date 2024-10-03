@@ -22,6 +22,7 @@ func (b interStateWorkflowState1) Execute(ctx iwf.WorkflowContext, input iwf.Obj
 	cmd1 := commandResults.GetInternalChannelCommandResultById("id1")
 	cmd2 := commandResults.GetInternalChannelCommandResultById("id2")
 	cmd2.Value.Get(&i)
+
 	if cmd1.Status == iwfidl.WAITING && i == 2 {
 		return iwf.GracefulCompletingWorkflow, nil
 	}

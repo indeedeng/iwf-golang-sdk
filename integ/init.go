@@ -10,6 +10,7 @@ var workerService = iwf.NewWorkerService(registry, nil)
 
 func init() {
 	err := registry.AddWorkflows(
+		&abnormalExitWorkflow{},
 		&basicWorkflow{},
 		&proceedOnStateStartFailWorkflow{},
 		&timerWorkflow{},

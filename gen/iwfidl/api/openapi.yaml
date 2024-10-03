@@ -325,6 +325,24 @@ paths:
                 $ref: '#/components/schemas/HealthInfo'
           description: successful operation
       summary: return health info of the server
+  /api/v1/workflow/triggerContinueAsNew:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TriggerContinueAsNewRequest'
+      responses:
+        "200":
+          content: {}
+          description: successful operation
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Invalid input
+      summary: trigger ContinueAsNew for a workflow
   /api/v1/workflowState/start:
     post:
       requestBody:
@@ -516,6 +534,7 @@ components:
           lockingKeys:
           - lockingKeys
           - lockingKeys
+          useKeyAsPrefix: true
           partialLoadingKeys:
           - partialLoadingKeys
           - partialLoadingKeys
@@ -543,6 +562,7 @@ components:
           lockingKeys:
           - lockingKeys
           - lockingKeys
+          useKeyAsPrefix: true
           partialLoadingKeys:
           - partialLoadingKeys
           - partialLoadingKeys
@@ -582,7 +602,9 @@ components:
         workflowConfigOverride:
           disableSystemSearchAttribute: true
           continueAsNewThreshold: 6
+          enabledExecutingStateExecutionIds: true
           continueAsNewPageSizeInBytes: 7
+          optimizeActivity: true
         idReusePolicy: null
         searchAttributes:
         - stringValue: stringValue
@@ -605,6 +627,15 @@ components:
           key: key
         useMemoForDataAttributes: true
         cronSchedule: cronSchedule
+        dataAttributes:
+        - value:
+            data: data
+            encoding: encoding
+          key: key
+        - value:
+            data: data
+            encoding: encoding
+          key: key
       properties:
         idReusePolicy:
           $ref: '#/components/schemas/IDReusePolicy'
@@ -619,6 +650,10 @@ components:
           items:
             $ref: '#/components/schemas/SearchAttribute'
           type: array
+        dataAttributes:
+          items:
+            $ref: '#/components/schemas/KeyValue'
+          type: array
         workflowConfigOverride:
           $ref: '#/components/schemas/WorkflowConfig'
         useMemoForDataAttributes:
@@ -626,7 +661,7 @@ components:
       type: object
     IDReusePolicy:
       enum:
-      - ALLOW_IF_PREVIOUS_EXISTS_ABNORMALLY
+      - ALLOW_IF_PREVIOUS_EXITS_ABNORMALLY
       - ALLOW_IF_NO_RUNNING
       - DISALLOW_REUSE
       - ALLOW_TERMINATE_IF_RUNNING
@@ -636,6 +671,7 @@ components:
         lockingKeys:
         - lockingKeys
         - lockingKeys
+        useKeyAsPrefix: true
         partialLoadingKeys:
         - partialLoadingKeys
         - partialLoadingKeys
@@ -651,6 +687,8 @@ components:
           items:
             type: string
           type: array
+        useKeyAsPrefix:
+          type: boolean
       type: object
     PersistenceLoadingType:
       enum:
@@ -658,6 +696,7 @@ components:
       - LOAD_PARTIAL_WITHOUT_LOCKING
       - LOAD_PARTIAL_WITH_EXCLUSIVE_LOCK
       - LOAD_NONE
+      - LOAD_ALL_WITH_PARTIAL_LOCK
       type: string
     WorkerErrorResponse:
       properties:
@@ -703,6 +742,9 @@ components:
     WorkflowStartRequest:
       example:
         startStateId: startStateId
+        waitForCompletionStateIds:
+        - waitForCompletionStateIds
+        - waitForCompletionStateIds
         workflowTimeoutSeconds: 0
         waitForCompletionStateExecutionIds:
         - waitForCompletionStateExecutionIds
@@ -712,6 +754,7 @@ components:
             lockingKeys:
             - lockingKeys
             - lockingKeys
+            useKeyAsPrefix: true
             partialLoadingKeys:
             - partialLoadingKeys
             - partialLoadingKeys
@@ -739,6 +782,7 @@ components:
             lockingKeys:
             - lockingKeys
             - lockingKeys
+            useKeyAsPrefix: true
             partialLoadingKeys:
             - partialLoadingKeys
             - partialLoadingKeys
@@ -754,7 +798,9 @@ components:
           workflowConfigOverride:
             disableSystemSearchAttribute: true
             continueAsNewThreshold: 6
+            enabledExecutingStateExecutionIds: true
             continueAsNewPageSizeInBytes: 7
+            optimizeActivity: true
           idReusePolicy: null
           searchAttributes:
           - stringValue: stringValue
@@ -777,6 +823,15 @@ components:
             key: key
           useMemoForDataAttributes: true
           cronSchedule: cronSchedule
+          dataAttributes:
+          - value:
+              data: data
+              encoding: encoding
+            key: key
+          - value:
+              data: data
+              encoding: encoding
+            key: key
         iwfWorkerUrl: iwfWorkerUrl
         workflowId: workflowId
         stateInput:
@@ -793,6 +848,10 @@ components:
           type: string
         startStateId:
           type: string
+        waitForCompletionStateIds:
+          items:
+            type: string
+          type: array
         waitForCompletionStateExecutionIds:
           items:
             type: string
@@ -1180,6 +1239,7 @@ components:
           lockingKeys:
           - lockingKeys
           - lockingKeys
+          useKeyAsPrefix: true
           partialLoadingKeys:
           - partialLoadingKeys
           - partialLoadingKeys
@@ -1198,6 +1258,7 @@ components:
           lockingKeys:
           - lockingKeys
           - lockingKeys
+          useKeyAsPrefix: true
           partialLoadingKeys:
           - partialLoadingKeys
           - partialLoadingKeys
@@ -1341,6 +1402,7 @@ components:
                 lockingKeys:
                 - lockingKeys
                 - lockingKeys
+                useKeyAsPrefix: true
                 partialLoadingKeys:
                 - partialLoadingKeys
                 - partialLoadingKeys
@@ -1368,6 +1430,7 @@ components:
                 lockingKeys:
                 - lockingKeys
                 - lockingKeys
+                useKeyAsPrefix: true
                 partialLoadingKeys:
                 - partialLoadingKeys
                 - partialLoadingKeys
@@ -1375,12 +1438,14 @@ components:
             stateInput:
               data: data
               encoding: encoding
+            waitForKey: waitForKey
           - stateId: stateId
             stateOptions:
               searchAttributesLoadingPolicy:
                 lockingKeys:
                 - lockingKeys
                 - lockingKeys
+                useKeyAsPrefix: true
                 partialLoadingKeys:
                 - partialLoadingKeys
                 - partialLoadingKeys
@@ -1408,6 +1473,7 @@ components:
                 lockingKeys:
                 - lockingKeys
                 - lockingKeys
+                useKeyAsPrefix: true
                 partialLoadingKeys:
                 - partialLoadingKeys
                 - partialLoadingKeys
@@ -1415,6 +1481,7 @@ components:
             stateInput:
               data: data
               encoding: encoding
+            waitForKey: waitForKey
           conditionalClose:
             closeInput:
               data: data
@@ -1565,7 +1632,9 @@ components:
         workflowConfig:
           disableSystemSearchAttribute: true
           continueAsNewThreshold: 6
+          enabledExecutingStateExecutionIds: true
           continueAsNewPageSizeInBytes: 7
+          optimizeActivity: true
         workflowRunId: workflowRunId
         workflowId: workflowId
       properties:
@@ -1609,16 +1678,21 @@ components:
             data: data
             encoding: encoding
           key: key
+        localActivityInput: localActivityInput
         commandRequest:
           signalCommands:
           - signalChannelName: signalChannelName
+            atLeast: 6
+            atMost: 1
             commandId: commandId
           - signalChannelName: signalChannelName
+            atLeast: 6
+            atMost: 1
             commandId: commandId
           timerCommands:
-          - firingUnixTimestampSeconds: 0
+          - durationSeconds: 0
             commandId: commandId
-          - firingUnixTimestampSeconds: 0
+          - durationSeconds: 0
             commandId: commandId
           commandCombinations:
           - commandIds:
@@ -1630,8 +1704,12 @@ components:
           commandWaitingType: null
           interStateChannelCommands:
           - channelName: channelName
+            atLeast: 5
+            atMost: 5
             commandId: commandId
           - channelName: channelName
+            atLeast: 5
+            atMost: 5
             commandId: commandId
         publishToInterStateChannel:
         - channelName: channelName
@@ -1661,6 +1739,8 @@ components:
             encoding: encoding
           key: key
       properties:
+        localActivityInput:
+          type: string
         upsertSearchAttributes:
           items:
             $ref: '#/components/schemas/SearchAttribute'
@@ -1834,6 +1914,7 @@ components:
                 lockingKeys:
                 - lockingKeys
                 - lockingKeys
+                useKeyAsPrefix: true
                 partialLoadingKeys:
                 - partialLoadingKeys
                 - partialLoadingKeys
@@ -1861,6 +1942,7 @@ components:
                 lockingKeys:
                 - lockingKeys
                 - lockingKeys
+                useKeyAsPrefix: true
                 partialLoadingKeys:
                 - partialLoadingKeys
                 - partialLoadingKeys
@@ -1868,12 +1950,14 @@ components:
             stateInput:
               data: data
               encoding: encoding
+            waitForKey: waitForKey
           - stateId: stateId
             stateOptions:
               searchAttributesLoadingPolicy:
                 lockingKeys:
                 - lockingKeys
                 - lockingKeys
+                useKeyAsPrefix: true
                 partialLoadingKeys:
                 - partialLoadingKeys
                 - partialLoadingKeys
@@ -1901,6 +1985,7 @@ components:
                 lockingKeys:
                 - lockingKeys
                 - lockingKeys
+                useKeyAsPrefix: true
                 partialLoadingKeys:
                 - partialLoadingKeys
                 - partialLoadingKeys
@@ -1908,12 +1993,14 @@ components:
             stateInput:
               data: data
               encoding: encoding
+            waitForKey: waitForKey
           conditionalClose:
             closeInput:
               data: data
               encoding: encoding
             channelName: channelName
             conditionalCloseType: null
+        localActivityInput: localActivityInput
         publishToInterStateChannel:
         - channelName: channelName
           value:
@@ -1942,6 +2029,8 @@ components:
             encoding: encoding
           key: key
       properties:
+        localActivityInput:
+          type: string
         stateDecision:
           $ref: '#/components/schemas/StateDecision'
         upsertSearchAttributes:
@@ -1968,17 +2057,22 @@ components:
     WorkflowWaitForStateCompletionRequest:
       example:
         waitTimeSeconds: 0
+        stateId: stateId
         workflowId: workflowId
         stateExecutionId: stateExecutionId
+        waitForKey: waitForKey
       properties:
         workflowId:
           type: string
         stateExecutionId:
           type: string
+        stateId:
+          type: string
+        waitForKey:
+          type: string
         waitTimeSeconds:
           type: integer
       required:
-      - stateExecutionId
       - workflowId
       type: object
     WorkflowWaitForStateCompletionResponse:
@@ -1993,6 +2087,18 @@ components:
         stateCompletionOutput:
           $ref: '#/components/schemas/StateCompletionOutput'
       type: object
+    TriggerContinueAsNewRequest:
+      example:
+        workflowRunId: workflowRunId
+        workflowId: workflowId
+      properties:
+        workflowId:
+          type: string
+        workflowRunId:
+          type: string
+      required:
+      - workflowId
+      type: object
     StateDecision:
       example:
         nextStates:
@@ -2002,6 +2108,7 @@ components:
               lockingKeys:
               - lockingKeys
               - lockingKeys
+              useKeyAsPrefix: true
               partialLoadingKeys:
               - partialLoadingKeys
               - partialLoadingKeys
@@ -2029,6 +2136,7 @@ components:
               lockingKeys:
               - lockingKeys
               - lockingKeys
+              useKeyAsPrefix: true
               partialLoadingKeys:
               - partialLoadingKeys
               - partialLoadingKeys
@@ -2036,12 +2144,14 @@ components:
           stateInput:
             data: data
             encoding: encoding
+          waitForKey: waitForKey
         - stateId: stateId
           stateOptions:
             searchAttributesLoadingPolicy:
               lockingKeys:
               - lockingKeys
               - lockingKeys
+              useKeyAsPrefix: true
               partialLoadingKeys:
               - partialLoadingKeys
               - partialLoadingKeys
@@ -2069,6 +2179,7 @@ components:
               lockingKeys:
               - lockingKeys
               - lockingKeys
+              useKeyAsPrefix: true
               partialLoadingKeys:
               - partialLoadingKeys
               - partialLoadingKeys
@@ -2076,6 +2187,7 @@ components:
           stateInput:
             data: data
             encoding: encoding
+          waitForKey: waitForKey
         conditionalClose:
           closeInput:
             data: data
@@ -2119,6 +2231,7 @@ components:
             lockingKeys:
             - lockingKeys
             - lockingKeys
+            useKeyAsPrefix: true
             partialLoadingKeys:
             - partialLoadingKeys
             - partialLoadingKeys
@@ -2146,6 +2259,7 @@ components:
             lockingKeys:
             - lockingKeys
             - lockingKeys
+            useKeyAsPrefix: true
             partialLoadingKeys:
             - partialLoadingKeys
             - partialLoadingKeys
@@ -2153,6 +2267,7 @@ components:
         stateInput:
           data: data
           encoding: encoding
+        waitForKey: waitForKey
       properties:
         stateId:
           type: string
@@ -2160,6 +2275,8 @@ components:
           $ref: '#/components/schemas/EncodedObject'
         stateOptions:
           $ref: '#/components/schemas/WorkflowStateOptions'
+        waitForKey:
+          type: string
       required:
       - stateId
       type: object
@@ -2167,13 +2284,17 @@ components:
       example:
         signalCommands:
         - signalChannelName: signalChannelName
+          atLeast: 6
+          atMost: 1
           commandId: commandId
         - signalChannelName: signalChannelName
+          atLeast: 6
+          atMost: 1
           commandId: commandId
         timerCommands:
-        - firingUnixTimestampSeconds: 0
+        - durationSeconds: 0
           commandId: commandId
-        - firingUnixTimestampSeconds: 0
+        - durationSeconds: 0
           commandId: commandId
         commandCombinations:
         - commandIds:
@@ -2185,8 +2306,12 @@ components:
         commandWaitingType: null
         interStateChannelCommands:
         - channelName: channelName
+          atLeast: 5
+          atMost: 5
           commandId: commandId
         - channelName: channelName
+          atLeast: 5
+          atMost: 5
           commandId: commandId
       properties:
         commandWaitingType:
@@ -2279,43 +2404,52 @@ components:
       type: object
     TimerCommand:
       example:
-        firingUnixTimestampSeconds: 0
+        durationSeconds: 0
         commandId: commandId
       properties:
         commandId:
           type: string
-        firingUnixTimestampSeconds:
+        durationSeconds:
           format: int64
           type: integer
       required:
-      - commandId
-      - firingUnixTimestampSeconds
+      - durationSeconds
       type: object
     SignalCommand:
       example:
         signalChannelName: signalChannelName
+        atLeast: 6
+        atMost: 1
         commandId: commandId
       properties:
         commandId:
           type: string
         signalChannelName:
           type: string
+        atLeast:
+          type: integer
+        atMost:
+          type: integer
       required:
-      - commandId
       - signalChannelName
       type: object
     InterStateChannelCommand:
       example:
         channelName: channelName
+        atLeast: 5
+        atMost: 5
         commandId: commandId
       properties:
         commandId:
           type: string
         channelName:
           type: string
+        atLeast:
+          type: integer
+        atMost:
+          type: integer
       required:
       - channelName
-      - commandId
       type: object
     TimerResult:
       example:
@@ -2402,14 +2536,20 @@ components:
       example:
         disableSystemSearchAttribute: true
         continueAsNewThreshold: 6
+        enabledExecutingStateExecutionIds: true
         continueAsNewPageSizeInBytes: 7
+        optimizeActivity: true
       properties:
         disableSystemSearchAttribute:
+          type: boolean
+        enabledExecutingStateExecutionIds:
           type: boolean
         continueAsNewThreshold:
           type: integer
         continueAsNewPageSizeInBytes:
           type: integer
+        optimizeActivity:
+          type: boolean
       type: object
     Context:
       example:

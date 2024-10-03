@@ -47,7 +47,7 @@ func (u *unregisteredClientImpl) StartWorkflow(ctx context.Context, workflowType
 		}
 	}
 
-	req := u.apiClient.DefaultAPI.ApiV1WorkflowStartPost(ctx)
+	req := u.apiClient.DefaultApi.ApiV1WorkflowStartPost(ctx)
 	resp, httpResp, err := req.WorkflowStartRequest(iwfidl.WorkflowStartRequest{
 		WorkflowId:             workflowId,
 		IwfWorkflowType:        workflowType,
@@ -69,7 +69,7 @@ func (u *unregisteredClientImpl) SignalWorkflow(ctx context.Context, workflowId,
 	if err != nil {
 		return err
 	}
-	req := u.apiClient.DefaultAPI.ApiV1WorkflowSignalPost(ctx)
+	req := u.apiClient.DefaultApi.ApiV1WorkflowSignalPost(ctx)
 	httpResp, err := req.WorkflowSignalRequest(iwfidl.WorkflowSignalRequest{
 		WorkflowId:        workflowId,
 		WorkflowRunId:     &workflowRunId,
@@ -91,7 +91,7 @@ func (u *unregisteredClientImpl) GetAllWorkflowDataAttributes(ctx context.Contex
 }
 
 func (u *unregisteredClientImpl) doGetWorkflowDataObjects(ctx context.Context, workflowId, workflowRunId string, keys []string) (map[string]Object, error) {
-	reqPost := u.apiClient.DefaultAPI.ApiV1WorkflowDataobjectsGetPost(ctx)
+	reqPost := u.apiClient.DefaultApi.ApiV1WorkflowDataobjectsGetPost(ctx)
 	resp, httpResp, err := reqPost.WorkflowGetDataObjectsRequest(iwfidl.WorkflowGetDataObjectsRequest{
 		WorkflowId:    workflowId,
 		WorkflowRunId: iwfidl.PtrString(workflowRunId),
@@ -115,7 +115,7 @@ func (u *unregisteredClientImpl) GetWorkflowSearchAttributes(ctx context.Context
 }
 
 func (u *unregisteredClientImpl) doGetWorkflowSearchAttributes(ctx context.Context, workflowId, workflowRunId string, keys []iwfidl.SearchAttributeKeyAndType) (map[string]iwfidl.SearchAttribute, error) {
-	reqPost := u.apiClient.DefaultAPI.ApiV1WorkflowSearchattributesGetPost(ctx)
+	reqPost := u.apiClient.DefaultApi.ApiV1WorkflowSearchattributesGetPost(ctx)
 	resp, httpResp, err := reqPost.WorkflowGetSearchAttributesRequest(iwfidl.WorkflowGetSearchAttributesRequest{
 		WorkflowId:    workflowId,
 		WorkflowRunId: iwfidl.PtrString(workflowRunId),
@@ -132,7 +132,7 @@ func (u *unregisteredClientImpl) doGetWorkflowSearchAttributes(ctx context.Conte
 }
 
 func (u *unregisteredClientImpl) StopWorkflow(ctx context.Context, workflowId, workflowRunId string, options *WorkflowStopOptions) error {
-	reqPost := u.apiClient.DefaultAPI.ApiV1WorkflowStopPost(ctx)
+	reqPost := u.apiClient.DefaultApi.ApiV1WorkflowStopPost(ctx)
 	req := &iwfidl.WorkflowStopRequest{
 		WorkflowId:    workflowId,
 		WorkflowRunId: &workflowRunId,
@@ -146,7 +146,7 @@ func (u *unregisteredClientImpl) StopWorkflow(ctx context.Context, workflowId, w
 }
 
 func (u *unregisteredClientImpl) GetSimpleWorkflowResult(ctx context.Context, workflowId, workflowRunId string, resultPtr interface{}) error {
-	req := u.apiClient.DefaultAPI.ApiV1WorkflowGetWithWaitPost(ctx)
+	req := u.apiClient.DefaultApi.ApiV1WorkflowGetWithWaitPost(ctx)
 	resp, httpResp, err := req.WorkflowGetRequest(iwfidl.WorkflowGetRequest{
 		WorkflowId:    workflowId,
 		WorkflowRunId: &workflowRunId,
@@ -176,7 +176,7 @@ func (u *unregisteredClientImpl) GetSimpleWorkflowResult(ctx context.Context, wo
 }
 
 func (u *unregisteredClientImpl) GetComplexWorkflowResults(ctx context.Context, workflowId, workflowRunId string) ([]iwfidl.StateCompletionOutput, error) {
-	req := u.apiClient.DefaultAPI.ApiV1WorkflowGetWithWaitPost(ctx)
+	req := u.apiClient.DefaultApi.ApiV1WorkflowGetWithWaitPost(ctx)
 	resp, httpResp, err := req.WorkflowGetRequest(iwfidl.WorkflowGetRequest{
 		WorkflowId:    workflowId,
 		WorkflowRunId: &workflowRunId,
@@ -212,7 +212,7 @@ func (u *unregisteredClientImpl) ResetWorkflow(ctx context.Context, workflowId, 
 		req.StateId = options.StateId
 		req.StateExecutionId = options.StateExecutionId
 	}
-	reqPost := u.apiClient.DefaultAPI.ApiV1WorkflowResetPost(ctx)
+	reqPost := u.apiClient.DefaultApi.ApiV1WorkflowResetPost(ctx)
 	resp, httpResp, err := reqPost.WorkflowResetRequest(req).Execute()
 	if err := u.processError(err, httpResp); err != nil {
 		return "", err
@@ -221,7 +221,7 @@ func (u *unregisteredClientImpl) ResetWorkflow(ctx context.Context, workflowId, 
 }
 
 func (u *unregisteredClientImpl) DescribeWorkflow(ctx context.Context, workflowId, workflowRunId string) (*WorkflowInfo, error) {
-	reqPost := u.apiClient.DefaultAPI.ApiV1WorkflowGetPost(ctx)
+	reqPost := u.apiClient.DefaultApi.ApiV1WorkflowGetPost(ctx)
 	resp, httpResp, err := reqPost.WorkflowGetRequest(iwfidl.WorkflowGetRequest{
 		WorkflowId:    workflowId,
 		WorkflowRunId: iwfidl.PtrString(workflowRunId),
@@ -237,7 +237,7 @@ func (u *unregisteredClientImpl) DescribeWorkflow(ctx context.Context, workflowI
 }
 
 func (u *unregisteredClientImpl) SearchWorkflow(ctx context.Context, request iwfidl.WorkflowSearchRequest) (*iwfidl.WorkflowSearchResponse, error) {
-	reqPost := u.apiClient.DefaultAPI.ApiV1WorkflowSearchPost(ctx)
+	reqPost := u.apiClient.DefaultApi.ApiV1WorkflowSearchPost(ctx)
 	resp, httpResp, err := reqPost.WorkflowSearchRequest(request).Execute()
 	if err := u.processError(err, httpResp); err != nil {
 		return nil, err
@@ -257,7 +257,7 @@ func (u *unregisteredClientImpl) SkipTimerByCommandIndex(ctx context.Context, wo
 }
 
 func (u *unregisteredClientImpl) UpdateWorkflowConfig(ctx context.Context, workflowId, workflowRunId string, config iwfidl.WorkflowConfig) error {
-	req := u.apiClient.DefaultAPI.ApiV1WorkflowConfigUpdatePost(ctx)
+	req := u.apiClient.DefaultApi.ApiV1WorkflowConfigUpdatePost(ctx)
 	httpResp, err := req.WorkflowConfigUpdateRequest(iwfidl.WorkflowConfigUpdateRequest{
 		WorkflowId:     workflowId,
 		WorkflowRunId:  &workflowRunId,
@@ -267,7 +267,7 @@ func (u *unregisteredClientImpl) UpdateWorkflowConfig(ctx context.Context, workf
 }
 
 func (u *unregisteredClientImpl) InvokeRPCByName(ctx context.Context, workflowId, workflowRunId, rpcName string, input interface{}, outputPtr interface{}, rpcOptions *RPCOptions) error {
-	req := u.apiClient.DefaultAPI.ApiV1WorkflowRpcPost(ctx)
+	req := u.apiClient.DefaultApi.ApiV1WorkflowRpcPost(ctx)
 	encodedInput, err := u.options.ObjectEncoder.Encode(input)
 	if err != nil {
 		return err
@@ -295,7 +295,7 @@ func (u *unregisteredClientImpl) InvokeRPCByName(ctx context.Context, workflowId
 
 func (u *unregisteredClientImpl) doSkipTimer(ctx context.Context, workflowId, workflowRunId, workflowStateId string, stateExecutionNumber int, timerCommandId string, timerCommandIndex int) error {
 	workflowStateExecutionId := fmt.Sprintf("%v-%v", workflowStateId, stateExecutionNumber)
-	reqPost := u.apiClient.DefaultAPI.ApiV1WorkflowTimerSkipPost(ctx)
+	reqPost := u.apiClient.DefaultApi.ApiV1WorkflowTimerSkipPost(ctx)
 	req := iwfidl.WorkflowSkipTimerRequest{
 		WorkflowId:               workflowId,
 		WorkflowRunId:            iwfidl.PtrString(workflowRunId),

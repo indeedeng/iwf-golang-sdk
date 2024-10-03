@@ -52,23 +52,24 @@ func toIdlCommandRequest(commandRequest *CommandRequest) (*iwfidl.CommandRequest
 	var signalCmds []iwfidl.SignalCommand
 	var interStateCmds []iwfidl.InterStateChannelCommand
 	for _, t := range commandRequest.Commands {
+		commandId := t.CommandId
 		if t.CommandType == CommandTypeTimer {
 			timerCmd := iwfidl.TimerCommand{
-				CommandId:                  t.CommandId,
-				FiringUnixTimestampSeconds: t.TimerCommand.FiringUnixTimestampSeconds,
+				CommandId:       &commandId,
+				DurationSeconds: t.TimerCommand.DurationSeconds,
 			}
 			timerCmds = append(timerCmds, timerCmd)
 		}
 		if t.CommandType == CommandTypeSignalChannel {
 			signalCmd := iwfidl.SignalCommand{
-				CommandId:         t.CommandId,
+				CommandId:         &commandId,
 				SignalChannelName: t.SignalCommand.ChannelName,
 			}
 			signalCmds = append(signalCmds, signalCmd)
 		}
 		if t.CommandType == CommandTypeInternalChannel {
 			interstateChannelCmd := iwfidl.InterStateChannelCommand{
-				CommandId:   t.CommandId,
+				CommandId:   &commandId,
 				ChannelName: t.InternalChannelCommand.ChannelName,
 			}
 			interStateCmds = append(interStateCmds, interstateChannelCmd)

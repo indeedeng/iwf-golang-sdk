@@ -4,14 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**CommandId** | **string** |  | 
-**FiringUnixTimestampSeconds** | **int64** |  | 
+**CommandId** | Pointer to **string** |  | [optional] 
+**DurationSeconds** | **int64** |  | 
 
 ## Methods
 
 ### NewTimerCommand
 
-`func NewTimerCommand(commandId string, firingUnixTimestampSeconds int64, ) *TimerCommand`
+`func NewTimerCommand(durationSeconds int64, ) *TimerCommand`
 
 NewTimerCommand instantiates a new TimerCommand object
 This constructor will assign default values to properties that have it defined,
@@ -45,25 +45,30 @@ and a boolean to check if the value has been set.
 
 SetCommandId sets CommandId field to given value.
 
+### HasCommandId
 
-### GetFiringUnixTimestampSeconds
+`func (o *TimerCommand) HasCommandId() bool`
 
-`func (o *TimerCommand) GetFiringUnixTimestampSeconds() int64`
+HasCommandId returns a boolean if a field has been set.
 
-GetFiringUnixTimestampSeconds returns the FiringUnixTimestampSeconds field if non-nil, zero value otherwise.
+### GetDurationSeconds
 
-### GetFiringUnixTimestampSecondsOk
+`func (o *TimerCommand) GetDurationSeconds() int64`
 
-`func (o *TimerCommand) GetFiringUnixTimestampSecondsOk() (*int64, bool)`
+GetDurationSeconds returns the DurationSeconds field if non-nil, zero value otherwise.
 
-GetFiringUnixTimestampSecondsOk returns a tuple with the FiringUnixTimestampSeconds field if it's non-nil, zero value otherwise
+### GetDurationSecondsOk
+
+`func (o *TimerCommand) GetDurationSecondsOk() (*int64, bool)`
+
+GetDurationSecondsOk returns a tuple with the DurationSeconds field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetFiringUnixTimestampSeconds
+### SetDurationSeconds
 
-`func (o *TimerCommand) SetFiringUnixTimestampSeconds(v int64)`
+`func (o *TimerCommand) SetDurationSeconds(v int64)`
 
-SetFiringUnixTimestampSeconds sets FiringUnixTimestampSeconds field to given value.
+SetDurationSeconds sets DurationSeconds field to given value.
 
 
 

@@ -14,7 +14,7 @@ func (b timerWorkflowState1) WaitUntil(ctx iwf.WorkflowContext, input iwf.Object
 	var i int
 	input.Get(&i)
 	return iwf.AllCommandsCompletedRequest(
-		iwf.NewTimerCommand("", time.Now().Add(time.Duration(i)*time.Second)),
+		iwf.NewTimerCommandByDuration("", time.Duration(i)*time.Second),
 	), nil
 }
 
