@@ -124,17 +124,20 @@ func toIdlStateOptions(skipWaitUntil bool, stateOptions *StateOptions) *iwfidl.W
 	}
 
 	idlStOptions := &iwfidl.WorkflowStateOptions{
-		WaitUntilApiSearchAttributesLoadingPolicy: stateOptions.WaitUntilApiSearchAttributesLoadingPolicy,
-		ExecuteApiSearchAttributesLoadingPolicy:   stateOptions.ExecuteApiSearchAttributesLoadingPolicy,
-		WaitUntilApiDataAttributesLoadingPolicy:   stateOptions.WaitUntilApiDataAttributesLoadingPolicy,
-		ExecuteApiDataAttributesLoadingPolicy:     stateOptions.ExecuteApiDataAttributesLoadingPolicy,
-		SearchAttributesLoadingPolicy:             stateOptions.SearchAttributesLoadingPolicy,
-		DataAttributesLoadingPolicy:               stateOptions.DataAttributesLoadingPolicy,
+		// apply for both waitUntil and execute API
+		DataAttributesLoadingPolicy:   stateOptions.DataAttributesLoadingPolicy,
+		SearchAttributesLoadingPolicy: stateOptions.SearchAttributesLoadingPolicy,
+		// below are wait_until API specific options:
 		WaitUntilApiTimeoutSeconds:                stateOptions.WaitUntilApiTimeoutSeconds,
-		ExecuteApiTimeoutSeconds:                  stateOptions.ExecuteApiTimeoutSeconds,
 		WaitUntilApiRetryPolicy:                   stateOptions.WaitUntilApiRetryPolicy,
-		ExecuteApiRetryPolicy:                     stateOptions.ExecuteApiRetryPolicy,
 		WaitUntilApiFailurePolicy:                 stateOptions.WaitUntilApiFailurePolicy,
+		WaitUntilApiDataAttributesLoadingPolicy:   stateOptions.WaitUntilApiDataAttributesLoadingPolicy,
+		WaitUntilApiSearchAttributesLoadingPolicy: stateOptions.WaitUntilApiSearchAttributesLoadingPolicy,
+		// below are execute API specific options:
+		ExecuteApiTimeoutSeconds:                stateOptions.ExecuteApiTimeoutSeconds,
+		ExecuteApiRetryPolicy:                   stateOptions.ExecuteApiRetryPolicy,
+		ExecuteApiDataAttributesLoadingPolicy:   stateOptions.ExecuteApiDataAttributesLoadingPolicy,
+		ExecuteApiSearchAttributesLoadingPolicy: stateOptions.ExecuteApiSearchAttributesLoadingPolicy,
 	}
 
 	if skipWaitUntil {
