@@ -124,13 +124,17 @@ func toIdlStateOptions(skipWaitUntil bool, stateOptions *StateOptions) *iwfidl.W
 	}
 
 	idlStOptions := &iwfidl.WorkflowStateOptions{
-		SearchAttributesLoadingPolicy: stateOptions.SearchAttributesLoadingPolicy,
-		DataAttributesLoadingPolicy:   stateOptions.DataAttributesLoadingPolicy,
-		WaitUntilApiTimeoutSeconds:    stateOptions.WaitUntilApiTimeoutSeconds,
-		ExecuteApiTimeoutSeconds:      stateOptions.ExecuteApiTimeoutSeconds,
-		WaitUntilApiRetryPolicy:       stateOptions.WaitUntilApiRetryPolicy,
-		ExecuteApiRetryPolicy:         stateOptions.ExecuteApiRetryPolicy,
-		WaitUntilApiFailurePolicy:     stateOptions.WaitUntilApiFailurePolicy,
+		DataAttributesLoadingPolicy:               stateOptions.DataAttributesLoadingPolicy,
+		SearchAttributesLoadingPolicy:             stateOptions.SearchAttributesLoadingPolicy,
+		WaitUntilApiTimeoutSeconds:                stateOptions.WaitUntilApiTimeoutSeconds,
+		WaitUntilApiRetryPolicy:                   stateOptions.WaitUntilApiRetryPolicy,
+		WaitUntilApiFailurePolicy:                 stateOptions.WaitUntilApiFailurePolicy,
+		WaitUntilApiDataAttributesLoadingPolicy:   stateOptions.WaitUntilApiDataAttributesLoadingPolicy,
+		WaitUntilApiSearchAttributesLoadingPolicy: stateOptions.WaitUntilApiSearchAttributesLoadingPolicy,
+		ExecuteApiTimeoutSeconds:                  stateOptions.ExecuteApiTimeoutSeconds,
+		ExecuteApiRetryPolicy:                     stateOptions.ExecuteApiRetryPolicy,
+		ExecuteApiDataAttributesLoadingPolicy:     stateOptions.ExecuteApiDataAttributesLoadingPolicy,
+		ExecuteApiSearchAttributesLoadingPolicy:   stateOptions.ExecuteApiSearchAttributesLoadingPolicy,
 	}
 
 	if skipWaitUntil {

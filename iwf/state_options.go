@@ -5,12 +5,19 @@ import (
 )
 
 type StateOptions struct {
-	SearchAttributesLoadingPolicy *iwfidl.PersistenceLoadingPolicy
+	// apply for both waitUntil and execute API
 	DataAttributesLoadingPolicy   *iwfidl.PersistenceLoadingPolicy
-	WaitUntilApiTimeoutSeconds    *int32
-	ExecuteApiTimeoutSeconds      *int32
-	WaitUntilApiRetryPolicy       *iwfidl.RetryPolicy
-	ExecuteApiRetryPolicy         *iwfidl.RetryPolicy
-	WaitUntilApiFailurePolicy     *iwfidl.WaitUntilApiFailurePolicy
-	ExecuteApiFailureProceedState WorkflowState
+	SearchAttributesLoadingPolicy *iwfidl.PersistenceLoadingPolicy
+	// below are wait_until API specific options:
+	WaitUntilApiTimeoutSeconds                *int32
+	WaitUntilApiRetryPolicy                   *iwfidl.RetryPolicy
+	WaitUntilApiFailurePolicy                 *iwfidl.WaitUntilApiFailurePolicy
+	WaitUntilApiDataAttributesLoadingPolicy   *iwfidl.PersistenceLoadingPolicy
+	WaitUntilApiSearchAttributesLoadingPolicy *iwfidl.PersistenceLoadingPolicy
+	// below are execute API specific options:
+	ExecuteApiTimeoutSeconds                *int32
+	ExecuteApiRetryPolicy                   *iwfidl.RetryPolicy
+	ExecuteApiFailureProceedState           WorkflowState
+	ExecuteApiDataAttributesLoadingPolicy   *iwfidl.PersistenceLoadingPolicy
+	ExecuteApiSearchAttributesLoadingPolicy *iwfidl.PersistenceLoadingPolicy
 }
