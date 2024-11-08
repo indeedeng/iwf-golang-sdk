@@ -30,6 +30,11 @@ func TestRPCWorkflow(t *testing.T) {
 	rpcErr, _ := err.(*iwf.ApiError)
 	assert.Equal(t, "worker API error, status:501, errorType:test-error-type", rpcErr.Response.GetDetail())
 
+	// Test unregister client
+	unregClient := iwf.NewUnregisteredClient(nil)
+	err = unregClient.InvokeRPCByName(context.Background(), wfId, "", "TestErrorRPC", 1, nil, nil)
+	assert.NotNil(t, err)
+
 	var rpcOutput int
 	err = client.InvokeRPC(context.Background(), wfId, "", wf.TestRPC, 1, &rpcOutput)
 	assert.Nil(t, err)

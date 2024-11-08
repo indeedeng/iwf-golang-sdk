@@ -171,7 +171,7 @@ func IsWorkflowNotExistsError(err error) bool {
 
 func IsRPCError(err error) bool {
 	apiError, ok := err.(*ApiError)
-	if !ok || apiError.Response == nil {
+	if !ok {
 		return false
 	}
 	return apiError.StatusCode == 420

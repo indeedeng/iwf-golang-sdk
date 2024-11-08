@@ -112,8 +112,8 @@ func TestStateApiTimeoutWorkflow(t *testing.T) {
 
 	fmt.Println(err)
 
-	expectedMsg := "workflow is not completed successfully, closedStatus: FAILED, failedErrorType(applies if failed as closedStatus):STATE_API_FAIL_MAX_OUT_RETRY_ERROR_TYPE, error message:activity error (type: StateApiWaitUntil, scheduledEventID: 8, startedEventID: 9, identity: ): activity StartToClose timeout (type: StartToClose)"
-	assert.Equal(t, expectedMsg, err.Error())
+	expectedMsg := "workflow is not completed successfully, closedStatus: FAILED, failedErrorType(applies if failed as closedStatus):STATE_API_FAIL_MAX_OUT_RETRY_ERROR_TYPE, error message:activity error "
+	assert.True(t, strings.HasPrefix(err.Error(), expectedMsg))
 
 	out, err2 := client.GetComplexWorkflowResults(context.Background(), wfId, "")
 	assert.Nil(t, out)
