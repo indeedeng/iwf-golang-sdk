@@ -28,7 +28,7 @@ func TestAbnormalExitWorkflow(t *testing.T) {
 	wErr, ok := iwf.AsWorkflowUncompletedError(err)
 	assert.True(t, ok)
 	assert.True(t, strings.Contains(*wErr.ErrorMessage, "abnormal exit state"))
-	assert.Equal(t, iwf.NewWorkflowUncompletedError(runId, iwfidl.FAILED, ptr.Any(iwfidl.STATE_API_FAIL_MAX_OUT_RETRY_ERROR_TYPE), wErr.ErrorMessage, wErr.StateResults, iwf.GetDefaultObjectEncoder()), wErr)
+	assert.Equal(t, iwf.NewWorkflowUncompletedError(runId, iwfidl.FAILED, ptr.Any(iwfidl.STATE_API_FAIL_ERROR_TYPE), wErr.ErrorMessage, wErr.StateResults, iwf.GetDefaultObjectEncoder()), wErr)
 
 	// Starting a workflow with the same ID should be allowed since the previous failed abnormally
 	_, err = client.StartWorkflow(context.Background(), &basicWorkflow{}, wfId, 10, 1, &opt)

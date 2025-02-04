@@ -19,11 +19,11 @@ var _ MappedNullable = &WorkflowConfig{}
 
 // WorkflowConfig struct for WorkflowConfig
 type WorkflowConfig struct {
-	DisableSystemSearchAttribute *bool   `json:"disableSystemSearchAttribute,omitempty"`
-	ExecutingStateIdMode         *string `json:"executingStateIdMode,omitempty"`
-	ContinueAsNewThreshold       *int32  `json:"continueAsNewThreshold,omitempty"`
-	ContinueAsNewPageSizeInBytes *int32  `json:"continueAsNewPageSizeInBytes,omitempty"`
-	OptimizeActivity             *bool   `json:"optimizeActivity,omitempty"`
+	ExecutingStateIdMode         *ExecutingStateIdMode `json:"executingStateIdMode,omitempty"`
+	ContinueAsNewThreshold       *int32                `json:"continueAsNewThreshold,omitempty"`
+	ContinueAsNewPageSizeInBytes *int32                `json:"continueAsNewPageSizeInBytes,omitempty"`
+	OptimizeActivity             *bool                 `json:"optimizeActivity,omitempty"`
+	OptimizeTimer                *bool                 `json:"optimizeTimer,omitempty"`
 }
 
 // NewWorkflowConfig instantiates a new WorkflowConfig object
@@ -43,42 +43,10 @@ func NewWorkflowConfigWithDefaults() *WorkflowConfig {
 	return &this
 }
 
-// GetDisableSystemSearchAttribute returns the DisableSystemSearchAttribute field value if set, zero value otherwise.
-func (o *WorkflowConfig) GetDisableSystemSearchAttribute() bool {
-	if o == nil || IsNil(o.DisableSystemSearchAttribute) {
-		var ret bool
-		return ret
-	}
-	return *o.DisableSystemSearchAttribute
-}
-
-// GetDisableSystemSearchAttributeOk returns a tuple with the DisableSystemSearchAttribute field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *WorkflowConfig) GetDisableSystemSearchAttributeOk() (*bool, bool) {
-	if o == nil || IsNil(o.DisableSystemSearchAttribute) {
-		return nil, false
-	}
-	return o.DisableSystemSearchAttribute, true
-}
-
-// HasDisableSystemSearchAttribute returns a boolean if a field has been set.
-func (o *WorkflowConfig) HasDisableSystemSearchAttribute() bool {
-	if o != nil && !IsNil(o.DisableSystemSearchAttribute) {
-		return true
-	}
-
-	return false
-}
-
-// SetDisableSystemSearchAttribute gets a reference to the given bool and assigns it to the DisableSystemSearchAttribute field.
-func (o *WorkflowConfig) SetDisableSystemSearchAttribute(v bool) {
-	o.DisableSystemSearchAttribute = &v
-}
-
 // GetExecutingStateIdMode returns the ExecutingStateIdMode field value if set, zero value otherwise.
-func (o *WorkflowConfig) GetExecutingStateIdMode() string {
+func (o *WorkflowConfig) GetExecutingStateIdMode() ExecutingStateIdMode {
 	if o == nil || IsNil(o.ExecutingStateIdMode) {
-		var ret string
+		var ret ExecutingStateIdMode
 		return ret
 	}
 	return *o.ExecutingStateIdMode
@@ -86,7 +54,7 @@ func (o *WorkflowConfig) GetExecutingStateIdMode() string {
 
 // GetExecutingStateIdModeOk returns a tuple with the ExecutingStateIdMode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *WorkflowConfig) GetExecutingStateIdModeOk() (*string, bool) {
+func (o *WorkflowConfig) GetExecutingStateIdModeOk() (*ExecutingStateIdMode, bool) {
 	if o == nil || IsNil(o.ExecutingStateIdMode) {
 		return nil, false
 	}
@@ -102,8 +70,8 @@ func (o *WorkflowConfig) HasExecutingStateIdMode() bool {
 	return false
 }
 
-// SetExecutingStateIdMode gets a reference to the given string and assigns it to the ExecutingStateIdMode field.
-func (o *WorkflowConfig) SetExecutingStateIdMode(v string) {
+// SetExecutingStateIdMode gets a reference to the given ExecutingStateIdMode and assigns it to the ExecutingStateIdMode field.
+func (o *WorkflowConfig) SetExecutingStateIdMode(v ExecutingStateIdMode) {
 	o.ExecutingStateIdMode = &v
 }
 
@@ -203,6 +171,38 @@ func (o *WorkflowConfig) SetOptimizeActivity(v bool) {
 	o.OptimizeActivity = &v
 }
 
+// GetOptimizeTimer returns the OptimizeTimer field value if set, zero value otherwise.
+func (o *WorkflowConfig) GetOptimizeTimer() bool {
+	if o == nil || IsNil(o.OptimizeTimer) {
+		var ret bool
+		return ret
+	}
+	return *o.OptimizeTimer
+}
+
+// GetOptimizeTimerOk returns a tuple with the OptimizeTimer field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *WorkflowConfig) GetOptimizeTimerOk() (*bool, bool) {
+	if o == nil || IsNil(o.OptimizeTimer) {
+		return nil, false
+	}
+	return o.OptimizeTimer, true
+}
+
+// HasOptimizeTimer returns a boolean if a field has been set.
+func (o *WorkflowConfig) HasOptimizeTimer() bool {
+	if o != nil && !IsNil(o.OptimizeTimer) {
+		return true
+	}
+
+	return false
+}
+
+// SetOptimizeTimer gets a reference to the given bool and assigns it to the OptimizeTimer field.
+func (o *WorkflowConfig) SetOptimizeTimer(v bool) {
+	o.OptimizeTimer = &v
+}
+
 func (o WorkflowConfig) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -213,9 +213,6 @@ func (o WorkflowConfig) MarshalJSON() ([]byte, error) {
 
 func (o WorkflowConfig) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.DisableSystemSearchAttribute) {
-		toSerialize["disableSystemSearchAttribute"] = o.DisableSystemSearchAttribute
-	}
 	if !IsNil(o.ExecutingStateIdMode) {
 		toSerialize["executingStateIdMode"] = o.ExecutingStateIdMode
 	}
@@ -227,6 +224,9 @@ func (o WorkflowConfig) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.OptimizeActivity) {
 		toSerialize["optimizeActivity"] = o.OptimizeActivity
+	}
+	if !IsNil(o.OptimizeTimer) {
+		toSerialize["optimizeTimer"] = o.OptimizeTimer
 	}
 	return toSerialize, nil
 }

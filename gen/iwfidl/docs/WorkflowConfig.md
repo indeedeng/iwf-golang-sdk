@@ -4,11 +4,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**DisableSystemSearchAttribute** | Pointer to **bool** |  | [optional] 
-**ExecutingStateIdMode** | Pointer to **string** |  | [optional] 
+**ExecutingStateIdMode** | Pointer to [**ExecutingStateIdMode**](ExecutingStateIdMode.md) |  | [optional] 
 **ContinueAsNewThreshold** | Pointer to **int32** |  | [optional] 
 **ContinueAsNewPageSizeInBytes** | Pointer to **int32** |  | [optional] 
 **OptimizeActivity** | Pointer to **bool** |  | [optional] 
+**OptimizeTimer** | Pointer to **bool** |  | [optional] 
 
 ## Methods
 
@@ -29,47 +29,22 @@ NewWorkflowConfigWithDefaults instantiates a new WorkflowConfig object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetDisableSystemSearchAttribute
-
-`func (o *WorkflowConfig) GetDisableSystemSearchAttribute() bool`
-
-GetDisableSystemSearchAttribute returns the DisableSystemSearchAttribute field if non-nil, zero value otherwise.
-
-### GetDisableSystemSearchAttributeOk
-
-`func (o *WorkflowConfig) GetDisableSystemSearchAttributeOk() (*bool, bool)`
-
-GetDisableSystemSearchAttributeOk returns a tuple with the DisableSystemSearchAttribute field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetDisableSystemSearchAttribute
-
-`func (o *WorkflowConfig) SetDisableSystemSearchAttribute(v bool)`
-
-SetDisableSystemSearchAttribute sets DisableSystemSearchAttribute field to given value.
-
-### HasDisableSystemSearchAttribute
-
-`func (o *WorkflowConfig) HasDisableSystemSearchAttribute() bool`
-
-HasDisableSystemSearchAttribute returns a boolean if a field has been set.
-
 ### GetExecutingStateIdMode
 
-`func (o *WorkflowConfig) GetExecutingStateIdMode() string`
+`func (o *WorkflowConfig) GetExecutingStateIdMode() ExecutingStateIdMode`
 
 GetExecutingStateIdMode returns the ExecutingStateIdMode field if non-nil, zero value otherwise.
 
 ### GetExecutingStateIdModeOk
 
-`func (o *WorkflowConfig) GetExecutingStateIdModeOk() (*string, bool)`
+`func (o *WorkflowConfig) GetExecutingStateIdModeOk() (*ExecutingStateIdMode, bool)`
 
 GetExecutingStateIdModeOk returns a tuple with the ExecutingStateIdMode field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetExecutingStateIdMode
 
-`func (o *WorkflowConfig) SetExecutingStateIdMode(v string)`
+`func (o *WorkflowConfig) SetExecutingStateIdMode(v ExecutingStateIdMode)`
 
 SetExecutingStateIdMode sets ExecutingStateIdMode field to given value.
 
@@ -153,6 +128,31 @@ SetOptimizeActivity sets OptimizeActivity field to given value.
 `func (o *WorkflowConfig) HasOptimizeActivity() bool`
 
 HasOptimizeActivity returns a boolean if a field has been set.
+
+### GetOptimizeTimer
+
+`func (o *WorkflowConfig) GetOptimizeTimer() bool`
+
+GetOptimizeTimer returns the OptimizeTimer field if non-nil, zero value otherwise.
+
+### GetOptimizeTimerOk
+
+`func (o *WorkflowConfig) GetOptimizeTimerOk() (*bool, bool)`
+
+GetOptimizeTimerOk returns a tuple with the OptimizeTimer field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOptimizeTimer
+
+`func (o *WorkflowConfig) SetOptimizeTimer(v bool)`
+
+SetOptimizeTimer sets OptimizeTimer field to given value.
+
+### HasOptimizeTimer
+
+`func (o *WorkflowConfig) HasOptimizeTimer() bool`
+
+HasOptimizeTimer returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

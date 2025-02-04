@@ -87,7 +87,7 @@ func TestStateApiFailWorkflow(t *testing.T) {
 
 	wErr, ok := iwf.AsWorkflowUncompletedError(err)
 	assert.True(t, ok)
-	assert.Equal(t, iwf.NewWorkflowUncompletedError(runId, iwfidl.FAILED, ptr.Any(iwfidl.STATE_API_FAIL_MAX_OUT_RETRY_ERROR_TYPE), wErr.ErrorMessage, nil, iwf.GetDefaultObjectEncoder()), wErr)
+	assert.Equal(t, iwf.NewWorkflowUncompletedError(runId, iwfidl.FAILED, ptr.Any(iwfidl.STATE_API_FAIL_ERROR_TYPE), wErr.ErrorMessage, nil, iwf.GetDefaultObjectEncoder()), wErr)
 
 	assert.True(t, strings.Contains(*wErr.ErrorMessage, "test api failing"), "must contain api failing message")
 
@@ -95,7 +95,7 @@ func TestStateApiFailWorkflow(t *testing.T) {
 	assert.Nil(t, out)
 	assert.Equal(t, err, err2)
 
-	assert.True(t, strings.Contains(err.Error(), "workflow is not completed successfully, closedStatus: FAILED, failedErrorType(applies if failed as closedStatus):STATE_API_FAIL_MAX_OUT_RETRY_ERROR_TYPE, error message:statusCode: 400, responseBody: {\"error\":\"error message:test api failing"))
+	assert.True(t, strings.Contains(err.Error(), "workflow is not completed successfully, closedStatus: FAILED, failedErrorType(applies if failed as closedStatus):STATE_API_FAIL_ERROR_TYPE, error message:statusCode: 400, responseBody: {\"error\":\"error message:test api failing"))
 }
 
 func TestStateApiTimeoutWorkflow(t *testing.T) {
@@ -108,11 +108,11 @@ func TestStateApiTimeoutWorkflow(t *testing.T) {
 
 	wErr, ok := iwf.AsWorkflowUncompletedError(err)
 	assert.True(t, ok)
-	assert.Equal(t, iwf.NewWorkflowUncompletedError(runId, iwfidl.FAILED, ptr.Any(iwfidl.STATE_API_FAIL_MAX_OUT_RETRY_ERROR_TYPE), wErr.ErrorMessage, nil, iwf.GetDefaultObjectEncoder()), wErr)
+	assert.Equal(t, iwf.NewWorkflowUncompletedError(runId, iwfidl.FAILED, ptr.Any(iwfidl.STATE_API_FAIL_ERROR_TYPE), wErr.ErrorMessage, nil, iwf.GetDefaultObjectEncoder()), wErr)
 
 	fmt.Println(err)
 
-	expectedMsg := "workflow is not completed successfully, closedStatus: FAILED, failedErrorType(applies if failed as closedStatus):STATE_API_FAIL_MAX_OUT_RETRY_ERROR_TYPE, error message:activity error "
+	expectedMsg := "workflow is not completed successfully, closedStatus: FAILED, failedErrorType(applies if failed as closedStatus):STATE_API_FAIL_ERROR_TYPE, error message:activity error "
 	assert.True(t, strings.HasPrefix(err.Error(), expectedMsg))
 
 	out, err2 := client.GetComplexWorkflowResults(context.Background(), wfId, "")

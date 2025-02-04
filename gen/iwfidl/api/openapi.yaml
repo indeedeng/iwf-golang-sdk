@@ -86,7 +86,25 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Invalid input
-      summary: get workflow data objects
+      summary: get workflow data objects aka data attributes
+  /api/v1/workflow/dataobjects/set:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkflowSetDataObjectsRequest'
+      responses:
+        "200":
+          content: {}
+          description: successful operation
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Invalid input
+      summary: set workflow data objects aka data attributes
   /api/v1/workflow/searchattributes/get:
     post:
       requestBody:
@@ -108,6 +126,24 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Invalid input
       summary: get workflow search attributes
+  /api/v1/workflow/searchattributes/set:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkflowSetSearchAttributesRequest'
+      responses:
+        "200":
+          content: {}
+          description: successful operation
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Invalid input
+      summary: set workflow search attributes
   /api/v1/workflow/get:
     post:
       requestBody:
@@ -635,6 +671,18 @@ components:
         skipWaitUntil:
           type: boolean
       type: object
+    WorkflowAlreadyStartedOptions:
+      example:
+        requestId: requestId
+        ignoreAlreadyStartedError: true
+      properties:
+        ignoreAlreadyStartedError:
+          type: boolean
+        requestId:
+          type: string
+      required:
+      - ignoreAlreadyStartedError
+      type: object
     WorkflowStartOptions:
       example:
         workflowStartDelaySeconds: 3
@@ -644,10 +692,10 @@ components:
           maximumIntervalSeconds: 7
           backoffCoefficient: 4.145608
         workflowConfigOverride:
-          disableSystemSearchAttribute: true
           continueAsNewThreshold: 6
+          optimizeTimer: true
           continueAsNewPageSizeInBytes: 7
-          executingStateIdMode: ENABLED_FOR_ALL
+          executingStateIdMode: null
           optimizeActivity: true
         idReusePolicy: null
         searchAttributes:
@@ -671,6 +719,9 @@ components:
           key: key
         useMemoForDataAttributes: true
         cronSchedule: cronSchedule
+        workflowAlreadyStartedOptions:
+          requestId: requestId
+          ignoreAlreadyStartedError: true
         dataAttributes:
         - value:
             data: data
@@ -702,6 +753,8 @@ components:
           $ref: '#/components/schemas/WorkflowConfig'
         useMemoForDataAttributes:
           type: boolean
+        workflowAlreadyStartedOptions:
+          $ref: '#/components/schemas/WorkflowAlreadyStartedOptions'
       type: object
     IDReusePolicy:
       enum:
@@ -876,10 +929,10 @@ components:
             maximumIntervalSeconds: 7
             backoffCoefficient: 4.145608
           workflowConfigOverride:
-            disableSystemSearchAttribute: true
             continueAsNewThreshold: 6
+            optimizeTimer: true
             continueAsNewPageSizeInBytes: 7
-            executingStateIdMode: ENABLED_FOR_ALL
+            executingStateIdMode: null
             optimizeActivity: true
           idReusePolicy: null
           searchAttributes:
@@ -903,6 +956,9 @@ components:
             key: key
           useMemoForDataAttributes: true
           cronSchedule: cronSchedule
+          workflowAlreadyStartedOptions:
+            requestId: requestId
+            ignoreAlreadyStartedError: true
           dataAttributes:
           - value:
               data: data
@@ -1039,6 +1095,31 @@ components:
             $ref: '#/components/schemas/KeyValue'
           type: array
       type: object
+    WorkflowSetDataObjectsRequest:
+      example:
+        objects:
+        - value:
+            data: data
+            encoding: encoding
+          key: key
+        - value:
+            data: data
+            encoding: encoding
+          key: key
+        workflowRunId: workflowRunId
+        workflowId: workflowId
+      properties:
+        workflowId:
+          type: string
+        workflowRunId:
+          type: string
+        objects:
+          items:
+            $ref: '#/components/schemas/KeyValue'
+          type: array
+      required:
+      - workflowId
+      type: object
     WorkflowGetSearchAttributesRequest:
       example:
         keys:
@@ -1086,6 +1167,41 @@ components:
           items:
             $ref: '#/components/schemas/SearchAttribute'
           type: array
+      type: object
+    WorkflowSetSearchAttributesRequest:
+      example:
+        searchAttributes:
+        - stringValue: stringValue
+          valueType: null
+          integerValue: 1
+          boolValue: true
+          doubleValue: 1.4894159098541704
+          stringArrayValue:
+          - stringArrayValue
+          - stringArrayValue
+          key: key
+        - stringValue: stringValue
+          valueType: null
+          integerValue: 1
+          boolValue: true
+          doubleValue: 1.4894159098541704
+          stringArrayValue:
+          - stringArrayValue
+          - stringArrayValue
+          key: key
+        workflowRunId: workflowRunId
+        workflowId: workflowId
+      properties:
+        workflowId:
+          type: string
+        workflowRunId:
+          type: string
+        searchAttributes:
+          items:
+            $ref: '#/components/schemas/SearchAttribute'
+          type: array
+      required:
+      - workflowId
       type: object
     WorkflowGetRequest:
       example:
@@ -1144,6 +1260,7 @@ components:
       - STATE_DECISION_FAILING_WORKFLOW_ERROR_TYPE
       - CLIENT_API_FAILING_WORKFLOW_ERROR_TYPE
       - STATE_API_FAIL_MAX_OUT_RETRY_ERROR_TYPE
+      - STATE_API_FAIL_ERROR_TYPE
       - INVALID_USER_WORKFLOW_CODE_ERROR_TYPE
       - RPC_ACQUIRE_LOCK_FAILURE
       - SERVER_INTERNAL_ERROR_TYPE
@@ -1231,6 +1348,7 @@ components:
         skipSignalReapply: true
         workflowRunId: workflowRunId
         workflowId: workflowId
+        skipUpdateReapply: true
         stateExecutionId: stateExecutionId
       properties:
         workflowId:
@@ -1250,6 +1368,8 @@ components:
         stateExecutionId:
           type: string
         skipSignalReapply:
+          type: boolean
+        skipUpdateReapply:
           type: boolean
       required:
       - resetType
@@ -1379,9 +1499,15 @@ components:
       type: object
     WorkflowWorkerRpcRequest:
       example:
+        internalChannelInfos:
+          key:
+            size: 0
         input:
           data: data
           encoding: encoding
+        signalChannelInfos:
+          key:
+            size: 0
         context:
           firstAttemptTimestamp: 6
           workflowStartedTimestamp: 0
@@ -1436,10 +1562,25 @@ components:
           items:
             $ref: '#/components/schemas/KeyValue'
           type: array
+        signalChannelInfos:
+          additionalProperties:
+            $ref: '#/components/schemas/ChannelInfo'
+          type: object
+        internalChannelInfos:
+          additionalProperties:
+            $ref: '#/components/schemas/ChannelInfo'
+          type: object
       required:
       - context
       - rpcName
       - workflowType
+      type: object
+    ChannelInfo:
+      example:
+        size: 0
+      properties:
+        size:
+          type: integer
       type: object
     WorkflowWorkerRpcResponse:
       example:
@@ -1782,10 +1923,10 @@ components:
     WorkflowConfigUpdateRequest:
       example:
         workflowConfig:
-          disableSystemSearchAttribute: true
           continueAsNewThreshold: 6
+          optimizeTimer: true
           continueAsNewPageSizeInBytes: 7
-          executingStateIdMode: ENABLED_FOR_ALL
+          executingStateIdMode: null
           optimizeActivity: true
         workflowRunId: workflowRunId
         workflowId: workflowId
@@ -2864,27 +3005,29 @@ components:
       required:
       - channelName
       type: object
+    ExecutingStateIdMode:
+      enum:
+      - ENABLED_FOR_ALL
+      - ENABLED_FOR_STATES_WITH_WAIT_UNTIL
+      - DISABLED
+      type: string
     WorkflowConfig:
       example:
-        disableSystemSearchAttribute: true
         continueAsNewThreshold: 6
+        optimizeTimer: true
         continueAsNewPageSizeInBytes: 7
-        executingStateIdMode: ENABLED_FOR_ALL
+        executingStateIdMode: null
         optimizeActivity: true
       properties:
-        disableSystemSearchAttribute:
-          type: boolean
         executingStateIdMode:
-          enum:
-          - ENABLED_FOR_ALL
-          - ENABLED_FOR_STATES_WITH_WAIT_UNTIL
-          - DISABLED
-          type: string
+          $ref: '#/components/schemas/ExecutingStateIdMode'
         continueAsNewThreshold:
           type: integer
         continueAsNewPageSizeInBytes:
           type: integer
         optimizeActivity:
+          type: boolean
+        optimizeTimer:
           type: boolean
       type: object
     Context:
