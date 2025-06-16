@@ -1,10 +1,10 @@
 package iwf
 
 import (
-	"github.com/indeedeng/iwf-golang-sdk/iwf/ptr"
 	"strings"
 
 	"github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
+	"github.com/indeedeng/iwf-golang-sdk/iwf/ptr"
 )
 
 func fromIdlCommandResults(results *iwfidl.CommandResults, encoder ObjectEncoder) (CommandResults, error) {
@@ -39,11 +39,19 @@ func fromIdlCommandResults(results *iwfidl.CommandResults, encoder ObjectEncoder
 		}
 		internalChannelResults = append(internalChannelResults, interStateChannelResult)
 	}
+	var waitUntilApiSucceeded *bool
+	if results.StateWaitUntilFailed != nil {
+		// The server will set stateWaitUntilFailed to true if the waitUntil API failed.
+		// Hence, flag inversion is needed here to indicate that the waitUntil API
+		// succeeded.
+		stateWaitUntilFailed := !*results.StateWaitUntilFailed
+		waitUntilApiSucceeded = &stateWaitUntilFailed
+	}
 	return CommandResults{
-		Timers:                     timerResults,
-		Signals:                    signalResults,
-		InternalChannelCommands:    internalChannelResults,
-		StateWaitUntilApiSucceeded: results.StateStartApiSucceeded,
+		Timers:                  timerResults,
+		Signals:                 signalResults,
+		InternalChannelCommands: internalChannelResults,
+		WaitUntilApiSucceeded:   waitUntilApiSucceeded,
 	}, nil
 }
 

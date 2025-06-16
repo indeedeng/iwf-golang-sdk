@@ -4,10 +4,10 @@ import "github.com/indeedeng/iwf-golang-sdk/gen/iwfidl"
 
 type (
 	CommandResults struct {
-		Timers                     []TimerCommandResult
-		Signals                    []SignalCommandResult
-		InternalChannelCommands    []InternalChannelCommandResult
-		StateWaitUntilApiSucceeded *bool
+		Timers                  []TimerCommandResult
+		Signals                 []SignalCommandResult
+		InternalChannelCommands []InternalChannelCommandResult
+		WaitUntilApiSucceeded   *bool
 	}
 
 	SignalCommandResult struct {
@@ -75,6 +75,6 @@ func (c CommandResults) GetInternalChannelCommandResultByChannel(channelName str
 	return nil
 }
 
-func (c CommandResults) GetStateWaitUntilApiSucceeded() *bool {
-	return c.StateWaitUntilApiSucceeded
+func (c CommandResults) GetWaitUntilApiSucceeded() *bool {
+	return c.WaitUntilApiSucceeded
 }
