@@ -17,7 +17,7 @@ type clientImpl struct {
 
 func (c *clientImpl) StartWorkflow(ctx context.Context, workflow ObjectWorkflow, workflowId string, timeoutSecs int32, input interface{}, options *WorkflowOptions) (string, error) {
 	wfType := GetFinalWorkflowType(workflow)
-	wf := c.registry.getWorkflow(wfType)
+	wf := c.registry.GetWorkflow(wfType)
 	if wf == nil {
 		return "", NewInvalidArgumentError("workflow is not registered")
 	}

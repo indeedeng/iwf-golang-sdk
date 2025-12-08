@@ -46,6 +46,10 @@ func (r *registryImpl) GetAllRegisteredWorkflowTypes() []string {
 	return res
 }
 
+func (r *registryImpl) GetWorkflow(wfType string) ObjectWorkflow {
+	return r.workflowStore[wfType]
+}
+
 func (r *registryImpl) getWorkflowStartingState(wfType string) WorkflowState {
 	return r.workflowStartingState[wfType]
 }
@@ -72,10 +76,6 @@ func (r *registryImpl) getSearchAttributeTypeStore(wfType string) map[string]iwf
 
 func (r *registryImpl) getWorkflowRPC(wfType string, rpcMethod string) CommunicationMethodDef {
 	return r.workflowRPCStore[wfType][rpcMethod]
-}
-
-func (r *registryImpl) getWorkflow(wfType string) ObjectWorkflow {
-	return r.workflowStore[wfType]
 }
 
 func (r *registryImpl) registerWorkflow(wf ObjectWorkflow) error {
